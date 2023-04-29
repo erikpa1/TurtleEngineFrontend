@@ -1,0 +1,12 @@
+{
+  "core.username": "Meno poúživateľa",
+  "core.password": "Heslo",
+  "core.applications": "Aplikácie",
+  "core.login": "Prihlásiť",
+  "core.organizations": "Organizácie",
+  "core.licences": "Licencie",
+  "core.users": "Používatelia",
+  "core.organizations": "Užívatelia",
+  "core.projects": "Projekty",
+  "core.management": "Menežment"
+}

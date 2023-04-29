@@ -1,0 +1,9 @@
+
+.navbaritem {
+    color: lightgray;
+
+}
+
+.navbaritem:hover {
+    color: gray;
+}

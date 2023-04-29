@@ -1,0 +1,11 @@
+{
+  "core.username": "User name",
+  "core.password": "Password",
+  "core.applications": "Applications",
+  "core.login": "Prihlásit",
+  "core.organizations": "Organizace",
+  "core.licences": "Licence",
+  "core.users": "Uživatelé",
+  "core.projects": "Projekty",
+  "core.management": "Menežment"
+}
