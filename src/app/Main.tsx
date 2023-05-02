@@ -23,7 +23,11 @@ export default function Main() {
 
 function _Main() {
     return (
-        <main>
+        //The overflow Y and X is more important it could looks like at first see
+        <main style={{
+            overflowY: "hidden",
+            overflowX: "hidden",
+        }}>
             <Routes>
                 <Route path={"/"} element={<_Test/>}/>
                 <Route path={"/projects"} element={<ProjectsSelectionView/>}/>

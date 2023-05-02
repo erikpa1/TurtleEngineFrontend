@@ -13,6 +13,7 @@ export default defineConfig({
             '@editors': path.resolve(__dirname, "src/editors"),
             '@players': path.resolve(__dirname, "src/players"),
             '@components': path.resolve(__dirname, "src/components"),
+            '@data': path.resolve(__dirname, "src/data"),
             '@external': path.resolve(__dirname, "src/external")
         }
     },

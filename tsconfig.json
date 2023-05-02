@@ -40,6 +40,9 @@
       ],
       "@external/*": [
         "src/external/*"
+      ],
+      "@data/*": [
+        "src/data/*"
       ]
     }
   },
