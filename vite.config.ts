@@ -14,6 +14,7 @@ export default defineConfig({
             '@players': path.resolve(__dirname, "src/players"),
             '@components': path.resolve(__dirname, "src/components"),
             '@data': path.resolve(__dirname, "src/data"),
+            '@api': path.resolve(__dirname, "src/api"),
             '@external': path.resolve(__dirname, "src/external")
         }
     },

@@ -22,6 +22,9 @@ dependencies:
   '@react-three/xr':
     specifier: ^5.5.0
     version: 5.5.0(@react-three/fiber@8.13.0)(react@18.2.0)(three@0.152.2)
+  '@tauri-apps/api':
+    specifier: ^1.2.0
+    version: 1.2.0
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -55,6 +58,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.11.0
     version: 6.11.0(react-dom@18.2.0)(react@18.2.0)
+  react-switch-case:
+    specifier: ^1.5.1
+    version: 1.5.1
   react-use-cookie:
     specifier: ^1.4.0
     version: 1.4.0(react@18.2.0)
@@ -1163,6 +1169,11 @@ packages:
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
     dependencies:
       tslib: 2.5.0
+    dev: false
+
+  /@tauri-apps/api@1.2.0:
+    resolution: {integrity: sha512-lsI54KI6HGf7VImuf/T9pnoejfgkNoXveP14pVV7XarrQ46rOejIVJLFqHI9sRReJMGdh2YuCoI3cc/yCWCsrw==}
+    engines: {node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
     dev: false
 
   /@tauri-apps/cli-darwin-arm64@1.2.3:
@@ -2748,6 +2759,10 @@ packages:
     dependencies:
       '@remix-run/router': 1.6.0
       react: 18.2.0
+    dev: false
+
+  /react-switch-case@1.5.1:
+    resolution: {integrity: sha512-gTddRXnnIHWMICUbAyzSgo+BCv88eGxcZ8dYnTx+Xgxa1MNNydVqwsYqdSwqMrsXMqQkvXsztA9NZRt3gBTouA==}
     dev: false
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):

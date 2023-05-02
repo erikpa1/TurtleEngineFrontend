@@ -39,8 +39,7 @@ export default function ProjectsSelectionView({}) {
                         textColor="inherit"
                     >
                         <Tab label={t("core.local")} value={"0"}/>
-                        <Tab label={t("core.cloud")} value={"1"}/>
-
+                        <Tab label={t("core.remote")} value={"1"}/>
                     </Tabs>
 
                 </Box>

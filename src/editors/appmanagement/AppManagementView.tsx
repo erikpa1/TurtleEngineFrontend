@@ -2,6 +2,8 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 
 
+import Switch, {Case} from "react-switch-case/lib/esm";
+
 import {Box, Tab, Tabs} from "@mui/material";
 
 import {TabContext} from "@mui/lab";
@@ -9,6 +11,7 @@ import {ViewContainer} from "@components/ViewContainer";
 
 
 import {Ext} from "@external/prelude";
+import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
 
 export default function AppManagementView({}) {
 
@@ -40,10 +43,14 @@ export default function AppManagementView({}) {
                     </Tabs>
 
                 </Box>
-
             </TabContext>
-        </ViewContainer>
 
+            <Switch condition={tabValue}>
+                <Case value={"0"}><ProjectsManagementView/></Case>
+
+            </Switch>
+
+        </ViewContainer>
 
     )
 }
