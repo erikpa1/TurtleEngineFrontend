@@ -2,5 +2,7 @@
 resolver = "2"
 members = [
     "src-tauri",
+    "src-fs",
+    "src-structures"
 ]
 default-members = ["src-tauri"]

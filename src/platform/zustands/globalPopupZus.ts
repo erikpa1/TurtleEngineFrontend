@@ -5,7 +5,7 @@ interface GlobalPopupZus {
     setElement: (element: HTMLElement | any) => void
     clear: () => void
     popElement: () => void
-    pushElement: (lement: HTMLElement | any) => void
+    pushElement: (element: HTMLElement | any) => void
 
 }
 

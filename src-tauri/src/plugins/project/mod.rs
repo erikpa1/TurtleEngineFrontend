@@ -1,21 +1,33 @@
+use std::fmt::format;
 use rusqlite::{Connection, Result};
 
+use uuid::{Uuid};
 
 use tauri::{Runtime};
 use tauri::plugin::{Builder, TauriPlugin};
 
 
+use tfs;
+
+
 #[tauri::command]
-fn SaveProject(projectJson: &str) -> String {
+fn CreateProject(projectJson: &str) -> String {
+    let projectUid = Uuid::new_v4().to_string();
+
+    let dbPath = format!("{}/../projects/{}/project.db", tfs::GetExePath(), projectUid);
+
+    tfs::CreateFolders(&dbPath);
+
     println!("Creating project");
 
-    let connRes = Connection::open("cats.db");
+    let connRes = Connection::open(dbPath.clone());
 
     if let Ok(conn) = connRes {
         conn.execute(
-            "create table if not exists cat_colors (
-             id integer primary key,
-             name text not null unique
+            "CREATE TABLE IF NOT EXISTS Spots (
+             Uid text primary key,
+             name text,
+             type text
          )",
             [],
         );
@@ -29,7 +41,7 @@ fn SaveProject(projectJson: &str) -> String {
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
-            SaveProject,
+            CreateProject,
         ])
         .build()
 }

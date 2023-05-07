@@ -14,6 +14,8 @@ export default function App() {
             <GlobalAppLock/>
 
             <_LoggedContent/>
+
+            <_GlobalPopup/>
         </div>
 
     )
