@@ -5,8 +5,18 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import {ProjectLight} from "@data/project/ProjectLight";
+import {useTranslation} from "react-i18next";
 
-export default function ProjectUniversalCard() {
+
+interface ProjectUniversalCardProps {
+    project: ProjectLight
+}
+
+export default function ProjectUniversalCard({project}: ProjectUniversalCardProps) {
+
+    const [t] = useTranslation()
+
     return (
         <Card sx={{maxWidth: 345}}>
             <CardMedia
@@ -16,16 +26,22 @@ export default function ProjectUniversalCard() {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    {project.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    style={{
+                        minHeight: "50px",
+                        maxHeight: "50px"
+                    }}
+                >
+                    {project.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                <Button size="small">{t("core.open")}</Button>
+                <Button size="small">{t("core.edit")}</Button>
             </CardActions>
         </Card>
     );

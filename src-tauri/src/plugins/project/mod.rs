@@ -1,5 +1,7 @@
 use std::fmt::format;
+use std::fs;
 use rusqlite::{Connection, Result};
+use serde::de::Unexpected::Str;
 
 use uuid::{Uuid};
 
@@ -8,29 +10,51 @@ use tauri::plugin::{Builder, TauriPlugin};
 
 
 use tfs;
+use tstructures::project::{CreateProjectParams, ProjectLight};
+
+use serde_json;
+use serde_json::json;
 
 
 #[tauri::command]
-fn CreateProject(projectJson: &str) -> String {
-    let projectUid = Uuid::new_v4().to_string();
+async fn CreateProject(projectJson: String) -> String {
+    let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
+    createParams.uid = Uuid::new_v4().to_string();
 
-    let dbPath = format!("{}/../projects/{}/project.db", tfs::GetExePath(), projectUid);
+
+    let projectFolder = format!("{}{}/", tfs::GetProjectsPath(), createParams.uid);
+
+    let dbPath = format!("{}/project.db", projectFolder);
 
     tfs::CreateFolders(&dbPath);
-
-    println!("Creating project");
 
     let connRes = Connection::open(dbPath.clone());
 
     if let Ok(conn) = connRes {
         conn.execute(
-            "CREATE TABLE IF NOT EXISTS Spots (
+            "CREATE TABLE IF NOT EXISTS Scenes (
              Uid text primary key,
-             name text,
-             type text
+             Name text,
+             PanoramaUid text;
          )",
             [],
         );
+
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS Assets (
+             Uid text primary key,
+             Name text,
+             Type text,
+             Extension text;
+         )",
+            [],
+        );
+
+        conn.close();
+
+        let lightProject = ProjectLight::FromCreateParams(&createParams);
+
+        fs::write(format!("{}/project_light.json", projectFolder), serde_json::to_string(&lightProject).unwrap());
     }
 
 
@@ -38,10 +62,38 @@ fn CreateProject(projectJson: &str) -> String {
 }
 
 
+#[tauri::command]
+async fn ListProjects() -> String {
+    let paths = tfs::ListFolders(&tfs::GetProjectsPath());
+
+
+    let mut resultJsons: Vec<ProjectLight> = Vec::new();
+
+    for folder in &paths {
+        println!("{}", folder);
+
+
+        if (tfs::CheckProjectExistenceAndValidity(folder)) {
+            let lightDataStr = tfs::FileToString(&format!("{}project_light.json", folder));
+
+            let lightDataResult = serde_json::from_str(&lightDataStr);
+
+            if let Ok(lightData) = lightDataResult {
+                resultJsons.push(lightData);
+            }
+        }
+    }
+
+    let resultValue = json!({"projects": resultJsons});
+
+    return serde_json::to_string(&resultValue).unwrap_or("\"projects\": []".into());
+}
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
             CreateProject,
+            ListProjects
         ])
         .build()
 }

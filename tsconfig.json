@@ -44,6 +44,9 @@
       "@data/*": [
         "src/data/*"
       ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
       "@api/*": [
         "src/api/*"
       ]
