@@ -89,11 +89,39 @@ async fn ListProjects() -> String {
     return serde_json::to_string(&resultValue).unwrap_or("\"projects\": []".into());
 }
 
+
+#[tauri::command]
+async fn GetProjectLight(projectUid: String) -> String {
+    return tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), projectUid));
+}
+
+
+#[tauri::command]
+async fn UploadProjectLightData(projectJson: String) -> bool {
+    let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
+
+    let projectFolder = format!("{}{}", tfs::GetProjectsPath(), &createParams.uid);
+
+    let jsonDataPath = format!("{}/project_light.json", &projectFolder);
+
+    let mut lightProject = ProjectLight::LoadFromJsonString(&tfs::FileToString(&jsonDataPath));
+
+    lightProject.name = createParams.name.clone();
+    lightProject.author = createParams.author.clone();
+    lightProject.description = createParams.description.clone();
+    lightProject.lat_lon = createParams.lat_lon.clone();
+
+    fs::write(jsonDataPath, serde_json::to_string(&lightProject).unwrap());
+    return true;
+}
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
             CreateProject,
-            ListProjects
+            ListProjects,
+            GetProjectLight,
+            UploadProjectLightData
         ])
         .build()
 }

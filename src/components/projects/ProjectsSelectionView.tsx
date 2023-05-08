@@ -17,7 +17,7 @@ export default function ProjectsSelectionView({}) {
 
     const [t] = useTranslation()
 
-    const [projects, isLoading] = useAvailableProjects()
+    const [projects, isLoading, refresh] = useAvailableProjects()
 
     const [tabValue, setTabValue] = Ext.Cookie.useCookie("projects-selection-tab-main", "0")
 

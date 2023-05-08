@@ -7,6 +7,8 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import {ProjectLight} from "@data/project/ProjectLight";
 import {useTranslation} from "react-i18next";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer";
 
 
 interface ProjectUniversalCardProps {
@@ -16,6 +18,14 @@ interface ProjectUniversalCardProps {
 export default function ProjectUniversalCard({project}: ProjectUniversalCardProps) {
 
     const [t] = useTranslation()
+
+    const popupZus = useGlobalPopup()
+
+    const editPressed = () => {
+
+        popupZus.pushElement(<EditProjectDrawer uid={project.uid} onClose={popupZus.popElement}/>)
+
+    }
 
     return (
         <Card sx={{maxWidth: 345}}>
@@ -41,7 +51,7 @@ export default function ProjectUniversalCard({project}: ProjectUniversalCardProp
             </CardContent>
             <CardActions>
                 <Button size="small">{t("core.open")}</Button>
-                <Button size="small">{t("core.edit")}</Button>
+                <Button onClick={editPressed} size="small">{t("core.edit")}</Button>
             </CardActions>
         </Card>
     );

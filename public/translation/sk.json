@@ -8,5 +8,16 @@
   "core.users": "Používatelia",
   "core.organizations": "Užívatelia",
   "core.projects": "Projekty",
-  "core.management": "Menežment"
+  "core.management": "Menežment",
+  "core.search": "Hľadať",
+  "core.local": "Lokálne",
+  "core.remote": "Vzdialené",
+  "core.edit": "Upraviť",
+  "core.open": "Otvoriť",
+  "project.name": "Meno projektu",
+  "project.author": "Autor projektu",
+  "project.description": "Popis projektu",
+  "project.create": "Vytvoriť projekt",
+  "project.edit": "Edit project",
+  "project.latlon": "Lat/Lon"
 }

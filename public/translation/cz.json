@@ -7,5 +7,16 @@
   "core.licences": "Licence",
   "core.users": "Uživatelé",
   "core.projects": "Projekty",
-  "core.management": "Menežment"
+  "core.management": "Menežment",
+  "core.search": "Search",
+  "core.local": "Local",
+  "core.remote": "Remote",
+  "core.edit": "Edit",
+  "core.open": "Open",
+  "project.name": "Project name",
+  "project.author": "Project author",
+  "project.description": "Project description",
+  "project.create": "Create project",
+  "project.edit": "Edit project",
+  "project.latlon": "Lat/Lon"
 }

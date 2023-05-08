@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use serde_json;
 use ts_rs::TS;
 
 
@@ -58,6 +59,10 @@ impl ProjectLight {
             project_type: params.project_type.clone(),
             description: params.description.clone(),
         };
+    }
+
+    pub fn LoadFromJsonString(jsonString: &String) -> Self {
+        return serde_json::from_str(jsonString).unwrap();
     }
 }
 

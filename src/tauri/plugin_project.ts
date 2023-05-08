@@ -7,16 +7,34 @@ export const PROJECTS_PLUGIN_NAME = "plugin:turtle_projects|"
 
 export default class TauriProjectPlugin {
 
-    static async CreateProject(params: CreateProjectParams): Promise<string> {
-        return await invoke<string>(`${PROJECTS_PLUGIN_NAME}CreateProject`, {
+    static async CreateProject(params: CreateProjectParams): Promise<boolean> {
+        await invoke<string>(`${PROJECTS_PLUGIN_NAME}CreateProject`, {
             projectJson: JSON.stringify(params),
         })
+
+        return true
     }
 
     static async ListProjects(): Promise<Array<ProjectLight>> {
         const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}ListProjects`)
         const parsed = JSON.parse(response)
         return parsed.projects
+    }
+
+    static async GetProjectLight(projectUid: string): Promise<ProjectLight> {
+        const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetProjectLight`, {
+            projectUid: projectUid,
+        })
+        return JSON.parse(response)
+    }
+
+    static async UploadProjectLightData(params: CreateProjectParams): Promise<boolean> {
+
+        await invoke<string>(`${PROJECTS_PLUGIN_NAME}UploadProjectLightData`, {
+            projectJson: JSON.stringify(params),
+        })
+
+        return true
     }
 }
 
