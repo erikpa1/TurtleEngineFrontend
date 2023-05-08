@@ -63,7 +63,7 @@ export default function ProjectsSelectionView({}) {
                             projects.map((value) => {
                                 return (
                                     <Col key={value.uid}>
-                                        <ProjectUniversalCard project={value}/>
+                                        <ProjectUniversalCard project={value} onRefresh={refresh}/>
                                     </Col>
                                 )
                             })

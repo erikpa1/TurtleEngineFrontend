@@ -13,17 +13,26 @@ import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer
 
 interface ProjectUniversalCardProps {
     project: ProjectLight
+    onRefresh?: () => void
 }
 
-export default function ProjectUniversalCard({project}: ProjectUniversalCardProps) {
+export default function ProjectUniversalCard({project, onRefresh}: ProjectUniversalCardProps) {
 
     const [t] = useTranslation()
+
+
+    const [val, setVal] = React.useState({project: project})
 
     const popupZus = useGlobalPopup()
 
     const editPressed = () => {
 
-        popupZus.pushElement(<EditProjectDrawer uid={project.uid} onClose={popupZus.popElement}/>)
+        popupZus.pushElement(<EditProjectDrawer
+            uid={project.uid}
+            onClose={popupZus.popElement}
+            onRefresh={onRefresh}
+
+        />)
 
     }
 
@@ -36,7 +45,7 @@ export default function ProjectUniversalCard({project}: ProjectUniversalCardProp
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {project.name}
+                    {val.project.name}
                 </Typography>
                 <Typography
                     variant="body2"
@@ -46,7 +55,7 @@ export default function ProjectUniversalCard({project}: ProjectUniversalCardProp
                         maxHeight: "50px"
                     }}
                 >
-                    {project.description}
+                    {val.project.description}
                 </Typography>
             </CardContent>
             <CardActions>
