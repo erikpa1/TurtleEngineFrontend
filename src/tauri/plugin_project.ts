@@ -29,12 +29,17 @@ export default class TauriProjectPlugin {
     }
 
     static async UploadProjectLightData(params: CreateProjectParams): Promise<boolean> {
-
         await invoke<string>(`${PROJECTS_PLUGIN_NAME}UploadProjectLightData`, {
             projectJson: JSON.stringify(params),
         })
-
         return true
+    }
+
+    static async GetAndActivateProject(projectUid: String): Promise<boolean> {
+        await invoke<boolean>(`${PROJECTS_PLUGIN_NAME}GetAndActivateProject`, {
+            projectUid: projectUid,
+        })
+
     }
 }
 

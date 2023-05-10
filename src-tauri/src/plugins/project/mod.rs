@@ -1,11 +1,13 @@
 use std::fmt::format;
 use std::fs;
+
 use rusqlite::{Connection, Result};
+
 use serde::de::Unexpected::Str;
 
 use uuid::{Uuid};
 
-use tauri::{Runtime};
+use tauri::{Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 
@@ -14,6 +16,7 @@ use tstructures::project::{CreateProjectParams, ProjectLight};
 
 use serde_json;
 use serde_json::json;
+use crate::app::AppState;
 
 
 #[tauri::command]
@@ -95,6 +98,19 @@ async fn GetProjectLight(projectUid: String) -> String {
     return tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), projectUid));
 }
 
+// #[tauri::command]
+// async fn GetAndActivateProject(state: &mut State<AppState>, projectUid: &String) -> bool {
+//     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
+//     //
+//     // let connRes = Connection::open(dbPath.clone());
+//     //
+//     // if let OK(conn) = connRes {
+//     //     state.SetSqlLiteConnection(conn);
+//     // }
+//
+//     return true;
+// }
+
 
 #[tauri::command]
 async fn UploadProjectLightData(projectJson: String) -> bool {
@@ -118,6 +134,7 @@ async fn UploadProjectLightData(projectJson: String) -> bool {
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
+            // GetAndActivateProject,
             CreateProject,
             ListProjects,
             GetProjectLight,

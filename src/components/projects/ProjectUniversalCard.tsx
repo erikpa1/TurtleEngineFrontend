@@ -9,6 +9,7 @@ import {ProjectLight} from "@data/project/ProjectLight";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer";
+import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 
 interface ProjectUniversalCardProps {
@@ -19,6 +20,8 @@ interface ProjectUniversalCardProps {
 export default function ProjectUniversalCard({project, onRefresh}: ProjectUniversalCardProps) {
 
     const [t] = useTranslation()
+
+    const [activate] = useActiveProjectZus()
 
 
     const [val, setVal] = React.useState({project: project})
@@ -59,7 +62,13 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">{t("core.open")}</Button>
+                <Button size="small"
+                        onClick={() => {
+                            activate(project)
+                        }}
+                >
+                    {t("core.open")}
+                </Button>
                 <Button onClick={editPressed} size="small">{t("core.edit")}</Button>
             </CardActions>
         </Card>

@@ -1,6 +1,7 @@
 import React from "react";
 import {ProjectLight} from "@data/project/ProjectLight";
 import ProjectApi from "@api/project/ProjectApi";
+import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 export function useAvailableProjects(): [projects: Array<ProjectLight>, isLoading: boolean, refresh: () => void] {
 
@@ -39,5 +40,20 @@ export function useLoadProjectLight(projectUid: string): [project: ProjectLight 
     }, [projectUid])
 
     return [project, isLoading]
+
+}
+
+export function useActivateAndDispatchProject(): [(project: ProjectLight) => void] {
+
+    const projectZus = useActiveProjectZus()
+
+    const activateProject = (project: ProjectLight) => {
+        ProjectApi.GetAndActivateProject(project.uid).then((data) => {
+            projectZus.setProject(project)
+        })
+    }
+
+    return [activateProject]
+
 
 }

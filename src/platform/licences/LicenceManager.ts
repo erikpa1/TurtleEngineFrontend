@@ -1,12 +1,10 @@
 export default class LicenceManager {
-
-    static HasValidLicence(): boolean {
+    static HasEditLicence(): boolean {
         return true
     }
 
     static LicenceKey(): string {
         return "Test"
     }
-
 
 }

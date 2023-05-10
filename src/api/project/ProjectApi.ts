@@ -16,6 +16,15 @@ export default class ProjectApi {
         return false
     }
 
+    static async GetAndActivateProject(projectUid: string): Promise<boolean> {
+        if (ApiDispatcher.IsDesktop()) {
+            return await TauriProjectPlugin.GetAndActivateProject(projectUid)
+        } else {
+            alert("Create project is unimplemented for WEB")
+        }
+        return false
+    }
+
     static async ListProjects(): Promise<Array<ProjectLight>> {
         if (ApiDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.ListProjects()
