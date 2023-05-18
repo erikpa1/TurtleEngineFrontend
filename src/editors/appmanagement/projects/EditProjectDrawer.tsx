@@ -14,6 +14,9 @@ import {MiddleSpinner} from "@components/Spinners";
 import ProjectApi from "@api/project/ProjectApi";
 import {CreateProjectParams} from "@api/project/data";
 
+import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TurtleTextField} from "@platform/components/TurtleForms";
+
 interface EditProjectDrawerProps {
     uid: string
     onClose?: () => void
@@ -112,35 +115,38 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
             <Box style={{padding: "15px"}}>
                 <Stack spacing={2}>
 
-                    <TextField
+                    <TurtleTextField
                         onChange={pNameChanged}
-                        label={t("project.name")}
+                        label={"project.name"}
                         value={name}
                     />
 
-                    <TextField
+                    <TurtleTextField
                         onChange={descChanged}
                         value={description}
-                        label={t("project.description")}
+                        label={"project.description"}
                         multiline
                     />
 
-                    <TextField
+                    <TurtleTextField
                         value={author}
                         onChange={authorChanged}
-                        label={t("project.author")}
+                        label={"project.author"}
                     />
 
-                    <TextField
+                    <TurtleTextField
                         value={latLon}
                         onChange={latLonChanged}
-                        label={t("project.latlon")}
+                        label={"project.latlon"}
                     />
 
                 </Stack>
             </Box>
 
-            <Button onClick={editProjectPressed}>{t("project.edit")}</Button>
+            <TurtleButton
+                onClick={editProjectPressed}
+                label={"project.edit"}
+            />
 
         </>
 

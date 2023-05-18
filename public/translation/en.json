@@ -18,6 +18,18 @@
   "project.description": "Project description",
   "project.create": "Create project",
   "project.edit": "Edit project",
-  "project.latlon": "Lat/Lon"
-
+  "project.latlon": "Lat/Lon",
+  "core.deployment": "Deployment",
+  "core.assets": "Assets",
+  "core.editor.map": "Map editor",
+  "core.play": "Play",
+  "core.all": "All",
+  "core.quizzes": "Quiz",
+  "core.images": "Image",
+  "core.videos": "Video",
+  "core.panoramas": "Panorama",
+  "core.pointclouds": "Point cloud",
+  "core.meshes": "Mesh",
+  "core.materials": "Material",
+  "core.document": "Document"
 }

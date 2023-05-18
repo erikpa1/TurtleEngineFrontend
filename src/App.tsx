@@ -11,9 +11,10 @@ export default function App() {
         <div>
             <div className={"app_background"}/>
 
-            <GlobalAppLock/>
-
             <_LoggedContent/>
+
+
+            <GlobalAppLock/>
 
             <_GlobalPopup/>
         </div>

@@ -27,7 +27,11 @@ export default function AppManagementView({}) {
     return (
         <ViewContainer>
             <TabContext value={tabValue}>
-                <Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>
+
+                <Box
+                    sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
+                    className={"turtle-shaded-bar"}
+                >
 
                     <Tabs
                         value={tabValue}
@@ -47,7 +51,6 @@ export default function AppManagementView({}) {
 
             <Switch condition={tabValue}>
                 <Case value={"0"}><ProjectsManagementView/></Case>
-
             </Switch>
 
         </ViewContainer>

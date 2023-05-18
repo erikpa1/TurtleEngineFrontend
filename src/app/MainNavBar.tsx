@@ -11,18 +11,23 @@ import {Image} from "react-bootstrap";
 import useCookie from "react-use-cookie";
 
 import "./MainNavBar.css"
+import {ProjectLight} from "@data/project/ProjectLight";
+import {Ext} from "@external/prelude";
+import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 
 export default function MainNavBar() {
 
     const [t] = useTranslation()
 
-    const [isCollapsed, setisCollapsed] = useCookie("navbar-collapsed", false as any)
-
+    const [isCollapsed, setisCollapsed] = Ext.Cookie.useCookieBoolean("navbar-collapsed", false)
 
     const collapse = () => {
         setisCollapsed(!isCollapsed as any)
     }
+
+    const projectZus = useActiveProjectZus()
+
 
     return (
 
@@ -67,9 +72,14 @@ export default function MainNavBar() {
 
                 <sb.Menu>
                     <MyNavbarItem lang={"core.projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
-                    <MyNavbarItem lang={"core.management"} link={"/management"} icon={"/icons/management.svg"}/>
-
+                    <MyNavbarItem lang={"core.management"} link={"/management"} icon={"/icons/Management.svg"}/>
                 </sb.Menu>
+
+                <hr/>
+
+                {
+                    projectZus.project && <_ActiveProjectBar project={projectZus.project}/>
+                }
 
                 <sb.Menu
                     style={{
@@ -95,6 +105,7 @@ interface MyNavbarItemProps {
     link?: string
     onClick?: () => void
 }
+
 
 function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
 
@@ -178,4 +189,21 @@ function _SettingsNavItem({}) {
             {/*}*/}
         </>
     )
+}
+
+interface _ActiveProjectBarProps {
+    project: ProjectLight
+}
+
+
+function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
+
+    return (
+        <sb.Menu>
+            <MyNavbarItem lang={"core.assets"} link={"/assets"} icon={"/icons/Assets.svg"}/>
+            <MyNavbarItem lang={"core.editor.map"} link={"/mapeditor"} icon={"/icons/Map.svg"}/>
+            <MyNavbarItem lang={"core.play"} link={"/play"} icon={"/icons/Spot.svg"}/>
+        </sb.Menu>
+    )
+
 }

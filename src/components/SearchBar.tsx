@@ -33,3 +33,11 @@ export default function UniversalInputSearchBar(props: UniversalInputSearchBarPr
         </Paper>
     );
 }
+
+export function MiddleSearchBar({}) {
+    return (
+        <div style={{marginLeft: "auto", marginRight: "auto"}}>
+            <UniversalInputSearchBar placeHolder={"core.search"}/>
+        </div>
+    )
+}

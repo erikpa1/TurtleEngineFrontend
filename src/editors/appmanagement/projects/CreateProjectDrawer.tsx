@@ -8,6 +8,9 @@ import {Box, Stack, TextField} from "@mui/material";
 import {CreateProjectParams} from "@api/project/data";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
+import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TurtleTextField} from "@platform/components/TurtleForms";
+
 interface CreateProjectDrawer {
     onClose: () => void
     onRefresh: () => void
@@ -23,7 +26,7 @@ export default function CreateProjectDrawer({
 
     const lock = useGlobalAppLock()
 
-    const [cpp] = React.useState<CreateProjectParams>({
+    const [cpp] = React.useState<CreateProjectParams | any>({
         name: "",
         author: "",
         description: "",
@@ -64,19 +67,35 @@ export default function CreateProjectDrawer({
             <Box style={{padding: "15px"}}>
                 <Stack spacing={2}>
 
-                    <TextField onChange={pNameChanged} label={t("project.name")}/>
+                    <TurtleTextField
+                        onChange={pNameChanged}
+                        label={"project.name"}
+                    />
 
-                    <TextField onChange={descChanged} label={t("project.description")} multiline/>
+                    <TurtleTextField
+                        onChange={descChanged}
+                        label={"project.description"}
+                        multiline
+                    />
 
-                    <TextField onChange={authorChanged} label={t("project.author")}/>
+                    <TurtleTextField
+                        onChange={authorChanged}
+                        label={"project.author"}
+                    />
 
-                    <TextField onChange={latLonChanged} label={t("project.latlot")}/>
+                    <TurtleTextField
+                        onChange={latLonChanged}
+                        label={"project.latlon"}
+                    />
 
                 </Stack>
             </Box>
 
-            <Button onClick={createProjectPressed}>{t("project.create")}</Button>
 
+            <TurtleButton
+                onClick={createProjectPressed}
+                label={"project.create"}
+            />
 
         </TurtleDrawer>
     )

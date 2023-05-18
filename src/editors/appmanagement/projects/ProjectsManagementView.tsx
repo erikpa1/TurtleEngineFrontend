@@ -5,6 +5,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectDrawer";
 import {useTranslation} from "react-i18next";
+import {TurtleButton} from "@platform/components/TurtleButtons";
 
 
 export default function ProjectsManagementView() {
@@ -26,8 +27,10 @@ export default function ProjectsManagementView() {
     return (
         <>
 
-
-            <Button onClick={createProjectPressed}>{t("project.create")}</Button>
+            <TurtleButton
+                onClick={createProjectPressed}
+                label={"project.create"}
+            />
 
 
         </>

@@ -21,7 +21,7 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
 
     const [t] = useTranslation()
 
-    const [activate] = useActiveProjectZus()
+    const projectZus = useActiveProjectZus()
 
 
     const [val, setVal] = React.useState({project: project})
@@ -64,7 +64,7 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
             <CardActions>
                 <Button size="small"
                         onClick={() => {
-                            activate(project)
+                            projectZus.setProject(project)
                         }}
                 >
                     {t("core.open")}
