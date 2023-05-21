@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<document>
+    <languages>
+        <rust/>
+        <typescript/>
+    </languages>
+
+    <export>
+        <rust path="../src-structures/src/project/mod.rs"/>
+        <typescript path="../src/data/project/params.ts"/>
+    </export>
+
+    <imports>
+        <rust>
+            use serde::{Serialize, Deserialize};
+            use serde_json;
+            use ts_rs::TS;
+        </rust>
+    </imports>
+
+
+    <prefix>
+        <rust>
+
+        </rust>
+
+    </prefix>
+
+    <class nam="CreateProjectParams">
+        <export>
+            <rust path="../src-structures/src/project/mod.rs"/>
+            <typescript path="../src/data/project/ProjectLight.ts"/>
+        </export>
+
+        <variables>
+            <variable name="name" type="string"/>
+            <variable name="uid" type="string"/>
+            <variable name="description" type="string"/>
+            <variable name="author" type="string"/>
+            <variable name="project_type" type="string"/>
+            <variable name="lat_lon" type="string"/>
+        </variables>
+
+        <functions>
+            <to_json/>
+            <from_json/>
+        </functions>
+    </class>
+
+
+    <class nam="CreateAssetParamas">
+        <variables>
+            <variable name="name" type="string"/>
+            <variable name="uid" type="string"/>
+            <variable name="extension" type="string"/>
+            <variable name="description" type="string"/>
+            <variable name="assetType" type="string"/>
+        </variables>
+
+        <functions>
+            <to_json/>
+            <from_json/>
+        </functions>
+    </class>
+
+
+    <postfix>
+
+        <rust>
+
+        </rust>
+
+    </postfix>
+
+
+</document>

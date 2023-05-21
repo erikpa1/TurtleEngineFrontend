@@ -5,7 +5,7 @@ use ts_rs::TS;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
-#[ts(export, export_to = "../src/api/project/data.ts")]
+#[ts(export, export_to = "../src/api/project/params.ts")]
 pub struct CreateProjectParams {
     #[serde(default)]
     pub name: String,
@@ -25,6 +25,28 @@ pub struct CreateProjectParams {
     #[serde(default)]
     pub lat_lon: String,
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+#[derive(TS)]
+#[ts(export, export_to = "../src/api/project/params.ts")]
+pub struct CreateAssetParamas {
+    #[serde(default)]
+    pub name: String,
+
+    #[serde(default)]
+    pub uid: String,
+
+    #[serde(default)]
+    pub extension: String,
+
+    #[serde(default)]
+    pub description: String,
+
+    #[serde(default)]
+    pub assetType: String,
+
+}
+
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]

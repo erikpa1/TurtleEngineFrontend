@@ -1,5 +1,8 @@
+use std::borrow::BorrowMut;
 use std::fmt::format;
 use std::fs;
+use std::sync::Mutex;
+
 
 use rusqlite::{Connection, Result};
 
@@ -17,6 +20,9 @@ use tstructures::project::{CreateProjectParams, ProjectLight};
 use serde_json;
 use serde_json::json;
 use crate::app::AppState;
+
+mod assets;
+
 
 
 #[tauri::command]
@@ -98,18 +104,20 @@ async fn GetProjectLight(projectUid: String) -> String {
     return tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), projectUid));
 }
 
-// #[tauri::command]
-// async fn GetAndActivateProject(state: &mut State<AppState>, projectUid: &String) -> bool {
-//     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
-//     //
-//     // let connRes = Connection::open(dbPath.clone());
-//     //
-//     // if let OK(conn) = connRes {
-//     //     state.SetSqlLiteConnection(conn);
-//     // }
-//
-//     return true;
-// }
+#[tauri::command]
+async fn GetAndActivateProject(state: State<'_, Mutex<AppState>>, projectUid: String) -> Result<(), String> {
+    let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
+
+    let connRes = Connection::open(dbPath.clone());
+
+    let mut locked_state = state.lock().unwrap();
+
+    if let Ok(conn) = connRes {
+        locked_state.SetSqlLiteConnection(conn);
+    }
+
+    return Ok(());
+}
 
 
 #[tauri::command]
@@ -134,11 +142,12 @@ async fn UploadProjectLightData(projectJson: String) -> bool {
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
-            // GetAndActivateProject,
+            GetAndActivateProject,
             CreateProject,
             ListProjects,
             GetProjectLight,
-            UploadProjectLightData
+            UploadProjectLightData,
+                assets::CreateAsset
         ])
         .build()
 }

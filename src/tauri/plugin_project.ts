@@ -1,5 +1,5 @@
 import {invoke} from "@tauri-apps/api/tauri";
-import {CreateProjectParams} from "../api/project/data";
+import {CreateProjectParams} from "@api/project/params";
 import {ProjectLight} from "@data/project/ProjectLight";
 
 export const PROJECTS_PLUGIN_NAME = "plugin:turtle_projects|"

@@ -12,7 +12,7 @@ import {ProjectLight} from "@data/project/ProjectLight";
 import {useLoadProjectLight} from "@hooks/project";
 import {MiddleSpinner} from "@components/Spinners";
 import ProjectApi from "@api/project/ProjectApi";
-import {CreateProjectParams} from "@api/project/data";
+import {CreateProjectParams} from "@api/project/params";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";

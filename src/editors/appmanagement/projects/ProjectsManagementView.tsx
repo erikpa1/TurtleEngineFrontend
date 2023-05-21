@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import {CreateProjectParams} from "@api/project/data";
+import {CreateProjectParams} from "@api/project/params";
 import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectDrawer";

@@ -4,6 +4,7 @@ use std::sync::Mutex;
 
 use tstructures::licence::Licence;
 
+
 pub struct AppState {
     pub licence: Mutex<Licence>,
     pub sqliteConn: Mutex<Option<rusqlite::Connection>>,

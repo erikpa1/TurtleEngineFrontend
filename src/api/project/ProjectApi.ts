@@ -1,4 +1,4 @@
-import {CreateProjectParams} from "./data";
+import {CreateProjectParams} from "./params";
 import ApiDispatcher from "../ApiDispatcher";
 
 import {ProjectLight} from "@data/project/ProjectLight";

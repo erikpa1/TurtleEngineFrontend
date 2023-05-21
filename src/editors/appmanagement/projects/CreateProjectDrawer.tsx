@@ -5,7 +5,7 @@ import React, {SyntheticEvent} from "react";
 import ProjectApi from "@api/project/ProjectApi";
 import {useTranslation} from "react-i18next";
 import {Box, Stack, TextField} from "@mui/material";
-import {CreateProjectParams} from "@api/project/data";
+import {CreateProjectParams} from "@api/project/params";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
