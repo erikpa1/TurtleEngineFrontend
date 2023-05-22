@@ -21,7 +21,7 @@
   "project.latlon": "Lat/Lon",
   "core.deployment": "Deployment",
   "core.assets": "Assets",
-  "core.editor.map": "Map editor",
+  "core.editor.area": "Area editor",
   "core.play": "Play",
   "core.all": "All",
   "core.quizzes": "Quiz",
@@ -31,5 +31,7 @@
   "core.pointclouds": "Point cloud",
   "core.meshes": "Mesh",
   "core.materials": "Material",
-  "core.document": "Document"
+  "core.document": "Document",
+  "core.areas": "Areas",
+  "core.scenes": "Scenes"
 }

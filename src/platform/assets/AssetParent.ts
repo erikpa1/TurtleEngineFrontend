@@ -7,6 +7,8 @@ export default class AssetParent {
     public name = ""
     public description = ""
 
+    static LANG = "core.asset"
+    static LANG_PLURAL = "core.assets"
 
     static tmp(): string {
         return "Hello"

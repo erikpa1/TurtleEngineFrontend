@@ -26,7 +26,7 @@ use crate::app::AppState;
 pub async fn CreateAsset(state: State<'_, Mutex<AppState>>, projectUid: String) -> Result<(), String> {
     let mut _state = state.lock().unwrap();
 
-    // let mut dbc = _state.sqliteConn.lock().unwrap().as_ref();
+    let mut dbc = _state.sqliteConn.lock().unwrap().take().unwrap();
 
     let uid = Uuid::new_v4().to_string();
     let name = "My asset";
@@ -38,7 +38,9 @@ pub async fn CreateAsset(state: State<'_, Mutex<AppState>>, projectUid: String) 
         uid, name, type_, extension
     );
 
-    // dbc.unwrap().execute(&query, []);
+    dbc.execute(&query, []).unwrap();
+
+
 
     return Ok(());
 }

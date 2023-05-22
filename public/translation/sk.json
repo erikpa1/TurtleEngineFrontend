@@ -22,7 +22,7 @@
   "project.latlon": "Lat/Lon",
   "core.deployment": "Nasadenie",
   "core.assets": "Assety",
-  "core.editor.map": "Map editor",
+  "core.editor.area": "Area editor",
   "core.play": "Prehrať",
   "core.all": "Všetky",
   "core.quizzes": "Kvíz",
@@ -32,5 +32,7 @@
   "core.pointclouds": "Point cloud",
   "core.meshes": "Model",
   "core.materials": "Materiál",
-  "core.document": "Dokument"
+  "core.document": "Dokument",
+  "core.areas": "Areas",
+  "core.scenes": "Scenes"
 }

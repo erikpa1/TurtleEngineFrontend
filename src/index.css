@@ -12,6 +12,18 @@ code {
     monospace;
 }
 
+img {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.gl-canvas {
+    touch-action: none;
+}
 
 .turtle-shaded-button {
     background-image: linear-gradient(to bottom, #e7ebf0, white);
@@ -20,3 +32,4 @@ code {
 .turtle-shaded-bar {
     background-image: linear-gradient(to bottom, #e7ebf0, white);
 }
+

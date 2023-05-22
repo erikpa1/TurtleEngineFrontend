@@ -42,33 +42,32 @@ export default function AssetsMainView({}) {
                         <Tabs
                             value={tabValue}
                             onChange={tabChanged}
-                            aria-label="basic tabs example"
-                            centered
-                            scrollButtons={true}
+                            aria-label="Asset tabs"
+                            variant={"scrollable"}
+                            scrollButtons={"auto"}
                             textColor="inherit"
                         >
-                            {/*<Tab label={t("core.all")} value={"0"}/>*/}
-                            <Tab label={t("core.quizzes")} value={"1"}/>
-                            <Tab label={t("core.images")} value={"2"}/>
-                            <Tab label={t("core.videos")} value={"3"}/>
-                            <Tab label={t("core.panoramas")} value={"4"}/>
-                            <Tab label={t("core.pointclouds")} value={"5"}/>
-                            <Tab label={t("core.meshes")} value={"6"}/>
-                            <Tab label={t("core.materials")} value={"7"}/>
+                            {
+                                Assets.values().map((value) => {
+                                    return (
+                                        <Tab key={value.TYPE} label={t(value.LANG_PLURAL)} value={value.TYPE}/>
+                                    )
+                                })
+                            }
                         </Tabs>
 
                     </Box>
                 </TabContext>
 
                 <Switch condition={tabValue}>
-                    {/*<Case value={"0"}><UniversalAssetList assetType={Assets.Material.TYPE}/></Case>*/}
-                    <Case value={"1"}><UniversalAssetList assetType={Assets.Quiz.TYPE}/></Case>
-                    <Case value={"2"}><UniversalAssetList assetType={Assets.Image.TYPE}/></Case>
-                    <Case value={"3"}><UniversalAssetList assetType={Assets.Video.TYPE}/></Case>
-                    <Case value={"4"}><UniversalAssetList assetType={Assets.Panorama.TYPE}/></Case>
-                    <Case value={"5"}><UniversalAssetList assetType={Assets.PointCloud.TYPE}/></Case>
-                    <Case value={"6"}><UniversalAssetList assetType={Assets.Mesh.TYPE}/></Case>
-                    <Case value={"7"}><UniversalAssetList assetType={Assets.Material.TYPE}/></Case>
+                    {
+                        Assets.values().map((value) => {
+                            return (
+                                <Case key={value} value={value.TYPE}><UniversalAssetList assetType={value.TYPE}/></Case>
+                            )
+                        })
+                    }
+
                 </Switch>
 
             </div>

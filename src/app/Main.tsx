@@ -3,11 +3,15 @@ import MainNavBar from "./MainNavBar";
 import {ProSidebarProvider} from "react-pro-sidebar";
 
 import {Route, Routes} from "react-router-dom";
+import MountTabWrapper from "@components/MountTabWrapper";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
 const AssetsMainView = React.lazy(() => import("@components/assets/AssetsMainView"))
 const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppManagementView"))
+
+const MapEditorMainView = React.lazy(() => import("@components/mapEditor/MapEditorMainView"))
+const SceneEditorMainView = React.lazy(() => import("@components/sceneEditor/SceneEditorMainView"))
 
 
 export default function Main() {
@@ -34,11 +38,42 @@ function _Main() {
         }}>
             <Routes>
                 <Route path={"/"} element={<_Test/>}/>
-                <Route path={"/projects"} element={<ProjectsSelectionView/>}/>
-                <Route path={"/management"} element={<AppManagementView/>}/>
-                <Route path={"/assets"} element={<AssetsMainView/>}/>
-                <Route path={"/mapeditor"} element={<AssetsMainView/>}/>
-                <Route path={"/play"} element={<AssetsMainView/>}/>
+
+                <Route path={"/projects"} element={
+                    <MountTabWrapper>
+                        <ProjectsSelectionView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/management"} element={
+                    <MountTabWrapper>
+                        <AppManagementView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/assets"} element={
+                    <MountTabWrapper>
+                        <AssetsMainView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/map-editor"} element={
+                    <MountTabWrapper>
+                        <MapEditorMainView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/scene-editor"} element={
+                    <MountTabWrapper>
+                        <SceneEditorMainView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/play"} element={
+                    <MountTabWrapper>
+                        <AssetsMainView/>
+                    </MountTabWrapper>
+                }/>
 
             </Routes>
         </main>

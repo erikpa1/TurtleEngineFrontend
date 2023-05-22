@@ -75,7 +75,7 @@ export default function MainNavBar() {
                     <MyNavbarItem lang={"core.management"} link={"/management"} icon={"/icons/Management.svg"}/>
                 </sb.Menu>
 
-                <hr/>
+                <Hr/>
 
                 {
                     projectZus.project && <_ActiveProjectBar project={projectZus.project}/>
@@ -88,7 +88,7 @@ export default function MainNavBar() {
                         width: "100%"
                     }}
                 >
-                    <hr style={{color: "lightgray"}}/>
+                    <Hr/>
 
                     {/*<_SettingsNavItem/>*/}
 
@@ -196,12 +196,19 @@ interface _ActiveProjectBarProps {
 }
 
 
+function Hr() {
+    return (
+        <hr color={"white"}/>
+    )
+}
+
 function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
 
     return (
         <sb.Menu>
             <MyNavbarItem lang={"core.assets"} link={"/assets"} icon={"/icons/Assets.svg"}/>
-            <MyNavbarItem lang={"core.editor.map"} link={"/mapeditor"} icon={"/icons/Map.svg"}/>
+            <MyNavbarItem lang={"core.editor.area"} link={"/map-editor"} icon={"/icons/Map.svg"}/>
+            <MyNavbarItem lang={"core.play"} link={"/scene-editor"} icon={"/icons/Spot.svg"}/>
             <MyNavbarItem lang={"core.play"} link={"/play"} icon={"/icons/Spot.svg"}/>
         </sb.Menu>
     )
