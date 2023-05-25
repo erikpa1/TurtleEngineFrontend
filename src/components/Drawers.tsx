@@ -1,38 +1,46 @@
 import React from "react"
 import {Drawer} from "@mui/material"
+import {Offcanvas} from "react-bootstrap";
 
 
 interface TurtleDrawer {
     children: any
+    header?: any
+    closeEnabled?: boolean
     onClose?: () => void
     width?: string
 }
 
-export default function TurtleDrawer({
-                                         children,
-                                         onClose,
-                                         width
-                                     }: TurtleDrawer) {
+export default function TurtleDrawer(props: TurtleDrawer) {
 
     const drawerStyle = {
         backgroundColor: '#e7ebf0',
-        width: width ? width : "450px"
+        width: props.width ? props.width : "450px"
     };
 
     return (
-        <Drawer
-            open={true}
-            onClose={onClose}
-            anchor={"right"}
-
-
-            PaperProps={{style: drawerStyle}}
-
+        <Offcanvas
+            onHide={props.onClose}
+            show={true}
+            placement={"end"}
+            style={{
+                margin: "5px"
+            }}
         >
-            {
-                React.Children.toArray(children)
-            }
 
-        </Drawer>
+            <Offcanvas.Header className={"custom-white"} closeButton={props.closeEnabled}>
+                {
+                    props.header
+                }
+            </Offcanvas.Header>
+
+            <Offcanvas.Body className={"custom-white"}>
+                {
+                    React.Children.toArray(props.children)
+
+                }
+            </Offcanvas.Body>
+
+        </Offcanvas>
     )
 }

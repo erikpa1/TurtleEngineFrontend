@@ -34,5 +34,11 @@
   "core.materials": "Materiál",
   "core.document": "Dokument",
   "core.areas": "Areas",
-  "core.scenes": "Scenes"
+  "core.scenes": "Scenes",
+  "project.delete": "Vymazať projekt",
+  "core.confirm": "Potvrďte",
+  "core.confirm.project.remove": "Potvrďte vymazanie projektu",
+  "core.project.edit": "Upraviť projekt",
+  "core.no": "Nie",
+  "core.yes": "Áno"
 }

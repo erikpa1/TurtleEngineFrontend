@@ -3,8 +3,8 @@ import {useTranslation} from "react-i18next";
 
 import {ViewContainer} from "@components/ViewContainer";
 
-import {TabContext} from "@mui/lab";
-import {Box, Grid, Paper, styled, Tab, Tabs} from "@mui/material";
+
+import {Box, Tab, Tabs} from "@mui/material";
 
 import {Ext} from "@external/prelude";
 import ProjectUniversalCard from "@components/projects/ProjectUniversalCard";

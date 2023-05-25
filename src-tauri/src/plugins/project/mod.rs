@@ -24,7 +24,6 @@ use crate::app::AppState;
 mod assets;
 
 
-
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
     let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
@@ -66,6 +65,16 @@ async fn CreateProject(projectJson: String) -> String {
         fs::write(format!("{}/project_light.json", projectFolder), serde_json::to_string(&lightProject).unwrap());
     }
 
+
+    return String::from("success");
+}
+
+
+#[tauri::command]
+async fn DeleteProject(uid: String) -> String {
+    let projectFolder = format!("{}{}/", tfs::GetProjectsPath(), uid);
+
+    tfs::DeleteFolder(&projectFolder);
 
     return String::from("success");
 }
@@ -144,6 +153,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
             GetAndActivateProject,
             CreateProject,
+            DeleteProject,
             ListProjects,
             GetProjectLight,
             UploadProjectLightData,

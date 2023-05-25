@@ -16,6 +16,8 @@ import {CreateProjectParams} from "@api/project/params";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
+import Modals from "@components/Modals";
+import {Offcanvas} from "react-bootstrap";
 
 interface EditProjectDrawerProps {
     uid: string
@@ -31,10 +33,16 @@ export default function EditProjectDrawer({
                                           }: EditProjectDrawerProps) {
 
 
+    const [t] = useTranslation()
+
     const [project, isLoading] = useLoadProjectLight(uid)
 
     return (
-        <TurtleDrawer onClose={onClose}>
+        <TurtleDrawer
+            onClose={onClose}
+            header={<Offcanvas.Title>{t("core.project.edit")}</Offcanvas.Title>}
+            closeEnabled={true}
+        >
 
             {
                 (isLoading || !project) ? <MiddleSpinner/> : <_InnerContent
@@ -68,6 +76,23 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
     const [description, setDescription] = React.useState(project.description)
     const [latLon, setLatLon] = React.useState(project.lat_lon)
 
+
+    const pNameChanged = (e: SyntheticEvent) => {
+        setName(e.target.value)
+    }
+
+    const descChanged = (e: SyntheticEvent) => {
+        setDescription(e.target.value)
+    }
+
+    const authorChanged = (e: SyntheticEvent) => {
+        setAuthor(e.target.value)
+    }
+
+    const latLonChanged = (e: SyntheticEvent) => {
+        setLatLon(e.target.value)
+    }
+
     const editProjectPressed = () => {
         lock.lock()
 
@@ -94,20 +119,22 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
         })
     }
 
-    const pNameChanged = (e: SyntheticEvent) => {
-        setName(e.target.value)
+    const deleteProjectConfirmed = () => {
+        lock.lock()
+
+        ProjectApi.DeleteProject(project.uid).then(() => {
+            lock.unlock()
+            if (onRefresh) {
+                onRefresh()
+            }
+        })
     }
 
-    const descChanged = (e: SyntheticEvent) => {
-        setDescription(e.target.value)
-    }
-
-    const authorChanged = (e: SyntheticEvent) => {
-        setAuthor(e.target.value)
-    }
-
-    const latLonChanged = (e: SyntheticEvent) => {
-        setLatLon(e.target.value)
+    const deleteProjectPressed = () => {
+        Modals.showYesNoModal({
+            lang: "core.confirm.project.remove",
+            onYes: deleteProjectConfirmed
+        })
     }
 
     return (
@@ -140,13 +167,25 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                         label={"project.latlon"}
                     />
 
+                    <Stack gap={1} direction={"row"}>
+                        <TurtleButton
+                            onClick={editProjectPressed}
+                            label={"project.edit"}
+                        />
+
+                        <TurtleButton
+                            onClick={deleteProjectPressed}
+                            label={"project.delete"}
+                            color={"error"}
+
+                        />
+                    </Stack>
+
                 </Stack>
+
+
             </Box>
 
-            <TurtleButton
-                onClick={editProjectPressed}
-                label={"project.edit"}
-            />
 
         </>
 

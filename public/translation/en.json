@@ -33,5 +33,11 @@
   "core.materials": "Material",
   "core.document": "Document",
   "core.areas": "Areas",
-  "core.scenes": "Scenes"
+  "core.scenes": "Scenes",
+  "project.delete": "Delete project",
+  "core.confirm": "Confirm",
+  "core.confirm.project.remove": "Confirm project remove",
+  "core.project.edit": "Edit project",
+  "core.no": "No",
+  "core.yes": "Yes"
 }
