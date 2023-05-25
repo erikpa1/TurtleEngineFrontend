@@ -2,7 +2,7 @@ import React, {SyntheticEvent} from "react";
 
 import {useTranslation} from "react-i18next";
 
-import TurtleDrawer from "@components/Drawers";
+import TurtleOffcanvas from "@components/Drawers";
 import Button from "@mui/material/Button";
 
 import {Box, Stack, TextField} from "@mui/material";
@@ -18,6 +18,7 @@ import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
 import Modals from "@components/Modals";
 import {Offcanvas} from "react-bootstrap";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 
 interface EditProjectDrawerProps {
     uid: string
@@ -38,7 +39,7 @@ export default function EditProjectDrawer({
     const [project, isLoading] = useLoadProjectLight(uid)
 
     return (
-        <TurtleDrawer
+        <TurtleOffcanvas
             onClose={onClose}
             header={<Offcanvas.Title>{t("core.project.edit")}</Offcanvas.Title>}
             closeEnabled={true}
@@ -53,7 +54,7 @@ export default function EditProjectDrawer({
             }
 
 
-        </TurtleDrawer>
+        </TurtleOffcanvas>
     )
 }
 
@@ -122,10 +123,16 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
     const deleteProjectConfirmed = () => {
         lock.lock()
 
+
         ProjectApi.DeleteProject(project.uid).then(() => {
             lock.unlock()
+
             if (onRefresh) {
                 onRefresh()
+            }
+
+            if (onClose) {
+                onClose()
             }
         })
     }

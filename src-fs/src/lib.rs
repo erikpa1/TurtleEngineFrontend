@@ -69,7 +69,7 @@ pub fn FileToString(filePath: &String) -> String {
 }
 
 pub fn DeleteFolder(path: &String) {
-    if let Ok(status) = fs::remove_dir_all(path) {
+    if let Ok(status) = fs::remove_dir_all(Path::new(path)) {
         println!("Success to remove file: {}", path);
     } else {
         println!("Failed to remove file: {}", path);

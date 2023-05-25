@@ -11,7 +11,7 @@ interface TurtleDrawer {
     width?: string
 }
 
-export default function TurtleDrawer(props: TurtleDrawer) {
+export default function TurtleOffcanvas(props: TurtleDrawer) {
 
     const drawerStyle = {
         backgroundColor: '#e7ebf0',

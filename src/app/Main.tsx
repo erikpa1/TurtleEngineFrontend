@@ -37,7 +37,12 @@ function _Main() {
             overflowX: "hidden",
         }}>
             <Routes>
-                <Route path={"/"} element={<_Test/>}/>
+
+                <Route path={"/"} element={
+                    <MountTabWrapper>
+                        <ProjectsSelectionView/>
+                    </MountTabWrapper>
+                }/>
 
                 <Route path={"/projects"} element={
                     <MountTabWrapper>
@@ -80,10 +85,3 @@ function _Main() {
     )
 }
 
-function _Test() {
-    return (
-        <div>
-            Here
-        </div>
-    )
-}

@@ -36,6 +36,8 @@ pub struct CreateAssetParamas {
     #[serde(default)]
     pub uid: String,
 
+    pub project_uid: String,
+
     #[serde(default)]
     pub extension: String,
 

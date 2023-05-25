@@ -19,7 +19,7 @@ export function TurtleTextField(props: TextFieldProps): JSX.Element {
 
     return (
         <TextField
-            className={"turtle-shaded-button"}
+            className={props.disabled ? "" : "turtle-shaded-button"}
             {...props}
             label={t(_label)}
         />

@@ -21,7 +21,7 @@ use serde_json;
 use serde_json::json;
 use crate::app::AppState;
 
-mod assets;
+
 
 
 #[tauri::command]
@@ -157,7 +157,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             ListProjects,
             GetProjectLight,
             UploadProjectLightData,
-                assets::CreateAsset
         ])
         .build()
 }
