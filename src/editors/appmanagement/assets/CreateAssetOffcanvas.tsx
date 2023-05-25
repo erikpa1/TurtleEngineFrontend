@@ -12,6 +12,7 @@ import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
 import AssetsApi from "@api/AssetsApi";
 import {Offcanvas} from "react-bootstrap";
+import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -27,11 +28,13 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
     const lock = useGlobalAppLock()
 
-    const [cpp] = React.useState<CreateAssetParamas | any>({
+    const projectZus = useActiveProjectZus()
+
+    const [cap] = React.useState<CreateAssetParamas | any>({
         name: "",
         description: "",
         assetType: props.assetType,
-
+        project_uid: projectZus.project.uid
     })
 
     const createAssetPressed = () => {
@@ -41,7 +44,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             props.onClose()
         }
 
-        AssetsApi.CreateAsset(cpp).then(() => {
+        AssetsApi.CreateAsset(cap).then(() => {
             lock.unlock()
 
             if (props.onRefresh) {
@@ -51,12 +54,12 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
     }
 
     const pNameChanged = (e: SyntheticEvent) => {
-        cpp.name = e.target.value
+        cap.name = e.target.value
 
     }
 
     const descChanged = (e: SyntheticEvent) => {
-        cpp.description = e.target.value
+        cap.description = e.target.value
     }
 
 
@@ -68,20 +71,19 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             header={<Offcanvas.Title>{t("core.create.asset")}</Offcanvas.Title>}
         >
 
-            <Box style={{padding: "15px"}}>
+            <Box>
                 <Stack spacing={2}>
 
                     <TurtleTextField
                         onChange={pNameChanged}
-                        label={"project.name"}
+                        label={"core.name"}
                     />
 
                     <TurtleTextField
                         onChange={descChanged}
-                        label={"project.description"}
+                        label={"core.description"}
                         multiline
                     />
-
 
 
                 </Stack>

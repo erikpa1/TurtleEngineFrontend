@@ -64,7 +64,7 @@ export default function CreateProjectOffcanvas({
     return (
         <TurtleOffcanvas onClose={onClose}>
 
-            <Box style={{padding: "15px"}}>
+            <Box>
                 <Stack spacing={2}>
 
                     <TurtleTextField

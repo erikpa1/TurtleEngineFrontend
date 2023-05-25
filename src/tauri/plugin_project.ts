@@ -11,8 +11,15 @@ export default class TauriProjectPlugin {
         await invoke<string>(`${PROJECTS_PLUGIN_NAME}CreateProject`, {
             projectJson: JSON.stringify(params),
         })
-
         return true
+    }
+
+    static async ActivateProject(projectUid: string): Promise<ProjectLight> {
+        const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetAndActivateProject`, {
+            projectUid: projectUid,
+        })
+
+        return JSON.parse(response)
     }
 
     static async DeleteProject(uid: string): Promise<boolean> {

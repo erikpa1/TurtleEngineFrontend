@@ -10,6 +10,8 @@ import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+import ProjectApi from "@api/project/ProjectApi";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 
 interface ProjectUniversalCardProps {
@@ -20,6 +22,8 @@ interface ProjectUniversalCardProps {
 export default function ProjectUniversalCard({project, onRefresh}: ProjectUniversalCardProps) {
 
     const [t] = useTranslation()
+
+    const lock = useGlobalAppLock()
 
     const projectZus = useActiveProjectZus()
 
@@ -37,6 +41,17 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
 
         />)
 
+    }
+
+    const activateProjectPressed = () => {
+
+        lock.lock()
+
+        ProjectApi.ActivateProject(project.uid).then((value) => {
+            lock.unlock()
+
+            projectZus.setProject(project)
+        })
     }
 
     return (
@@ -63,10 +78,8 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
             </CardContent>
             <CardActions>
                 <Button size="small"
-                        onClick={() => {
-                            projectZus.setProject(project)
-                        }}
-                >
+                        onClick={activateProjectPressed}>
+
                     {t("core.open")}
                 </Button>
                 <Button onClick={editPressed} size="small">{t("core.edit")}</Button>

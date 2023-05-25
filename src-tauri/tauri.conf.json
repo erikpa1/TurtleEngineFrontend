@@ -12,7 +12,7 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": true
     },
     "bundle": {
       "active": true,
@@ -48,7 +48,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self' data: filesystem:"
     },
     "updater": {
       "active": false

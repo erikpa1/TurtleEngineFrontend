@@ -4,22 +4,47 @@ import './App.css'
 import Main from "./app/Main";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import AppApi from "@api/AppApi";
 
 export default function App() {
 
-    return (
-        <div>
-            <div className={"app_background"}/>
 
-            <_LoggedContent/>
+    const [isLoading, setIsLoading] = React.useState(true)
 
 
-            <GlobalAppLock/>
+    React.useEffect(() => {
+        setIsLoading(true)
 
-            <_GlobalPopup/>
-        </div>
+        AppApi.Init().then(() => {
+            setIsLoading(false)
+        })
 
-    )
+    }, [])
+
+    if (isLoading) {
+
+        return (
+            <div>Loading</div>
+        )
+
+    } else {
+
+        return (
+            <div>
+                <div className={"app_background"}/>
+
+                <_LoggedContent/>
+
+
+                <_GlobalPopup/>
+
+
+                <GlobalAppLock/>
+            </div>
+
+        )
+    }
+
 }
 
 function _LoggedContent() {

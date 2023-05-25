@@ -7,6 +7,21 @@ import TauriProjectPlugin from "../../tauri/plugin_project";
 
 export default class ProjectApi {
 
+
+    static async ActivateProject(projectUid: string): Promise<ProjectLight | null> {
+        if (ApiDispatcher.IsDesktop()) {
+            const result = await TauriProjectPlugin.ActivateProject(projectUid)
+
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            return result
+        } else {
+            //
+        }
+
+        return null
+    }
+
     static async CreateProject(params: CreateProjectParams): Promise<boolean> {
         if (ApiDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.CreateProject(params)

@@ -25,6 +25,9 @@ fn main() {
 
     tauri::Builder::default()
         .manage(app)
+        .manage(app::DbTest{
+            mapMutex: Default::default()
+        })
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(plugins::project::init())
         .plugin(plugins::assets::init())

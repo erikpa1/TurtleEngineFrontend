@@ -6,6 +6,7 @@ export interface CreateAssetParamas {
     extension: string,
     description: string,
     assetType: string,
+    project_uid: string,
 }
 
 export interface CreateProjectParams {

@@ -3,6 +3,7 @@ import ApiDispatcher from "@api/ApiDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 import axios from "axios";
 import TauriAssetPlugin from "../tauri/plugin_assets";
+import FsApi from "@api/FsApi";
 
 export default class AssetsApi {
 
@@ -15,11 +16,16 @@ export default class AssetsApi {
                 asset.name = `${assetType}-${value}`
                 asset.uid = `tmp-${assetType}-${value}`
                 asset.relativePath = `/dev/assets/${assetType}/tmp-${assetType}/Preview.png`
+
+                console.log(asset.relativePath)
                 asset.description = "This asset is for"
                 return asset
             })
 
-            return [...tmp]
+
+            const assets = await TauriAssetPlugin.GetAllAssetsOfType(projectUid, assetType)
+
+            return [...tmp, ...assets]
 
         } else {
             return []

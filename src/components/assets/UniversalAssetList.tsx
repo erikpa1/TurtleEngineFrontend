@@ -18,13 +18,11 @@ export default function UniversalAssetList({assetType}) {
 
     const [assets, setAssets] = React.useState(new Array<AssetParent>())
 
-
     const refreshAssets = () => {
         AssetsApi.GetAllAssetsOfType("", assetType).then((response) => {
             setAssets(response)
         })
     }
-
 
     const createAssetPressed = () => {
         popupZus.pushElement(

@@ -19,9 +19,7 @@ use tstructures::project::{CreateProjectParams, ProjectLight};
 
 use serde_json;
 use serde_json::json;
-use crate::app::AppState;
-
-
+use crate::app::{AppState, DbTest};
 
 
 #[tauri::command]
@@ -39,30 +37,38 @@ async fn CreateProject(projectJson: String) -> String {
     let connRes = Connection::open(dbPath.clone());
 
     if let Ok(conn) = connRes {
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS Scenes (
+        // let result = conn.execute(
+        //     "CREATE TABLE IF NOT EXISTS Scenes (
+        //      Uid text primary key,
+        //      Name text,
+        //      PanoramaUid text
+        //  );",
+        //     [],
+        // );
+
+        // println!("{:?}", &result);
+
+        let result = conn.execute(
+            "CREATE TABLE IF NOT EXISTS Assets (
              Uid text primary key,
-             Name text,
-             PanoramaUid text;
-         )",
+             Name text DEFAULT '',
+             Type text,
+             Subtype text DEFAULT '',
+             Extension text DEFAULT '',
+             HasPreview integer DEFAULT 0
+         );",
             [],
         );
 
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS Assets (
-             Uid text primary key,
-             Name text,
-             Type text,
-             Extension text;
-         )",
-            [],
-        );
+        println!("{:?}", result);
 
         conn.close();
 
         let lightProject = ProjectLight::FromCreateParams(&createParams);
 
         fs::write(format!("{}/project_light.json", projectFolder), serde_json::to_string(&lightProject).unwrap());
+    } else {
+        println!("Failed to create database: {}", &dbPath);
     }
 
 
@@ -90,8 +96,7 @@ async fn ListProjects() -> String {
     for folder in &paths {
         println!("{}", folder);
 
-
-        if (tfs::CheckProjectExistenceAndValidity(folder)) {
+        if tfs::CheckProjectExistenceAndValidity(folder) {
             let lightDataStr = tfs::FileToString(&format!("{}project_light.json", folder));
 
             let lightDataResult = serde_json::from_str(&lightDataStr);
@@ -114,18 +119,21 @@ async fn GetProjectLight(projectUid: String) -> String {
 }
 
 #[tauri::command]
-async fn GetAndActivateProject(state: State<'_, Mutex<AppState>>, projectUid: String) -> Result<(), String> {
+async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -> Result<(), String> {
     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
 
     let connRes = Connection::open(dbPath.clone());
 
-    let mut locked_state = state.lock().unwrap();
-
-    if let Ok(conn) = connRes {
-        locked_state.SetSqlLiteConnection(conn);
-    }
+    state.SetSqlLiteConnection(connRes.unwrap());
+    state.SetActiveProjectUid(projectUid);
 
     return Ok(());
+}
+
+
+#[tauri::command]
+async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> {
+    return Ok(state.activeProjectUid.lock().unwrap().clone());
 }
 
 
