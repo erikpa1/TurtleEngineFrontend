@@ -12,7 +12,39 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "scope": [
+          "$APP/*",
+          "$DESKTOP/*",
+          "$HOME/*",
+          "$RUNTIME/*",
+          "$EXECUTABLE/*",
+          "$RESOURCE/*"
+        ],
+        "all": true,
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true
+      },
+      "path": {
+        "all": true
+      },
+      "protocol": {
+        "asset": true,
+        "assetScope": [
+          "$APP/*",
+          "$DESKTOP/*",
+          "$HOME/*",
+          "$RUNTIME/*",
+          "$RESOURCE/*"
+        ]
+      }
     },
     "bundle": {
       "active": true,
@@ -48,7 +80,14 @@
       }
     },
     "security": {
-      "csp": "default-src 'self' data: filesystem:"
+      "csp": {
+        "default-src": "'self' customprotocol: asset:",
+        "font-src": [
+          "https://fonts.gstatic.com"
+        ],
+        "img-src": "'self' asset: https://asset.localhost blob: data:",
+        "style-src": "'unsafe-inline' 'self' https://fonts.googleapis.com"
+      }
     },
     "updater": {
       "active": false
