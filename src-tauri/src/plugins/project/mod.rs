@@ -19,6 +19,9 @@ use tstructures::project::{CreateProjectParams, ProjectLight};
 
 use serde_json;
 use serde_json::json;
+
+use crate::database;
+
 use crate::app::{AppState, DbTest};
 
 
@@ -34,7 +37,7 @@ async fn CreateProject(projectJson: String) -> String {
 
     tfs::CreateFolders(&dbPath);
 
-    let connRes = Connection::open(dbPath.clone());
+    let connRes = database::CreateDatabaseConnection(&dbPath);
 
     if let Ok(conn) = connRes {
         // let result = conn.execute(
@@ -122,10 +125,11 @@ async fn GetProjectLight(projectUid: String) -> String {
 async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -> Result<(), String> {
     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
 
-    let connRes = Connection::open(dbPath.clone());
+    let connRes = database::CreateDatabaseConnection(&dbPath);
 
     state.SetSqlLiteConnection(connRes.unwrap());
     state.SetActiveProjectUid(projectUid);
+    state.SetActiveProjectDbPah(dbPath);
 
     return Ok(());
 }

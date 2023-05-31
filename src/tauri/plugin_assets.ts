@@ -18,6 +18,7 @@ export default class TauriAssetPlugin {
     }
 
     static async CreateAsset(params: CreateAssetParamas): Promise<boolean> {
+        console.log(params)
         await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
             createJson: JSON.stringify(params),
         })

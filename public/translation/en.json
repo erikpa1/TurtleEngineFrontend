@@ -39,5 +39,8 @@
   "core.confirm.project.remove": "Confirm project remove",
   "core.project.edit": "Edit project",
   "core.no": "No",
-  "core.yes": "Yes"
+  "core.yes": "Yes",
+  "core.asset.create": "Create asset",
+  "core.name": "Name",
+  "core.description": "Description"
 }

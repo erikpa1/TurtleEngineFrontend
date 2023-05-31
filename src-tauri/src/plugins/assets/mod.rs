@@ -19,18 +19,27 @@ use serde_json;
 use serde_json::json;
 use crate::app::AppState;
 
+use crate::database;
+
 
 #[tauri::command]
-pub fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+    println!("{}", &createJson);
+
     let mut createParams: CreateAssetParamas = serde_json::from_str(&createJson).unwrap();
 
-    let mut dbc = state.sqliteConn.lock().unwrap().take().unwrap();
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    // let mut dbc = state.sqliteConn.lock().unwrap().take().unwrap();
+
+    println!("Database path: {}", &dbPath);
+
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let uid = Uuid::new_v4().to_string();
 
     let query = format!(
         "INSERT INTO Assets (Uid, Name, Type, Extension) VALUES ('{}', '{}', '{}', '{}');",
-        createParams.uid, createParams.name, createParams.assetType, createParams.extension
+        uid, createParams.name, createParams.assetType, createParams.extension
     );
 
     dbc.execute(&query, []).unwrap();

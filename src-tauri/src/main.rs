@@ -5,6 +5,7 @@ windows_subsystem = "windows"
 
 mod app;
 mod plugins;
+mod database;
 
 
 #[tauri::command]
