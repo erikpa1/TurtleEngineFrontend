@@ -44,7 +44,6 @@ pub struct CreateAssetParamas {
     #[serde(default)]
     pub description: String,
 
-    #[serde(default)]
     pub assetType: String,
 
 }
