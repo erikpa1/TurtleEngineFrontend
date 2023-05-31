@@ -122,6 +122,18 @@ async fn GetProjectLight(projectUid: String) -> String {
 }
 
 #[tauri::command]
+async fn ActivateLastProject(state: State<'_, AppState>) -> Result<String, String> {
+    // let activeProjectUid = state.activeProjectUid.lock().unwrap();
+    //
+    // if (activeProjectUid != "") {
+    //     return Ok(tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), &activeProjectUid)))
+    // } else {
+    //     return Err("".into());
+    // }
+    return Err("Not found".into());
+}
+
+#[tauri::command]
 async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -> Result<(), String> {
     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
 
@@ -165,6 +177,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
             GetAndActivateProject,
             CreateProject,
+            ActivateLastProject,
             DeleteProject,
             ListProjects,
             GetProjectLight,

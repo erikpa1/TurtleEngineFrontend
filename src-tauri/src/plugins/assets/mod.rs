@@ -15,6 +15,9 @@ use tauri::plugin::{Builder, TauriPlugin};
 use tfs;
 use tstructures::project::{CreateAssetParamas};
 
+
+use tstructures::assets::AssetParentLight;
+
 use serde_json;
 use serde_json::json;
 use crate::app::AppState;
@@ -54,22 +57,44 @@ pub fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset
     //
     // map.insert("Test".into(), "value".into());
     //
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
-    // let mut dbc = state.sqliteConn.lock().unwrap();
-    //
-    // let query = format!(
-    //     "SELECT * from Assets WHERE Type='{}'", asset_type
-    // );
-    //
-    // let mut statement = dbc.prepare(&query).unwrap();
-    //
-    // let rows = statement.query_map([], |row| {
-    //     println!("Row: {:?}", row);
-    //
-    //     return Ok(());
-    // });
+    println!("Selecting from assets with type: {}", asset_type);
 
-    return Ok("[]".into());
+    let query = format!(
+        "SELECT Uid, Name, Type from Assets WHERE Type='{}'", asset_type
+    );
+
+    let mut statement = dbc.prepare(&query).unwrap();
+
+    let rows_iter = statement.query_map([], |row| {
+        println!("Row: {:?}", row);
+
+        let mut tmp = AssetParentLight::New();
+
+        tmp.uid = row.get(0).unwrap_or("".into());
+        tmp.name = row.get(1).unwrap_or("".into());
+        tmp.assetType = row.get(2).unwrap_or("".into());
+
+        return Ok(tmp);
+    }).unwrap();
+
+
+    let mut result: Vec<AssetParentLight> = vec![];
+
+    for myRow in rows_iter {
+        if let Ok(lightAsset) = myRow {
+            result.push(lightAsset);
+        }
+    }
+
+    let resultValue = json!({"assets": result});
+
+    let resString = serde_json::to_string(&resultValue)
+        .unwrap_or("\"assets\": []".into());
+
+    return Ok(resString);
 }
 
 

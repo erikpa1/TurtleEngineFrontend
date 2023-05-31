@@ -156,6 +156,12 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                     />
 
                     <TurtleTextField
+                        label={"project.uid"}
+                        value={project.uid}
+                        disabled={true}
+                    />
+
+                    <TurtleTextField
                         onChange={descChanged}
                         value={description}
                         label={"project.description"}
