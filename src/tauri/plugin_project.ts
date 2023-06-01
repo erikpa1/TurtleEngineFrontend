@@ -13,7 +13,6 @@ export default class TauriProjectPlugin {
         })
         return true
     }
-
     static async ActivateLastProject(): Promise<ProjectLight> {
         const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}ActivateLastProject`).catch((expection => {
 

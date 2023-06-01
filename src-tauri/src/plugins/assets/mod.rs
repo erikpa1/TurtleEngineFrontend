@@ -69,8 +69,6 @@ pub fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset
     let mut statement = dbc.prepare(&query).unwrap();
 
     let rows_iter = statement.query_map([], |row| {
-        println!("Row: {:?}", row);
-
         let mut tmp = AssetParentLight::New();
 
         tmp.uid = row.get(0).unwrap_or("".into());
@@ -95,6 +93,22 @@ pub fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset
         .unwrap_or("\"assets\": []".into());
 
     return Ok(resString);
+}
+
+
+#[tauri::command]
+pub fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
+
+    let query = format!(
+        "DELETE Assets WHERE Uid='{}'", asset_uid
+    );
+
+    dbc.execute(&query, []).unwrap();
+
+
+    return Ok("".into());
 }
 
 

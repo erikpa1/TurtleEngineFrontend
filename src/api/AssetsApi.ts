@@ -45,5 +45,17 @@ export default class AssetsApi {
 
     }
 
+    static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
+
+        if (ApiDispatcher.IsDesktop()) {
+            await TauriAssetPlugin.DeleteAssetWithUid(project_uid, asset_uid);
+
+        } else {
+            await axios.post("/api/assets/create-asset", params) //TODO Implement this one
+        }
+        return true
+
+    }
+
 
 }
