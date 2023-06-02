@@ -13,6 +13,7 @@ const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppMan
 const MapEditorMainView = React.lazy(() => import("@components/mapEditor/MapEditorMainView"))
 const SceneEditorMainView = React.lazy(() => import("@components/sceneEditor/SceneEditorMainView"))
 
+import MaterialEditor from "@components/assets/material/MaterialEditor";
 
 export default function Main() {
 
@@ -78,6 +79,11 @@ function _Main() {
                     <MountTabWrapper>
                         <AssetsMainView/>
                     </MountTabWrapper>
+                }/>
+
+
+                <Route path={"/material-editor/:projectuid/:materialuid"} element={
+                    <MaterialEditor/>
                 }/>
 
             </Routes>

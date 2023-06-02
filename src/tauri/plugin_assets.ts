@@ -21,6 +21,7 @@ export default class TauriAssetPlugin {
         const returnValue = responseJson.assets.map((value: any) => {
             const tmp = new AssetParentLight()
             tmp.from_json(value)
+            tmp.parent_project_uid = projectUid
 
             return tmp
         })
@@ -30,7 +31,7 @@ export default class TauriAssetPlugin {
     }
 
     static async CreateAsset(params: CreateAssetParamas): Promise<boolean> {
-        console.log(params)
+
         await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
             createJson: JSON.stringify(params),
         })
@@ -39,7 +40,7 @@ export default class TauriAssetPlugin {
 
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
 
-        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetAllAssetsOfType`, {
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}DeleteAssetWithUid`, {
             projectUid: project_uid,
             assetUid: asset_uid
         })
@@ -47,5 +48,14 @@ export default class TauriAssetPlugin {
         return true
     }
 
+    static async GetAsset(project_uid: string, asset_uid: string): Promise<any> {
+
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetAsset`, {
+            projectUid: project_uid,
+            assetUid: asset_uid
+        })
+
+        return JSON.parse(response)
+    }
 
 }

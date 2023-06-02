@@ -1,5 +1,6 @@
 export default class AssetParentLight {
     public uid = ""
+    public parent_project_uid = ""
     public name = ""
     public assetType = ""
     public description = ""

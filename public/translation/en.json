@@ -42,5 +42,6 @@
   "core.yes": "Yes",
   "core.asset.create": "Create asset",
   "core.name": "Name",
-  "core.description": "Description"
+  "core.description": "Description",
+  "core.delete": "Delete"
 }

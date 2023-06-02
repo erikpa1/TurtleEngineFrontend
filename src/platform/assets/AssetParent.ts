@@ -4,6 +4,7 @@ export default class AssetParent {
     public relativePath = ""
 
     public uid = ""
+    public parent_project_uid = ""
     public name = ""
     public description = ""
 
@@ -17,6 +18,10 @@ export default class AssetParent {
 
     GetPreviewPath(): string {
         return this.relativePath//`${this.relativePath}${this.uid}/Preview.png`
+    }
+
+    from_json(jObject: any) {
+
     }
 
 

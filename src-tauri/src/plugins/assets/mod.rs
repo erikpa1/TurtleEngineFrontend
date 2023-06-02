@@ -51,7 +51,7 @@ pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Resu
 }
 
 #[tauri::command]
-pub fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset_type: String) -> Result<String, ()> {
+pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset_type: String) -> Result<String, ()> {
     // let mapLock = state.test.lock().unwrap();
     // let map = mapLock.as_mut().unwrap();
     //
@@ -97,12 +97,12 @@ pub fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset
 
 
 #[tauri::command]
-pub fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
+pub async fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let query = format!(
-        "DELETE Assets WHERE Uid='{}'", asset_uid
+        "DELETE from Assets WHERE Uid='{}'", asset_uid
     );
 
     dbc.execute(&query, []).unwrap();
@@ -116,7 +116,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
             CreateAsset,
-            GetAllAssetsOfType
+            GetAllAssetsOfType,
+            DeleteAssetWithUid
         ])
         .build()
 }

@@ -40,5 +40,6 @@
   "core.confirm.project.remove": "Potvrďte vymazanie projektu",
   "core.project.edit": "Upraviť projekt",
   "core.no": "Nie",
-  "core.yes": "Áno"
+  "core.yes": "Áno",
+  "core.delete": "Vymazať"
 }

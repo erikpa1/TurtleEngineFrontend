@@ -1,33 +1,69 @@
 import React from "react";
-import AssetParent from "@platform/assets/AssetParent";
 
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
 
-import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TGui} from "@external/tgui";
+
+
+import Modals from "@components/Modals";
+import {useTranslation} from "react-i18next";
+import AssetsApi from "@api/AssetsApi";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import AssetParentLight from "@platform/assets/AssetParentLight";
+import useOpenAssetDispatcher from "@components/assets/prelude";
+
 
 interface AssetCardProps {
-    asset: AssetParent
+    asset: AssetParentLight
+    onRefresh: any
 }
 
 
-export default function AssetCard({asset}: AssetCardProps) {
+export default function AssetCard({asset, onRefresh}: AssetCardProps) {
+
+    const [t] = useTranslation()
+
+    const lockZus = useGlobalAppLock()
+
+    const [dispatchAsset] = useOpenAssetDispatcher()
+
+    const editAssetPressed = () => {
+        dispatchAsset(asset)
+    }
+
+
+    const deleteConfirmed = () => {
+
+        lockZus.lock()
+
+        AssetsApi.DeleteAssetWithUid(asset.parent_project_uid, asset.uid).then(() => {
+
+            if (onRefresh) {
+                onRefresh()
+            }
+
+            lockZus.unlock()
+        })
+    }
+    const deletePressed = () => {
+        Modals.showYesNoModal({
+            lang: `${t("core.sure.remove.asset")}: ${asset.name} (${asset.uid})`,
+            onYes: deleteConfirmed
+        })
+    }
+
 
     return (
-        <Card sx={{maxWidth: 345}}>
-            <CardMedia
+        <TGui.Card sx={{maxWidth: 345}}>
+            <TGui.CardMedia
                 sx={{height: 140}}
                 image={asset.GetPreviewPath()}
-                title="green iguana"
+                title={asset.name}
             />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+            <TGui.CardContent>
+                <TGui.Typography gutterBottom variant="h5" component="div">
                     {asset.name}
-                </Typography>
-                <Typography
+                </TGui.Typography>
+                <TGui.Typography
                     variant="body2"
                     color="text.secondary"
                     style={{
@@ -36,12 +72,13 @@ export default function AssetCard({asset}: AssetCardProps) {
                     }}
                 >
                     {asset.description}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <TurtleButton label={"core.edit"}/>
-            </CardActions>
-        </Card>
+                </TGui.Typography>
+            </TGui.CardContent>
+            <TGui.CardActions>
+                <TGui.Button onClick={editAssetPressed} label={"core.edit"}/>
+                <TGui.Button onClick={deletePressed} label={"core.delete"} color={"error"}/>
+            </TGui.CardActions>
+        </TGui.Card>
     );
 
 }

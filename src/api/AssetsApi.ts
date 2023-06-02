@@ -51,9 +51,32 @@ export default class AssetsApi {
             await TauriAssetPlugin.DeleteAssetWithUid(project_uid, asset_uid);
 
         } else {
-            await axios.post("/api/assets/create-asset", params) //TODO Implement this one
+            await axios.post("/api/assets/create-asset") //TODO Implement this one
         }
         return true
+
+    }
+
+    static async GetAsset<T extends AssetParent>(clazz: new () => T, project_uid: string, asset_uid: string): Promise<T> {
+
+
+        const asset = new clazz()
+
+        if (ApiDispatcher.IsDesktop()) {
+            const data = await TauriAssetPlugin.GetAsset(project_uid, asset_uid);
+            asset.from_json(data)
+
+        } else {
+            const data = await axios.get("/api/assets/get-asset", {
+                params: {
+                    project_uid: project_uid,
+                    asset_uid: asset_uid
+                }
+            })
+            asset.from_json(data)
+        }
+
+        return asset
 
     }
 

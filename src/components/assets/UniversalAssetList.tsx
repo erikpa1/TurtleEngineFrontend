@@ -1,27 +1,34 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
 
-import {MiddleSearchBar} from "@components/SearchBar";
 import AssetCard from "@components/assets/AssetCard";
 import AssetParent from "@platform/assets/AssetParent";
 import AssetsApi from "@api/AssetsApi";
-import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Stack} from "@mui/material";
+import {TGui} from "@external/tgui";
+
+
 import LicenceManager from "@platform/licences/LicenceManager";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import CreateAssetOffcanvas from "@editors/appmanagement/assets/CreateAssetOffcanvas";
+
+import AssetParentLight from "@platform/assets/AssetParentLight";
 
 export default function UniversalAssetList({assetType}) {
 
 
     const popupZus = useGlobalPopup()
 
-    const [assets, setAssets] = React.useState(new Array<AssetParent>())
+
+
+    const [assets, setAssets] = React.useState(new Array<AssetParentLight>())
+
 
     const refreshAssets = () => {
         AssetsApi.GetAllAssetsOfType("", assetType).then((response) => {
             setAssets(response)
         })
+
+
     }
 
     const createAssetPressed = () => {
@@ -36,18 +43,19 @@ export default function UniversalAssetList({assetType}) {
     }
 
 
+
     React.useEffect(refreshAssets, [assetType])
 
 
     return (
         <div className={"vstack gap-3"}>
 
-            <MiddleSearchBar/>
+            <TGui.MiddleSearchBar/>
 
 
             {
-                LicenceManager.HasEditLicence() && <Stack>
-                    <TurtleButton
+                LicenceManager.HasEditLicence() && <TGui.Stack>
+                    <TGui.Button
                         label={"core.asset.create"}
                         color={"success"}
                         variant={"outlined"}
@@ -59,7 +67,7 @@ export default function UniversalAssetList({assetType}) {
 
                     />
 
-                </Stack>
+                </TGui.Stack>
 
             }
 
@@ -70,7 +78,7 @@ export default function UniversalAssetList({assetType}) {
                     assets.map((value) => {
                         return (
                             <Col key={value.uid}>
-                                <AssetCard asset={value}/>
+                                <AssetCard onRefresh={refreshAssets} asset={value}/>
                             </Col>
                         )
                     })
