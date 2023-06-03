@@ -14,6 +14,8 @@ import "./MainNavBar.css"
 import {ProjectLight} from "@data/project/ProjectLight";
 import {Ext} from "@external/prelude";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+import RoutesManager from "@platform/RoutesManager";
+
 
 
 export default function MainNavBar() {
@@ -206,10 +208,22 @@ function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
 
     return (
         <sb.Menu>
-            <MyNavbarItem lang={"core.assets"} link={"/assets"} icon={"/icons/Assets.svg"}/>
-            <MyNavbarItem lang={"core.editor.area"} link={"/map-editor"} icon={"/icons/Map.svg"}/>
-            <MyNavbarItem lang={"core.play"} link={"/scene-editor"} icon={"/icons/Spot.svg"}/>
-            <MyNavbarItem lang={"core.play"} link={"/play"} icon={"/icons/Spot.svg"}/>
+
+            <MyNavbarItem
+                lang={"core.assets"}
+                link={RoutesManager.Assets(project.uid)}
+                icon={"/icons/Assets.svg"}/>
+
+            <MyNavbarItem
+                lang={"core.editor.area"}
+                link={RoutesManager.AreaEditor(project.uid)}
+                icon={"/icons/Map.svg"}/>
+
+            <MyNavbarItem
+                lang={"core.play"}
+                link={RoutesManager.Play(project.uid)}
+                icon={"/icons/Spot.svg"}/>
+
         </sb.Menu>
     )
 

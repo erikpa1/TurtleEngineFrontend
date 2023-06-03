@@ -5,11 +5,15 @@ import Main from "./app/Main";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import AppApi from "@api/AppApi";
+import ApiDispatcher from "@api/ApiDispatcher";
+import {useNavigate} from "react-router-dom";
 
 export default function App() {
 
 
     const [isLoading, setIsLoading] = React.useState(true)
+
+    const navigate = useNavigate()
 
 
     React.useEffect(() => {
@@ -17,6 +21,10 @@ export default function App() {
 
         AppApi.Init().then(() => {
             setIsLoading(false)
+
+            if (ApiDispatcher.IsDesktop()) {
+                navigate("/")
+            }
         })
 
     }, [])

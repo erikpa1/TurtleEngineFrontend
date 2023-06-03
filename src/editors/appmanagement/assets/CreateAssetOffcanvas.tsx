@@ -13,6 +13,7 @@ import {TurtleTextField} from "@platform/components/TurtleForms";
 import AssetsApi from "@api/AssetsApi";
 import {Offcanvas} from "react-bootstrap";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+import {TGui} from "@external/tgui";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -89,11 +90,14 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
                 </Stack>
             </Box>
 
+            <TGui.Stack>
 
-            <TurtleButton
-                onClick={createAssetPressed}
-                label={"core.create.asset"}
-            />
+                <TurtleButton
+                    onClick={createAssetPressed}
+                    label={"core.create.asset"}
+                />
+            </TGui.Stack>
+
 
         </TurtleOffcanvas>
     )

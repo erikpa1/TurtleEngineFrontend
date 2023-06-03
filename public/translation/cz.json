@@ -24,7 +24,7 @@
   "core.editor.area": "Area editor",
   "core.play": "Přehrávání",
   "core.all": "All",
-  "core.quizzes": "Quiz",
+  "core.quizzes": "Quizzes",
   "core.images": "Image",
   "core.videos": "Video",
   "core.panoramas": "Panorama",
@@ -40,5 +40,9 @@
   "core.project.edit": "Edit project",
   "core.no": "No",
   "core.yes": "Yes",
-  "core.delete": "Delete"
+  "core.delete": "Delete",
+  "core.create.asset": "Create asset",
+  "core.clear": "Clear",
+  "core.replace": "Replace",
+  "core.snapshot": "Take snapshot"
 }

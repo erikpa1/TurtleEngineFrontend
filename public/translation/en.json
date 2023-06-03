@@ -24,7 +24,7 @@
   "core.editor.area": "Area editor",
   "core.play": "Play",
   "core.all": "All",
-  "core.quizzes": "Quiz",
+  "core.quizzes": "Quizzes",
   "core.images": "Image",
   "core.videos": "Video",
   "core.panoramas": "Panorama",
@@ -43,5 +43,9 @@
   "core.asset.create": "Create asset",
   "core.name": "Name",
   "core.description": "Description",
-  "core.delete": "Delete"
+  "core.delete": "Delete",
+  "core.create.asset": "Create asset",
+  "core.clear": "Clear",
+  "core.replace": "Replace",
+  "core.snapshot": "Take snapshot"
 }

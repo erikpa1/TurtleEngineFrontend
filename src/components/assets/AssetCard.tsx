@@ -24,7 +24,7 @@ export default function AssetCard({asset, onRefresh}: AssetCardProps) {
 
     const lockZus = useGlobalAppLock()
 
-    const [dispatchAsset] = useOpenAssetDispatcher()
+    const dispatchAsset = useOpenAssetDispatcher()
 
     const editAssetPressed = () => {
         dispatchAsset(asset)

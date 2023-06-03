@@ -12,8 +12,12 @@ const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppMan
 
 const MapEditorMainView = React.lazy(() => import("@components/mapEditor/MapEditorMainView"))
 const SceneEditorMainView = React.lazy(() => import("@components/sceneEditor/SceneEditorMainView"))
+const MeshEditor = React.lazy(() => import("@components/assets/mesh-editor/MeshEditor"))
+
 
 import MaterialEditor from "@components/assets/material/MaterialEditor";
+import RoutesManager from "@platform/RoutesManager";
+
 
 export default function Main() {
 
@@ -45,45 +49,49 @@ function _Main() {
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/projects"} element={
+                <Route path={RoutesManager.ROUTE_PROJECTS} element={
                     <MountTabWrapper>
                         <ProjectsSelectionView/>
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/management"} element={
+                <Route path={RoutesManager.ROUTE_MANAGEMENT} element={
                     <MountTabWrapper>
                         <AppManagementView/>
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/assets"} element={
+                <Route path={RoutesManager.ROUTE_ASSETS} element={
                     <MountTabWrapper>
                         <AssetsMainView/>
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/map-editor"} element={
+                <Route path={RoutesManager.ROUTE_AREA_EDITOR} element={
                     <MountTabWrapper>
                         <MapEditorMainView/>
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/scene-editor"} element={
+                <Route path={RoutesManager.ROUTE_SCENE_EDITOR} element={
                     <MountTabWrapper>
                         <SceneEditorMainView/>
                     </MountTabWrapper>
                 }/>
 
-                <Route path={"/play"} element={
+                <Route path={RoutesManager.ROUTE_PLAY} element={
                     <MountTabWrapper>
                         <AssetsMainView/>
                     </MountTabWrapper>
                 }/>
 
 
-                <Route path={"/material-editor/:projectuid/:materialuid"} element={
+                <Route path={RoutesManager.ROUTE_MATERIAL_EDITOR} element={
                     <MaterialEditor/>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_MESH_EDITOR} element={
+                    <MeshEditor/>
                 }/>
 
             </Routes>

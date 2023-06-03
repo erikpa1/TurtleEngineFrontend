@@ -7,6 +7,7 @@ import QuizAsset from "@platform/assets/QuizAsset";
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import AreaAsset from "@platform/assets/AreaAsset";
 import SceneAsset from "@platform/assets/SceneAsset";
+import SoundAsset from "@platform/assets/SoundAsset";
 
 export const Assets = {
     Material: MaterialAsset,
@@ -18,6 +19,7 @@ export const Assets = {
     Quiz: QuizAsset,
     Area: AreaAsset,
     Scenes: SceneAsset,
+    Sound: SoundAsset,
 
     values: () => {
         return [
@@ -29,7 +31,8 @@ export const Assets = {
             Assets.Image,
             Assets.Quiz,
             Assets.Area,
-            Assets.Scenes
+            Assets.Scenes,
+            Assets.Sound
 
         ]
     }

@@ -3,7 +3,6 @@ use rusqlite;
 
 
 use std::sync::{Arc, Mutex};
-use tauri::CursorIcon::Default;
 
 use tstructures::licence::Licence;
 

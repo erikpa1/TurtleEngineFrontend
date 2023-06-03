@@ -12,6 +12,9 @@ import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import {useNavigate} from "react-router-dom";
+import RoutesManager from "@platform/RoutesManager";
+
 
 
 interface ProjectUniversalCardProps {
@@ -26,6 +29,7 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
     const lock = useGlobalAppLock()
 
     const projectZus = useActiveProjectZus()
+    const navigate = useNavigate()
 
 
     const [val, setVal] = React.useState({project: project})
@@ -45,12 +49,13 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
 
     const activateProjectPressed = () => {
 
+
         lock.lock()
 
         ProjectApi.ActivateProject(project.uid).then((value) => {
             lock.unlock()
-
             projectZus.setProject(project)
+            navigate(RoutesManager.Assets(project.uid))
         })
     }
 

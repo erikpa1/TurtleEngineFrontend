@@ -23,6 +23,7 @@ use serde_json::json;
 use crate::database;
 
 use crate::app::{AppState, DbTest};
+use crate::database::FixProject;
 
 
 #[tauri::command]
@@ -40,30 +41,8 @@ async fn CreateProject(projectJson: String) -> String {
     let connRes = database::CreateDatabaseConnection(&dbPath);
 
     if let Ok(conn) = connRes {
-        // let result = conn.execute(
-        //     "CREATE TABLE IF NOT EXISTS Scenes (
-        //      Uid text primary key,
-        //      Name text,
-        //      PanoramaUid text
-        //  );",
-        //     [],
-        // );
 
-        // println!("{:?}", &result);
-
-        let result = conn.execute(
-            "CREATE TABLE IF NOT EXISTS Assets (
-             Uid text primary key,
-             Name text DEFAULT '',
-             Type text,
-             Subtype text DEFAULT '',
-             Extension text DEFAULT '',
-             HasPreview integer DEFAULT 0
-         );",
-            [],
-        );
-
-        println!("{:?}", result);
+        FixProject(&conn);
 
         conn.close();
 
@@ -138,8 +117,11 @@ async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -
     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
 
     let connRes = database::CreateDatabaseConnection(&dbPath);
+    let conn = connRes.unwrap();
 
-    state.SetSqlLiteConnection(connRes.unwrap());
+    FixProject(&conn);
+
+    state.SetSqlLiteConnection(conn);
     state.SetActiveProjectUid(projectUid);
     state.SetActiveProjectDbPah(dbPath);
 

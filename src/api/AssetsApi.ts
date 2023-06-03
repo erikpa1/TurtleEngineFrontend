@@ -12,20 +12,10 @@ export default class AssetsApi {
     static async GetAllAssetsOfType(projectUid: string, assetType: string): Promise<Array<AssetParentLight>> {
 
         if (ApiDispatcher.IsDesktop()) {
-            const tmp = [0, 1, 2, 3].map((value) => {
-                const asset = new AssetParentLight()
-                asset.name = `${assetType}-${value}`
-                asset.uid = `tmp-${assetType}-${value}`
-                asset.relativePath = `/dev/assets/${assetType}/tmp-${assetType}/Preview.png`
-
-                asset.description = "This asset is for"
-                return asset
-            })
-
 
             const assets = await TauriAssetPlugin.GetAllAssetsOfType(projectUid, assetType)
 
-            return [...tmp, ...assets]
+            return assets
 
         } else {
             return []
@@ -58,7 +48,6 @@ export default class AssetsApi {
     }
 
     static async GetAsset<T extends AssetParent>(clazz: new () => T, project_uid: string, asset_uid: string): Promise<T> {
-
 
         const asset = new clazz()
 

@@ -25,7 +25,7 @@
   "core.editor.area": "Area editor",
   "core.play": "Prehrať",
   "core.all": "Všetky",
-  "core.quizzes": "Kvíz",
+  "core.quizzes": "Kvízy",
   "core.images": "Obrázok",
   "core.videos": "Video",
   "core.panoramas": "Panorama",
@@ -41,5 +41,9 @@
   "core.project.edit": "Upraviť projekt",
   "core.no": "Nie",
   "core.yes": "Áno",
-  "core.delete": "Vymazať"
+  "core.delete": "Vymazať",
+  "core.create.asset": "Vytvoriť asset",
+  "core.clear": "Vyčistiť",
+  "core.replace": "Nahradiť",
+  "core.snapshot": "Spraviť náhľad"
 }

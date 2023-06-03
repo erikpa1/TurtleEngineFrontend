@@ -9,7 +9,7 @@ use rusqlite::ffi::sqlite3;
 
 use uuid::{Uuid};
 
-use tauri::{Runtime, State};
+use tauri::{Asset, Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 use tfs;
@@ -27,25 +27,13 @@ use crate::database;
 
 #[tauri::command]
 pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
-    println!("{}", &createJson);
-
     let mut createParams: CreateAssetParamas = serde_json::from_str(&createJson).unwrap();
 
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
-    // let mut dbc = state.sqliteConn.lock().unwrap().take().unwrap();
-
-    println!("Database path: {}", &dbPath);
 
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
-    let uid = Uuid::new_v4().to_string();
-
-    let query = format!(
-        "INSERT INTO Assets (Uid, Name, Type, Extension) VALUES ('{}', '{}', '{}', '{}');",
-        uid, createParams.name, createParams.assetType, createParams.extension
-    );
-
-    dbc.execute(&query, []).unwrap();
+    database::CreateAsset(&dbc, &createParams);
 
     return Ok(());
 }
@@ -77,7 +65,6 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
 
         return Ok(tmp);
     }).unwrap();
-
 
     let mut result: Vec<AssetParentLight> = vec![];
 
@@ -111,13 +98,29 @@ pub async fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String,
     return Ok("".into());
 }
 
+#[tauri::command]
+pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
+
+    let assetOption = database::GetAssetFromDatabase(&dbc, &asset_uid);
+
+    if let Some(_asset) = assetOption {
+        let returnString = serde_json::to_string(&_asset).unwrap_or("{}".into());
+        return Ok(returnString);
+    } else {
+        return Ok("{}".into());
+    }
+}
+
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
             CreateAsset,
             GetAllAssetsOfType,
-            DeleteAssetWithUid
+            DeleteAssetWithUid,
+            GetAsset
         ])
         .build()
 }

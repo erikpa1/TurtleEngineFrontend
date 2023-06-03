@@ -13,22 +13,24 @@ import CreateAssetOffcanvas from "@editors/appmanagement/assets/CreateAssetOffca
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
 
-export default function UniversalAssetList({assetType}) {
+
+interface UniversalAssetListProps {
+    assetType: string,
+    parentProjectUid: string,
+
+}
+
+export default function UniversalAssetList({parentProjectUid, assetType}: UniversalAssetListProps) {
 
 
     const popupZus = useGlobalPopup()
 
-
-
     const [assets, setAssets] = React.useState(new Array<AssetParentLight>())
 
-
     const refreshAssets = () => {
-        AssetsApi.GetAllAssetsOfType("", assetType).then((response) => {
+        AssetsApi.GetAllAssetsOfType(parentProjectUid, assetType).then((response) => {
             setAssets(response)
         })
-
-
     }
 
     const createAssetPressed = () => {
@@ -41,7 +43,6 @@ export default function UniversalAssetList({assetType}) {
         )
 
     }
-
 
 
     React.useEffect(refreshAssets, [assetType])

@@ -2,20 +2,28 @@ import React from "react";
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {useNavigate} from "react-router-dom";
 import {Assets} from "@platform/assets/Assets";
+import RoutesManager from "@platform/RoutesManager";
 
-export default function useOpenAssetDispatcher(): [(asset: AssetParentLight) => void] {
+
+export default function useOpenAssetDispatcher(): (asset: AssetParentLight) => void {
 
     const navigate = useNavigate()
     const openAsset = (asset: AssetParentLight) => {
 
-        if (asset.assetType === Assets.Material.TYPE) {
-            navigate(`/material-editor/${asset.parent_project_uid}/${asset.uid}`)
+        console.log(asset)
+
+        const projectUid = asset.parent_project_uid
+        const assetUid = asset.uid
+
+        if (asset.type === Assets.Material.TYPE) {
+            navigate(RoutesManager.MaterialEditor(projectUid, assetUid))
+        } else if (asset.type === Assets.Mesh.TYPE) {
+            navigate(RoutesManager.MeshEditor(projectUid, assetUid))
         } else {
-            alert(`No editor known for asset of type: ${asset.assetType}`)
+            alert(`No editor known for asset of type: ${asset.type}`)
         }
     }
 
-
-    return [openAsset]
+    return openAsset
 
 }

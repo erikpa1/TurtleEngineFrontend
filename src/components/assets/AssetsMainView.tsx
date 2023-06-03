@@ -16,12 +16,14 @@ import UniversalAssetList from "@components/assets/UniversalAssetList";
 
 import MaterialAsset from "@platform/assets/MaterialAsset";
 import {Assets} from "@platform/assets/Assets";
+import {useParams} from "react-router-dom";
 
 
 export default function AssetsMainView({}) {
 
     const [t] = useTranslation()
 
+    const {projectuid} = useParams()
 
     const [tabValue, setTabValue] = Ext.Cookie.useCookie("assets-tab-main", "0")
 
@@ -63,7 +65,9 @@ export default function AssetsMainView({}) {
                     {
                         Assets.values().map((value) => {
                             return (
-                                <Case key={value} value={value.TYPE}><UniversalAssetList assetType={value.TYPE}/></Case>
+                                <Case key={value} value={value.TYPE}>
+                                    <UniversalAssetList parentProjectUid={projectuid ?? ""} assetType={value.TYPE}/>
+                                </Case>
                             )
                         })
                     }
