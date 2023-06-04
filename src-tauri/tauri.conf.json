@@ -37,13 +37,9 @@
       },
       "protocol": {
         "asset": true,
-        "assetScope": [
-          "$APP/*",
-          "$DESKTOP/*",
-          "$HOME/*",
-          "$RUNTIME/*",
-          "$RESOURCE/*"
-        ]
+        "assetScope": {
+          "allow": ["**"]
+        }
       }
     },
     "bundle": {

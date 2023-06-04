@@ -14,7 +14,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {useNavigate} from "react-router-dom";
 import RoutesManager from "@platform/RoutesManager";
-
+import {convertFileSrc} from "@tauri-apps/api/tauri";
 
 
 interface ProjectUniversalCardProps {
@@ -23,6 +23,7 @@ interface ProjectUniversalCardProps {
 }
 
 export default function ProjectUniversalCard({project, onRefresh}: ProjectUniversalCardProps) {
+
 
     const [t] = useTranslation()
 
@@ -59,11 +60,13 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
         })
     }
 
+
     return (
         <Card sx={{maxWidth: 345}}>
             <CardMedia
                 sx={{height: 140}}
-                image="/textures/UniversalTurtle.png"
+                image={project.getFilePath("Preview.png")}
+                // image="/textures/UniversalTurtle.png"
                 title="green iguana"
             />
             <CardContent>

@@ -35,7 +35,7 @@ function _PlayMainView({}) {
             <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
             <GizmoHelper
-                alignment="bottom-right" // widget alignment within scene
+                alignment="bottom-right" // widget alignment within scene-editor
                 margin={[80, 80]} // widget margins (X, Y)
             >
                 <GizmoViewport axisColors={['red', '#34eb37', '#347deb']} labelColor="black"/>

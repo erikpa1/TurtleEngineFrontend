@@ -4,7 +4,7 @@ use std::fs;
 use std::sync::Mutex;
 
 
-use rusqlite::{Connection, Result};
+use rusqlite::{Connection};
 
 use serde::de::Unexpected::Str;
 
@@ -41,7 +41,6 @@ async fn CreateProject(projectJson: String) -> String {
     let connRes = database::CreateDatabaseConnection(&dbPath);
 
     if let Ok(conn) = connRes {
-
         FixProject(&conn);
 
         conn.close();
@@ -81,9 +80,10 @@ async fn ListProjects() -> String {
         if tfs::CheckProjectExistenceAndValidity(folder) {
             let lightDataStr = tfs::FileToString(&format!("{}project_light.json", folder));
 
-            let lightDataResult = serde_json::from_str(&lightDataStr);
+            let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
 
-            if let Ok(lightData) = lightDataResult {
+            if let Ok(mut lightData) = lightDataResult {
+                lightData.projectFolderPath = folder.clone();
                 resultJsons.push(lightData);
             }
         }

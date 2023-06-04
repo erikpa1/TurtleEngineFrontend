@@ -70,6 +70,9 @@ pub struct ProjectLight {
 
     #[serde(default)]
     pub lat_lon: String,
+
+    #[serde(default)]
+    pub projectFolderPath: String,
 }
 
 impl ProjectLight {
@@ -81,6 +84,7 @@ impl ProjectLight {
             lat_lon: params.lat_lon.clone(),
             project_type: params.project_type.clone(),
             description: params.description.clone(),
+            projectFolderPath: "".into(),
         };
     }
 

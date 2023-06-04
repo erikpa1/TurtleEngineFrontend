@@ -9,7 +9,7 @@ export default class FsApi {
 
     static convertFilePath(path: string): string {
         if (ApiDispatcher.IsDesktop()) {
-            const tmp = convertFileSrc(FsApi.normalizePath(FsApi.RESOURCES + path))
+            const tmp = convertFileSrc(path)//FsApi.normalizePath(FsApi.RESOURCES + path)
             return tmp
         } else {
             return path

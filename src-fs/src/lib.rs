@@ -4,7 +4,7 @@ use std::env;
 use std::fmt::format;
 use std::fs;
 use std::fs::{File};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 
 pub fn GetExePath() -> String {
@@ -19,7 +19,36 @@ pub fn GetExePath() -> String {
 }
 
 pub fn GetProjectsPath() -> String {
-    return format!("{}/../projects/", GetExePath());
+    let original_path = format!("{}/../projects/", GetExePath());
+    // Create a PathBuf from the original path
+    let mut path_buf = PathBuf::from(original_path);
+
+    let canonical_path = match path_buf.canonicalize() {
+        Ok(path) => path,
+        Err(err) => {
+            println!("Failed to canonicalize path: {}", err);
+            return "".into();
+        }
+    };
+
+    let final_path = match canonical_path.to_str() {
+        Some(path_str) => path_str.to_string(),
+        None => {
+            println!("Failed to convert path to string");
+            return "".into();
+        }
+    };
+
+    let result = format!("{}\\", &final_path);
+
+    let path_without_prefix = match result.strip_prefix(r"\\?\") {
+        Some(stripped_path) => stripped_path,
+        None => &result, // Prefix not found, use original path
+    };
+
+    println!("{}", path_without_prefix);
+
+    return path_without_prefix.into();
 }
 
 pub fn CreateFolders(path: &String) {
@@ -39,7 +68,7 @@ pub fn ListFolders(path: &String) -> Vec<String> {
                 if let Ok(file_type) = entry.file_type() {
                     if file_type.is_dir() {
                         if let Ok(file_name) = entry.file_name().into_string() {
-                            folders.push(format!("{}{}/", path, file_name))
+                            folders.push(format!("{}{}\\", path, file_name))
                         }
                     }
                 }
