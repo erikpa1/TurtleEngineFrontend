@@ -19,6 +19,10 @@ export default function useOpenAssetDispatcher(): (asset: AssetParentLight) => v
             navigate(RoutesManager.MaterialEditor(projectUid, assetUid))
         } else if (asset.type === Assets.Mesh.TYPE) {
             navigate(RoutesManager.MeshEditor(projectUid, assetUid))
+        } else if (asset.type === Assets.PointCloud.TYPE) {
+            navigate(RoutesManager.PointCloudEditor(projectUid, assetUid))
+        } else if (asset.type === Assets.Panorama.TYPE) {
+            navigate(RoutesManager.PanoramaEditor(projectUid, assetUid))
         } else {
             alert(`No editor known for asset of type: ${asset.type}`)
         }

@@ -19,7 +19,6 @@ export class ProjectLight {
         this.lat_lon = jObject.lat_lon ?? ""
         this.projectFolderPath = jObject.projectFolderPath ?? ""
 
-        console.log(jObject.projectFolderPath)
     }
 
     getFilePath(filePath: string): string {

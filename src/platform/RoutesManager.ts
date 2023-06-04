@@ -4,6 +4,8 @@ const PREFIX_SCENE_EDITOR = "/scene-editor-editor"
 const PREFIX_MESH_EDITOR = "/mesh-editor"
 const PREFIX_AREA_EDITOR = "/area-editor"
 const PREFIX_MATERIAL_EDITOR = "/material-editor"
+const PREFIX_POINTCLOUD_EDITOR = "/point-cloud-editor"
+const PREFIX_PANORAMA_EDITOR = "/panorama-editor"
 
 export default class RoutesManager {
 
@@ -21,6 +23,8 @@ export default class RoutesManager {
 
     static ROUTE_MATERIAL_EDITOR = `/${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
     static ROUTE_MESH_EDITOR = `/${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
+    static ROUTE_POINTCLOUD_EDITOR = `/${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
+    static ROUTE_PANORAMA_EDITOR = `/${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
@@ -36,6 +40,14 @@ export default class RoutesManager {
 
     static MaterialEditor(projectUid: string, materialUid: string): string {
         return `${PREFIX_MATERIAL_EDITOR}/${projectUid}/${materialUid}`
+    }
+
+    static PointCloudEditor(projectUid: string, cloudUid: string): string {
+        return `${PREFIX_POINTCLOUD_EDITOR}/${projectUid}/${projectUid}`
+    }
+
+    static PanoramaEditor(projectUid: string, panoramaUid: string): string {
+        return `${PREFIX_PANORAMA_EDITOR}/${projectUid}/${projectUid}`
     }
 
     static Play(projectUid: string): string {

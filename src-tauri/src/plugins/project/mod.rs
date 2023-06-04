@@ -97,7 +97,19 @@ async fn ListProjects() -> String {
 
 #[tauri::command]
 async fn GetProjectLight(projectUid: String) -> String {
-    return tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), projectUid));
+    let projectFolder = tfs::GetProjectsPath();
+
+    let lightDataStr = tfs::FileToString(&format!("{}{}\\project_light.json", projectFolder, projectUid));
+
+    let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
+
+    if let Ok(mut lightData) = lightDataResult {
+        lightData.projectFolderPath = format!("{}{}\\", projectFolder, projectUid);
+
+        return serde_json::to_string(&lightData).unwrap_or("{}".into());
+    }
+
+    return "{}".into();
 }
 
 #[tauri::command]

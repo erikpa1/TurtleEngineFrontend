@@ -20,11 +20,11 @@ export default function MeshEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _meshuidUid: string = meshuid ?? ""
 
-    const [mesh, setMesh] = React.useState<MaterialAsset | null>(null)
+    const [mesh, setMesh] = React.useState<MeshAsset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(MaterialAsset, _projectUid, _meshuidUid).then((value) => {
+        AssetsApi.GetAsset(MeshAsset, _projectUid, _meshuidUid).then((value) => {
             setMesh(value)
         })
 

@@ -19,6 +19,7 @@ import {TurtleTextField} from "@platform/components/TurtleForms";
 import Modals from "@components/Modals";
 import {Offcanvas} from "react-bootstrap";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import {TGui} from "@external/tgui";
 
 interface EditProjectDrawerProps {
     uid: string
@@ -149,6 +150,17 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
             <Box style={{padding: "15px"}}>
                 <Stack spacing={2}>
 
+                    <TGui.Card>
+                        <TGui.CardMedia
+                            sx={{height: 140}}
+                            image={project.getFilePath("Preview.png")}
+                        />
+
+                        <TGui.CardActions>
+                            <TGui.Button label={"core.replace"}/>
+                        </TGui.CardActions>
+                    </TGui.Card>
+
                     <TurtleTextField
                         onChange={pNameChanged}
                         label={"project.name"}
@@ -179,6 +191,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                         onChange={latLonChanged}
                         label={"project.latlon"}
                     />
+
 
                     <Stack gap={1} direction={"row"}>
                         <TurtleButton

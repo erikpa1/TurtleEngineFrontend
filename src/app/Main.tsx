@@ -13,6 +13,8 @@ const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppMan
 const MapEditorMainView = React.lazy(() => import("@components/mapEditor/MapEditorMainView"))
 const SceneEditorMainView = React.lazy(() => import("@components/sceneEditor/SceneEditorMainView"))
 const MeshEditor = React.lazy(() => import("@components/assets/mesh-editor/MeshEditor"))
+const PointCloudEditor = React.lazy(() => import("@components/assets/pointcould-editor/PointCouldEditor"))
+const PanoramaEditor = React.lazy(() => import( "@components/assets/panorama/PanoramaEditor"))
 
 
 import MaterialEditor from "@components/assets/material/MaterialEditor";
@@ -93,6 +95,15 @@ function _Main() {
                 <Route path={RoutesManager.ROUTE_MESH_EDITOR} element={
                     <MeshEditor/>
                 }/>
+
+                <Route path={RoutesManager.ROUTE_POINTCLOUD_EDITOR} element={
+                    <PointCloudEditor/>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_PANORAMA_EDITOR} element={
+                    <PanoramaEditor/>
+                }/>
+
 
             </Routes>
         </main>
