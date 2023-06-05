@@ -23,6 +23,8 @@ export default function useOpenAssetDispatcher(): (asset: AssetParentLight) => v
             navigate(RoutesManager.PointCloudEditor(projectUid, assetUid))
         } else if (asset.type === Assets.Panorama.TYPE) {
             navigate(RoutesManager.PanoramaEditor(projectUid, assetUid))
+        } else if (asset.type === Assets.Scenes.TYPE) {
+            navigate(RoutesManager.SceneEditor(projectUid, assetUid))
         } else {
             alert(`No editor known for asset of type: ${asset.type}`)
         }

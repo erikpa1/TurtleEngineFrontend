@@ -1,6 +1,6 @@
 const PREFIX_ASSETS = "/assets"
 const PREFIX_PLAY = "/play"
-const PREFIX_SCENE_EDITOR = "/scene-editor-editor"
+const PREFIX_SCENE_EDITOR = "/scene-editor"
 const PREFIX_MESH_EDITOR = "/mesh-editor"
 const PREFIX_AREA_EDITOR = "/area-editor"
 const PREFIX_MATERIAL_EDITOR = "/material-editor"
@@ -17,7 +17,7 @@ export default class RoutesManager {
 
     static ROUTE_PLAY = `/${PREFIX_PLAY}/:projectuid`
 
-    static ROUTE_SCENE_EDITOR = `/${PREFIX_SCENE_EDITOR}/:projectuid`
+    static ROUTE_SCENE_EDITOR = `/${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
 
     static ROUTE_AREA_EDITOR = `/${PREFIX_AREA_EDITOR}/:projectuid`
 
@@ -36,6 +36,10 @@ export default class RoutesManager {
 
     static MeshEditor(projectUid: string, meshUid: string): string {
         return `${PREFIX_MESH_EDITOR}/${projectUid}/${meshUid}`
+    }
+
+    static SceneEditor(projectUid: string, sceneUid: string): string {
+        return `${PREFIX_SCENE_EDITOR}/${projectUid}/${sceneUid}`
     }
 
     static MaterialEditor(projectUid: string, materialUid: string): string {

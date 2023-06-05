@@ -19,6 +19,7 @@ const PanoramaEditor = React.lazy(() => import( "@components/assets/panorama/Pan
 
 import MaterialEditor from "@components/assets/material/MaterialEditor";
 import RoutesManager from "@platform/RoutesManager";
+import SceneEditorDispatcher from "@components/assets/scene-editor/SceneEditorDispatcher";
 
 
 export default function Main() {
@@ -102,6 +103,10 @@ function _Main() {
 
                 <Route path={RoutesManager.ROUTE_PANORAMA_EDITOR} element={
                     <PanoramaEditor/>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_SCENE_EDITOR} element={
+                    <SceneEditorDispatcher/>
                 }/>
 
 
