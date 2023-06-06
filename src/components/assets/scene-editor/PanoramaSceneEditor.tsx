@@ -25,6 +25,10 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
             <Canvas
                 shadows
                 className={"gl-canvas"}
+                camera={{
+                    far: 10000
+                }}
+
                 style={{
                     height: "100vh"
                 }}
@@ -34,7 +38,7 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
                 <React.Suspense fallback={""}>
                     <Environment
                         preset={"sunset"}
-                        ground={{height: 1, radius: 0}}
+                        ground={{height: 1, radius: 25}}
                     />
                 </React.Suspense>
 
