@@ -67,50 +67,7 @@ function _VideoMesh({
     let finalScaleX = 1
     let finalScaleY = 1
 
-    if (aspectX > aspectY) {
-        if (scaleX > scaleY) {
-            if ((scaleX * 0.575) > scaleY) {
-                finalScaleX = scaleY / aspectY
-                finalScaleY = scaleY
-            } else {
-                finalScaleX = scaleX
-                finalScaleY = scaleX * aspectY
-            }
-        } else if (scaleX < scaleY) {
-            finalScaleX = scaleX
-            finalScaleY = scaleX * aspectY
-        } else {
-            finalScaleX = scaleX * aspectX
-            finalScaleY = scaleY * aspectY
-        }
 
-
-    } else if (aspectX === aspectY) {
-        //Video je stvorec
-        if (scaleX > scaleY) {
-            finalScaleX = scaleY
-            finalScaleY = scaleY
-        } else if (scaleX < scaleY) {
-            finalScaleX = scaleX
-            finalScaleY = scaleX
-        } else {
-            finalScaleX = scaleX
-            finalScaleY = scaleX
-        }
-
-    } else if (aspectX < aspectY) {
-        //Video je na vysku
-        if (scaleX > scaleY) {
-            finalScaleX = scaleY * aspectX
-            finalScaleY = scaleY
-        } else if (scaleX < scaleY) {
-            finalScaleX = scaleX
-            finalScaleY = scaleX * aspectY
-        } else {
-            finalScaleX = scaleY * aspectX
-            finalScaleY = scaleY
-        }
-    }
 
     return (
         <Plane position={[0, 0, 0]} scale={[finalScaleX, finalScaleY, 1]}>
