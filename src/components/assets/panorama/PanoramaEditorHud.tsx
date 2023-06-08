@@ -1,17 +1,12 @@
+import {AssetEditorHud} from "@components/assets/AssetEditorHud";
+import HudButton from "@components/assets/HudButton";
+import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 import React from "react";
 
-import HudButton from "@components/assets/HudButton";
-
-import {AssetEditorHud} from "@components/assets/AssetEditorHud";
-import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-
-
-export default function MeshEditorHud({}) {
+export default function PanoramaEditorHud({}) {
     return (
         <AssetEditorHud placement={"bottom"}>
-
             <OpenAssetFolderButton/>
-
 
             <HudButton
                 lang={"core.replace"}

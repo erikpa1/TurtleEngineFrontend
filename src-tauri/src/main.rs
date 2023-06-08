@@ -32,6 +32,7 @@ fn main() {
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(plugins::project::init())
         .plugin(plugins::assets::init())
+        .plugin(plugins::os::init())
         .invoke_handler(tauri::generate_handler![serve_any_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

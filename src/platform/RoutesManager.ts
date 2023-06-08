@@ -19,7 +19,7 @@ export default class RoutesManager {
 
     static ROUTE_SCENE_EDITOR = `/${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
 
-    static ROUTE_AREA_EDITOR = `/${PREFIX_AREA_EDITOR}/:projectuid`
+    static ROUTE_AREA_EDITOR = `/${PREFIX_AREA_EDITOR}/:projectuid/:areauid`
 
     static ROUTE_MATERIAL_EDITOR = `/${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
     static ROUTE_MESH_EDITOR = `/${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
@@ -30,8 +30,8 @@ export default class RoutesManager {
         return `${PREFIX_ASSETS}/${projectUid}`
     }
 
-    static AreaEditor(projectUid: string): string {
-        return `${PREFIX_AREA_EDITOR}/${projectUid}`
+    static AreaEditor(projectUid: string, areaUid: string): string {
+        return `${PREFIX_AREA_EDITOR}/${projectUid}/${areaUid}`
     }
 
     static MeshEditor(projectUid: string, meshUid: string): string {

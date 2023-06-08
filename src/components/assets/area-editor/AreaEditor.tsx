@@ -1,55 +1,48 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-
-import * as three from "three"
-
-import AssetsApi from "@api/AssetsApi";
-
 import MeshAsset from "@platform/assets/MeshAsset";
-
+import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
-
-import {Canvas, useThree} from "@react-three/fiber";
-
-import {ContactShadows, Environment, OrbitControls, useGLTF} from "@react-three/drei";
-
+import {Canvas} from "@react-three/fiber";
+import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
+import AreaAsset from "@platform/assets/AreaAsset";
+import PrimitiveMesh from "@components/assets/mesh/PrimitiveMesh";
+import AreaSpot from "@components/assets/area/AreaSpot";
 
 
-export default function MeshEditor({}) {
-
-    const {projectuid, meshuid} = useParams()
+export default function AreaEditor({}) {
+    const {projectuid, areauid} = useParams()
 
     const _projectUid: string = projectuid ?? ""
-    const _meshuidUid: string = meshuid ?? ""
+    const _meshuidUid: string = areauid ?? ""
 
-    const [mesh, setMesh] = React.useState<MeshAsset | null>(null)
+    const [area, setArea] = React.useState<MeshAsset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(MeshAsset, _projectUid, _meshuidUid).then((value) => {
-            setMesh(value)
+        AssetsApi.GetAsset(AreaAsset, _projectUid, _meshuidUid).then((value) => {
+            setArea(value)
         })
 
     }, [_projectUid, _meshuidUid])
 
-    if (mesh) {
+    if (area) {
         return (
-            <_MeshEditor mesh={mesh}/>
+            <_AreaEditor area={area}/>
         )
     } else {
         return (
             <MiddleSpinner/>
         )
     }
-
 }
 
-interface _MeshEditorProps {
-    mesh: MeshAsset
+interface _AreaEditorProps {
+    area: AreaAsset
 }
 
-function _MeshEditor({mesh}: _MeshEditorProps) {
+function _AreaEditor({area}: _AreaEditorProps) {
     return (
         <div style={{}}>
 
@@ -71,7 +64,7 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 <React.Suspense fallback={""}>
                     <Environment
                         preset={"sunset"}
-                        ground={{height: 1, radius: 0}}
+                        ground={{radius: 1000}}
                     />
                 </React.Suspense>
 
@@ -85,11 +78,12 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
 
                 <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
+                <_AreaPlane/>
 
-                <_InitCanvas/>
-
-                <DefaultMesh/>
-
+                <PrimitiveMesh meshPath={"/dev/assets/mesh/tmp-mesh/Default.glb"}/>
+                <AreaSpot position={[5, 0, 0]}/>
+                <AreaSpot position={[4, 0, 3]}/>
+                <AreaSpot position={[6, 0, 2]}/>
             </Canvas>
 
             <MeshEditorHud/>
@@ -98,31 +92,15 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
     )
 }
 
-function _InitCanvas() {
+function _AreaPlane({}) {
 
-    const {camera} = useThree()
-
-    React.useEffect(() => {
-        const _camera: three.PerspectiveCamera = camera as any
-        _camera.updateProjectionMatrix()
-
-    }, [])
+    const texture = useTexture("/dev/assets/area/tmp-area/Preview.png")
 
     return (
-        <></>
-    )
-}
-
-
-function DefaultMesh() {
-
-    const meshPath = "/dev/assets/mesh/tmp-mesh/Default.glb"
-
-    const gltf = useGLTF(meshPath, true)
-
-    return (
-        <React.Suspense fallback={null}>
-            <primitive object={gltf.scene}/>
-        </React.Suspense>
+        <Plane scale={[20, 14, 1]} position={[0, -0.01, 0]} rotation={[Math.PI / -2, 0, 0]}>
+            <meshBasicMaterial
+                map={texture}
+            />
+        </Plane>
     )
 }

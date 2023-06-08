@@ -1,10 +1,8 @@
 import {invoke} from "@tauri-apps/api/tauri";
 
-import AssetParent from "@platform/assets/AssetParent";
 import {CreateAssetParamas} from "@api/project/params";
+
 import AssetParentLight from "@platform/assets/AssetParentLight";
-import ApiDispatcher from "@api/ApiDispatcher";
-import axios from "axios";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 

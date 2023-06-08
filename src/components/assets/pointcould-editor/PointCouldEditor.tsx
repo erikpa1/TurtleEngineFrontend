@@ -1,13 +1,13 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import MaterialAsset from "@platform/assets/MaterialAsset";
+
 import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
-import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
 import PointCloudAsset from "@platform/assets/PointCloudAsset";
+import PointCloudEditorHud from "@components/assets/pointcould-editor/PointCloudEditorHud";
 
 export default function PointCloudEditor({}) {
     const {projectuid, clouduid} = useParams()
@@ -76,7 +76,7 @@ function _CloudEditor({cloud}: _CloudEditorProps) {
 
             </Canvas>
 
-            <MeshEditorHud/>
+            <PointCloudEditorHud/>
 
         </div>
     )

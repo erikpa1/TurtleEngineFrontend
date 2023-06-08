@@ -215,11 +215,6 @@ function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
                 icon={"/icons/Assets.svg"}/>
 
             <MyNavbarItem
-                lang={"core.editor.area"}
-                link={RoutesManager.AreaEditor(project.uid)}
-                icon={"/icons/Map.svg"}/>
-
-            <MyNavbarItem
                 lang={"core.play"}
                 link={RoutesManager.Play(project.uid)}
                 icon={"/icons/Spot.svg"}/>

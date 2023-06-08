@@ -8,8 +8,9 @@ import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-three/drei";
-import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
+
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -81,9 +82,7 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
                 <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
             </Canvas>
-
-            <MeshEditorHud/>
-
+            <PanoramaEditorHud/>
         </div>
     )
 }

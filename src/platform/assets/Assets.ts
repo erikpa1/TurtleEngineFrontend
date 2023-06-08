@@ -18,7 +18,7 @@ export const Assets = {
     Image: ImageAsset,
     Quiz: QuizAsset,
     Area: AreaAsset,
-    Scenes: SceneAsset,
+    Scene: SceneAsset,
     Sound: SoundAsset,
 
     values: () => {
@@ -31,7 +31,7 @@ export const Assets = {
             Assets.Image,
             Assets.Quiz,
             Assets.Area,
-            Assets.Scenes,
+            Assets.Scene,
             Assets.Sound
 
         ]

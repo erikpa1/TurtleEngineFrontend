@@ -1,7 +1,13 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 
-export default class ErrorBoundary extends React.Component<any, any> {
+
+interface ErrorBoundaryProps {
+    children: any
+    onError: any
+}
+
+export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
     constructor(props) {
         super(props);
         this.state = {error: ""};
