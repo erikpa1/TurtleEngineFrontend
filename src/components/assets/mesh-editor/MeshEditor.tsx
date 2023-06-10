@@ -14,6 +14,8 @@ import {Canvas, useThree} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, useGLTF} from "@react-three/drei";
 
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
+import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
 
 
 export default function MeshEditor({}) {
@@ -54,43 +56,13 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
         <div style={{}}>
 
 
-            <Canvas
-                shadows
-                className={"gl-canvas"}
-                camera={{
-                    far: 100000,
-                    near: 0.0005
-                }}
+            <UniversalMeshCanvas>
 
-                style={{
-                    height: "100vh"
-                }}
-            >
-                <ambientLight/>
+                <UniversalWorldEnvironment/>
 
-                <React.Suspense fallback={""}>
-                    <Environment
-                        preset={"sunset"}
-                        ground={{height: 1, radius: 0}}
-                    />
-                </React.Suspense>
+                <PrimitiveMesh meshPath={"/dev/assets/mesh/tmp-mesh/Default.glb"}/>
 
-                <ContactShadows position={[0, -0.8, 0]} opacity={0.25} scale={10} blur={1.5} far={0.8}/>
-
-                <OrbitControls makeDefault
-                               target={[0, 0.15, 0]}
-                               enableDamping={false}
-                               maxPolarAngle={Math.PI / 2}
-                />
-
-                <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
-
-
-                <_InitCanvas/>
-
-                <DefaultMesh/>
-
-            </Canvas>
+            </UniversalMeshCanvas>
 
             <MeshEditorHud/>
 
@@ -98,31 +70,3 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
     )
 }
 
-function _InitCanvas() {
-
-    const {camera} = useThree()
-
-    React.useEffect(() => {
-        const _camera: three.PerspectiveCamera = camera as any
-        _camera.updateProjectionMatrix()
-
-    }, [])
-
-    return (
-        <></>
-    )
-}
-
-
-function DefaultMesh() {
-
-    const meshPath = "/dev/assets/mesh/tmp-mesh/Default.glb"
-
-    const gltf = useGLTF(meshPath, true)
-
-    return (
-        <React.Suspense fallback={null}>
-            <primitive object={gltf.scene}/>
-        </React.Suspense>
-    )
-}

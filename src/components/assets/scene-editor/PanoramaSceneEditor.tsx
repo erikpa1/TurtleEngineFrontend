@@ -57,7 +57,6 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
 
             </Canvas>
 
-            <MeshEditorHud/>
 
         </div>
     )

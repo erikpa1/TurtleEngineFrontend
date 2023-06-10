@@ -7,7 +7,7 @@ import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 import AreaAsset from "@platform/assets/AreaAsset";
-import PrimitiveMesh from "@components/assets/mesh/PrimitiveMesh";
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import AreaSpot from "@components/assets/area/AreaSpot";
 
 
@@ -86,7 +86,7 @@ function _AreaEditor({area}: _AreaEditorProps) {
                 <AreaSpot position={[6, 0, 2]}/>
             </Canvas>
 
-            <MeshEditorHud/>
+
 
         </div>
     )

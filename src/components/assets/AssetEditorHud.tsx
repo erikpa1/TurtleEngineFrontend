@@ -8,26 +8,18 @@ interface AssetEditorHudProps {
 
 
 export function AssetEditorHud({children, placement}: AssetEditorHudProps) {
+
     return (
         <div style={{
-            position: "relative",
-            left: "0px",
-            top: "0px",
-            width: "100%",
-            height: "100%"
+            position: "absolute",
+            ..._position(placement),
         }}>
-            <div style={{
-                position: "absolute",
-                ..._position(placement)
-            }}>
-
-                <div className={_stack(placement)}>
-                    {
-                        React.Children.toArray(children)
-                    }
-                </div>
-
+            <div className={_stack(placement)}>
+                {
+                    React.Children.toArray(children)
+                }
             </div>
+
 
         </div>
     )
@@ -46,13 +38,16 @@ function _position(placement: string): any {
 
     const OFFSET = "10px"
 
+
     if (placement === "bottom") {
+
         return {
             bottom: OFFSET,
             left: "50%",
             transform: "translate(-50%)"
         }
     } else if (placement === "top") {
+
         return {
             top: OFFSET,
             left: "50%",
@@ -62,13 +57,13 @@ function _position(placement: string): any {
         return {
             top: "50%",
             left: OFFSET,
-            transform: "translate(0%, 50%)"
+            transform: "translate(0%, -50%)"
         }
     } else if (placement === "right") {
         return {
             top: "50%",
             right: OFFSET,
-            transform: "translate(0%, 50%)"
+            transform: "translate(0%, -50%)"
         }
     }
 }

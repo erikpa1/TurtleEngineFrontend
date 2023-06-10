@@ -4,6 +4,7 @@ import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
+import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEditor";
 
 
 export default function SceneEditorDispatcher({}) {
@@ -24,7 +25,7 @@ export default function SceneEditorDispatcher({}) {
 
     if (scene) {
         return (
-            <PanoramaSceneEditor scene={scene}/>
+            <VirtualSceneEditor scene={scene}/>
         )
     } else {
         return (

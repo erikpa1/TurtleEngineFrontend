@@ -44,5 +44,13 @@
   "core.create.asset": "Create asset",
   "core.clear": "Clear",
   "core.replace": "Replace",
-  "core.snapshot": "Take snapshot"
+  "core.snapshot": "Take snapshot",
+  "core.mesh": "Mesh",
+  "core.camera": "Camera",
+  "core.light": "Light",
+  "core.video": "Video",
+  "core.image": "Image",
+  "core.document": "Document",
+  "core.table": "Table",
+  "core.other": "Other"
 }

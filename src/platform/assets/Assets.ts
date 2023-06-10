@@ -23,15 +23,15 @@ export const Assets = {
 
     values: () => {
         return [
-            Assets.Material,
+            Assets.Scene,
             Assets.Mesh,
-            Assets.PointCloud,
-            Assets.Panorama,
             Assets.Video,
+            Assets.Panorama,
+            Assets.Material,
+            Assets.PointCloud,
             Assets.Image,
             Assets.Quiz,
             Assets.Area,
-            Assets.Scene,
             Assets.Sound
 
         ]

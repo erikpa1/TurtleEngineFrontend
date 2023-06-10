@@ -1,4 +1,4 @@
-import PrimitiveMesh from "@components/assets/mesh/PrimitiveMesh";
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 
 
 interface AreaSpotProps {

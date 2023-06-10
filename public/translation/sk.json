@@ -45,5 +45,13 @@
   "core.create.asset": "Vytvoriť asset",
   "core.clear": "Vyčistiť",
   "core.replace": "Nahradiť",
-  "core.snapshot": "Spraviť náhľad"
+  "core.snapshot": "Spraviť náhľad",
+  "core.mesh": "Mesh",
+  "core.camera": "Camera",
+  "core.light": "Light",
+  "core.video": "Video",
+  "core.image": "Image",
+  "core.document": "Document",
+  "core.table": "Table",
+  "core.other": "Other"
 }
