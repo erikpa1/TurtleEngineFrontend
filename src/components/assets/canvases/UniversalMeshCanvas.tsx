@@ -33,12 +33,11 @@ export function UniversalMeshCanvas({children}) {
                 {/*    <RandomizedLight amount={8} radius={4} position={[5, 5, -10]}/>*/}
                 {/*</AccumulativeShadows>*/}
 
-                <CameraControls/>
+                {/*<CameraControls/>*/}
 
                 <OrbitControls makeDefault target={[0, 0, 0]}
                                enableDamping={false}
                                maxPolarAngle={Math.PI / 2}/>
-
 
                 <UniversalWorldGrid/>
 

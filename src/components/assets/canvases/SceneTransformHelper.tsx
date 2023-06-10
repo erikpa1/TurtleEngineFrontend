@@ -12,24 +12,34 @@ export class GizmoTypes {
 
 }
 
-export default function SceneTransformHelper({}) {
+interface SceneTransformHelperPorps {
+    position: [number, number, number]
+    onValueChanged: (positionObject: three.Object3D, gizmoType: string) => void
+}
+
+export default function SceneTransformHelper({
+                                                 position,
+                                                 onValueChanged
+                                             }: SceneTransformHelperPorps) {
 
 
     const gizmoRef = React.useRef<any>()
 
-    const position = new three.Vector3(0, 0, 0)
+    const gizmoType = GizmoTypes.TRANSLATE
+
+    const _position = new three.Vector3(position[0], position[1], position[2])
     const rotation = new three.Euler(0, 0, 0)
     const scale = new three.Vector3(1, 1, 1)
 
+    console.log("Rendering")
 
     const valueChange = (gizmoType) => {
         const _obj: three.Object3D = gizmoRef.current.object
 
         if (_obj) {
             //Do nothing yet
+            onValueChanged(_obj, gizmoType)
         }
-
-
     }
 
 
@@ -45,7 +55,7 @@ export default function SceneTransformHelper({}) {
             size={0.75}
 
         >
-            <Plane/>
+
 
         </TransformControls>
     )
