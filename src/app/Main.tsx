@@ -20,9 +20,7 @@ const PanoramaEditor = React.lazy(() => import( "@components/assets/panorama/Pan
 const AreaEditor = React.lazy(() => import("@components/assets/area-editor/AreaEditor"))
 const MaterialEditor = React.lazy(() => import("@components/assets/material/MaterialEditor"))
 const SceneEditorDispatcher = React.lazy(() => import("@components/assets/scene-editor/SceneEditorDispatcher"))
-
-
-
+const QuizEditor = React.lazy(() => import("@components/assets/quiz-editor/QuizEditor"))
 
 export default function Main() {
 
@@ -101,6 +99,10 @@ function _Main() {
 
                 <Route path={RoutesManager.ROUTE_AREA_EDITOR} element={
                     <AreaEditor/>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_QUIZ_EDITOR} element={
+                    <QuizEditor/>
                 }/>
 
             </Routes>
