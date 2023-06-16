@@ -20,19 +20,20 @@ import Modals from "@components/Modals";
 import {Offcanvas} from "react-bootstrap";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TGui} from "@external/tgui";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 
-interface EditProjectDrawerProps {
+interface EditProjectOffcanvasProps {
     uid: string
     onClose?: () => void
     onRefresh?: () => void
 
 }
 
-export default function EditProjectDrawer({
-                                              onClose,
-                                              onRefresh,
-                                              uid
-                                          }: EditProjectDrawerProps) {
+export default function EditProjectOffcanvas({
+                                                 onClose,
+                                                 onRefresh,
+                                                 uid
+                                             }: EditProjectOffcanvasProps) {
 
 
     const [t] = useTranslation()
@@ -72,6 +73,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
 
     const lock = useGlobalAppLock()
 
+    const inputRef = React.useRef()
 
     const [name, setName] = React.useState(project.name)
     const [author, setAuthor] = React.useState(project.author)
@@ -145,6 +147,25 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
         })
     }
 
+
+    function selectImageClicked() {
+        if (PlatformDispatcher.IsDesktop()) {
+            PlatformDispatcher.OpenImageDialog().then((filePath) => {
+                ProjectApi.ChangeProjectCoverDesktop(project.uid, filePath)
+            })
+        } else {
+            const curr: any = inputRef.current
+            curr.click()
+        }
+
+    }
+
+    function imageSelected() {
+        const curr: HTMLInputElement = inputRef.current as any
+        console.log(curr.files)
+
+    }
+
     return (
         <>
             <Box style={{padding: "15px"}}>
@@ -157,7 +178,17 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                         />
 
                         <TGui.CardActions>
-                            <TGui.Button label={"core.replace"}/>
+                            <TGui.Button
+                                label={"core.replace"}
+                                onClick={selectImageClicked}
+
+                            />
+                            <input
+                                ref={inputRef}
+                                onChange={imageSelected}
+                                type={"file"}
+                                hidden
+                            />
                         </TGui.CardActions>
                     </TGui.Card>
 

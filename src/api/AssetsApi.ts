@@ -1,5 +1,5 @@
 import AssetParent from "@platform/assets/AssetParent";
-import ApiDispatcher from "@api/ApiDispatcher";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 import axios from "axios";
 import TauriAssetPlugin from "../tauri/plugin_assets";
@@ -11,7 +11,7 @@ export default class AssetsApi {
 
     static async GetAllAssetsOfType(projectUid: string, assetType: string): Promise<Array<AssetParentLight>> {
 
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
 
             const assets = await TauriAssetPlugin.GetAllAssetsOfType(projectUid, assetType)
 
@@ -25,7 +25,7 @@ export default class AssetsApi {
 
     static async CreateAsset(params: CreateAssetParamas): Promise<boolean> {
 
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             await TauriAssetPlugin.CreateAsset(params);
 
         } else {
@@ -37,7 +37,7 @@ export default class AssetsApi {
 
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
 
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             await TauriAssetPlugin.DeleteAssetWithUid(project_uid, asset_uid);
 
         } else {
@@ -51,7 +51,7 @@ export default class AssetsApi {
 
         const asset = new clazz()
 
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             const data = await TauriAssetPlugin.GetAsset(project_uid, asset_uid);
             asset.from_json(data)
 

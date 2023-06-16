@@ -27,14 +27,11 @@ export default function ProjectsSelectionView({}) {
 
     if (isLoading) {
         return (
-            <ViewContainer>
-                <Spinner/>
-            </ViewContainer>
+            <Spinner/>
         )
     } else {
         return (
-            <ViewContainer>
-
+            <>
                 <div className={"vstack gap-3"}>
 
                     <Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>
@@ -74,11 +71,11 @@ export default function ProjectsSelectionView({}) {
 
                 </div>
 
+            </>
 
-            </ViewContainer>
 
 
-        )
+    )
     }
 
 

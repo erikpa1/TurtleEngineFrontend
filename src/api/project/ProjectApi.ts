@@ -1,5 +1,5 @@
 import {CreateProjectParams} from "./params";
-import ApiDispatcher from "../ApiDispatcher";
+import PlatformDispatcher from "../PlatformDispatcher";
 
 import {ProjectLight} from "@data/project/ProjectLight";
 import TauriProjectPlugin from "../../tauri/plugin_project";
@@ -9,7 +9,7 @@ export default class ProjectApi {
 
 
     static async ActivateProject(projectUid: string): Promise<ProjectLight | null> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             const result = await TauriProjectPlugin.ActivateProject(projectUid)
 
             await new Promise(resolve => setTimeout(resolve, 1000));
@@ -23,7 +23,7 @@ export default class ProjectApi {
     }
 
     static async CreateProject(params: CreateProjectParams): Promise<boolean> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.CreateProject(params)
         } else {
             alert("Create project is unimplemented for WEB")
@@ -33,7 +33,7 @@ export default class ProjectApi {
 
 
     static async DeleteProject(projectUid: string): Promise<boolean> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.DeleteProject(projectUid)
         } else {
             alert("Create project is unimplemented for WEB")
@@ -43,7 +43,7 @@ export default class ProjectApi {
 
 
     static async GetAndActivateProject(projectUid: string): Promise<boolean> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.GetAndActivateProject(projectUid)
         } else {
             alert("Create project is unimplemented for WEB")
@@ -52,7 +52,7 @@ export default class ProjectApi {
     }
 
     static async ListProjects(): Promise<Array<ProjectLight>> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.ListProjects()
         } else {
             alert("ListProjects is not implemented for web")
@@ -61,7 +61,7 @@ export default class ProjectApi {
     }
 
     static async GetProjectLight(projectUid: string): Promise<ProjectLight | null> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.GetProjectLight(projectUid)
         } else {
             alert("GetProjectLight is not implemented for web")
@@ -70,12 +70,16 @@ export default class ProjectApi {
     }
 
     static async UploadProjectLightData(params: CreateProjectParams): Promise<boolean> {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.UploadProjectLightData(params)
         } else {
             alert("GetProjectLight is not implemented for web")
         }
         return true
+    }
+
+    static async ChangeProjectCoverDesktop(projectUid: string, filePath: string): Promise<boolean> {
+        return await TauriProjectPlugin.ChangeProjectCover(projectUid, filePath)
     }
 
 }

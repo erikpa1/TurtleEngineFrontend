@@ -46,8 +46,6 @@ pub fn GetProjectsPath() -> String {
         None => &result, // Prefix not found, use original path
     };
 
-    println!("{}", path_without_prefix);
-
     return path_without_prefix.into();
 }
 

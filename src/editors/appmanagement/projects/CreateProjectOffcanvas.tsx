@@ -18,9 +18,9 @@ interface CreateProjectOffcanvasProps {
 }
 
 export default function CreateProjectOffcanvas({
-                                                onClose,
-                                                onRefresh
-                                            }: CreateProjectOffcanvasProps) {
+                                                   onClose,
+                                                   onRefresh
+                                               }: CreateProjectOffcanvasProps) {
 
     const [t] = useTranslation()
 
@@ -40,7 +40,9 @@ export default function CreateProjectOffcanvas({
 
         ProjectApi.CreateProject(cpp).then(() => {
             lock.unlock()
-            onRefresh()
+            if (onRefresh) {
+                onRefresh()
+            }
         })
     }
 

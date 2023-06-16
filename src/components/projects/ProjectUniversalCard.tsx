@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 import {ProjectLight} from "@data/project/ProjectLight";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import EditProjectDrawer from "@editors/appmanagement/projects/EditProjectDrawer";
+import EditProjectOffcanvas from "@editors/appmanagement/projects/EditProjectOffcanvas";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
@@ -39,7 +39,7 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
 
     const editPressed = () => {
 
-        popupZus.pushElement(<EditProjectDrawer
+        popupZus.pushElement(<EditProjectOffcanvas
             uid={project.uid}
             onClose={popupZus.popElement}
             onRefresh={onRefresh}

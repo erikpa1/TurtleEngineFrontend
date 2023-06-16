@@ -1,3 +1,5 @@
+mod imops;
+
 use std::borrow::BorrowMut;
 use std::fmt::format;
 use std::fs;
@@ -47,8 +49,6 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
     //
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
-
-    println!("Selecting from assets with type: {}", asset_type);
 
     let query = format!(
         "SELECT Uid, Name, Type from Assets WHERE Type='{}'", asset_type

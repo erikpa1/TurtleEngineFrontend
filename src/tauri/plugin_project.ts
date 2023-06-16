@@ -13,6 +13,7 @@ export default class TauriProjectPlugin {
         })
         return true
     }
+
     static async ActivateLastProject(): Promise<ProjectLight> {
         const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}ActivateLastProject`).catch((expection => {
 
@@ -73,6 +74,15 @@ export default class TauriProjectPlugin {
     static async GetAndActivateProject(projectUid: string): Promise<boolean> {
         await invoke<boolean>(`${PROJECTS_PLUGIN_NAME}GetAndActivateProject`, {
             projectUid: projectUid,
+        })
+
+        return true
+    }
+
+    static async ChangeProjectCover(projectUid: string, filePath: string): Promise<boolean> {
+        await invoke<boolean>(`${PROJECTS_PLUGIN_NAME}ChangeProjectCover`, {
+            projectUid: projectUid,
+            sourcePath: filePath,
         })
 
         return true

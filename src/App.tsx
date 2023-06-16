@@ -5,7 +5,7 @@ import Main from "./app/Main";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import AppApi from "@api/AppApi";
-import ApiDispatcher from "@api/ApiDispatcher";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
         AppApi.Init().then(() => {
             setIsLoading(false)
 
-            if (ApiDispatcher.IsDesktop()) {
+            if (PlatformDispatcher.IsDesktop()) {
                 navigate("/")
             }
         })

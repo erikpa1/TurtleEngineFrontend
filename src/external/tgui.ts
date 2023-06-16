@@ -12,6 +12,8 @@ import {Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
 
 
+import Switch, {Case} from "react-switch-case/lib/esm";
+
 export const TGui = {
     Box: Box,
     Card: Card,
@@ -23,5 +25,7 @@ export const TGui = {
     Button: TurtleButton,
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
+    Switch: Switch,
+    Case: Case
 
 }

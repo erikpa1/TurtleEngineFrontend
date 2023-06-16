@@ -1,4 +1,4 @@
-import ApiDispatcher from "@api/ApiDispatcher";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 import FsApi from "@api/FsApi";
 import {resourceDir} from "@tauri-apps/api/path";
 
@@ -9,7 +9,7 @@ export default class AppApi {
 
 
     static async Init() {
-        if (ApiDispatcher.IsDesktop()) {
+        if (PlatformDispatcher.IsDesktop()) {
 
             await TauriProjectPlugin.ActivateLastProject()
 

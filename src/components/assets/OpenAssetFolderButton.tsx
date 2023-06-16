@@ -4,7 +4,7 @@ import HudButton from "@components/assets/HudButton";
 import AssetParent from "@platform/assets/AssetParent";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsApi from "@api/FsApi";
-import ApiDispatcher from "@api/ApiDispatcher";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 
 
 interface OpenAssetFolderButton {
@@ -20,7 +20,7 @@ export default function OpenAssetFolderButton() {
         })
     }
 
-    if (ApiDispatcher.IsDesktop()) {
+    if (PlatformDispatcher.IsDesktop()) {
         return (
             <HudButton
                 lang={"core.open"}

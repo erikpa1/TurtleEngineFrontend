@@ -14,6 +14,9 @@ import AssetsApi from "@api/AssetsApi";
 import {Offcanvas} from "react-bootstrap";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {TGui} from "@external/tgui";
+import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
+import {Assets} from "@platform/assets/Assets";
+import CreatePanoramaOffcContent from "@editors/appmanagement/assets/CreatePanoramaOffcContent";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -86,17 +89,28 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
                         multiline
                     />
 
+                    <TurtleTextField
+                        label={"core.author"}
+                        disabled
+                    />
+
+                    <TGui.Switch condition={props.assetType}>
+                        <TGui.Case value={Assets.Panorama.TYPE}>
+                            <CreatePanoramaOffcContent/>
+                        </TGui.Case>
+                    </TGui.Switch>
+
+                    <TGui.Stack>
+                        <TurtleButton
+                            variant={"outlined"}
+                            onClick={createAssetPressed}
+                            label={"core.create.asset"}
+                        />
+                    </TGui.Stack>
+
 
                 </Stack>
             </Box>
-
-            <TGui.Stack>
-
-                <TurtleButton
-                    onClick={createAssetPressed}
-                    label={"core.create.asset"}
-                />
-            </TGui.Stack>
 
 
         </TurtleOffcanvas>

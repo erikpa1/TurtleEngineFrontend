@@ -7,6 +7,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 
 
 import RoutesManager from "@platform/RoutesManager";
+import {ViewContainer} from "@components/ViewContainer";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -48,13 +49,17 @@ function _Main() {
 
                 <Route path={"/"} element={
                     <MountTabWrapper>
-                        <ProjectsSelectionView/>
+                        <ViewContainer>
+                            <ProjectsSelectionView/>
+                        </ViewContainer>
                     </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_PROJECTS} element={
                     <MountTabWrapper>
-                        <ProjectsSelectionView/>
+                        <ViewContainer>
+                            <ProjectsSelectionView/>
+                        </ViewContainer>
                     </MountTabWrapper>
                 }/>
 

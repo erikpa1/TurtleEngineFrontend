@@ -131,4 +131,6 @@ dist
 
 .lock
 
-/target
+/target/release/
+/target/debug/
+/target/projects/

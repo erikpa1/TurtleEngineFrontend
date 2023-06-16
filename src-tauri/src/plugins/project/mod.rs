@@ -1,6 +1,6 @@
 use std::borrow::BorrowMut;
 use std::fmt::format;
-use std::fs;
+use std::{fs, result};
 use std::sync::Mutex;
 
 
@@ -166,6 +166,23 @@ async fn UploadProjectLightData(projectJson: String) -> bool {
     return true;
 }
 
+#[tauri::command]
+async fn ChangeProjectCover(projectUid: String, sourcePath: String) -> bool {
+    let projectFolder = format!("{}{}", tfs::GetProjectsPath(), &projectUid);
+    let toPath = format!("{}\\{}", projectFolder, "Preview.png");
+
+    println!("Starting to copy");
+    println!("From: {}", &sourcePath);
+    println!("To: {}", &toPath);
+
+    let result = fs::copy(sourcePath, toPath);
+
+    println!("{:?}", result);
+
+    return true;
+}
+
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
@@ -175,6 +192,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             DeleteProject,
             ListProjects,
             GetProjectLight,
+            ChangeProjectCover,
             UploadProjectLightData,
         ])
         .build()
