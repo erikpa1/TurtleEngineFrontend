@@ -15,27 +15,49 @@ use tauri::{Asset, Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 use tfs;
-use tstructures::project::{CreateAssetParamas};
+use tstructures::project::{CreateAssetParamas, CreatePanoramaAssetParams};
 
 
-use tstructures::assets::AssetParentLight;
+use tstructures::assets::{AssetManager, AssetParentLight};
 
 use serde_json;
 use serde_json::json;
+use tfs::{CreateFolders, GetProjectsPath};
 use crate::app::AppState;
 
 use crate::database;
 
 
 #[tauri::command]
-pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<String, String> {
     let mut createParams: CreateAssetParamas = serde_json::from_str(&createJson).unwrap();
 
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
 
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
-    database::CreateAsset(&dbc, &createParams);
+    let uid = database::CreateAsset(&dbc, &createParams);
+
+    return Ok(uid.unwrap());
+}
+
+#[tauri::command]
+pub async fn CreatePanoramaAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+    let mut createParams: CreatePanoramaAssetParams = serde_json::from_str(&createJson).unwrap();
+
+    let panoramaFolder = format!("{}{}\\Panoramas\\{}\\", GetProjectsPath(), createParams.project_uid, createParams.asset_uid);
+
+    CreateFolders(&panoramaFolder);
+
+    let copyFile = format!("{}Default.jpg", panoramaFolder);
+
+
+    println!("Creating folder: {}", panoramaFolder);
+    println!("Copying from: {}", createParams.panorama_path);
+    println!("Copying to: {}", copyFile);
+
+    println!("{:?}", fs::copy(createParams.panorama_path, copyFile));
+
 
     return Ok(());
 }
@@ -99,15 +121,19 @@ pub async fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String,
 }
 
 #[tauri::command]
-pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
-    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
-    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
+pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_type: String, asset_uid: String) -> Result<String, ()> {
+    let assetFolder = AssetManager::GetAssetFolder(&asset_type);
 
-    let assetOption = database::GetAssetFromDatabase(&dbc, &asset_uid);
+    let assetFolder = format!("{}{}\\{}\\{}\\", tfs::GetProjectsPath(), project_uid, assetFolder, asset_uid);
 
-    if let Some(_asset) = assetOption {
-        let returnString = serde_json::to_string(&_asset).unwrap_or("{}".into());
-        return Ok(returnString);
+    let jsonFile = format!("{}{}", assetFolder, "Default.json");
+
+    let fileStreamResult = fs::read(jsonFile);
+
+    if let Ok(stream) = fileStreamResult {
+        let returnStr = String::from_utf8(stream).unwrap_or("{}".into());
+        println!("{}", returnStr);
+        return Ok(returnStr);
     } else {
         return Ok("{}".into());
     }
@@ -120,6 +146,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             CreateAsset,
             GetAllAssetsOfType,
             DeleteAssetWithUid,
+            CreatePanoramaAsset,
             GetAsset
         ])
         .build()

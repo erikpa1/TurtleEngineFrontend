@@ -36,7 +36,7 @@ async fn CreateProject(projectJson: String) -> String {
 
     let dbPath = format!("{}/project.db", projectFolder);
 
-    tfs::CreateFolders(&dbPath);
+    tfs::CreateFolders(&projectFolder);
 
     let connRes = database::CreateDatabaseConnection(&dbPath);
 

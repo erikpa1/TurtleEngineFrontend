@@ -9,7 +9,12 @@ export default class TauriOsPlugin {
             folder: folder,
         })
         return true
-
     }
+
+    static async GetWorkingDirectory(): Promise<string> {
+        const data = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetWorkingDirectory`)
+        return data
+    }
+
 
 }

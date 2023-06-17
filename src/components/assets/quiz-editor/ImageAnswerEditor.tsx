@@ -1,7 +1,7 @@
 import React from "react";
 
 import {TGui} from "@external/tgui";
-import {Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 
 export default function ImageAnswerEditor({}) {
     return (

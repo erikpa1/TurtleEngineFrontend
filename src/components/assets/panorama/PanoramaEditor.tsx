@@ -11,6 +11,7 @@ import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-thr
 
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
+import FsApi from "@api/FsApi";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -18,12 +19,12 @@ export default function PanoramaEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _panoramaUid: string = panoramauid ?? ""
 
-    const [panorama, setCloud] = React.useState<PanoramaAsset | null>(null)
+    const [panorama, setPanorama] = React.useState<PanoramaAsset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(PanoramaAsset, _projectUid, _panoramaUid).then((value) => {
-            setCloud(value)
+        AssetsApi.GetAsset<PanoramaAsset>(PanoramaAsset, _projectUid, _panoramaUid).then((value) => {
+            setPanorama(value)
         })
 
     }, [_projectUid, _panoramaUid])
@@ -58,7 +59,7 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
             >
 
 
-                <_PhotoDom/>
+                <_PhotoDom panorama={panorama}/>
 
                 <ambientLight/>
 
@@ -87,9 +88,9 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
     )
 }
 
-function _PhotoDom() {
+function _PhotoDom({panorama}: { panorama: PanoramaAsset }) {
 
-    const texutre = useTexture("/dev/assets/panorama/tmp-panorama/Original.jpg")
+    const texutre = useTexture(FsApi.convertFilePath(panorama.GetFullPanoramaPath()))
 
     return (
         <mesh visible={true} scale={[-1, 1, 1]}>

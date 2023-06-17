@@ -50,6 +50,16 @@ pub struct CreateAssetParamas {
 
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct CreatePanoramaAssetParams {
+    #[serde(default)]
+    pub panorama_path: String,
+    pub project_uid: String,
+    pub asset_uid: String
+
+}
+
+
+#[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
 #[ts(export, export_to = "../src/data/project/ProjectLight.ts")]
 pub struct ProjectLight {

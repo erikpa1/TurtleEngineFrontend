@@ -17,6 +17,7 @@ import {TGui} from "@external/tgui";
 import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
 import {Assets} from "@platform/assets/Assets";
 import CreatePanoramaOffcContent from "@editors/appmanagement/assets/CreatePanoramaOffcContent";
+import {CreatePanoramaAssetParams} from "@editors/appmanagement/assets/CreateParams";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -34,13 +35,16 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
     const projectZus = useActiveProjectZus()
 
-    const [cap] = React.useState<CreateAssetParamas | any>({
+    const projectUid = projectZus.project.uid
+
+    const [basicParams] = React.useState<CreateAssetParamas | any>({
         name: "",
         description: "",
         assetType: props.assetType,
-        project_uid: projectZus.project.uid
+        project_uid: projectUid
     })
 
+    const [params] = React.useState(getCreateParams(projectUid, props.assetType))
     const createAssetPressed = () => {
         lock.lock()
 
@@ -48,22 +52,33 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             props.onClose()
         }
 
-        AssetsApi.CreateAsset(cap).then(() => {
-            lock.unlock()
+        AssetsApi.CreateAsset(basicParams).then((uid) => {
 
-            if (props.onRefresh) {
-                props.onRefresh()
-            }
+            console.log(uid)
+
+            params.asset_uid = uid
+
+            getCreateFunction(props.assetType)(params).then(() => {
+
+                lock.unlock()
+
+                if (props.onRefresh) {
+                    props.onRefresh()
+                }
+
+            })
+
+
         })
     }
 
     const pNameChanged = (e: SyntheticEvent) => {
-        cap.name = e.target.value
+        basicParams.name = e.target.value
 
     }
 
     const descChanged = (e: SyntheticEvent) => {
-        cap.description = e.target.value
+        basicParams.description = e.target.value
     }
 
 
@@ -96,7 +111,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
                     <TGui.Switch condition={props.assetType}>
                         <TGui.Case value={Assets.Panorama.TYPE}>
-                            <CreatePanoramaOffcContent/>
+                            <CreatePanoramaOffcContent createPanoramaData={params}/>
                         </TGui.Case>
                     </TGui.Switch>
 
@@ -115,4 +130,24 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
         </TurtleOffcanvas>
     )
+}
+
+
+function getCreateFunction(assetType: string) {
+    if (assetType === Assets.Panorama.TYPE) {
+        return AssetsApi.CreatePanorama
+    } else {
+        return async () => {
+            //pass
+        }
+    }
+}
+
+function getCreateParams(projectUid: string, type: string): any {
+    if (type === Assets.Panorama.TYPE) {
+        const tmp = new CreatePanoramaAssetParams()
+        tmp.project_uid = projectUid
+        return tmp
+    }
+    return null
 }

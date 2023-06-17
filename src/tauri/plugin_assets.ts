@@ -3,6 +3,7 @@ import {invoke} from "@tauri-apps/api/tauri";
 import {CreateAssetParamas} from "@api/project/params";
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
+import {CreatePanoramaParams} from "@editors/appmanagement/assets/CreateParams";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 
@@ -28,12 +29,13 @@ export default class TauriAssetPlugin {
 
     }
 
-    static async CreateAsset(params: CreateAssetParamas): Promise<boolean> {
-
-        await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
+    static async CreateAsset(params: CreateAssetParamas): Promise<string> {
+        const uid = await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
             createJson: JSON.stringify(params),
         })
-        return true
+
+        console.log(uid)
+        return uid
     }
 
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
@@ -46,14 +48,25 @@ export default class TauriAssetPlugin {
         return true
     }
 
-    static async GetAsset(project_uid: string, asset_uid: string): Promise<any> {
+    static async GetAsset(project_uid: string, asset_type: string, asset_uid: string): Promise<any> {
 
         const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetAsset`, {
             projectUid: project_uid,
-            assetUid: asset_uid
+            assetUid: asset_uid,
+            assetType: asset_type
         })
+
 
         return JSON.parse(response)
     }
+
+    static async CreatePanorama(params: CreatePanoramaParams): Promise<boolean> {
+        console.log(params)
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}CreatePanoramaAsset`, {
+            createJson: JSON.stringify(params),
+        })
+        return true
+    }
+
 
 }

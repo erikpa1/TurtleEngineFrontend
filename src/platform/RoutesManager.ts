@@ -46,11 +46,11 @@ export default class RoutesManager {
     }
 
     static PointCloudEditor(projectUid: string, cloudUid: string): string {
-        return `${PREFIX_POINTCLOUD_EDITOR}/${projectUid}/${projectUid}`
+        return `${PREFIX_POINTCLOUD_EDITOR}/${projectUid}/${cloudUid}`
     }
 
     static PanoramaEditor(projectUid: string, panoramaUid: string): string {
-        return `${PREFIX_PANORAMA_EDITOR}/${projectUid}/${projectUid}`
+        return `${PREFIX_PANORAMA_EDITOR}/${projectUid}/${panoramaUid}`
     }
 
     static QuizEditor(projectUid: string, quizUid: string): string {

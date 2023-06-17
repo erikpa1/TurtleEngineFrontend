@@ -4,8 +4,7 @@ import {sep} from "@tauri-apps/api/path";
 
 export default class FsApi {
 
-
-    static RESOURCES = "C:/Work/TurtleEngine/TurtleEngineFrontend/public/dev/assets/area/tmp-area/"
+    static WORK_DIR = ""
 
     static convertFilePath(path: string): string {
         if (PlatformDispatcher.IsDesktop()) {
@@ -19,5 +18,10 @@ export default class FsApi {
     static normalizePath(path: string): string {
         return path.replaceAll("/", sep)
     }
+
+    static GetPlatformPath(path: string) {
+        return FsApi.normalizePath(`${FsApi.WORK_DIR}platform/${path}`)
+    }
+
 
 }

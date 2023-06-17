@@ -73,6 +73,7 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
                 <Typography gutterBottom variant="h5" component="div">
                     {val.project.name}
                 </Typography>
+
                 <Typography
                     variant="body2"
                     color="text.secondary"
@@ -83,6 +84,18 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
                 >
                     {val.project.description}
                 </Typography>
+
+                <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    style={{
+                        minHeight: "50px",
+                        maxHeight: "50px",
+                    }}
+                >
+                    ({val.project.uid})
+                </Typography>
+
             </CardContent>
             <CardActions>
                 <Button size="small"

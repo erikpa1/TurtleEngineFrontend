@@ -1,6 +1,8 @@
+use std::fmt::format;
+use std::fs;
 use rusqlite::{Connection, Result, OpenFlags, params};
 use uuid::Uuid;
-use tstructures::assets::AssetParentLight;
+use tstructures::assets::{AssetManager, AssetParentLight};
 use tstructures::project::CreateAssetParamas;
 
 
@@ -56,6 +58,8 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
 
     for myRow in rows_iter {
         if let Ok(lightAsset) = myRow {
+            println!("{:?}", lightAsset);
+
             return Some(lightAsset);
         } else {
             return None;
@@ -65,7 +69,7 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
     return None;
 }
 
-pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Result<()> {
+pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Result<String> {
     let uid = Uuid::new_v4().to_string();
 
     let query = format!(
@@ -76,7 +80,27 @@ pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Resul
     dbc.execute(&query, []).unwrap();
 
 
-    return Ok(());
+    let mut asset = AssetParentLight::New();
+
+    asset.assetType = createParams.assetType.clone();
+    asset.uid = uid.clone();
+    asset.name = createParams.name.clone();
+    asset.hasPreview = false;
+    asset.extension = "jpg".into();
+    asset.description = createParams.description.clone();
+
+    let assetFolder = AssetManager::GetAssetFolder(&asset.assetType);
+
+    let panoramaFolder = format!("{}{}\\{}\\{}\\", tfs::GetProjectsPath(), createParams.project_uid, assetFolder, uid);
+
+    tfs::CreateFolders(&panoramaFolder);
+
+    println!("{:?}", fs::write(format!("{}Default.json", panoramaFolder), serde_json::to_string(&asset).unwrap()));
+
+    if (createParams.assetType == "panorama") {}
+
+
+    return Ok(uid);
 }
 
 pub fn CreateAssetData(dbc: &Connection, assetUid: &String, blobData: &[u8]) -> Result<()> {

@@ -48,9 +48,9 @@ export default function AppManagementView({}) {
                 </Box>
             </TabContext>
 
-            <TGui.Swith condition={tabValue}>
+            <TGui.Switch condition={tabValue}>
                 <TGui.Case value={"0"}><ProjectsManagementView/></TGui.Case>
-            </TGui.Swith>
+            </TGui.Switch>
 
         </ViewContainer>
 

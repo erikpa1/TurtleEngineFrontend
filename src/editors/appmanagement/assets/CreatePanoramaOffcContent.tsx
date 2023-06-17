@@ -6,42 +6,48 @@ import ProjectApi from "@api/project/ProjectApi";
 
 import PlatformDispatcher from "@api/PlatformDispatcher";
 
-
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+
 import FsApi from "@api/FsApi";
+import {CreatePanoramaAssetParams} from "@editors/appmanagement/assets/CreateParams";
 
 
-export default function CreatePanoramaOffcContent({}) {
+interface CreatePanoramaOffcContentProps {
+    createPanoramaData: CreatePanoramaAssetParams
+}
+
+export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePanoramaOffcContentProps) {
 
     const project = useActiveProjectZus
 
-    const inputRef = React.useRef()
+    const [imagePath, setImagePath] = React.useState(createPanoramaData.panorama_path)
+
+    const inputRef = React.useRef<any>()
 
     function selectImageClicked() {
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenImageDialog().then((filePath) => {
-                ProjectApi.ChangeProjectCoverDesktop(project.uid, filePath)
+                const converted = FsApi.convertFilePath(filePath)
+                createPanoramaData.panorama_path = filePath
+                setImagePath(converted)
+
             })
         } else {
             const curr: any = inputRef.current
             curr.click()
         }
-
     }
 
     function imageSelected() {
         const curr: HTMLInputElement = inputRef.current as any
-        console.log(curr.files)
-
     }
-
 
     return (
         <>
             <TGui.Card>
                 <TGui.CardMedia
                     sx={{height: 140}}
-                    image={FsApi.convertFilePath("C:\\Work\\TurtleEngine\\TurtleEngineFrontend\\target\\platform\\Panoramas\\PreviewPanorama.jpg")}
+                    image={FsApi.convertFilePath(imagePath)}
                 />
 
                 <TGui.CardActions>

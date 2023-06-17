@@ -16,7 +16,7 @@ export default class PlatformDispatcher {
             multiple: false,
             filters: [{
                 name: 'Image',
-                extensions: ['png', 'jpeg']
+                extensions: ['png', 'jpeg', "jpg"]
             }]
         });
 
