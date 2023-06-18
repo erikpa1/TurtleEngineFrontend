@@ -63,6 +63,31 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
     return Ok(());
 }
 
+
+#[tauri::command]
+pub async fn CreateThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+    let mut createParams: UploadAssetFileParams = serde_json::from_str(&createJson).unwrap();
+
+    let assetFolder = format!("{}{}\\{}\\{}\\",
+                              GetProjectsPath(),
+                              createParams.project_uid,
+                              createParams.folder,
+                              createParams.asset_uid);
+
+    CreateFolders(&assetFolder);
+
+    let destinationPath = format!("{}{}", assetFolder, createParams.destination_name);
+
+    println!("Creating folder: {}", assetFolder);
+    println!("Copying from: {}", createParams.path_from);
+    println!("Copying to: {}", destinationPath);
+
+    println!("{:?}", fs::copy(createParams.path_from, destinationPath));
+
+    return Ok(());
+}
+
+
 #[tauri::command]
 pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset_type: String) -> Result<String, ()> {
     // let mapLock = state.test.lock().unwrap();
@@ -146,6 +171,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             GetAllAssetsOfType,
             DeleteAssetWithUid,
             UploadAssetFile,
+            CreateThumbnail,
             GetAsset
         ])
         .build()
