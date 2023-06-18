@@ -5,4 +5,5 @@ export default class SoundAsset extends AssetParent {
     static FOLDER = "Sounds"
     static LANG = "core.sound"
     static LANG_PLURAL = "core.souns"
+    static DEFAULT_PLATFORM_FILE = `Images/Previews/${SoundAsset.TYPE}-Preview.png`
 }

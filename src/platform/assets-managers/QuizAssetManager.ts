@@ -13,23 +13,16 @@ export default class QuizAssetManager {
 
     static async CreateQuizAsset(assetParams: CreateAssetParamas, uploadFileParams: UploadAssetFileParams) {
 
-        const createdAsset = await AssetParentManager.CreateAsset(assetParams);
 
+        const createdAsset = await AssetParentManager.CreateAsset(assetParams);
 
         uploadFileParams.asset_uid = createdAsset.uid
 
-        const thumbnailParams = new CreateThumbnailParams()
-        thumbnailParams.source_file = uploadFileParams.path_from
-        thumbnailParams.destination_file = FsTools.GetPathInProject(uploadFileParams.project_uid, `${Assets.Quiz.FOLDER}/${createdAsset.uid}/Preview.png`)
-        thumbnailParams.maxWidth = 256
-
-        //Vytvorenie thumbnailu
-        await AssetsApi.CreateAssetThumbnail(thumbnailParams)
+        await AssetParentManager.CreateAssetThumbnail(createdAsset, Assets.Quiz.FOLDER, uploadFileParams)
 
         createdAsset.hasPreview = true
 
         await AssetsApi.UploadAssetLight(createdAsset)
-
         await AssetsApi.UploadAssetData(createdAsset, new QuizAssetData())
 
     }

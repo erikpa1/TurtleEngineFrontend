@@ -27,6 +27,7 @@ import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 
 import AssetsDispatcher from "@platform/assets/AssetsDispatcher";
 import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
+import FsTools from "@api/FsTools";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -71,6 +72,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             await QuizAssetManager.CreateQuizAsset(basicParams, uploadFileParams)
         } else {
             await AssetParentManager.CreateAsset(basicParams)
+            await AssetParentManager.CreateAssetThumbnail(basicParams, assetDefinition.FOLDER, uploadFileParams)
         }
 
         lock.unlock()
@@ -94,6 +96,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
         uploadFileParams.project_uid = projectUid
         uploadFileParams.asset_type = assetType
         uploadFileParams.folder = assetDefinition.FOLDER
+        uploadFileParams.path_from = FsTools.GetPlatformPath(assetDefinition.DEFAULT_PLATFORM_FILE)
 
     }, [])
 
@@ -124,15 +127,9 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
                         disabled
                     />
 
-
-                    <TGui.Switch condition={assetType}>
-                        <TGui.Case value={Assets.Panorama.TYPE}>
-                            <CreateAssetWithFileContent createPanoramaData={uploadFileParams}/>
-                        </TGui.Case>
-                        <TGui.Case value={Assets.Quiz.TYPE}>
-                            <CreateAssetWithFileContent createPanoramaData={uploadFileParams}/>
-                        </TGui.Case>
-                    </TGui.Switch>
+                    <CreateAssetWithFileContent
+                        assetDefinition={assetDefinition}
+                        uploadFileParams={uploadFileParams}/>
 
                     <TGui.Stack>
                         <TurtleButton

@@ -27,7 +27,6 @@ export default class AssetParentLight {
     GetPreviewPath(): string {
         if (this.hasPreview) {
             const path = FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.assetType)}/${this.uid}/Preview.png`)
-            console.log(path)
             return path
         } else {
             return FsTools.GetPlatformPath(`Images/Previews/${this.assetType}-Preview.png`)

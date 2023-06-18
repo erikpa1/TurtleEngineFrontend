@@ -5,4 +5,5 @@ export default class PointCloudAsset extends AssetParent {
     static FOLDER = "PointClouds"
     static LANG = "core.pointcloud"
     static LANG_PLURAL = "core.pointclouds"
+    static DEFAULT_PLATFORM_FILE = `Images/Previews/${PointCloudAsset.TYPE}-Preview.png`
 }

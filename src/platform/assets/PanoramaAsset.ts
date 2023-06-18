@@ -5,6 +5,7 @@ export default class PanoramaAsset extends AssetParent {
     static TYPE = "panorama"
     static LANG = "core.panorama"
     static LANG_PLURAL = "core.panoramas"
+    static DEFAULT_PLATFORM_FILE = `Images/Previews/${PanoramaAsset.TYPE}-Preview.png`
 
     FromJson(jObject: any) {
         super.FromJson(jObject)

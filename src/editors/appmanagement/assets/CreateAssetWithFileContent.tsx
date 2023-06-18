@@ -11,17 +11,21 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import FsTools from "@api/FsTools";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import {AssetDefinition} from "@platform/assets/Assets";
 
 
 interface CreatePanoramaOffcContentProps {
-    createPanoramaData: UploadAssetFileParams
+    assetDefinition: AssetDefinition
+    uploadFileParams: UploadAssetFileParams
 }
 
-export default function CreateAssetWithFileContent({createPanoramaData}: CreatePanoramaOffcContentProps) {
+export default function CreateAssetWithFileContent({
+                                                       assetDefinition,
+                                                       uploadFileParams
+                                                   }: CreatePanoramaOffcContentProps) {
 
 
-
-    const [imagePath, setImagePath] = React.useState(createPanoramaData.path_from)
+    const [imagePath, setImagePath] = React.useState(uploadFileParams.path_from)
 
     const inputRef = React.useRef<any>()
 
@@ -29,9 +33,8 @@ export default function CreateAssetWithFileContent({createPanoramaData}: CreateP
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenImageDialog().then((filePath) => {
                 const converted = FsTools.ConvertFilePath(filePath)
-                createPanoramaData.path_from = filePath
-                createPanoramaData.destination_name = `Default.${FsTools.GetFileExtension(filePath)}`
-
+                uploadFileParams.path_from = filePath
+                uploadFileParams.destination_name = `Default.${FsTools.GetFileExtension(filePath)}`
 
                 setImagePath(filePath)
             })

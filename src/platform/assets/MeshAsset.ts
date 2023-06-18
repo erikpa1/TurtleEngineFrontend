@@ -6,5 +6,6 @@ export default class MeshAsset extends AssetParent {
     static FOLDER = "Meshes"
     static LANG = "core.mesh"
     static LANG_PLURAL = "core.meshes"
+    static DEFAULT_PLATFORM_FILE = `Images/Previews/${MeshAsset.TYPE}-Preview.png`
 
 }

@@ -5,6 +5,7 @@ export default class QuizAsset extends AssetParent {
     static FOLDER = "Quizzes"
     static LANG = "core.quiz"
     static LANG_PLURAL = "core.quizzes"
+    static DEFAULT_PLATFORM_FILE = `Images/Previews/${QuizAsset.TYPE}-Preview.png`
 }
 
 export class QuizAssetData extends AssetParentData {
