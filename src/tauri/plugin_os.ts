@@ -11,6 +11,21 @@ export default class TauriOsPlugin {
         return true
     }
 
+    static async DeleteFolder(folder: string): Promise<boolean> {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}DeleteFolder`, {
+            folder: folder,
+        })
+        return true
+    }
+
+    static async WriteFileString(file: string, content: string): Promise<boolean> {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}WriteFileString`, {
+            file: file,
+            content: content,
+        })
+        return true
+    }
+
     static async GetWorkingDirectory(): Promise<string> {
         const data = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetWorkingDirectory`)
         return data

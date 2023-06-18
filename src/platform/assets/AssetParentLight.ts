@@ -1,30 +1,41 @@
+import FsTools from "@api/FsTools";
+import {AssetConstants} from "@platform/assets/AssetConstants";
+
 export default class AssetParentLight {
     public uid = ""
     public parent_project_uid = ""
     public name = ""
-    public type = ""
+    public assetType = ""
     public description = ""
     public relativePath = ""
+
     public hasPreview = false
+    public absolutePath = ""
 
     from_json(jObject: any | AssetParentLight) {
         this.uid = jObject.uid ?? ""
         this.name = jObject.name ?? ""
-        this.type = jObject.assetType ?? ""
+        this.assetType = jObject.assetType ?? ""
         this.description = jObject.description ?? ""
         this.hasPreview = jObject.hasPreview ?? false
 
         if (!this.hasPreview) {
-            this.relativePath = `/dev/assets/${this.type}/tmp-${this.type}/Preview.png`
+            this.relativePath = `/dev/assets/${this.assetType}/tmp-${this.assetType}/Preview.png`
         }
-
-
-
-
-
     }
 
     GetPreviewPath(): string {
-        return this.relativePath//`${this.relativePath}${this.uid}/Preview.png`
+        if (this.hasPreview) {
+            const path = FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.assetType)}/${this.uid}/Preview.png`)
+            console.log(path)
+            return path
+        } else {
+            return FsTools.GetPlatformPath(`Images/Previews/${this.assetType}-Preview.png`)
+        }
     }
+
+    GetFolderPath(): string {
+        return FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.assetType)}/${this.uid}/`)
+    }
+
 }

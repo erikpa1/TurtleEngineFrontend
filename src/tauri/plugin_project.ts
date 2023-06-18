@@ -1,6 +1,8 @@
 import {invoke} from "@tauri-apps/api/tauri";
 import {CreateProjectParams} from "@api/project/params";
 import {ProjectLight} from "@data/project/ProjectLight";
+import TauriOsPlugin from "./plugin_os";
+import FsTools from "@api/FsTools";
 
 export const PROJECTS_PLUGIN_NAME = "plugin:turtle_projects|"
 
@@ -65,9 +67,7 @@ export default class TauriProjectPlugin {
     }
 
     static async UploadProjectLightData(params: CreateProjectParams): Promise<boolean> {
-        await invoke<string>(`${PROJECTS_PLUGIN_NAME}UploadProjectLightData`, {
-            projectJson: JSON.stringify(params),
-        })
+        await TauriOsPlugin.WriteFileString(FsTools.GetProjectsPath(`${params.uid}/project_light.json`), JSON.stringify(params));
         return true
     }
 
@@ -75,7 +75,6 @@ export default class TauriProjectPlugin {
         await invoke<boolean>(`${PROJECTS_PLUGIN_NAME}GetAndActivateProject`, {
             projectUid: projectUid,
         })
-
         return true
     }
 

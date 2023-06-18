@@ -1,13 +1,12 @@
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {convertFileSrc} from "@tauri-apps/api/tauri";
 import {sep} from "@tauri-apps/api/path";
-import {path} from "@tauri-apps/api";
 
-export default class FsApi {
+export default class FsTools {
 
     static WORK_DIR = ""
 
-    static convertFilePath(path: string): string {
+    static ConvertFilePath(path: string): string {
         if (PlatformDispatcher.IsDesktop()) {
             const tmp = convertFileSrc(path)//FsApi.normalizePath(FsApi.RESOURCES + path)
             return tmp
@@ -16,13 +15,22 @@ export default class FsApi {
         }
     }
 
-    static normalizePath(path: string): string {
+    static NormalizePath(path: string): string {
         return path.replaceAll("/", sep)
     }
 
     static GetPlatformPath(path: string) {
-        return FsApi.normalizePath(`${FsApi.WORK_DIR}platform/${path}`)
+        return FsTools.NormalizePath(`${FsTools.WORK_DIR}platform/${path}`)
     }
+
+    static GetProjectsPath(path: string) {
+        return FsTools.NormalizePath(`${FsTools.WORK_DIR}projects/${path}`)
+    }
+
+    static GetPathInProject(projectUid: string, path: string) {
+        return FsTools.GetProjectsPath(`${projectUid}/${path}`)
+    }
+
 
     static GetFileExtension(name: string): string {
         return name.split(".").pop() as string
@@ -36,10 +44,13 @@ export default class FsApi {
 
         const finalPath = paths.join(".")
 
-        console.log(`Previous  file: ${filePath}`)
-        console.log(`New  file: ${finalPath}`)
+        return finalPath
+    }
 
-
+    static ReplaceFileNameAndExtension(filePath: string, newFileName: string): string {
+        const paths = filePath.split(sep)
+        paths[paths.length - 1] = newFileName
+        const finalPath = paths.join(sep)
         return finalPath
     }
 

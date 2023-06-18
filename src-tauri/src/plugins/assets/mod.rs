@@ -4,6 +4,7 @@ mod params;
 use std::borrow::BorrowMut;
 use std::fmt::format;
 use std::fs;
+use std::path::Path;
 
 use futures::lock::Mutex;
 
@@ -37,9 +38,9 @@ pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Resu
 
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
-    let uid = database::CreateAsset(&dbc, &createParams);
+    let assetLightResult = database::CreateAsset(&dbc, &createParams);
 
-    return Ok(uid.unwrap());
+    return Ok(serde_json::to_string(&assetLightResult.unwrap()).unwrap_or("{}".into()));
 }
 
 #[tauri::command]
@@ -69,6 +70,16 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
 pub async fn CreateAssetThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
     let mut createParams: params::CreateAssetThumbnailParams = serde_json::from_str(&createJson).unwrap();
 
+
+    let path = Path::new(&createParams.destination_file);
+
+    tfs::CreateFolders(&String::from(path.parent().unwrap().to_str().unwrap()));
+
+    println!("Going to create thumbnail:");
+    println!("From: {}", &createParams.source_file);
+    println!("To: {}", &createParams.destination_file);
+
+
     imops::CreateThumbnail(&createParams.source_file, &createParams.destination_file, createParams.maxWidth);
     return Ok(());
 }
@@ -85,7 +96,7 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let query = format!(
-        "SELECT Uid, Name, Type from Assets WHERE Type='{}'", asset_type
+        "SELECT Uid, Name, Type, HasPreview from Assets WHERE Type='{}'", asset_type
     );
 
     let mut statement = dbc.prepare(&query).unwrap();
@@ -96,6 +107,13 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
         tmp.uid = row.get(0).unwrap_or("".into());
         tmp.name = row.get(1).unwrap_or("".into());
         tmp.assetType = row.get(2).unwrap_or("".into());
+
+        tmp.hasPreview = if row.get(3).unwrap_or(0) == 0 {
+            false
+        } else {
+            true
+        };
+
 
         return Ok(tmp);
     }).unwrap();
@@ -150,6 +168,21 @@ pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_typ
     }
 }
 
+
+#[tauri::command]
+pub async fn UploadAssetLight(state: State<'_, AppState>, jsonString: String) -> Result<(), String> {
+    let mut assetLight: AssetParentLight = serde_json::from_str(&jsonString).unwrap();
+
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    println!("Uploading asset");
+
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
+    database::UpdateAsset(&dbc, &assetLight);
+
+    return Ok(());
+}
+
+
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
@@ -158,6 +191,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             DeleteAssetWithUid,
             UploadAssetFile,
             CreateAssetThumbnail,
+            UploadAssetLight,
             GetAsset
         ])
         .build()

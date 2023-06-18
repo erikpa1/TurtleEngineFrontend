@@ -1,37 +1,47 @@
 import TurtleOffcanvas from "@components/Drawers";
-import Button from "@mui/material/Button";
+
 import React, {SyntheticEvent} from "react";
 
-import ProjectApi from "@api/project/ProjectApi";
 import {useTranslation} from "react-i18next";
 import {Box, Stack, TextField} from "@mui/material";
 import {CreateAssetParamas, CreateProjectParams} from "@api/project/params";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
+import {Offcanvas} from "react-bootstrap";
+
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
 import AssetsApi from "@api/AssetsApi";
-import {Offcanvas} from "react-bootstrap";
+
+
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+
 import {TGui} from "@external/tgui";
-import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
-import {Assets} from "@platform/assets/Assets";
-import CreatePanoramaOffcContent from "@editors/appmanagement/assets/CreatePanoramaOffcContent";
+
+import {AnyAssetType, AssetDefinition, Assets} from "@platform/assets/Assets";
+import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import FsApi from "@api/FsApi";
-import {CreateThumbnailParams} from "@api/AssetApiParams";
+
+import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager";
+import AssetParentManager from "@platform/assets-managers/AssetParentManager";
+
+import AssetsDispatcher from "@platform/assets/AssetsDispatcher";
+import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
     onRefresh?: () => void
 
-    assetType: string,
+    assetDefinition: AssetDefinition,
 
 }
 
 export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
     const [t] = useTranslation()
+
+    const assetDefinition = props.assetDefinition
+    const assetType = assetDefinition.TYPE
 
     const lock = useGlobalAppLock()
 
@@ -42,10 +52,9 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
     const [basicParams] = React.useState<CreateAssetParamas | any>({
         name: "",
         description: "",
-        assetType: props.assetType,
+        assetType: assetType,
         project_uid: projectUid
     })
-
 
     const [uploadFileParams] = React.useState(new UploadAssetFileParams())
     const createAssetPressed = async () => {
@@ -56,29 +65,19 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             props.onClose()
         }
 
-        //Vytvorenie assetu
-        const assetNewUid = await AssetsApi.CreateAsset(basicParams)
-
-        uploadFileParams.asset_uid = assetNewUid
-
-        //Update assetoveho obrazka
-        const destinationFile = await AssetsApi.UpdateAssetFile(uploadFileParams)
-
-        const thumbnailParams = new CreateThumbnailParams()
-        thumbnailParams.source_file = destinationFile
-        thumbnailParams.destination_file = FsApi.ReplaceFileExtention(destinationFile, "png")
-        thumbnailParams.maxWidth = 256
-
-        //Vytvorenie thumbnailu
-        await AssetsApi.CreateAssetThumbnail(thumbnailParams)
+        if (assetType === Assets.Panorama.TYPE) {
+            await PanoramaAssetManager.CreatePanoramaAsset(basicParams, uploadFileParams)
+        } else if (assetType === Assets.Quiz.TYPE) {
+            await QuizAssetManager.CreateQuizAsset(basicParams, uploadFileParams)
+        } else {
+            await AssetParentManager.CreateAsset(basicParams)
+        }
 
         lock.unlock()
 
         if (props.onRefresh) {
             props.onRefresh()
         }
-
-
     }
 
     const pNameChanged = (e: SyntheticEvent) => {
@@ -93,7 +92,8 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
     React.useEffect(() => {
         uploadFileParams.project_uid = projectUid
-        uploadFileParams.asset_type = props.assetType
+        uploadFileParams.asset_type = assetType
+        uploadFileParams.folder = assetDefinition.FOLDER
 
     }, [])
 
@@ -124,9 +124,13 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
                         disabled
                     />
 
-                    <TGui.Switch condition={props.assetType}>
+
+                    <TGui.Switch condition={assetType}>
                         <TGui.Case value={Assets.Panorama.TYPE}>
-                            <CreatePanoramaOffcContent createPanoramaData={uploadFileParams}/>
+                            <CreateAssetWithFileContent createPanoramaData={uploadFileParams}/>
+                        </TGui.Case>
+                        <TGui.Case value={Assets.Quiz.TYPE}>
+                            <CreateAssetWithFileContent createPanoramaData={uploadFileParams}/>
                         </TGui.Case>
                     </TGui.Switch>
 

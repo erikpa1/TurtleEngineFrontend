@@ -1,4 +1,4 @@
-import FsApi from "@api/FsApi";
+import FsTools from "@api/FsTools";
 
 export class UploadAssetFileParams {
 
@@ -10,8 +10,8 @@ export class UploadAssetFileParams {
     destination_name = ""
 
     constructor() {
-        this.path_from = FsApi.GetPlatformPath("Panoramas/PreviewPanorama.jpg")
-        this.destination_name = `Default.${FsApi.GetFileExtension(this.path_from)}`
+        this.path_from = FsTools.GetPlatformPath("Panoramas/PreviewPanorama.jpg")
+        this.destination_name = `Default.${FsTools.GetFileExtension(this.path_from)}`
     }
 
 }

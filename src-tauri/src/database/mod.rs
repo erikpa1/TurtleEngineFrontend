@@ -69,7 +69,7 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
     return None;
 }
 
-pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Result<String> {
+pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Result<AssetParentLight> {
     let uid = Uuid::new_v4().to_string();
 
     let query = format!(
@@ -97,10 +97,32 @@ pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Resul
 
     println!("{:?}", fs::write(format!("{}Default.json", panoramaFolder), serde_json::to_string(&asset).unwrap()));
 
-    if (createParams.assetType == "panorama") {}
+    return Ok(asset);
+}
 
 
-    return Ok(uid);
+pub fn UpdateAsset(dbc: &Connection, assetLight: &AssetParentLight) -> Result<()> {
+    let uid = Uuid::new_v4().to_string();
+
+    let hasPreview = if assetLight.hasPreview == true {
+        1
+    } else {
+        0
+    };
+
+    let query = format!(
+        "UPDATE Assets SET Name='{}' HasPreview={}  WHERE Uid = '{}';",
+        assetLight.name,
+        hasPreview,
+        assetLight.uid
+    );
+
+    dbc.execute(&query, []).unwrap();
+
+    println!("Updated Asset with uid: {}", assetLight.uid);
+
+
+    return Ok(());
 }
 
 pub fn CreateAssetData(dbc: &Connection, assetUid: &String, blobData: &[u8]) -> Result<()> {

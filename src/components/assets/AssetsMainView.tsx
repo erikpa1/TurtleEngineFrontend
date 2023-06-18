@@ -66,7 +66,7 @@ export default function AssetsMainView({}) {
                         Assets.values().map((value) => {
                             return (
                                 <Case key={value} value={value.TYPE}>
-                                    <UniversalAssetList parentProjectUid={projectuid ?? ""} assetType={value.TYPE}/>
+                                    <UniversalAssetList parentProjectUid={projectuid ?? ""} assetDefinition={value}/>
                                 </Case>
                             )
                         })

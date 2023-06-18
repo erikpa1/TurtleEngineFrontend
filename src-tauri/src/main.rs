@@ -23,6 +23,7 @@ fn main() {
         .plugin(plugins::project::init())
         .plugin(plugins::assets::init())
         .plugin(plugins::os::init())
+        .plugin(plugins::sqlite::init())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

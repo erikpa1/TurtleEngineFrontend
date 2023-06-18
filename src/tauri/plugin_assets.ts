@@ -3,7 +3,11 @@ import {invoke} from "@tauri-apps/api/tauri";
 import {CreateAssetParamas} from "@api/project/params";
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
-import {CreatePanoramaParams, UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+import TauriSqlitePlugin from "./plugin_sqlite";
+import FsTools from "@api/FsTools";
+import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
+import TauriOsPlugin from "./plugin_os";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 
@@ -29,13 +33,16 @@ export default class TauriAssetPlugin {
 
     }
 
-    static async CreateAsset(params: CreateAssetParamas): Promise<string> {
-        const uid = await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
+    static async CreateAsset(params: CreateAssetParamas): Promise<AssetParentLight> {
+        const assetData = await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
             createJson: JSON.stringify(params),
         })
 
-        console.log(uid)
-        return uid
+        const asset = new AssetParentLight()
+        asset.from_json(JSON.parse(assetData))
+        asset.parent_project_uid = params.project_uid
+
+        return asset
     }
 
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
@@ -63,14 +70,30 @@ export default class TauriAssetPlugin {
         const filePath = await invoke<string>(`${ASSETS_PLUGIN_NAME}UploadAssetFile`, {
             createJson: JSON.stringify(params),
         })
-        return filePath
+        return FsTools.NormalizePath(filePath)
+
     }
 
     static async CreateAssetThumbnail(params: UploadAssetFileParams): Promise<boolean> {
-        console.log(params)
         await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAssetThumbnail`, {
             createJson: JSON.stringify(params),
         })
+        return true
+    }
+
+    static async UploadAssetLight(assetLight: AssetParentLight): Promise<boolean> {
+
+        const hasPreview = assetLight.hasPreview ? 1 : 0
+
+        await TauriSqlitePlugin.Exec(`UPDATE Assets
+                                      SET Name='${assetLight.name}',
+                                          HasPreview=${hasPreview}
+                                      WHERE Uid = '${assetLight.uid}';`)
+        return true
+    }
+
+    static async UploadAssetData(asset: AssetParentLight, assetLight: AssetParentData): Promise<boolean> {
+        await TauriOsPlugin.WriteFileString(`${asset.GetFolderPath()}Default.json`, JSON.stringify(assetLight.ToJson()))
         return true
     }
 

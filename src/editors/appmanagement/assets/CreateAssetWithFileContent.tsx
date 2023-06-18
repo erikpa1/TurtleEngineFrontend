@@ -8,7 +8,7 @@ import PlatformDispatcher from "@api/PlatformDispatcher";
 
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
-import FsApi from "@api/FsApi";
+import FsTools from "@api/FsTools";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
 
@@ -17,11 +17,9 @@ interface CreatePanoramaOffcContentProps {
     createPanoramaData: UploadAssetFileParams
 }
 
-export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePanoramaOffcContentProps) {
+export default function CreateAssetWithFileContent({createPanoramaData}: CreatePanoramaOffcContentProps) {
 
-    const project = useActiveProjectZus
 
-    createPanoramaData.folder = PanoramaAsset.FOLDER
 
     const [imagePath, setImagePath] = React.useState(createPanoramaData.path_from)
 
@@ -30,13 +28,12 @@ export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePa
     function selectImageClicked() {
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenImageDialog().then((filePath) => {
-                const converted = FsApi.convertFilePath(filePath)
+                const converted = FsTools.ConvertFilePath(filePath)
                 createPanoramaData.path_from = filePath
-                createPanoramaData.destination_name = `Default.${FsApi.GetFileExtension(filePath)}`
+                createPanoramaData.destination_name = `Default.${FsTools.GetFileExtension(filePath)}`
 
-                console.log(createPanoramaData)
 
-                setImagePath(converted)
+                setImagePath(filePath)
             })
         } else {
             const curr: any = inputRef.current
@@ -53,7 +50,7 @@ export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePa
             <TGui.Card>
                 <TGui.CardMedia
                     sx={{height: 140}}
-                    image={FsApi.convertFilePath(imagePath)}
+                    image={FsTools.ConvertFilePath(imagePath)}
                 />
 
                 <TGui.CardActions>

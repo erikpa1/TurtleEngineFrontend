@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import AssetParent from "@platform/assets/AssetParent";
+import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 
@@ -10,6 +10,7 @@ import AssetParentLight from "@platform/assets/AssetParentLight";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
+import TauriOsPlugin from "../tauri/plugin_os";
 
 export default class AssetsApi {
 
@@ -28,14 +29,16 @@ export default class AssetsApi {
 
     }
 
-    static async CreateAsset(params: CreateAssetParamas): Promise<string> {
+    static async CreateAsset(params: CreateAssetParamas): Promise<AssetParentLight> {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriAssetPlugin.CreateAsset(params);
         } else {
             await axios.post("/api/assets/create-asset", params) //TODO Implement this one
         }
-        return ""
+        alert("Create asset is not implemented for web")
+        return new AssetParentLight()
     }
+
 
     static async UpdateAssetFile(params: UploadAssetFileParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
@@ -56,9 +59,28 @@ export default class AssetsApi {
     }
 
 
-    static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
+    static async DeleteAssetWithUid(asset: AssetParentLight): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.DeleteAssetWithUid(project_uid, asset_uid);
+            await TauriAssetPlugin.DeleteAssetWithUid(asset.parent_project_uid, asset.uid);
+            await TauriOsPlugin.DeleteFolder(asset.GetFolderPath());
+        } else {
+            await axios.post("/api/assets/create-asset") //TODO Implement this one
+        }
+        return true
+    }
+
+    static async UploadAssetLight(assetLight: AssetParentLight): Promise<boolean> {
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriAssetPlugin.UploadAssetLight(assetLight);
+        } else {
+            await axios.post("/api/assets/create-asset") //TODO Implement this one
+        }
+        return true
+    }
+
+    static async UploadAssetData(asset: AssetParentLight, assetParentData: AssetParentData): Promise<boolean> {
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriAssetPlugin.UploadAssetData(asset, assetParentData);
         } else {
             await axios.post("/api/assets/create-asset") //TODO Implement this one
         }
@@ -71,7 +93,7 @@ export default class AssetsApi {
 
         if (PlatformDispatcher.IsDesktop()) {
             const data = await TauriAssetPlugin.GetAsset(project_uid, clazz.TYPE, asset_uid);
-            asset.from_json(data)
+            asset.FromJson(data)
             asset.parent_project_uid = project_uid
             asset.parent_project_path = useActiveProjectZus.getState().project.projectFolderPath
         } else {
@@ -81,7 +103,7 @@ export default class AssetsApi {
                     asset_uid: asset_uid
                 }
             })
-            asset.from_json(data)
+            asset.FromJson(data)
         }
 
 

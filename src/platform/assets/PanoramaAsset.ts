@@ -6,8 +6,12 @@ export default class PanoramaAsset extends AssetParent {
     static LANG = "core.panorama"
     static LANG_PLURAL = "core.panoramas"
 
-    from_json(jObject: any) {
-        super.from_json(jObject)
+    FromJson(jObject: any) {
+        super.FromJson(jObject)
+    }
+
+    GetFolderPath(): string {
+        return `${this.parent_project_path}${PanoramaAsset.FOLDER}/${this.uid}/`
     }
 
     GetPreviewPath(): string {

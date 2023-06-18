@@ -1,12 +1,21 @@
+import React from "react";
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import HudButton from "@components/assets/HudButton";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-import React from "react";
 
-export default function PanoramaEditorHud({}) {
+import PanoramaAsset from "@platform/assets/PanoramaAsset";
+
+interface PanoramaEditorHudProps {
+    panorama: PanoramaAsset
+}
+
+export default function PanoramaEditorHud({panorama}: PanoramaEditorHudProps) {
+
+
     return (
         <AssetEditorHud placement={"bottom"}>
-            <OpenAssetFolderButton/>
+
+            <OpenAssetFolderButton asset={panorama}/>
 
             <HudButton
                 lang={"core.replace"}

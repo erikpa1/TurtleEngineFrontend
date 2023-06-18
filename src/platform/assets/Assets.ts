@@ -10,18 +10,36 @@ import SceneAsset from "@platform/assets/SceneAsset";
 import SoundAsset from "@platform/assets/SoundAsset";
 import FontAsset from "@platform/assets/FontAsset";
 
+
+export class AssetDefinition {
+
+    FOLDER = ""
+    TYPE = ""
+    LANG = ""
+    LANG_PLURAL = ""
+
+    constructor(_clazz: any) {
+        this.FOLDER = _clazz.FOLDER
+        this.TYPE = _clazz.TYPE
+        this.LANG = _clazz.LANG
+        this.LANG_PLURAL = _clazz.LANG_PLURAL
+
+    }
+}
+
+
 export const Assets = {
-    Material: MaterialAsset,
-    Mesh: MeshAsset,
-    PointCloud: PointCloudAsset,
-    Panorama: PanoramaAsset,
-    Video: VideoAsset,
-    Image: ImageAsset,
-    Quiz: QuizAsset,
-    Area: AreaAsset,
-    Scene: SceneAsset,
-    Sound: SoundAsset,
-    Font: FontAsset,
+    Material: new AssetDefinition(MaterialAsset),
+    Mesh: new AssetDefinition(MeshAsset),
+    PointCloud: new AssetDefinition(PointCloudAsset),
+    Panorama: new AssetDefinition(PanoramaAsset),
+    Video: new AssetDefinition(VideoAsset),
+    Image: new AssetDefinition(ImageAsset),
+    Quiz: new AssetDefinition(QuizAsset),
+    Area: new AssetDefinition(AreaAsset),
+    Scene: new AssetDefinition(SceneAsset),
+    Sound: new AssetDefinition(SoundAsset),
+    Font: new AssetDefinition(FontAsset),
 
     values: () => {
         return [
@@ -39,23 +57,12 @@ export const Assets = {
 
         ]
     }
+
+
 }
 
-export class AssetsManager {
-
-    static FOLDER_TYPES_MAP: Map<string, string> = new Map(Assets.values().map((asset) => {
-        return [asset.TYPE, asset.FOLDER]
-    }))
-
-    static GetFolderOnType(assetType: string): string {
-        const tmp = AssetsManager.FOLDER_TYPES_MAP.get(assetType)
-        if (tmp) {
-            return tmp
-        } else {
-            return "Undefined"
-        }
-    }
-}
-
+export const AssetsTypeMap = new Map<string, any>(Assets.values().map((value) => {
+    return [value.TYPE, value]
+}))
 
 

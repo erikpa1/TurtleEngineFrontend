@@ -12,15 +12,16 @@ import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import CreateAssetOffcanvas from "@editors/appmanagement/assets/CreateAssetOffcanvas";
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
+import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
 
 
 interface UniversalAssetListProps {
-    assetType: string,
+    assetDefinition: AssetDefinition,
     parentProjectUid: string,
 
 }
 
-export default function UniversalAssetList({parentProjectUid, assetType}: UniversalAssetListProps) {
+export default function UniversalAssetList({parentProjectUid, assetDefinition}: UniversalAssetListProps) {
 
 
     const popupZus = useGlobalPopup()
@@ -28,7 +29,7 @@ export default function UniversalAssetList({parentProjectUid, assetType}: Univer
     const [assets, setAssets] = React.useState(new Array<AssetParentLight>())
 
     const refreshAssets = () => {
-        AssetsApi.GetAllAssetsOfType(parentProjectUid, assetType).then((response) => {
+        AssetsApi.GetAllAssetsOfType(parentProjectUid, assetDefinition.TYPE).then((response) => {
             setAssets(response)
         })
     }
@@ -36,7 +37,7 @@ export default function UniversalAssetList({parentProjectUid, assetType}: Univer
     const createAssetPressed = () => {
         popupZus.pushElement(
             <CreateAssetOffcanvas
-                assetType={assetType}
+                assetDefinition={assetDefinition}
                 onRefresh={refreshAssets}
                 onClose={popupZus.popElement}
             />
@@ -45,7 +46,7 @@ export default function UniversalAssetList({parentProjectUid, assetType}: Univer
     }
 
 
-    React.useEffect(refreshAssets, [assetType])
+    React.useEffect(refreshAssets, [assetDefinition.TYPE])
 
 
     return (

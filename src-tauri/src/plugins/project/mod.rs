@@ -71,7 +71,6 @@ async fn DeleteProject(uid: String) -> String {
 async fn ListProjects() -> String {
     let paths = tfs::ListFolders(&tfs::GetProjectsPath());
 
-
     let mut resultJsons: Vec<ProjectLight> = Vec::new();
 
     for folder in &paths {
@@ -147,24 +146,6 @@ async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> 
 }
 
 
-#[tauri::command]
-async fn UploadProjectLightData(projectJson: String) -> bool {
-    let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
-
-    let projectFolder = format!("{}{}", tfs::GetProjectsPath(), &createParams.uid);
-
-    let jsonDataPath = format!("{}/project_light.json", &projectFolder);
-
-    let mut lightProject = ProjectLight::LoadFromJsonString(&tfs::FileToString(&jsonDataPath));
-
-    lightProject.name = createParams.name.clone();
-    lightProject.author = createParams.author.clone();
-    lightProject.description = createParams.description.clone();
-    lightProject.lat_lon = createParams.lat_lon.clone();
-
-    fs::write(jsonDataPath, serde_json::to_string(&lightProject).unwrap());
-    return true;
-}
 
 #[tauri::command]
 async fn ChangeProjectCover(projectUid: String, sourcePath: String) -> bool {
@@ -193,7 +174,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             ListProjects,
             GetProjectLight,
             ChangeProjectCover,
-            UploadProjectLightData,
         ])
         .build()
 }

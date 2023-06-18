@@ -10,6 +10,7 @@ import AssetsApi from "@api/AssetsApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import useOpenAssetDispatcher from "@components/assets/prelude";
+import FsTools from "@api/FsTools";
 
 
 interface AssetCardProps {
@@ -35,7 +36,7 @@ export default function AssetCard({asset, onRefresh}: AssetCardProps) {
 
         lockZus.lock()
 
-        AssetsApi.DeleteAssetWithUid(asset.parent_project_uid, asset.uid).then(() => {
+        AssetsApi.DeleteAssetWithUid(asset).then(() => {
 
             if (onRefresh) {
                 onRefresh()
@@ -56,7 +57,7 @@ export default function AssetCard({asset, onRefresh}: AssetCardProps) {
         <TGui.Card sx={{maxWidth: 345}}>
             <TGui.CardMedia
                 sx={{height: 140}}
-                image={asset.GetPreviewPath()}
+                image={FsTools.ConvertFilePath(asset.GetPreviewPath())}
                 title={asset.name}
             />
             <TGui.CardContent>

@@ -23,6 +23,8 @@ pub struct AssetParentLight {
 
     #[serde(default)]
     pub hasPreview: bool,
+
+
 }
 
 impl AssetParentLight {

@@ -11,7 +11,7 @@ import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-thr
 
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
-import FsApi from "@api/FsApi";
+import FsTools from "@api/FsTools";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -83,14 +83,14 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
                 <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
             </Canvas>
-            <PanoramaEditorHud/>
+            <PanoramaEditorHud panorama={panorama}/>
         </div>
     )
 }
 
 function _PhotoDom({panorama}: { panorama: PanoramaAsset }) {
 
-    const texutre = useTexture(FsApi.convertFilePath(panorama.GetFullPanoramaPath()))
+    const texutre = useTexture(FsTools.ConvertFilePath(panorama.GetFullPanoramaPath()))
 
     return (
         <mesh visible={true} scale={[-1, 1, 1]}>

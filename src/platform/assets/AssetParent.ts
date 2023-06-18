@@ -1,3 +1,6 @@
+import FsTools from "@api/FsTools";
+import {AssetConstants} from "@platform/assets/AssetConstants";
+
 export default class AssetParent {
 
     public relativePath = ""
@@ -13,16 +16,16 @@ export default class AssetParent {
     static LANG = "core.asset"
     static LANG_PLURAL = "core.assets"
 
-    static tmp(): string {
-        return "Hello"
-    }
-
     GetPreviewPath(): string {
         return `${this.parent_project_path}${this._folder}/${this.uid}/Preview.png`
 
     }
 
-    from_json(jObject: any) {
+    GetFolderPath(): string {
+        return `${this.parent_project_path}${this._folder}/${this.uid}/`
+    }
+
+    FromJson(jObject: any) {
         this.uid = jObject.uid ?? ""
         this.name = jObject.name ?? ""
         this.description = jObject.description ?? ""
@@ -30,4 +33,10 @@ export default class AssetParent {
     }
 
 
+}
+
+export class AssetParentData {
+    ToJson(): any {
+        return {}
+    }
 }
