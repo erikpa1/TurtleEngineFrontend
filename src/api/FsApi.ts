@@ -1,6 +1,7 @@
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {convertFileSrc} from "@tauri-apps/api/tauri";
 import {sep} from "@tauri-apps/api/path";
+import {path} from "@tauri-apps/api";
 
 export default class FsApi {
 
@@ -25,6 +26,21 @@ export default class FsApi {
 
     static GetFileExtension(name: string): string {
         return name.split(".").pop() as string
+    }
+
+
+    static ReplaceFileExtention(filePath: string, newExtension: string): string {
+        const paths = filePath.split(".")
+
+        paths[paths.length - 1] = newExtension
+
+        const finalPath = paths.join(".")
+
+        console.log(`Previous  file: ${filePath}`)
+        console.log(`New  file: ${finalPath}`)
+
+
+        return finalPath
     }
 
 

@@ -8,6 +8,7 @@ export default class AssetParent {
     public name = ""
     public description = ""
     public extension = ""
+    public _folder = ""
 
     static LANG = "core.asset"
     static LANG_PLURAL = "core.assets"
@@ -17,7 +18,8 @@ export default class AssetParent {
     }
 
     GetPreviewPath(): string {
-        return this.relativePath//`${this.relativePath}${this.uid}/Preview.png`
+        return `${this.parent_project_path}${this._folder}/${this.uid}/Preview.png`
+
     }
 
     from_json(jObject: any) {

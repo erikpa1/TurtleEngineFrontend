@@ -19,6 +19,7 @@ import {Assets} from "@platform/assets/Assets";
 import CreatePanoramaOffcContent from "@editors/appmanagement/assets/CreatePanoramaOffcContent";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import FsApi from "@api/FsApi";
+import {CreateThumbnailParams} from "@api/AssetApiParams";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -47,29 +48,37 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
 
     const [uploadFileParams] = React.useState(new UploadAssetFileParams())
-    const createAssetPressed = () => {
+    const createAssetPressed = async () => {
+
         lock.lock()
 
         if (props.onClose) {
             props.onClose()
         }
 
-        AssetsApi.CreateAsset(basicParams).then((uid) => {
+        //Vytvorenie assetu
+        const assetNewUid = await AssetsApi.CreateAsset(basicParams)
 
-            uploadFileParams.asset_uid = uid
+        uploadFileParams.asset_uid = assetNewUid
 
-            AssetsApi.UpdateAssetFile(uploadFileParams).then(() => {
+        //Update assetoveho obrazka
+        const destinationFile = await AssetsApi.UpdateAssetFile(uploadFileParams)
 
-                lock.unlock()
+        const thumbnailParams = new CreateThumbnailParams()
+        thumbnailParams.source_file = destinationFile
+        thumbnailParams.destination_file = FsApi.ReplaceFileExtention(destinationFile, "png")
+        thumbnailParams.maxWidth = 256
 
-                if (props.onRefresh) {
-                    props.onRefresh()
-                }
+        //Vytvorenie thumbnailu
+        await AssetsApi.CreateAssetThumbnail(thumbnailParams)
 
-            })
+        lock.unlock()
+
+        if (props.onRefresh) {
+            props.onRefresh()
+        }
 
 
-        })
     }
 
     const pNameChanged = (e: SyntheticEvent) => {

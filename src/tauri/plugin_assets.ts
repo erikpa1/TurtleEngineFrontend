@@ -59,9 +59,16 @@ export default class TauriAssetPlugin {
         return JSON.parse(response)
     }
 
-    static async UploadAssetFile(params: UploadAssetFileParams): Promise<boolean> {
+    static async UploadAssetFile(params: UploadAssetFileParams): Promise<string> {
+        const filePath = await invoke<string>(`${ASSETS_PLUGIN_NAME}UploadAssetFile`, {
+            createJson: JSON.stringify(params),
+        })
+        return filePath
+    }
+
+    static async CreateAssetThumbnail(params: UploadAssetFileParams): Promise<boolean> {
         console.log(params)
-        await invoke<string>(`${ASSETS_PLUGIN_NAME}UploadAssetFile`, {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAssetThumbnail`, {
             createJson: JSON.stringify(params),
         })
         return true

@@ -10,6 +10,10 @@ export default class PanoramaAsset extends AssetParent {
         super.from_json(jObject)
     }
 
+    GetPreviewPath(): string {
+        return `${this.parent_project_path}${PanoramaAsset.FOLDER}/${this.uid}/Preview.png`
+    }
+
     GetFullPanoramaPath(): string {
         return `${this.parent_project_path}${PanoramaAsset.FOLDER}/${this.uid}/Default.${this.extension}`
 

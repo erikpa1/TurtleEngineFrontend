@@ -18,6 +18,10 @@ export default class AssetParentLight {
             this.relativePath = `/dev/assets/${this.type}/tmp-${this.type}/Preview.png`
         }
 
+
+
+
+
     }
 
     GetPreviewPath(): string {

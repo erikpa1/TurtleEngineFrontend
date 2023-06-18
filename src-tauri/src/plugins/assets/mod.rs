@@ -1,4 +1,5 @@
 mod imops;
+mod params;
 
 use std::borrow::BorrowMut;
 use std::fmt::format;
@@ -42,7 +43,7 @@ pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Resu
 }
 
 #[tauri::command]
-pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> Result<String, String> {
     let mut createParams: UploadAssetFileParams = serde_json::from_str(&createJson).unwrap();
 
     let assetFolder = format!("{}{}\\{}\\{}\\",
@@ -56,34 +57,19 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
 
     println!("Creating folder: {}", assetFolder);
     println!("Copying from: {}", createParams.path_from);
-    println!("Copying to: {}", destinationPath);
+    println!("Copying to: {}", &destinationPath);
 
-    println!("{:?}", fs::copy(createParams.path_from, destinationPath));
+    println!("{:?}", fs::copy(&createParams.path_from, &destinationPath));
 
-    return Ok(());
+    return Ok(destinationPath);
 }
 
 
 #[tauri::command]
-pub async fn CreateThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
-    let mut createParams: UploadAssetFileParams = serde_json::from_str(&createJson).unwrap();
+pub async fn CreateAssetThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+    let mut createParams: params::CreateAssetThumbnailParams = serde_json::from_str(&createJson).unwrap();
 
-    let assetFolder = format!("{}{}\\{}\\{}\\",
-                              GetProjectsPath(),
-                              createParams.project_uid,
-                              createParams.folder,
-                              createParams.asset_uid);
-
-    CreateFolders(&assetFolder);
-
-    let destinationPath = format!("{}{}", assetFolder, createParams.destination_name);
-
-    println!("Creating folder: {}", assetFolder);
-    println!("Copying from: {}", createParams.path_from);
-    println!("Copying to: {}", destinationPath);
-
-    println!("{:?}", fs::copy(createParams.path_from, destinationPath));
-
+    imops::CreateThumbnail(&createParams.source_file, &createParams.destination_file, createParams.maxWidth);
     return Ok(());
 }
 
@@ -171,7 +157,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             GetAllAssetsOfType,
             DeleteAssetWithUid,
             UploadAssetFile,
-            CreateThumbnail,
+            CreateAssetThumbnail,
             GetAsset
         ])
         .build()

@@ -9,6 +9,7 @@ import TauriAssetPlugin from "../tauri/plugin_assets";
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+import {CreateThumbnailParams} from "@api/AssetApiParams";
 
 export default class AssetsApi {
 
@@ -36,9 +37,18 @@ export default class AssetsApi {
         return ""
     }
 
-    static async UpdateAssetFile(params: UploadAssetFileParams): Promise<boolean> {
+    static async UpdateAssetFile(params: UploadAssetFileParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.UploadAssetFile(params);
+            return await TauriAssetPlugin.UploadAssetFile(params);
+        } else {
+            await axios.post("/api/assets/upload-asset-file", params) //TODO Implement this one
+        }
+        return ""
+    }
+
+    static async CreateAssetThumbnail(params: CreateThumbnailParams): Promise<boolean> {
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriAssetPlugin.CreateAssetThumbnail(params);
         } else {
             await axios.post("/api/assets/upload-asset-file", params) //TODO Implement this one
         }

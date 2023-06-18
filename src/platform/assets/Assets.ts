@@ -41,7 +41,21 @@ export const Assets = {
     }
 }
 
+export class AssetsManager {
 
+    static FOLDER_TYPES_MAP: Map<string, string> = new Map(Assets.values().map((asset) => {
+        return [asset.TYPE, asset.FOLDER]
+    }))
+
+    static GetFolderOnType(assetType: string): string {
+        const tmp = AssetsManager.FOLDER_TYPES_MAP.get(assetType)
+        if (tmp) {
+            return tmp
+        } else {
+            return "Undefined"
+        }
+    }
+}
 
 
 
