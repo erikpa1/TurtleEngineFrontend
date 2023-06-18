@@ -50,11 +50,14 @@ pub struct CreateAssetParamas {
 
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct CreatePanoramaAssetParams {
+pub struct UploadAssetFileParams {
     #[serde(default)]
-    pub panorama_path: String,
+    pub path_from: String,
     pub project_uid: String,
-    pub asset_uid: String
+    pub asset_uid: String,
+    pub folder: String,
+    pub asset_type: String,
+    pub destination_name: String,
 
 }
 

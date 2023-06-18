@@ -15,7 +15,7 @@ use tauri::{Asset, Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 use tfs;
-use tstructures::project::{CreateAssetParamas, CreatePanoramaAssetParams};
+use tstructures::project::{CreateAssetParamas, UploadAssetFileParams};
 
 
 use tstructures::assets::{AssetManager, AssetParentLight};
@@ -42,22 +42,23 @@ pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Resu
 }
 
 #[tauri::command]
-pub async fn CreatePanoramaAsset(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
-    let mut createParams: CreatePanoramaAssetParams = serde_json::from_str(&createJson).unwrap();
+pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
+    let mut createParams: UploadAssetFileParams = serde_json::from_str(&createJson).unwrap();
 
-    let panoramaFolder = format!("{}{}\\Panoramas\\{}\\", GetProjectsPath(), createParams.project_uid, createParams.asset_uid);
+    let assetFolder = format!("{}{}\\{}\\{}\\",
+                              GetProjectsPath(),
+                              createParams.project_uid,
+                              createParams.folder,
+                              createParams.asset_uid);
+    CreateFolders(&assetFolder);
 
-    CreateFolders(&panoramaFolder);
+    let destinationPath = format!("{}{}", assetFolder, createParams.destination_name);
 
-    let copyFile = format!("{}Default.jpg", panoramaFolder);
+    println!("Creating folder: {}", assetFolder);
+    println!("Copying from: {}", createParams.path_from);
+    println!("Copying to: {}", destinationPath);
 
-
-    println!("Creating folder: {}", panoramaFolder);
-    println!("Copying from: {}", createParams.panorama_path);
-    println!("Copying to: {}", copyFile);
-
-    println!("{:?}", fs::copy(createParams.panorama_path, copyFile));
-
+    println!("{:?}", fs::copy(createParams.path_from, destinationPath));
 
     return Ok(());
 }
@@ -132,13 +133,11 @@ pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_typ
 
     if let Ok(stream) = fileStreamResult {
         let returnStr = String::from_utf8(stream).unwrap_or("{}".into());
-        println!("{}", returnStr);
         return Ok(returnStr);
     } else {
         return Ok("{}".into());
     }
 }
-
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
@@ -146,7 +145,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             CreateAsset,
             GetAllAssetsOfType,
             DeleteAssetWithUid,
-            CreatePanoramaAsset,
+            UploadAssetFile,
             GetAsset
         ])
         .build()

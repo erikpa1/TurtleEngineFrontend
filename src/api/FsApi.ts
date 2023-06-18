@@ -23,5 +23,9 @@ export default class FsApi {
         return FsApi.normalizePath(`${FsApi.WORK_DIR}platform/${path}`)
     }
 
+    static GetFileExtension(name: string): string {
+        return name.split(".").pop() as string
+    }
+
 
 }

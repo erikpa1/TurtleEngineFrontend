@@ -3,7 +3,7 @@ import {invoke} from "@tauri-apps/api/tauri";
 import {CreateAssetParamas} from "@api/project/params";
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
-import {CreatePanoramaParams} from "@editors/appmanagement/assets/CreateParams";
+import {CreatePanoramaParams, UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 
@@ -56,13 +56,12 @@ export default class TauriAssetPlugin {
             assetType: asset_type
         })
 
-
         return JSON.parse(response)
     }
 
-    static async CreatePanorama(params: CreatePanoramaParams): Promise<boolean> {
+    static async UploadAssetFile(params: UploadAssetFileParams): Promise<boolean> {
         console.log(params)
-        await invoke<string>(`${ASSETS_PLUGIN_NAME}CreatePanoramaAsset`, {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}UploadAssetFile`, {
             createJson: JSON.stringify(params),
         })
         return true

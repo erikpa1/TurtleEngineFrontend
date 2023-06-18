@@ -1,13 +1,17 @@
 import FsApi from "@api/FsApi";
 
-export class CreatePanoramaAssetParams {
+export class UploadAssetFileParams {
 
     project_uid = ""
+    folder = ""
+    asset_type = ""
     asset_uid = ""
-    panorama_path: string
+    path_from: string
+    destination_name = ""
 
     constructor() {
-        this.panorama_path = FsApi.GetPlatformPath("Panoramas/PreviewPanorama.jpg")
+        this.path_from = FsApi.GetPlatformPath("Panoramas/PreviewPanorama.jpg")
+        this.destination_name = `Default.${FsApi.GetFileExtension(this.path_from)}`
     }
 
 }

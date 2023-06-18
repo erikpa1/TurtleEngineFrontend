@@ -1,12 +1,14 @@
+import axios from "axios";
+
 import AssetParent from "@platform/assets/AssetParent";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
-import axios from "axios";
+
 import TauriAssetPlugin from "../tauri/plugin_assets";
-import FsApi from "@api/FsApi";
+
 import AssetParentLight from "@platform/assets/AssetParentLight";
-import {CreatePanoramaParams} from "@editors/appmanagement/assets/CreateParams";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 export default class AssetsApi {
 
@@ -26,24 +28,23 @@ export default class AssetsApi {
     }
 
     static async CreateAsset(params: CreateAssetParamas): Promise<string> {
-
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriAssetPlugin.CreateAsset(params);
         } else {
             await axios.post("/api/assets/create-asset", params) //TODO Implement this one
         }
         return ""
-
     }
 
-    static async CreatePanorama(params: CreatePanoramaParams): Promise<boolean> {
+    static async UpdateAssetFile(params: UploadAssetFileParams): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.CreatePanorama(params);
+            await TauriAssetPlugin.UploadAssetFile(params);
         } else {
-            await axios.post("/api/assets/create-asset", params) //TODO Implement this one
+            await axios.post("/api/assets/upload-asset-file", params) //TODO Implement this one
         }
         return true
     }
+
 
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {

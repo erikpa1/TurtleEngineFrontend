@@ -9,18 +9,21 @@ import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import FsApi from "@api/FsApi";
-import {CreatePanoramaAssetParams} from "@editors/appmanagement/assets/CreateParams";
+import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+import PanoramaAsset from "@platform/assets/PanoramaAsset";
 
 
 interface CreatePanoramaOffcContentProps {
-    createPanoramaData: CreatePanoramaAssetParams
+    createPanoramaData: UploadAssetFileParams
 }
 
 export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePanoramaOffcContentProps) {
 
     const project = useActiveProjectZus
 
-    const [imagePath, setImagePath] = React.useState(createPanoramaData.panorama_path)
+    createPanoramaData.folder = PanoramaAsset.FOLDER
+
+    const [imagePath, setImagePath] = React.useState(createPanoramaData.path_from)
 
     const inputRef = React.useRef<any>()
 
@@ -28,9 +31,12 @@ export default function CreatePanoramaOffcContent({createPanoramaData}: CreatePa
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenImageDialog().then((filePath) => {
                 const converted = FsApi.convertFilePath(filePath)
-                createPanoramaData.panorama_path = filePath
-                setImagePath(converted)
+                createPanoramaData.path_from = filePath
+                createPanoramaData.destination_name = `Default.${FsApi.GetFileExtension(filePath)}`
 
+                console.log(createPanoramaData)
+
+                setImagePath(converted)
             })
         } else {
             const curr: any = inputRef.current

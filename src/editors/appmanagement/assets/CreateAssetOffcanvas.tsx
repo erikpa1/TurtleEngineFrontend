@@ -17,7 +17,8 @@ import {TGui} from "@external/tgui";
 import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
 import {Assets} from "@platform/assets/Assets";
 import CreatePanoramaOffcContent from "@editors/appmanagement/assets/CreatePanoramaOffcContent";
-import {CreatePanoramaAssetParams} from "@editors/appmanagement/assets/CreateParams";
+import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+import FsApi from "@api/FsApi";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -44,7 +45,8 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
         project_uid: projectUid
     })
 
-    const [params] = React.useState(getCreateParams(projectUid, props.assetType))
+
+    const [uploadFileParams] = React.useState(new UploadAssetFileParams())
     const createAssetPressed = () => {
         lock.lock()
 
@@ -54,11 +56,9 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
         AssetsApi.CreateAsset(basicParams).then((uid) => {
 
-            console.log(uid)
+            uploadFileParams.asset_uid = uid
 
-            params.asset_uid = uid
-
-            getCreateFunction(props.assetType)(params).then(() => {
+            AssetsApi.UpdateAssetFile(uploadFileParams).then(() => {
 
                 lock.unlock()
 
@@ -81,6 +81,12 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
         basicParams.description = e.target.value
     }
 
+
+    React.useEffect(() => {
+        uploadFileParams.project_uid = projectUid
+        uploadFileParams.asset_type = props.assetType
+
+    }, [])
 
     return (
         <TurtleOffcanvas
@@ -111,7 +117,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
                     <TGui.Switch condition={props.assetType}>
                         <TGui.Case value={Assets.Panorama.TYPE}>
-                            <CreatePanoramaOffcContent createPanoramaData={params}/>
+                            <CreatePanoramaOffcContent createPanoramaData={uploadFileParams}/>
                         </TGui.Case>
                     </TGui.Switch>
 
@@ -143,11 +149,3 @@ function getCreateFunction(assetType: string) {
     }
 }
 
-function getCreateParams(projectUid: string, type: string): any {
-    if (type === Assets.Panorama.TYPE) {
-        const tmp = new CreatePanoramaAssetParams()
-        tmp.project_uid = projectUid
-        return tmp
-    }
-    return null
-}
