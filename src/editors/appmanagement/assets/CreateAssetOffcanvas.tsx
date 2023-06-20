@@ -28,6 +28,7 @@ import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 import AssetsDispatcher from "@platform/assets/AssetsDispatcher";
 import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 import FsTools from "@api/FsTools";
+import AreaAssetManager from "@platform/assets-managers/AreaAssetManager";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -70,6 +71,8 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             await PanoramaAssetManager.CreatePanoramaAsset(basicParams, uploadFileParams)
         } else if (assetType === Assets.Quiz.TYPE) {
             await QuizAssetManager.CreateQuizAsset(basicParams, uploadFileParams)
+        } else if (assetType === Assets.Area.TYPE) {
+            await AreaAssetManager.CreateAreaAsset(basicParams, uploadFileParams)
         } else {
             await AssetParentManager.CreateAsset(basicParams)
             await AssetParentManager.CreateAssetThumbnail(basicParams, assetDefinition.FOLDER, uploadFileParams)

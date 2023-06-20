@@ -6,7 +6,7 @@ interface AreaSpotProps {
     scale?: [number, number, number]
 }
 
-export default function AreaSpot({position, scale}: AreaSpotProps) {
+export default function AreaMarker({position, scale}: AreaSpotProps) {
     return (
         <PrimitiveMesh
             position={position}

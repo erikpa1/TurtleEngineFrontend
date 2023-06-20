@@ -37,4 +37,13 @@ export default class AssetParentLight {
         return FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.assetType)}/${this.uid}/`)
     }
 
+    ToJson(): any {
+        return {
+            uid: this.uid,
+            name: this.name,
+            assetType: this.assetType,
+            description: this.description,
+        }
+    }
+
 }

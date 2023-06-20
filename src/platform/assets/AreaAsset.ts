@@ -6,4 +6,9 @@ export default class AreaAsset extends AssetParent {
     static LANG = "core.area"
     static LANG_PLURAL = "core.areas"
     static DEFAULT_PLATFORM_FILE = `Images/Previews/${AreaAsset.TYPE}-Preview.png`
+
+    GetMaximapPath(): string {
+        return `${this.parent_project_path}${AreaAsset.FOLDER}/${this.uid}/Default.jpg`
+
+    }
 }

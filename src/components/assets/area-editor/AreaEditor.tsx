@@ -5,27 +5,30 @@ import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
-import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
+
 import AreaAsset from "@platform/assets/AreaAsset";
-import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
-import AreaSpot from "@components/assets/area/AreaSpot";
+
+import AreaMarker from "@components/assets/area/AreaMarker";
+import AreaEditorHud from "@components/assets/area-editor/AreaEditorHud";
+import FsTools from "@api/FsTools";
+import ErrorBoundary from "@components/ErrorBoundary";
 
 
 export default function AreaEditor({}) {
     const {projectuid, areauid} = useParams()
 
     const _projectUid: string = projectuid ?? ""
-    const _meshuidUid: string = areauid ?? ""
+    const _areaiud: string = areauid ?? ""
 
     const [area, setArea] = React.useState<MeshAsset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(AreaAsset, _projectUid, _meshuidUid).then((value) => {
+        AssetsApi.GetAsset(AreaAsset, _projectUid, _areaiud).then((value) => {
             setArea(value)
         })
 
-    }, [_projectUid, _meshuidUid])
+    }, [_projectUid, _areaiud])
 
     if (area) {
         return (
@@ -44,7 +47,9 @@ interface _AreaEditorProps {
 
 function _AreaEditor({area}: _AreaEditorProps) {
     return (
-        <div style={{}}>
+        <div style={{
+            position: "relative"
+        }}>
 
 
             <Canvas
@@ -64,7 +69,7 @@ function _AreaEditor({area}: _AreaEditorProps) {
                 <React.Suspense fallback={""}>
                     <Environment
                         preset={"sunset"}
-                        ground={{radius: 1000}}
+                        ground={{radius: 0}}
                     />
                 </React.Suspense>
 
@@ -78,29 +83,55 @@ function _AreaEditor({area}: _AreaEditorProps) {
 
                 <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
-                <_AreaPlane/>
+                <_AreaPlane area={area}/>
 
-                <PrimitiveMesh meshPath={"/dev/assets/mesh/tmp-mesh/Default.glb"}/>
-                <AreaSpot position={[5, 0, 0]}/>
-                <AreaSpot position={[4, 0, 3]}/>
-                <AreaSpot position={[6, 0, 2]}/>
+                <AreaMarker position={[5, 0, 0]}/>
+                <AreaMarker position={[4, 0, 3]}/>
+                <AreaMarker position={[6, 0, 2]}/>
             </Canvas>
 
-
-
+            <AreaEditorHud area={area}/>
         </div>
     )
 }
 
-function _AreaPlane({}) {
+interface _AreaPlaneProps {
+    area: AreaAsset
+}
 
-    const texture = useTexture("/dev/assets/area/tmp-area/Preview.png")
+function _AreaPlane({area}: _AreaPlaneProps) {
+
 
     return (
-        <Plane scale={[20, 14, 1]} position={[0, -0.01, 0]} rotation={[Math.PI / -2, 0, 0]}>
+        <ErrorBoundary onError={<_SafeAreaPlane area={area}/>}>
+            <_TryAreaPlane area={area}/>
+        </ErrorBoundary>
+    )
+}
+
+function _TryAreaPlane({area}) {
+
+    const pathToTexture = area.GetMaximapPath()
+
+    const texture = useTexture(FsTools.ConvertFilePath(pathToTexture))
+
+    return (
+        <Plane scale={[20, 20, 1]} position={[0, -0.01, 0]} rotation={[Math.PI / -2, 0, 0]}>
             <meshBasicMaterial
                 map={texture}
             />
         </Plane>
     )
 }
+
+function _SafeAreaPlane({area}) {
+
+    return (
+        <Plane scale={[20, 20, 1]} position={[0, -0.01, 0]} rotation={[Math.PI / -2, 0, 0]}>
+            <meshBasicMaterial/>
+        </Plane>
+    )
+}
+
+
+

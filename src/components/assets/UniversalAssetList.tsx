@@ -18,10 +18,15 @@ import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
 interface UniversalAssetListProps {
     assetDefinition: AssetDefinition,
     parentProjectUid: string,
+    md?: number
 
 }
 
-export default function UniversalAssetList({parentProjectUid, assetDefinition}: UniversalAssetListProps) {
+export default function UniversalAssetList(props: UniversalAssetListProps) {
+
+    const _md = props.md ?? 4
+
+    console.log(_md)
 
 
     const popupZus = useGlobalPopup()
@@ -29,7 +34,7 @@ export default function UniversalAssetList({parentProjectUid, assetDefinition}: 
     const [assets, setAssets] = React.useState(new Array<AssetParentLight>())
 
     const refreshAssets = () => {
-        AssetsApi.GetAllAssetsOfType(parentProjectUid, assetDefinition.TYPE).then((response) => {
+        AssetsApi.GetAllAssetsOfType(props.parentProjectUid, props.assetDefinition.TYPE).then((response) => {
             setAssets(response)
         })
     }
@@ -37,7 +42,7 @@ export default function UniversalAssetList({parentProjectUid, assetDefinition}: 
     const createAssetPressed = () => {
         popupZus.pushElement(
             <CreateAssetOffcanvas
-                assetDefinition={assetDefinition}
+                assetDefinition={props.assetDefinition}
                 onRefresh={refreshAssets}
                 onClose={popupZus.popElement}
             />
@@ -46,7 +51,7 @@ export default function UniversalAssetList({parentProjectUid, assetDefinition}: 
     }
 
 
-    React.useEffect(refreshAssets, [assetDefinition.TYPE])
+    React.useEffect(refreshAssets, [props.assetDefinition.TYPE])
 
 
     return (
@@ -74,7 +79,7 @@ export default function UniversalAssetList({parentProjectUid, assetDefinition}: 
             }
 
 
-            <Row xs={1} md={4} className="g-4">
+            <Row xs={1} md={_md} className={`g-${_md}`}>
 
                 {
                     assets.map((value) => {
