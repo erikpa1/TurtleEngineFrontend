@@ -5,13 +5,14 @@ import {useTranslation} from "react-i18next";
 
 import {TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField/TextField";
+import {TGui} from "@external/tgui";
 
 
 interface TurtleTextFieldProps {
     name: string
 }
 
-export function TurtleTextField(props: TextFieldProps): JSX.Element {
+export function TurtleTextField(props: TextFieldProps | any): JSX.Element {
 
     const [t] = useTranslation()
 
@@ -23,5 +24,50 @@ export function TurtleTextField(props: TextFieldProps): JSX.Element {
             {...props}
             label={t(_label)}
         />
+    )
+}
+
+interface TurtleSingleFileInput {
+    name: string
+}
+
+
+export function TurtleSingleFileInput(props: TurtleSingleFileInput | any): JSX.Element {
+
+
+    const fileInputRef = React.useRef();
+
+    const [t] = useTranslation()
+
+    function handleFileInputChange(event) {
+        const file = event.target.files[0];
+        // Handle the selected file here
+        console.log(file);
+    }
+
+    function handleButtonClick() {
+        // Trigger the file input dialog when the button is clicked
+        fileInputRef.current.click();
+    };
+
+
+    const _label: string = props.label ? props.label as string : ""
+
+    return (
+        <div>
+            <TextField
+
+                inputRef={fileInputRef}
+                onChange={handleFileInputChange}
+                className={props.disabled ? "" : "turtle-shaded-button"}
+
+                {...props}
+
+                label={t(_label)}
+            />
+            <TGui.Button variant="contained" onClick={handleButtonClick}>
+                Select File
+            </TGui.Button>
+        </div>
     )
 }

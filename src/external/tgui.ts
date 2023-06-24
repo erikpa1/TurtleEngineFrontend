@@ -6,15 +6,22 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Box} from "@mui/material";
+import {Box, Tab, Tabs} from "@mui/material";
 
-import {Stack} from "react-bootstrap";
+import {Offcanvas, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
-
 
 import Switch, {Case} from "react-switch-case/lib/esm";
 
+import TurtleOffcanvas from "@components/Drawers";
+import {useTranslation} from "react-i18next";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import {TurtleSingleFileInput} from "@platform/components/TurtleForms";
+
 export const TGui = {
+    T: useTranslation,
+    Offcanvas: TurtleOffcanvas,
+    OffcanvasTitle: Offcanvas.Title,
     Box: Box,
     Card: Card,
     CardHeader: CardHeader,
@@ -26,6 +33,10 @@ export const TGui = {
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
     Switch: Switch,
-    Case: Case
+    Case: Case,
+    Tabs: Tabs,
+    Tab: Tab,
+    PopupZus: useGlobalPopup,
+    SingleFileInput: TurtleSingleFileInput
 
 }

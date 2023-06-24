@@ -17,7 +17,6 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import RoutesManager from "@platform/RoutesManager";
 
 
-
 export default function MainNavBar() {
 
     const [t] = useTranslation()
@@ -36,18 +35,20 @@ export default function MainNavBar() {
         <div style={{
             width: isCollapsed ? "79px" : "200px",
             height: "100vh",
-            float: "left"
+            float: "left",
+            backgroundColor: "red",
         }}>
             <sb.Sidebar
                 backgroundColor={"rgba(0, 0,0, 0.5)"}
                 image={"/textures/AppBackgroundBlured.png"}
-                width={isCollapsed ? "80px" : "201px"}
+                width={isCollapsed ? "80px" : "200px"}
                 style={{
                     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                     touchAction: "none",
                     position: "fixed",
                     left: "0px",
-                    height: "100vh"
+                    height: "100vh",
+                    zIndex: 1000
 
                 }}
             >

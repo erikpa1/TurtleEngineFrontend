@@ -2,19 +2,28 @@ import {Canvas} from "@react-three/fiber";
 import {
     AccumulativeShadows,
     CameraControls,
-    Environment,
+    Environment, GizmoHelper, GizmoViewport,
     Grid,
     OrbitControls,
     RandomizedLight
 } from "@react-three/drei";
-import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
+
 import React from "react";
 
-export function UniversalMeshCanvas({children}) {
+import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
+
+interface UniversalMeshCanvasProps {
+    children: any
+    style?: React.CSSProperties
+}
+
+export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps) {
     return (
         <div style={{
             backgroundColor: "#303035"
         }}>
+
+
             <Canvas
                 shadows
                 className={"gl-canvas"}
@@ -25,9 +34,15 @@ export function UniversalMeshCanvas({children}) {
                 }}
 
                 style={{
-                    height: "100vh"
+                    height: "100vh",
+                    ...(style ? style : {})
                 }}
+                raycaster={{params: {Line: {threshold: 0.15}}}}
             >
+
+                <directionalLight castShadow position={[2.5, 5, 5]} intensity={1.5} shadow-mapSize={[1024, 1024]}>
+                    <orthographicCamera attach="shadow-camera" args={[-5, 5, 5, -5, 1, 50]}/>
+                </directionalLight>
 
                 {/*<AccumulativeShadows frames={100} color="#9d4b4b" colorBlend={0.5} alphaTest={0.9} scale={20}>*/}
                 {/*    <RandomizedLight amount={8} radius={4} position={[5, 5, -10]}/>*/}
@@ -41,6 +56,7 @@ export function UniversalMeshCanvas({children}) {
 
                 <UniversalWorldGrid/>
 
+                <SceneCameraRotationGizmo/>
 
                 {
                     React.Children.toArray(children)

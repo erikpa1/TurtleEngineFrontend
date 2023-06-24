@@ -20,9 +20,10 @@ export default function OpenAssetFolderButton({asset}: OpenAssetFolderButton) {
         })
     }
 
-    if (PlatformDispatcher.IsDesktop()) {
+    if (PlatformDispatcher.IsDesktop() && asset.extension !== "") {
         return (
             <HudButton
+
                 lang={"core.open"}
                 icon={"/icons/Projects.svg"}
                 onClick={clicked}

@@ -84,6 +84,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.0.11
     version: 18.2.1
+  '@types/react-switch-case':
+    specifier: ^1.5.1
+    version: 1.5.1
   '@types/three':
     specifier: ^0.152.1
     version: 0.152.1
@@ -1394,6 +1397,12 @@ packages:
     dependencies:
       '@types/react': 18.2.0
     dev: false
+
+  /@types/react-switch-case@1.5.1:
+    resolution: {integrity: sha512-t6gQCbmdOejJw0VG3Wv7Nou8MuU1t502sy1KNH30/+oPdulZXWqtlAY23I/SijyjN/aLHpXgQFlBaQSqVrYntw==}
+    dependencies:
+      '@types/react': 18.2.0
+    dev: true
 
   /@types/react-transition-group@4.4.5:
     resolution: {integrity: sha512-juKD/eiSM3/xZYzjuzH6ZwpP+/lejltmiS3QEzV/vmb/Q8+HfDmxu+Baga8UEMGBqV88Nbg4l2hY/K2DkyaLLA==}

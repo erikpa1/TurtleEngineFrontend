@@ -26,9 +26,6 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
 
     const _md = props.md ?? 4
 
-    console.log(_md)
-
-
     const popupZus = useGlobalPopup()
 
     const [assets, setAssets] = React.useState(new Array<AssetParentLight>())

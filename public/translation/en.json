@@ -55,5 +55,7 @@
   "core.image": "Image",
   "core.document": "Document",
   "core.table": "Table",
-  "core.other": "Other"
+  "core.other": "Other",
+  "core.mesh.layers": "Mesh layers",
+  "core.add.marker": "Add marker"
 }
