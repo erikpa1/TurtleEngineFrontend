@@ -17,7 +17,7 @@ export default function SceneEditorDispatcher({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(PanoramaAsset, _projectUid, _sceneUid).then((value) => {
+        AssetsApi.GetAssetData(PanoramaAsset, _projectUid, _sceneUid).then((value) => {
             setScene(value)
         })
 

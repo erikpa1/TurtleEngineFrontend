@@ -11,6 +11,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
 import TauriOsPlugin from "../tauri/plugin_os";
+import {AssetDefinition} from "@platform/assets/Assets";
 
 export default class AssetsApi {
 
@@ -88,13 +89,12 @@ export default class AssetsApi {
     }
 
 
+    static async GetAssetData<T extends AssetParent>(assetDefinition: AssetDefinition, project_uid: string, asset_uid: string): Promise<T> {
 
-    static async GetAsset<T extends AssetParent>(clazz: new () => T | any, project_uid: string, asset_uid: string): Promise<T> {
-
-        const asset: AssetParent = new clazz() as any
+        const asset: AssetParent = new assetDefinition.CLASS()
 
         if (PlatformDispatcher.IsDesktop()) {
-            const data = await TauriAssetPlugin.GetAsset(project_uid, clazz.TYPE, asset_uid);
+            const data = await TauriAssetPlugin.GetAssetData(project_uid, assetDefinition, asset_uid);
             asset.FromJson(data)
             asset.parent_project_uid = project_uid
             asset.parent_project_path = useActiveProjectZus.getState().project.projectFolderPath

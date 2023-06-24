@@ -1,8 +1,11 @@
 use std::fs;
+
 use tauri::{Asset, Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 use std::process::Command;
+use std::path::Path;
+
 
 use tfs;
 
@@ -33,8 +36,31 @@ pub async fn DeleteFolder(folder: String) -> Result<bool, ()> {
 #[tauri::command]
 pub async fn WriteFileString(file: String, content: String) -> Result<bool, ()> {
     println!("Writting to file: {}", file);
+
+    let path = Path::new(&file);
+
+    let folderPath: String = String::from(path.parent().unwrap().to_str().unwrap());
+
+    tfs::CreateFolders(&folderPath);
+
     fs::write(&file, content);
     return Ok(true);
+}
+
+#[tauri::command]
+pub async fn ReadFileString(file: String) -> Result<String, String> {
+    println!("Reading String from: {}", file);
+
+    let streamResult = fs::read(&file);
+
+    if let Ok(fileContent) = streamResult {
+        let result = String::from_utf8(fileContent).unwrap_or("".into());
+
+        return Ok(result);
+    } else {
+        println!("{:?}", &file);
+        return Result::Err("404".into());
+    }
 }
 
 

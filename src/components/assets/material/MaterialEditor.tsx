@@ -38,7 +38,7 @@ export default function MaterialEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(MaterialAsset, _projectUid, _materialUid).then((value) => {
+        AssetsApi.GetAssetData(MaterialAsset, _projectUid, _materialUid).then((value) => {
             setMaterial(value)
         })
 

@@ -1,12 +1,12 @@
 import React from "react";
 import {TGui} from "@external/tgui";
-import {EditAssetDescriptionFormField, EditAssetNameFormField} from "@components/assets/parent/edit-parent-props";
+
 import MeshAsset from "@platform/assets/MeshAsset";
 import FileMeshPreview from "@components/assets/mesh-editor/mesh-previews";
 import {Ext} from "@external/prelude";
-import ConstantsApi from "@api/ConstantsApi";
+
 import FsTools from "@api/FsTools";
-import AssetsApi from "@api/AssetsApi";
+
 import TauriAssetPlugin from "../../../tauri/plugin_assets";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {Assets} from "@platform/assets/Assets";
@@ -92,6 +92,7 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
     const [meshPath, setMeshPath] = React.useState(FsTools.GetPlatformPath("Meshes/Default.glb"))
 
     function meshSelectedDesktop(path: string) {
+        console.log(path)
         setMeshPath(meshPath)
     }
 
@@ -101,6 +102,8 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
 
     function uploadPressed() {
+
+
         const params = new UploadAssetFileParams()
         params.path_from = meshPath
         params.folder = Assets.Mesh.FOLDER

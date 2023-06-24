@@ -12,9 +12,10 @@ import {MiddleSpinner} from "@components/Spinners";
 import {PivotControls} from "@react-three/drei";
 
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
-import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
+
 import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
+import {Assets} from "@platform/assets/Assets";
 
 
 export default function MeshEditor({}) {
@@ -28,7 +29,7 @@ export default function MeshEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(MeshAsset, _projectUid, _meshuidUid).then((value) => {
+        AssetsApi.GetAssetData(Assets.Mesh, _projectUid, _meshuidUid).then((value) => {
             setMesh(value)
         })
 

@@ -23,7 +23,7 @@ export default function QuizEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(QuizAsset, _projectUid, _quizUid).then((value) => {
+        AssetsApi.GetAssetData(QuizAsset, _projectUid, _quizUid).then((value) => {
             setQuiz(value)
         })
 

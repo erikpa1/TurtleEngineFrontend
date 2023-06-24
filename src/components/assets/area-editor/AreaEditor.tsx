@@ -24,7 +24,7 @@ export default function AreaEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(AreaAsset, _projectUid, _areaiud).then((value) => {
+        AssetsApi.GetAssetData(AreaAsset, _projectUid, _areaiud).then((value) => {
             setArea(value)
         })
 

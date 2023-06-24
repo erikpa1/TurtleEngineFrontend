@@ -26,6 +26,14 @@ export default class TauriOsPlugin {
         return true
     }
 
+    static async ReadFileString(file: string): Promise<string> {
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}ReadFileString`, {
+            file: file,
+        })
+        return response
+    }
+
+
     static async GetWorkingDirectory(): Promise<string> {
         const data = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetWorkingDirectory`)
         return data

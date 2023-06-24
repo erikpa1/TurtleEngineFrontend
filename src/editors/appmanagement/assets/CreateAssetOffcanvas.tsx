@@ -69,8 +69,8 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
         } else if (assetType === Assets.Area.TYPE) {
             await AreaAssetManager.CreateAreaAsset(basicParams, uploadFileParams)
         } else {
-            await AssetParentManager.CreateAsset(basicParams)
-            await AssetParentManager.CreateAssetThumbnail(basicParams, assetDefinition.FOLDER, uploadFileParams)
+            const createdAsset = await AssetParentManager.CreateAsset(basicParams)
+            await AssetParentManager.CreateAssetThumbnail(createdAsset, assetDefinition.FOLDER, uploadFileParams)
         }
 
         lock.unlock()
@@ -94,6 +94,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
         basicParams.assetDefinition = props.assetDefinition
         basicParams.assetType = props.assetDefinition.TYPE
+        basicParams.project_uid = projectZus.project.uid
 
         uploadFileParams.project_uid = projectUid
         uploadFileParams.asset_type = assetType

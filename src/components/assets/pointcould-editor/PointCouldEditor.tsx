@@ -19,7 +19,7 @@ export default function PointCloudEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset(PointCloudAsset, _projectUid, _cloudUid).then((value) => {
+        AssetsApi.GetAssetData(PointCloudAsset, _projectUid, _cloudUid).then((value) => {
             setCloud(value)
         })
 

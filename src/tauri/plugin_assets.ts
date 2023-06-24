@@ -9,6 +9,7 @@ import FsTools from "@api/FsTools";
 import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
 import TauriOsPlugin from "./plugin_os";
 import AssetParentManager from "@platform/assets-managers/AssetParentManager";
+import {AssetDefinition} from "@platform/assets/Assets";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 
@@ -44,8 +45,6 @@ export default class TauriAssetPlugin {
 
         const response = await TauriSqlitePlugin.Exec(QUERY)
 
-        console.log(response)
-
         const asset = new AssetParentLight()
         asset.parent_project_uid = params.project_uid
         asset.uid = params.uid
@@ -80,7 +79,14 @@ export default class TauriAssetPlugin {
         return JSON.parse(response)
     }
 
+    static async GetAssetData(project_uid: string, assetDefinition: AssetDefinition, asset_uid: string): Promise<any> {
+        const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, `${assetDefinition.FOLDER}/${asset_uid}/Default.json`))
+
+        return JSON.parse(response)
+    }
+
     static async UploadAssetFile(params: UploadAssetFileParams): Promise<string> {
+        console.log(params)
         const filePath = await invoke<string>(`${ASSETS_PLUGIN_NAME}UploadAssetFile`, {
             createJson: JSON.stringify(params),
         })

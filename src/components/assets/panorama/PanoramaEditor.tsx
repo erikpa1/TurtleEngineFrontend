@@ -23,7 +23,7 @@ export default function PanoramaEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAsset<PanoramaAsset>(PanoramaAsset, _projectUid, _panoramaUid).then((value) => {
+        AssetsApi.GetAssetData<PanoramaAsset>(PanoramaAsset, _projectUid, _panoramaUid).then((value) => {
             setPanorama(value)
         })
 
