@@ -80,9 +80,18 @@ export default class TauriAssetPlugin {
     }
 
     static async GetAssetData(project_uid: string, assetDefinition: AssetDefinition, asset_uid: string): Promise<any> {
-        const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, `${assetDefinition.FOLDER}/${asset_uid}/Default.json`))
+        const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, `${assetDefinition.FOLDER}/${asset_uid}/Default.json`)).catch((err) => {
+            console.error(`Unable to get asset data of: <${asset_uid}> because of ${err}`)
+            return "{}"
+        })
 
-        return JSON.parse(response)
+        if (response === "404") {
+            return {}
+        } else {
+            return JSON.parse(response)
+
+        }
+
     }
 
     static async UploadAssetFile(params: UploadAssetFileParams): Promise<string> {
