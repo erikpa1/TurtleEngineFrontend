@@ -40,3 +40,7 @@ export const TGui = {
     SingleFileInput: TurtleSingleFileInput
 
 }
+
+interface TSwitch  {
+    condition: string | number | any
+}

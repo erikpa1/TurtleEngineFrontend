@@ -19,6 +19,7 @@ export class AssetDefinition {
     LANG_PLURAL = ""
 
     DEFAULT_PLATFORM_FILE = ""
+    CLASS: any
 
     constructor(_clazz: any) {
         this.FOLDER = _clazz.FOLDER
@@ -26,6 +27,7 @@ export class AssetDefinition {
         this.LANG = _clazz.LANG
         this.LANG_PLURAL = _clazz.LANG_PLURAL
         this.DEFAULT_PLATFORM_FILE = _clazz.DEFAULT_PLATFORM_FILE
+        this.CLASS = _clazz
 
 
     }

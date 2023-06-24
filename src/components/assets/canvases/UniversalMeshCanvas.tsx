@@ -14,10 +14,11 @@ import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRot
 
 interface UniversalMeshCanvasProps {
     children: any
+    preserveDrawingBuffer?: boolean
     style?: React.CSSProperties
 }
 
-export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps) {
+export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
     return (
         <div style={{
             backgroundColor: "#303035"
@@ -27,6 +28,10 @@ export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps)
             <Canvas
                 shadows
                 className={"gl-canvas"}
+                gl={{
+                    preserveDrawingBuffer: props.preserveDrawingBuffer ?? false
+                }}
+
 
                 camera={{
                     far: 10000,
@@ -35,7 +40,7 @@ export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps)
 
                 style={{
                     height: "100vh",
-                    ...(style ? style : {})
+                    ...(props.style ? props.style : {})
                 }}
                 raycaster={{params: {Line: {threshold: 0.15}}}}
             >
@@ -57,9 +62,8 @@ export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps)
                 <UniversalWorldGrid/>
 
 
-
                 {
-                    React.Children.toArray(children)
+                    React.Children.toArray(props.children)
                 }
 
 

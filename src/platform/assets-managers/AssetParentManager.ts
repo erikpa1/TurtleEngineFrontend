@@ -14,6 +14,7 @@ export default class AssetParentManager {
     }
 
     static async CreateAssetThumbnail(basicParams: AssetParentLight, folder: string, uploadFileParams: UploadAssetFileParams) {
+
         const thumbnailParams = new CreateThumbnailParams()
         thumbnailParams.source_file = uploadFileParams.path_from
         thumbnailParams.destination_file = FsTools.GetPathInProject(basicParams.parent_project_uid, `${folder}/${basicParams.uid}/Preview.png`)

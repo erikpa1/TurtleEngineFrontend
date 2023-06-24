@@ -28,4 +28,21 @@ export default class PlatformDispatcher {
     }
 
 
+    static async OpenSingleMeshDialog(extension: string): Promise<string> {
+        const selected = await open({
+            multiple: false,
+            filters: [{
+                name: 'Mesh',
+                extensions: [extension]
+            }]
+        });
+
+        if (selected) {
+            return selected as string
+        } else {
+            return ""
+        }
+    }
+
+
 }

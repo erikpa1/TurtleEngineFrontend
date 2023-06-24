@@ -8,6 +8,7 @@ import TauriSqlitePlugin from "./plugin_sqlite";
 import FsTools from "@api/FsTools";
 import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
 import TauriOsPlugin from "./plugin_os";
+import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 
 export const ASSETS_PLUGIN_NAME = "plugin:turtle_assets|"
 
@@ -34,13 +35,26 @@ export default class TauriAssetPlugin {
     }
 
     static async CreateAsset(params: CreateAssetParamas): Promise<AssetParentLight> {
-        const assetData = await invoke<string>(`${ASSETS_PLUGIN_NAME}CreateAsset`, {
-            createJson: JSON.stringify(params),
-        })
+
+        params.uid = crypto.randomUUID()
+
+
+        const QUERY = `INSERT INTO Assets (Uid, Name, Type, Extension)
+                       VALUES ('${params.uid}', '${params.name}', '${params.assetType}', '${params.extension}');`
+
+        const response = await TauriSqlitePlugin.Exec(QUERY)
+
+        console.log(response)
 
         const asset = new AssetParentLight()
-        asset.from_json(JSON.parse(assetData))
         asset.parent_project_uid = params.project_uid
+        asset.uid = params.uid
+        asset.name = params.name
+
+        await TauriOsPlugin.WriteFileString(
+            FsTools.GetPathInProject(params.project_uid, `${params.assetDefinition.FOLDER}/${params.uid}/Default.json`),
+            JSON.stringify(asset)
+        )
 
         return asset
     }

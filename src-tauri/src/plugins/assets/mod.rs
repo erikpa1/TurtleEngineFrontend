@@ -31,19 +31,6 @@ use crate::database;
 
 
 #[tauri::command]
-pub async fn CreateAsset(state: State<'_, AppState>, createJson: String) -> Result<String, String> {
-    let mut createParams: CreateAssetParamas = serde_json::from_str(&createJson).unwrap();
-
-    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
-
-    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
-
-    let assetLightResult = database::CreateAsset(&dbc, &createParams);
-
-    return Ok(serde_json::to_string(&assetLightResult.unwrap()).unwrap_or("{}".into()));
-}
-
-#[tauri::command]
 pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> Result<String, String> {
     let mut createParams: UploadAssetFileParams = serde_json::from_str(&createJson).unwrap();
 
@@ -186,7 +173,6 @@ pub async fn UploadAssetLight(state: State<'_, AppState>, jsonString: String) ->
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
-            CreateAsset,
             GetAllAssetsOfType,
             DeleteAssetWithUid,
             UploadAssetFile,

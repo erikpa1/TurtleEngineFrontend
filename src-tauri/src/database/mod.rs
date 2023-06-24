@@ -69,38 +69,6 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
     return None;
 }
 
-pub fn CreateAsset(dbc: &Connection, createParams: &CreateAssetParamas) -> Result<AssetParentLight> {
-    let uid = Uuid::new_v4().to_string();
-
-    let query = format!(
-        "INSERT INTO Assets (Uid, Name, Type, Extension) VALUES ('{}', '{}', '{}', '{}');",
-        uid, createParams.name, createParams.assetType, createParams.extension
-    );
-
-    dbc.execute(&query, []).unwrap();
-
-
-    let mut asset = AssetParentLight::New();
-
-    asset.assetType = createParams.assetType.clone();
-    asset.uid = uid.clone();
-    asset.name = createParams.name.clone();
-    asset.hasPreview = false;
-    asset.extension = "jpg".into();
-    asset.description = createParams.description.clone();
-
-    let assetFolder = AssetManager::GetAssetFolder(&asset.assetType);
-
-    let panoramaFolder = format!("{}{}\\{}\\{}\\", tfs::GetProjectsPath(), createParams.project_uid, assetFolder, uid);
-
-    tfs::CreateFolders(&panoramaFolder);
-
-    println!("{:?}", fs::write(format!("{}Default.json", panoramaFolder), serde_json::to_string(&asset).unwrap()));
-
-    return Ok(asset);
-}
-
-
 pub fn UpdateAsset(dbc: &Connection, assetLight: &AssetParentLight) -> Result<()> {
     let uid = Uuid::new_v4().to_string();
 

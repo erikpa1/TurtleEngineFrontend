@@ -51,14 +51,9 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
     const projectUid = projectZus.project.uid
 
-    const [basicParams] = React.useState<CreateAssetParamas | any>({
-        name: "",
-        description: "",
-        assetType: assetType,
-        project_uid: projectUid
-    })
+    const [basicParams] = React.useState<CreateAssetParamas | any>(new CreateAssetParamas())
 
-    const [uploadFileParams] = React.useState(new UploadAssetFileParams())
+    const [uploadFileParams] = React.useState<UploadAssetFileParams>(new UploadAssetFileParams())
     const createAssetPressed = async () => {
 
         lock.lock()
@@ -96,6 +91,10 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
 
     React.useEffect(() => {
+
+        basicParams.assetDefinition = props.assetDefinition
+        basicParams.assetType = props.assetDefinition.TYPE
+
         uploadFileParams.project_uid = projectUid
         uploadFileParams.asset_type = assetType
         uploadFileParams.folder = assetDefinition.FOLDER
@@ -150,15 +149,3 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
         </TurtleOffcanvas>
     )
 }
-
-
-function getCreateFunction(assetType: string) {
-    if (assetType === Assets.Panorama.TYPE) {
-        return AssetsApi.CreatePanorama
-    } else {
-        return async () => {
-            //pass
-        }
-    }
-}
-

@@ -87,6 +87,8 @@ export default class AssetsApi {
         return true
     }
 
+
+
     static async GetAsset<T extends AssetParent>(clazz: new () => T | any, project_uid: string, asset_uid: string): Promise<T> {
 
         const asset: AssetParent = new clazz() as any
