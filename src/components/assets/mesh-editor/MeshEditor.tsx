@@ -16,6 +16,8 @@ import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 import {Assets} from "@platform/assets/Assets";
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
+import FsTools from "@api/FsTools";
 
 
 export default function MeshEditor({}) {
@@ -63,19 +65,21 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 <UniversalWorldEnvironment/>
 
 
-                <PivotControls
-                    rotation={[0, 0, 0]}
-                    anchor={[0, 0, 0]}
-                    scale={75}
-                    depthTest={false}
-                    fixed
-                    lineWidth={2}>
+                {/*<PivotControls*/}
+                {/*    rotation={[0, 0, 0]}*/}
+                {/*    anchor={[0, 0, 0]}*/}
+                {/*    scale={75}*/}
+                {/*    depthTest={false}*/}
+                {/*    fixed*/}
+                {/*    lineWidth={2}>*/}
 
-                    <mesh castShadow receiveShadow position={[0, 0.5, 0]}>
-                        <boxGeometry args={[1, 1, 1]}/>
-                        <meshStandardMaterial/>
-                    </mesh>
-                </PivotControls>
+                {/*    <mesh castShadow receiveShadow position={[0, 0.5, 0]}>*/}
+                {/*        <boxGeometry args={[1, 1, 1]}/>*/}
+                {/*        <meshStandardMaterial/>*/}
+                {/*    </mesh>*/}
+                {/*</PivotControls>*/}
+
+                <PrimitiveMesh meshPath={FsTools.ConvertFilePath(mesh.GetEntryFile())}/>
 
             </UniversalMeshCanvas>
 

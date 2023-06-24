@@ -77,6 +77,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 OpenFolder,
                 DeleteFolder,
                 WriteFileString,
+                ReadFileString,
                 GetWorkingDirectory
         ])
         .build()

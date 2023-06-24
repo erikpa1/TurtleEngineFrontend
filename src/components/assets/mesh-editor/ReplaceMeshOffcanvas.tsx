@@ -93,7 +93,7 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
     function meshSelectedDesktop(path: string) {
         console.log(path)
-        setMeshPath(meshPath)
+        setMeshPath(path)
     }
 
     function meshSelectedWeb(file: File) {
@@ -103,7 +103,6 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
     function uploadPressed() {
 
-
         const params = new UploadAssetFileParams()
         params.path_from = meshPath
         params.folder = Assets.Mesh.FOLDER
@@ -111,6 +110,8 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
         params.asset_uid = props.mesh.uid
         params.project_uid = props.mesh.parent_project_uid
         params.destination_name = "Default.glb"
+
+        console.log(params)
 
         TauriAssetPlugin.UploadAssetFile(params)
     }
