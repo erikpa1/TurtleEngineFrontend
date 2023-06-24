@@ -1,23 +1,33 @@
-import {AssetEditorHud} from "@components/assets/AssetEditorHud";
-import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-import HudButton from "@components/assets/HudButton";
 import React from "react";
 
+import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 
-export default function SceneEditorHud({}) {
+import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
+
+import HudButton from "@components/assets/HudButton";
+
+import SceneAsset from "@platform/assets/SceneAsset";
+import {Scene} from "three";
+
+
+interface SceneEditorHudProps {
+    scene: SceneAsset
+}
+
+export default function SceneEditorHud(props: SceneEditorHudProps) {
     return (
         <>
-            <_Bottom/>
-            <_Top/>
-            <_Left/>
-            <_Right/>
+            <_Bottom {...props}/>
+            <_Top {...props}/>
+            <_Left {...props}/>
+            <_Right {...props}/>
 
         </>
 
     )
 }
 
-function _Bottom({}) {
+function _Bottom(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
@@ -50,7 +60,7 @@ function _Bottom({}) {
     )
 }
 
-function _Top({}) {
+function _Top(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"top"}>
 
@@ -70,10 +80,10 @@ function _Top({}) {
     )
 }
 
-function _Left({}) {
+function _Left(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"left"}>
-            <OpenAssetFolderButton/>
+
 
             <HudButton
                 lang={"core.replace"}
@@ -93,10 +103,11 @@ function _Left({}) {
     )
 }
 
-function _Right({}) {
+function _Right(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"right"}>
-            <OpenAssetFolderButton/>
+
+            <OpenAssetFolderButton asset={props.scene}/>
 
             <HudButton
                 lang={"core.replace"}

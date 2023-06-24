@@ -39,10 +39,8 @@ export default function ReplaceMeshOffcanvas({mesh, onClose, onRefresh}: EditMes
                         </TGui.Tabs>
                     </TGui.Box>
 
-                    <TGui.SingleFileInput/>
 
-                    <FileMeshPreview/>
-
+                    <_GlbUpload/>
 
                 </TGui.Stack>
             </TGui.Box>
@@ -53,3 +51,14 @@ export default function ReplaceMeshOffcanvas({mesh, onClose, onRefresh}: EditMes
 }
 
 
+function _GlbUpload({}) {
+    return (
+        <>
+
+            <TGui.SingleFileInput accept={".glb"}/>
+
+            <FileMeshPreview/>
+
+        </>
+    )
+}

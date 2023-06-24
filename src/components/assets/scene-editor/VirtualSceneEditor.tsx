@@ -13,11 +13,11 @@ import {TeleportBoardEditHandler, TeleportBoardHandler} from "@components/assets
 
 export default function VirtualSceneEditor({scene}) {
     return (
-        <_VirtualSceneEditor/>
+        <_VirtualSceneEditor scene={scene}/>
     )
 }
 
-function _VirtualSceneEditor({}) {
+function _VirtualSceneEditor({scene}) {
     return (
         <div style={{
             position: "relative"
@@ -50,7 +50,7 @@ function _VirtualSceneEditor({}) {
 
             </UniversalMeshCanvas>
 
-            <SceneEditorHud/>
+            <SceneEditorHud scene={scene}/>
 
         </div>
     )

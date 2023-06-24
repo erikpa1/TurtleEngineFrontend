@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 import {TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField/TextField";
 import {TGui} from "@external/tgui";
+import {Form} from "react-bootstrap";
 
 
 interface TurtleTextFieldProps {
@@ -29,6 +30,7 @@ export function TurtleTextField(props: TextFieldProps | any): JSX.Element {
 
 interface TurtleSingleFileInput {
     name: string
+    accept: string
 }
 
 
@@ -55,19 +57,14 @@ export function TurtleSingleFileInput(props: TurtleSingleFileInput | any): JSX.E
 
     return (
         <div>
-            <TextField
 
-                inputRef={fileInputRef}
+            <Form.Control
+                type="file"
+                ref={fileInputRef}
                 onChange={handleFileInputChange}
-                className={props.disabled ? "" : "turtle-shaded-button"}
-
-                {...props}
-
-                label={t(_label)}
+                accept={props.accept}
             />
-            <TGui.Button variant="contained" onClick={handleButtonClick}>
-                Select File
-            </TGui.Button>
+
         </div>
     )
 }

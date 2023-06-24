@@ -9,12 +9,12 @@ import MeshAsset from "@platform/assets/MeshAsset";
 
 import {MiddleSpinner} from "@components/Spinners";
 
-import { PivotControls} from "@react-three/drei";
+import {PivotControls} from "@react-three/drei";
 
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
-
+import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
 
 export default function MeshEditor({}) {
@@ -56,6 +56,8 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
             position: "relative"
         }}>
             <UniversalMeshCanvas>
+
+                <SceneCameraRotationGizmo/>
 
                 <UniversalWorldEnvironment/>
 

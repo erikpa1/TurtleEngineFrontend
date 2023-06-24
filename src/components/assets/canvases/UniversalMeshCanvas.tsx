@@ -56,7 +56,7 @@ export function UniversalMeshCanvas({children, style}: UniversalMeshCanvasProps)
 
                 <UniversalWorldGrid/>
 
-                <SceneCameraRotationGizmo/>
+
 
                 {
                     React.Children.toArray(children)
