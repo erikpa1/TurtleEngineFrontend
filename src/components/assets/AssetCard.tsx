@@ -61,7 +61,7 @@ export default function AssetCard({
     }
     const deletePressed = () => {
         Modals.showYesNoModal({
-            lang: `${t("core.sure.remove.asset")}: ${asset.name} (${asset.uid})`,
+            lang: `${t("sure.remove.asset")}: ${asset.name} (${asset.uid})`,
             onYes: deleteConfirmed
         })
     }
@@ -93,8 +93,8 @@ export default function AssetCard({
 
                 {
                     mode === AssetCardModes.EDIT && <>
-                        <TGui.Button onClick={editAssetPressed} label={"core.edit"}/>
-                        <TGui.Button onClick={deletePressed} label={"core.delete"} color={"error"}/>
+                        <TGui.Button onClick={editAssetPressed} label={"edit"}/>
+                        <TGui.Button onClick={deletePressed} label={"delete"} color={"error"}/>
                     </>
                 }
 
@@ -104,7 +104,7 @@ export default function AssetCard({
                             if (onSelect) {
                                 onSelect(asset)
                             }
-                        }} label={"core.select"}/>
+                        }} label={"select"}/>
                     </>
                 }
 

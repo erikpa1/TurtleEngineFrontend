@@ -83,12 +83,12 @@ export function YesNoModal(props: YesNoModalProps) {
             <TurtleButton
                 variant={"contained"}
                 color={"error"}
-                label={"core.no"}
+                label={"no"}
                 onClick={props.onNo}
             />
             <TurtleButton
                 variant={"contained"}
-                label={"core.yes"}
+                label={"yes"}
                 onClick={props.onYes}
             />
 
@@ -99,7 +99,7 @@ export function YesNoModal(props: YesNoModalProps) {
         <TurtleModal
             onHide={props.onNo}
             closeEnabled={true}
-            header={<Modal.Title>{t("core.confirm")}</Modal.Title>}
+            header={<Modal.Title>{t("confirm")}</Modal.Title>}
             body={<>{t(_lang)}</>}
             footer={footer}
 

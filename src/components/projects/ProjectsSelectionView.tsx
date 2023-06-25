@@ -43,14 +43,14 @@ export default function ProjectsSelectionView({}) {
                             centered
                             textColor="inherit"
                         >
-                            <Tab label={t("core.local")} value={"0"}/>
-                            <Tab label={t("core.remote")} value={"1"}/>
+                            <Tab label={t("local")} value={"0"}/>
+                            <Tab label={t("remote")} value={"1"}/>
                         </Tabs>
 
                     </Box>
 
                     <div style={{marginLeft: "auto", marginRight: "auto"}}>
-                        <UniversalInputSearchBar placeHolder={"core.search"}/>
+                        <UniversalInputSearchBar placeHolder={"search"}/>
                     </div>
 
 

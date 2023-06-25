@@ -35,7 +35,7 @@ export default function ReplaceMeshOffcanvas(props: EditMeshAssetOffcanvas) {
             onClose={props.onClose}
             header={
                 <TGui.OffcanvasTitle>
-                    {t("core.replace")}
+                    {t("replace")}
                 </TGui.OffcanvasTitle>
             }
         >
@@ -128,7 +128,7 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
             <TGui.Button
                 variant={"outlined"}
-                label={t("core.upload")}
+                label={t("upload")}
                 onClick={uploadPressed}
             />
 

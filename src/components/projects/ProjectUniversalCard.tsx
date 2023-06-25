@@ -100,9 +100,9 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
             <CardActions>
                 <Button size="small"
                         onClick={activateProjectPressed}>
-                    {t("core.open")}
+                    {t("open")}
                 </Button>
-                <Button onClick={editPressed} size="small">{t("core.edit")}</Button>
+                <Button onClick={editPressed} size="small">{t("edit")}</Button>
             </CardActions>
         </Card>
     );

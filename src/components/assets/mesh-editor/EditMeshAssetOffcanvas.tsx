@@ -20,7 +20,7 @@ export default function EditMeshAssetOffcanvas({mesh, onClose, onRefresh}: EditM
             onClose={onClose}
             header={
                 <TGui.OffcanvasTitle>
-                    {t("core.edit")}
+                    {t("edit")}
                 </TGui.OffcanvasTitle>
             }
         >

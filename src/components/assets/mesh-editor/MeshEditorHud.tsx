@@ -48,12 +48,12 @@ export default function MeshEditorHud({mesh}: MeshEditorHud) {
             <OpenAssetFolderButton asset={mesh}/>
 
             <HudButton
-                lang={"core.replace"}
+                lang={"replace"}
                 icon={"/icons/Map.svg"}
                 onClick={replaceMeshPressed}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
                 onClick={editAssetPressed}
             />

@@ -17,6 +17,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import SceneDefinition from "@platform/scene/SceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import {SceneNode} from "@platform/scene/SceneNode";
 
 
 interface SceneEditorHudProps {
@@ -53,7 +54,7 @@ function _Bottom(props: SceneEditorHudProps) {
                 closeEnabled={true}
                 onClose={popup.popElement}
                 width={"1000px"}
-                header={<TGui.OffcanvasTitle>{"core.select"}</TGui.OffcanvasTitle>}
+                header={<TGui.OffcanvasTitle>{"select"}</TGui.OffcanvasTitle>}
             >
                 <UniversalAssetList
                     md={4}
@@ -84,13 +85,13 @@ function _Bottom(props: SceneEditorHudProps) {
             />
 
             <HudButton
-                lang={"core.mesh"}
+                lang={"mesh"}
                 icon={"/icons/Create.Mesh.svg"}
                 onClick={() => addAssetPressed(Assets.Mesh)}
             />
 
             <HudButton
-                lang={"core.video"}
+                lang={"video"}
                 icon={"/icons/Create.Video.svg"}
                 onClick={() => addAssetPressed(Assets.Video)}
             />
@@ -100,7 +101,7 @@ function _Bottom(props: SceneEditorHudProps) {
                 icon={"/icons/Create.Pdf.svg"}
             />
             <HudButton
-                lang={"core.other"}
+                lang={"other"}
                 icon={"/icons/Create.Other.svg"}
             />
 
@@ -147,16 +148,16 @@ function _Left(props: SceneEditorHudProps) {
         <AssetEditorHud placement={"left"}>
 
             <HudButton
-                lang={"core.replace"}
+                lang={"replace"}
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
             />
 
             <HudButton
-                lang={"core.snapshot"}
+                lang={"snapshot"}
                 icon={"/icons/Management.svg"}
             />
 
@@ -165,6 +166,11 @@ function _Left(props: SceneEditorHudProps) {
 }
 
 function _Right(props: SceneEditorHudProps) {
+
+    function deleteSelectedPressed(node: SceneNode) {
+        //pass
+    }
+
     return (
         <AssetEditorHud placement={"right"}>
 
@@ -175,7 +181,7 @@ function _Right(props: SceneEditorHudProps) {
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
             />
 

@@ -39,10 +39,10 @@ export default function AppManagementView({}) {
                         centered
                         textColor="inherit"
                     >
-                        <Tab label={t("core.projects")} value={"0"}/>
-                        <Tab label={t("core.users")} value={"1"}/>
-                        <Tab label={t("core.deployment")} value={"2"}/>
-                        <Tab label={t("core.licences")} value={"3"}/>
+                        <Tab label={t("projects")} value={"0"}/>
+                        <Tab label={t("users")} value={"1"}/>
+                        <Tab label={t("deployment")} value={"2"}/>
+                        <Tab label={t("licences")} value={"3"}/>
                     </Tabs>
 
                 </Box>

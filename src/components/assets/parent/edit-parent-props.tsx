@@ -20,7 +20,7 @@ export function EditAssetNameFormField({asset}: _AllProps) {
         <TurtleTextField
             value={name}
             onChange={nameChanged}
-            label={"core.name"}
+            label={"name"}
         />
     )
 }
@@ -38,7 +38,7 @@ export function EditAssetDescriptionFormField({asset}: _AllProps) {
         <TurtleTextField
             value={desciption}
             onChange={descChanged}
-            label={"core.description"}
+            label={"description"}
         />
     )
 }

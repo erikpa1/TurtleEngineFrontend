@@ -74,8 +74,8 @@ export default function MainNavBar() {
                 </sb.Menu>
 
                 <sb.Menu>
-                    <MyNavbarItem lang={"core.projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
-                    <MyNavbarItem lang={"core.management"} link={"/management"} icon={"/icons/Management.svg"}/>
+                    <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
+                    <MyNavbarItem lang={"management"} link={"/management"} icon={"/icons/Management.svg"}/>
                 </sb.Menu>
 
                 <Hr/>
@@ -181,7 +181,7 @@ function _SettingsNavItem({}) {
         <>
             <MyNavbarItem
                 icon={"/icons/settings.svg"}
-                lang={"core.settings"}
+                lang={"settings"}
                 onClick={() => {
                     setShow(true)
                 }}
@@ -211,12 +211,12 @@ function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
         <sb.Menu>
 
             <MyNavbarItem
-                lang={"core.assets"}
+                lang={"assets"}
                 link={RoutesManager.Assets(project.uid)}
                 icon={"/icons/Assets.svg"}/>
 
             <MyNavbarItem
-                lang={"core.play"}
+                lang={"play"}
                 link={RoutesManager.Play(project.uid)}
                 icon={"/icons/Spot.svg"}/>
 

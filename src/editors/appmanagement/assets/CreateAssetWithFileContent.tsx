@@ -58,7 +58,7 @@ export default function CreateAssetWithFileContent({
 
                 <TGui.CardActions>
                     <TGui.Button
-                        label={"core.replace"}
+                        label={"replace"}
                         onClick={selectImageClicked}
 
                     />

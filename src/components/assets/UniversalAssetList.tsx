@@ -70,7 +70,7 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
                 &&
                 <TGui.Stack>
                     <TGui.Button
-                        label={"core.asset.create"}
+                        label={"asset.create"}
                         color={"success"}
                         variant={"outlined"}
                         onClick={createAssetPressed}

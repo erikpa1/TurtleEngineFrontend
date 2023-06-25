@@ -9,11 +9,11 @@ export default function PointCloudEditorHud({}) {
             <OpenAssetFolderButton/>
 
             <HudButton
-                lang={"core.replace"}
+                lang={"replace"}
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
             />
 

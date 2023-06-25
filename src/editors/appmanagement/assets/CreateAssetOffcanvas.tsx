@@ -108,7 +108,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
             onClose={props.onClose}
             closeEnabled={true}
 
-            header={<Offcanvas.Title>{t("core.create.asset")}</Offcanvas.Title>}
+            header={<Offcanvas.Title>{t("create.asset")}</Offcanvas.Title>}
         >
 
             <Box>
@@ -116,17 +116,17 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
 
                     <TurtleTextField
                         onChange={pNameChanged}
-                        label={"core.name"}
+                        label={"name"}
                     />
 
                     <TurtleTextField
                         onChange={descChanged}
-                        label={"core.description"}
+                        label={"description"}
                         multiline
                     />
 
                     <TurtleTextField
-                        label={"core.author"}
+                        label={"author"}
                         disabled
                     />
 
@@ -138,7 +138,7 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
                         <TurtleButton
                             variant={"outlined"}
                             onClick={createAssetPressed}
-                            label={"core.create.asset"}
+                            label={"create.asset"}
                         />
                     </TGui.Stack>
 

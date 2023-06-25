@@ -36,11 +36,11 @@ function _Bottom({area}: AreaEditorHudProps) {
             <OpenAssetFolderButton asset={area}/>
 
             <HudButton
-                lang={"core.replace"}
+                lang={"replace"}
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
             />
 
@@ -53,11 +53,11 @@ function _Top({area}: AreaEditorHudProps) {
     return (
         <AssetEditorHud placement={"top"}>
             <HudButton
-                lang={"core.add.marker"}
+                lang={"add.marker"}
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.add.marker"}
+                lang={"add.marker"}
                 icon={"/icons/Map.svg"}
             />
         </AssetEditorHud>
@@ -69,7 +69,7 @@ function _Left({area}: AreaEditorHudProps) {
         <AssetEditorHud placement={"left"}>
 
             <HudButton
-                lang={"core.mesh.layers"}
+                lang={"mesh.layers"}
                 icon={"/icons/Map.svg"}
             />
 
@@ -87,7 +87,7 @@ function _Right({area}: AreaEditorHudProps) {
 
         popupZus.pushElement(
             <TurtleOffcanvas
-                header={<Offcanvas.Title>{t("core.select.scene")}</Offcanvas.Title>}
+                header={<Offcanvas.Title>{t("select.scene")}</Offcanvas.Title>}
                 closeEnabled={true}
                 width={"800px"}
                 onClose={popupZus.popElement}>
@@ -105,11 +105,11 @@ function _Right({area}: AreaEditorHudProps) {
         <AssetEditorHud placement={"right"}>
             <HudButton
                 onClick={selectScenePressed}
-                lang={"core.add.marker"}
+                lang={"add.marker"}
                 icon={"/icons/Spot.svg"}
             />
             <HudButton
-                lang={"core.add.marker"}
+                lang={"add.marker"}
                 icon={"/icons/Map.svg"}
             />
         </AssetEditorHud>

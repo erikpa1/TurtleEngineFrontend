@@ -24,7 +24,7 @@ export default function OpenAssetFolderButton({asset}: OpenAssetFolderButton) {
         return (
             <HudButton
 
-                lang={"core.open"}
+                lang={"open"}
                 icon={"/icons/Projects.svg"}
                 onClick={clicked}
             />

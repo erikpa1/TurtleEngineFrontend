@@ -37,7 +37,7 @@ export default function UniversalInputSearchBar(props: UniversalInputSearchBarPr
 export function MiddleSearchBar({}) {
     return (
         <div style={{marginLeft: "auto", marginRight: "auto"}}>
-            <UniversalInputSearchBar placeHolder={"core.search"}/>
+            <UniversalInputSearchBar placeHolder={"search"}/>
         </div>
     )
 }

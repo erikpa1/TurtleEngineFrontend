@@ -18,8 +18,8 @@ export default function MaterialTextureCard({type, path}) {
 
             </TGui.CardContent>
             <TGui.CardActions>
-                <TGui.Button label={"core.replace"}/>
-                <TGui.Button label={"core.clear"} color={"error"}/>
+                <TGui.Button label={"replace"}/>
+                <TGui.Button label={"clear"} color={"error"}/>
             </TGui.CardActions>
 
         </TGui.Card>

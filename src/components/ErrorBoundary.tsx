@@ -71,7 +71,7 @@ function _ErrorView({error = ""}): any {
                                     setIsClosed(true)
                                 }}
                             >
-                                {t("core.continue")}
+                                {t("continue")}
                             </button>
                         </div>
                     </div>

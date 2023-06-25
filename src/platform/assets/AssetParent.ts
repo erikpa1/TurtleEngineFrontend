@@ -13,8 +13,8 @@ export default class AssetParent {
     public extension = ""
     public _folder = ""
 
-    static LANG = "core.asset"
-    static LANG_PLURAL = "core.assets"
+    static LANG = "asset"
+    static LANG_PLURAL = "assets"
 
     GetPreviewPath(): string {
         return `${this.parent_project_path}${this._folder}/${this.uid}/Preview.png`

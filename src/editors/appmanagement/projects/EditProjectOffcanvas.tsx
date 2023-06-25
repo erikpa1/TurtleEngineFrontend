@@ -43,7 +43,7 @@ export default function EditProjectOffcanvas({
     return (
         <TurtleOffcanvas
             onClose={onClose}
-            header={<Offcanvas.Title>{t("core.project.edit")}</Offcanvas.Title>}
+            header={<Offcanvas.Title>{t("project.edit")}</Offcanvas.Title>}
             closeEnabled={true}
         >
 
@@ -142,7 +142,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
 
     const deleteProjectPressed = () => {
         Modals.showYesNoModal({
-            lang: "core.confirm.project.remove",
+            lang: "confirm.project.remove",
             onYes: deleteProjectConfirmed
         })
     }
@@ -179,7 +179,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
 
                         <TGui.CardActions>
                             <TGui.Button
-                                label={"core.replace"}
+                                label={"replace"}
                                 onClick={selectImageClicked}
 
                             />

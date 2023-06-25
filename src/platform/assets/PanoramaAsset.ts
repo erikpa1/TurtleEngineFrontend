@@ -3,8 +3,8 @@ import AssetParent from "./AssetParent";
 export default class PanoramaAsset extends AssetParent {
     static FOLDER = "Panoramas"
     static TYPE = "panorama"
-    static LANG = "core.panorama"
-    static LANG_PLURAL = "core.panoramas"
+    static LANG = "panorama"
+    static LANG_PLURAL = "panoramas"
     static DEFAULT_PLATFORM_FILE = `Images/Previews/${PanoramaAsset.TYPE}-Preview.png`
 
     FromJson(jObject: any) {

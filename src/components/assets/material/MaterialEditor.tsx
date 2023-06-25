@@ -94,8 +94,8 @@ function _MaterialEditor({material}) {
                     </TGui.CardContent>
 
                     <TGui.CardActions>
-                        <TGui.Button label={"core.snapshot"}/>
-                        <TGui.Button label={"core.clear"} color={"error"}/>
+                        <TGui.Button label={"snapshot"}/>
+                        <TGui.Button label={"clear"} color={"error"}/>
                     </TGui.CardActions>
 
 

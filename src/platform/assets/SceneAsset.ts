@@ -3,8 +3,8 @@ import AssetParent from "./AssetParent";
 export default class SceneAsset extends AssetParent {
     static TYPE = "scene"
     static FOLDER = "Scenes"
-    static LANG = "core.scene-editor"
-    static LANG_PLURAL = "core.scenes"
+    static LANG = "scene-editor"
+    static LANG_PLURAL = "scenes"
     static DEFAULT_PLATFORM_FILE = `Images/Previews/${SceneAsset.TYPE}-Preview.png`
 }
 

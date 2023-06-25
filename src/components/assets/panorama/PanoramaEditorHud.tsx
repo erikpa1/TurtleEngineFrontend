@@ -18,11 +18,11 @@ export default function PanoramaEditorHud({panorama}: PanoramaEditorHudProps) {
             <OpenAssetFolderButton asset={panorama}/>
 
             <HudButton
-                lang={"core.replace"}
+                lang={"replace"}
                 icon={"/icons/Map.svg"}
             />
             <HudButton
-                lang={"core.edit"}
+                lang={"edit"}
                 icon={"/icons/Management.svg"}
             />
 
