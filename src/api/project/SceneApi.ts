@@ -1,5 +1,5 @@
 import PlatformDispatcher from "@api/PlatformDispatcher";
-import SceneDefinition from "@platform/scene/SceneDefinition";
+import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneGraphicParams from "@platform/scene/SceneGraphicParams";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsTools from "@api/FsTools";
@@ -8,9 +8,9 @@ import {Assets} from "@platform/assets/Assets";
 
 export default class SceneApi {
 
-    static async GetSceneDefinition(projectUid: string, sceneUid: string): Promise<SceneDefinition> {
+    static async GetSceneDefinition(clazz: any, projectUid: string, sceneUid: string): Promise<VirtualSceneDefinition> {
 
-        const sceneDefinition = new SceneDefinition()
+        const sceneDefinition = new clazz()
 
         if (PlatformDispatcher.IsDesktop()) {
             const path = FsTools.GetPathInProject(projectUid, `${Assets.Scene.FOLDER}/${sceneUid}/SceneDefinition.json`)
@@ -30,7 +30,7 @@ export default class SceneApi {
         return sceneDefinition
     }
 
-    static async SaveSceneDefinition(projectUid: string, sceneUid: string, sceneDefinition: SceneDefinition): Promise<boolean> {
+    static async SaveSceneDefinition(projectUid: string, sceneUid: string, sceneDefinition: VirtualSceneDefinition): Promise<boolean> {
 
 
         if (PlatformDispatcher.IsDesktop()) {

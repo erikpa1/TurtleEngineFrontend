@@ -1,11 +1,11 @@
 import React from "react";
 
-import SceneDefinition from "@platform/scene/SceneDefinition";
+import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import {SceneMeshNode, SceneMeshView} from "@platform/scene/SceneMeshNode";
 
 
 interface SceneDefinitionDomProps {
-    sceneDefinition: SceneDefinition
+    sceneDefinition: VirtualSceneDefinition
 }
 
 export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {

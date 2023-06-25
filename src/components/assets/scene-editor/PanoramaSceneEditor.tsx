@@ -1,69 +1,123 @@
 import React from "react";
-import {useParams} from "react-router-dom";
 
-import AssetsApi from "@api/AssetsApi";
-import {MiddleSpinner} from "@components/Spinners";
-import {Canvas} from "@react-three/fiber";
-import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
-import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
-import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import SceneAsset from "@platform/assets/SceneAsset";
-import VideoBoardHandler from "@components/boards/VideoBoardHandler";
+
+import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
+
+import SceneApi from "@api/project/SceneApi";
+
+import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
+
+import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
+
+import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
+
+import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
+import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
+import PanoramaSceneDefinition from "@platform/scene/PanoramaSceneDefinition";
+import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import FsTools from "@api/FsTools";
 
 
 interface PanoramaSceneEditorProps {
     scene: SceneAsset
 }
 
-
 export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
+
+    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: PanoramaSceneDefinition } | null>()
+
+    React.useEffect(() => {
+        SceneApi.GetSceneDefinition(PanoramaSceneDefinition, scene.parent_project_uid, scene.uid).then((value) => {
+
+            setSceneDefinition({value: value as PanoramaSceneDefinition})
+        })
+
+    }, [])
+
+    if (sceneDefinition) {
+        return (
+            <_PanoramaSceneEditor
+                scene={scene}
+                sceneDefinition={sceneDefinition.value}
+                onSceneDefinitionChanged={() => {
+                    setSceneDefinition({value: sceneDefinition.value})
+                }}
+            />
+        )
+    } else {
+        return <></>
+    }
+}
+
+interface _PanoramaSceneEditorProps {
+    scene: SceneAsset
+    sceneDefinition: PanoramaSceneDefinition
+    onSceneDefinitionChanged: () => void
+}
+
+function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
+
+
     return (
-        <div style={{}}>
+        <div style={{
+            position: "relative"
+        }}>
+
+            <UniversalMeshCanvas>
+
+                <UniversalWorldEnvironment/>
+                <SceneCameraRotationGizmo/>
+                {/*<SceneTransformHelper/>*/}
+
+                {/*<_ExampleMeshes/>*/}
+
+                <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
+
+                <_PanoramaLoader panoramaUid={props.sceneDefinition.panoramaUid}/>
 
 
-            <Canvas
-                shadows
-                className={"gl-canvas"}
-                camera={{
-                    far: 10000
-                }}
+            </UniversalMeshCanvas>
 
-                style={{
-                    height: "100vh"
-                }}
-            >
-                <ambientLight/>
-
-                <React.Suspense fallback={""}>
-                    <Environment
-                        preset={"sunset"}
-                        ground={{height: 1, radius: 25}}
-                    />
-                </React.Suspense>
-
-                <ContactShadows position={[0, -0.8, 0]} opacity={0.25} scale={10} blur={1.5} far={0.8}/>
-
-                <OrbitControls makeDefault
-                               target={[0, 0.15, 0]}
-                               enableDamping={false}
-                               maxPolarAngle={Math.PI / 2}
-                />
-
-                <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
-
-
-                <_Components/>
-
-            </Canvas>
-
+            <SceneEditorHud
+                sceneDefinition={props.sceneDefinition}
+                scene={props.scene}
+                onSceneDefinitionChanged={props.onSceneDefinitionChanged}
+            />
 
         </div>
     )
 }
 
-function _Components({}) {
-    return (
-        <VideoBoardHandler/>
-    )
+function _PanoramaLoader({panoramaUid}) {
+
+
+    if (panoramaUid && panoramaUid !== "") {
+        return (
+            <_PanoramaAssetLoader assetUid={panoramaUid}/>
+        )
+    } else {
+
+        return (
+            <PhotoRawDom path={FsTools.GetPlatformPath("Panoramas/PreviewPanorama.jpg")}/>
+        )
+    }
+}
+
+
+function _PanoramaAssetLoader({assetUid}) {
+
+
+    const [panoAsset, setPanoAsset] = React.useState<PanoramaAsset | null>(null)
+
+    if (panoAsset) {
+        return (
+            <PhotoDom panorama={panoAsset}/>
+        )
+    } else {
+        return (<></>)
+    }
+
+
 }

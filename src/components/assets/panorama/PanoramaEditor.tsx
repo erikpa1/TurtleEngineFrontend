@@ -13,6 +13,7 @@ import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 import FsTools from "@api/FsTools";
 import {Assets} from "@platform/assets/Assets";
+import PhotoDom from "@components/assets/panorama/PhotoDom";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -61,8 +62,7 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
                 }}
             >
 
-
-                <_PhotoDom panorama={panorama}/>
+                <PhotoDom panorama={panorama}/>
 
                 <ambientLight/>
 
@@ -91,20 +91,3 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
     )
 }
 
-function _PhotoDom({panorama}: { panorama: PanoramaAsset }) {
-
-    const texutre = useTexture(FsTools.ConvertFilePath(panorama.GetFullPanoramaPath()))
-
-    return (
-        <mesh visible={true} scale={[-1, 1, 1]}>
-            <sphereGeometry args={[980, 64, 64]}/>
-            <meshBasicMaterial
-                side={three.BackSide}
-                map={texutre}
-
-            />
-
-        </mesh>
-
-    )
-}

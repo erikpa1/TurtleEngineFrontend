@@ -5,8 +5,9 @@ import {SceneMeshNode} from "@platform/scene/SceneMeshNode";
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {Assets} from "@platform/assets/Assets";
 
-export default class SceneDefinition {
+export default class VirtualSceneDefinition {
     root: SceneNode
+    type = "virtual"
 
     constructor() {
         this.root = new SceneNode()
@@ -18,6 +19,7 @@ export default class SceneDefinition {
 
     ToJson() {
         return {
+            type: this.type,
             root: this.root.ToJson()
         }
     }
@@ -28,10 +30,8 @@ export default class SceneDefinition {
             const tmp = new SceneMeshNode()
             tmp.meshUid = asset.uid
             this.root.children.push(tmp)
-            console.log("Mesh added")
         }
 
-        console.log(this)
 
     }
 

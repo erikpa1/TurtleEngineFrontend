@@ -6,7 +6,7 @@ import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
 import SceneAsset from "@platform/assets/SceneAsset";
-import SceneDefinition from "@platform/scene/SceneDefinition";
+import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
 
 import SceneApi from "@api/project/SceneApi";
@@ -19,10 +19,10 @@ interface VirtualSceneEditorProps {
 export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 
 
-    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: SceneDefinition } | null>()
+    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: VirtualSceneDefinition } | null>()
 
     React.useEffect(() => {
-        SceneApi.GetSceneDefinition(scene.parent_project_uid, scene.uid).then((value) => {
+        SceneApi.GetSceneDefinition(VirtualSceneDefinition,scene.parent_project_uid, scene.uid).then((value) => {
 
             setSceneDefinition({value: value})
         })
@@ -46,7 +46,7 @@ export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 
 interface _VirtualSceneEditorProps {
     scene: SceneAsset
-    sceneDefinition: SceneDefinition
+    sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }
 

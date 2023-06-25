@@ -14,7 +14,7 @@ import {TGui} from "@external/tgui";
 import {useTranslation} from "react-i18next";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
-import SceneDefinition from "@platform/scene/SceneDefinition";
+import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {SceneNode} from "@platform/scene/SceneNode";
@@ -22,7 +22,7 @@ import {SceneNode} from "@platform/scene/SceneNode";
 
 interface SceneEditorHudProps {
     scene: SceneAsset
-    sceneDefinition: SceneDefinition
+    sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }
 

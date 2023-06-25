@@ -7,7 +7,7 @@ import {MiddleSpinner} from "@components/Spinners";
 import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEditor";
 import {Assets} from "@platform/assets/Assets";
 import SceneAsset from "@platform/assets/SceneAsset";
-
+import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
 
 export default function SceneEditorDispatcher({}) {
     const {projectuid, sceneuid} = useParams()
@@ -25,8 +25,11 @@ export default function SceneEditorDispatcher({}) {
 
     if (scene) {
         return (
-            <VirtualSceneEditor scene={scene}/>
+            <PanoramaSceneEditor scene={scene}/>
         )
+        // return (
+        //     <VirtualSceneEditor scene={scene}/>
+        // )
     } else {
         return (
             <MiddleSpinner/>
