@@ -133,6 +133,8 @@ function _Top(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"top"}>
 
+            <OpenAssetFolderButton asset={props.scene}/>
+
             <HudButton
                 icon={"/icons/Save.svg"}
                 lang={"save"}
@@ -178,7 +180,7 @@ function _Right(props: SceneEditorHudProps) {
 
             <HudButton
                 lang={"delete"}
-                icon={"/icons/Map.svg"}
+                icon={"/icons/Delete.svg"}
             />
             <HudButton
                 lang={"edit"}

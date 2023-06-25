@@ -44,8 +44,8 @@ export default function HudButton({
              }}
         >
             <div style={{
-                borderRadius: "50%",
-                backgroundColor: isActive ? `rgb(100, 0, 0)` : `rgb(30, 30, 30)`,
+                borderRadius: "25%",
+                backgroundColor: isActive ? `rgb(100, 0, 0)` : `rgba(150, 150, 150, 0.8)`,
             }}>
                 <div style={{
                     width: "50px",
