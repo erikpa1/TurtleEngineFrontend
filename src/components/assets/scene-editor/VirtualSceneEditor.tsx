@@ -1,23 +1,58 @@
 import React from "react";
 
-import {PrimitiveMeshEditable} from "@components/assets/mesh/PrimitiveMesh";
-
 import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
-import {AnimatedMeshEditable} from "@components/assets/mesh/AnimatedMesh";
-import {TeleportBoardEditHandler, TeleportBoardHandler} from "@components/assets/boards/TeleportBoardHandler";
+import SceneAsset from "@platform/assets/SceneAsset";
+import SceneDefinition from "@platform/scene/SceneDefinition";
+import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
+
+import SceneApi from "@api/project/SceneApi";
 
 
-export default function VirtualSceneEditor({scene}) {
-    return (
-        <_VirtualSceneEditor scene={scene}/>
-    )
+interface VirtualSceneEditorProps {
+    scene: SceneAsset
 }
 
-function _VirtualSceneEditor({scene}) {
+export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
+
+
+    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: SceneDefinition } | null>()
+
+    React.useEffect(() => {
+        SceneApi.GetSceneDefinition(scene.parent_project_uid, scene.uid).then((value) => {
+
+            setSceneDefinition({value: value})
+        })
+
+    }, [])
+
+    if (sceneDefinition) {
+        return (
+            <_VirtualSceneEditor
+                scene={scene}
+                sceneDefinition={sceneDefinition.value}
+                onSceneDefinitionChanged={() => {
+                    setSceneDefinition({value: sceneDefinition.value})
+                }}
+            />
+        )
+    } else {
+        return <></>
+    }
+}
+
+interface _VirtualSceneEditorProps {
+    scene: SceneAsset
+    sceneDefinition: SceneDefinition
+    onSceneDefinitionChanged: () => void
+}
+
+function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
+
+
     return (
         <div style={{
             position: "relative"
@@ -29,37 +64,19 @@ function _VirtualSceneEditor({scene}) {
                 <SceneCameraRotationGizmo/>
                 {/*<SceneTransformHelper/>*/}
 
-                <_ExampleMeshes/>
+                {/*<_ExampleMeshes/>*/}
+
+                <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
 
             </UniversalMeshCanvas>
 
-            <SceneEditorHud scene={scene}/>
+            <SceneEditorHud
+                sceneDefinition={props.sceneDefinition}
+                scene={props.scene}
+                onSceneDefinitionChanged={props.onSceneDefinitionChanged}
+            />
 
         </div>
     )
 }
 
-function _ExampleMeshes() {
-    return (
-        <>
-            <PrimitiveMeshEditable
-                meshPath={"/dev/assets/mesh/tmp-mesh/Default.glb"}
-            />
-
-            <AnimatedMeshEditable
-                meshPath={"/dev/assets/mesh/tmp-animated/Default.glb"}
-                position={[0, 0, 10]}
-                scale={[0.05, 0.05, 0.05]}
-            />
-
-            <PrimitiveMeshEditable
-                meshPath={"/dev/assets/mesh/tmp-cones/Default.glb"}
-                position={[10, 0, 0]}
-            />
-
-            <TeleportBoardEditHandler
-                position={[2, 1, 0]}
-            />
-        </>
-    )
-}

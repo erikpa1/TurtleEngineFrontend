@@ -2,7 +2,7 @@ import React from "react";
 import {Col, Row} from "react-bootstrap";
 
 import AssetCard from "@components/assets/AssetCard";
-import AssetParent from "@platform/assets/AssetParent";
+
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
 
@@ -13,18 +13,26 @@ import CreateAssetOffcanvas from "@editors/appmanagement/assets/CreateAssetOffca
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
+import AssetParent from "@platform/assets/AssetParent";
 
 
 interface UniversalAssetListProps {
     assetDefinition: AssetDefinition,
+    mode?: string
+    onSelect?: (asset: AssetParentLight) => void
     parentProjectUid: string,
     md?: number
+}
 
+export const UniversalAssetListModes = {
+    EDIT: "edit",
+    SELECT: "select"
 }
 
 export default function UniversalAssetList(props: UniversalAssetListProps) {
 
     const _md = props.md ?? 4
+    const _mode = props.mode ?? UniversalAssetListModes.EDIT
 
     const popupZus = useGlobalPopup()
 
@@ -56,9 +64,11 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
 
             <TGui.MiddleSearchBar/>
 
-
             {
-                LicenceManager.HasEditLicence() && <TGui.Stack>
+                (LicenceManager.HasEditLicence() &&
+                    _mode === UniversalAssetListModes.EDIT)
+                &&
+                <TGui.Stack>
                     <TGui.Button
                         label={"core.asset.create"}
                         color={"success"}
@@ -82,7 +92,12 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
                     assets.map((value) => {
                         return (
                             <Col key={value.uid}>
-                                <AssetCard onRefresh={refreshAssets} asset={value}/>
+                                <AssetCard
+                                    onRefresh={refreshAssets}
+                                    asset={value}
+                                    mode={_mode}
+                                    onSelect={props.onSelect}
+                                />
                             </Col>
                         )
                     })

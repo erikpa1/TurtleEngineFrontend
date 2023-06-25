@@ -12,6 +12,7 @@ import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-thr
 import PanoramaAsset from "@platform/assets/PanoramaAsset";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 import FsTools from "@api/FsTools";
+import {Assets} from "@platform/assets/Assets";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -23,7 +24,7 @@ export default function PanoramaEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<PanoramaAsset>(PanoramaAsset, _projectUid, _panoramaUid).then((value) => {
+        AssetsApi.GetAssetData<PanoramaAsset>(Assets.Panorama, _projectUid, _panoramaUid).then((value) => {
             setPanorama(value)
         })
 
@@ -47,7 +48,9 @@ interface _PanoramaEditorProps {
 
 function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
     return (
-        <div style={{}}>
+        <div style={{
+            position: "relative"
+        }}>
 
 
             <Canvas

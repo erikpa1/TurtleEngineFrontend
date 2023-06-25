@@ -39,7 +39,6 @@ export default class TauriAssetPlugin {
 
         params.uid = crypto.randomUUID()
 
-
         const QUERY = `INSERT INTO Assets (Uid, Name, Type, Extension)
                        VALUES ('${params.uid}', '${params.name}', '${params.assetType}', '${params.extension}');`
 
@@ -80,10 +79,16 @@ export default class TauriAssetPlugin {
     }
 
     static async GetAssetData(project_uid: string, assetDefinition: AssetDefinition, asset_uid: string): Promise<any> {
-        const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, `${assetDefinition.FOLDER}/${asset_uid}/Default.json`)).catch((err) => {
+
+        const dataJsonPath = `${assetDefinition.FOLDER}/${asset_uid}/Default.json`
+
+        console.log(dataJsonPath)
+
+        const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, dataJsonPath)).catch((err) => {
             console.error(`Unable to get asset data of: <${asset_uid}> because of ${err}`)
             return "{}"
         })
+
 
         if (response === "404") {
             return {}

@@ -55,5 +55,8 @@
   "core.table": "Table",
   "core.other": "Other",
   "core.mesh.layers": "Mesh layers",
-  "core.add.marker": "Add marker"
+  "core.add.marker": "Add marker",
+  "core.select": "Vybrať",
+  "scene": "Scéna",
+  "save": "Uložiť"
 }

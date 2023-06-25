@@ -16,7 +16,7 @@ interface FileMeshPreviewProps {
     style?: React.CSSProperties
 }
 
-export default function FileMeshPreview(props: FileMeshPreviewProps) {
+export default function MeshFilePickView(props: FileMeshPreviewProps) {
 
     const [t] = TGui.T()
 
@@ -40,6 +40,7 @@ export default function FileMeshPreview(props: FileMeshPreviewProps) {
         }
     }
 
+
     return (
         <div>
             <TGui.Box
@@ -57,7 +58,7 @@ export default function FileMeshPreview(props: FileMeshPreviewProps) {
                     }}>
                     <UniversalWorldEnvironment/>
 
-                    <PrimitiveMesh meshPath={FsTools.ConvertFilePath(meshPath)}/>
+                    <PrimitiveMesh meshPath={meshPath}/>
                 </UniversalMeshCanvas>
 
                 <TGui.Button label={t("core.select")} onClick={selectMeshPressed}/>

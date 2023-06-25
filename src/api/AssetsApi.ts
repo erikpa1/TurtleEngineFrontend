@@ -95,6 +95,7 @@ export default class AssetsApi {
 
         if (PlatformDispatcher.IsDesktop()) {
             const data = await TauriAssetPlugin.GetAssetData(project_uid, assetDefinition, asset_uid);
+
             asset.FromJson(data)
             asset.parent_project_uid = project_uid
             asset.parent_project_path = useActiveProjectZus.getState().project.projectFolderPath

@@ -31,7 +31,7 @@ export default function MeshEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(Assets.Mesh, _projectUid, _meshuidUid).then((value) => {
+        AssetsApi.GetAssetData<MeshAsset>(Assets.Mesh, _projectUid, _meshuidUid).then((value) => {
             setMesh(value)
         })
 
@@ -79,7 +79,7 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 {/*    </mesh>*/}
                 {/*</PivotControls>*/}
 
-                <PrimitiveMesh meshPath={FsTools.ConvertFilePath(mesh.GetEntryFile())}/>
+                <PrimitiveMesh meshPath={mesh.GetEntryFile()}/>
 
             </UniversalMeshCanvas>
 

@@ -33,6 +33,13 @@ export default class TauriOsPlugin {
         return response
     }
 
+    static async FileExists(file: string): Promise<boolean> {
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}FileExists`, {
+            file: file,
+        })
+        return response === "true" ? true : false
+    }
+
 
     static async GetWorkingDirectory(): Promise<string> {
         const data = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetWorkingDirectory`)

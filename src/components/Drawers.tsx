@@ -15,7 +15,7 @@ export default function TurtleOffcanvas(props: TurtleDrawer) {
 
     const drawerStyle = {
         backgroundColor: '#e7ebf0',
-        width: props.width ? props.width : "450px"
+        width: props.width ?? "450px"
     };
 
     return (
@@ -23,9 +23,12 @@ export default function TurtleOffcanvas(props: TurtleDrawer) {
             onHide={props.onClose}
             show={true}
             placement={"end"}
+
             style={{
-                margin: "5px"
+                margin: "5px",
+                ...drawerStyle
             }}
+
         >
 
             <Offcanvas.Header className={"custom-white"} closeButton={props.closeEnabled}>

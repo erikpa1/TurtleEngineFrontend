@@ -16,10 +16,24 @@ import FsTools from "@api/FsTools";
 interface AssetCardProps {
     asset: AssetParentLight
     onRefresh: any
+    onSelect?: (asset: AssetParentLight) => void
+    mode?: string
 }
 
 
-export default function AssetCard({asset, onRefresh}: AssetCardProps) {
+export const AssetCardModes = {
+    EDIT: "edit",
+    SELECT: "select"
+}
+
+export default function AssetCard({
+                                      asset,
+                                      mode,
+                                      onRefresh,
+                                      onSelect
+                                  }: AssetCardProps) {
+
+    const _mode = mode ?? AssetCardModes.EDIT
 
     const [t] = useTranslation()
 
@@ -76,8 +90,24 @@ export default function AssetCard({asset, onRefresh}: AssetCardProps) {
                 </TGui.Typography>
             </TGui.CardContent>
             <TGui.CardActions>
-                <TGui.Button onClick={editAssetPressed} label={"core.edit"}/>
-                <TGui.Button onClick={deletePressed} label={"core.delete"} color={"error"}/>
+
+                {
+                    mode === AssetCardModes.EDIT && <>
+                        <TGui.Button onClick={editAssetPressed} label={"core.edit"}/>
+                        <TGui.Button onClick={deletePressed} label={"core.delete"} color={"error"}/>
+                    </>
+                }
+
+                {
+                    mode === AssetCardModes.SELECT && <>
+                        <TGui.Button onClick={() => {
+                            if (onSelect) {
+                                onSelect(asset)
+                            }
+                        }} label={"core.select"}/>
+                    </>
+                }
+
             </TGui.CardActions>
         </TGui.Card>
     );

@@ -11,11 +11,13 @@ import * as three from "three"
 import SceneTransformHelper from "@components/assets/canvases/SceneTransformHelper";
 import {use} from "i18next";
 import {useMeshHover} from "@components/assets/tools/useMeshHover";
+import FsTools from "@api/FsTools";
 
 interface PrimitiveMeshProps {
     meshPath: string
-    position?: [number, number, number]
-    scale?: [number, number, number]
+    position?: [number, number, number] | any
+    rotation?: [number, number, number] | any
+    scale?: [number, number, number] | any
 }
 
 export function PrimitiveMesh(props: PrimitiveMeshProps) {
@@ -28,7 +30,10 @@ export function PrimitiveMesh(props: PrimitiveMeshProps) {
 
 
 interface PrimitiveMeshEditableProps extends PrimitiveMeshProps {
-    onClick?: () => void
+    onClick?: () => void,
+    onPositionChanged?: (position: [number, number, number] | number[]) => void
+    onRotationChanged?: (rotation: [number, number, number] | number[]) => void
+    onScaleChanged?: (scale: [number, number, number] | number[]) => void
 }
 
 export function PrimitiveMeshEditable(props: PrimitiveMeshEditableProps) {
@@ -43,7 +48,13 @@ export function PrimitiveMeshEditable(props: PrimitiveMeshEditableProps) {
     const planeRef = React.useRef<any>()
 
     function gizmoMove(obj: three.Object3D, gizmoType: string) {
+        const newPosition = [obj.position.x, obj.position.y, obj.position.z]
         setPosition([obj.position.x, obj.position.y, obj.position.z])
+
+        if (props.onPositionChanged) {
+            props.onPositionChanged(newPosition)
+        }
+
     }
 
     return (
@@ -63,7 +74,7 @@ export function PrimitiveMeshEditable(props: PrimitiveMeshEditableProps) {
                 rotation={[Math.PI / -2, 0, 0]}
 
                 renderOrder={0}
-                onClick={() => {
+                onClick={(e) => {
                     setUseGizmo(!useGizmo)
                 }}
                 {
@@ -88,7 +99,12 @@ export function PrimitiveMeshEditable(props: PrimitiveMeshEditableProps) {
 
 function _Mesh(props: PrimitiveMeshProps) {
 
-    const gltf = useGLTF(props.meshPath, true)
+    const meshPath = FsTools.ConvertFilePath(props.meshPath)
+
+    console.log(`Going to load: ${props.meshPath}`)
+    console.log(`Going to load: ${meshPath}`)
+
+    const gltf = useGLTF(meshPath, true)
 
     return (
         <React.Suspense fallback={null}>
@@ -96,6 +112,7 @@ function _Mesh(props: PrimitiveMeshProps) {
                 object={gltf.scene.clone(true)}
                 position={props.position ?? [0, 0, 0]}
                 scale={props.scale ?? [1, 1, 1]}
+                rotation={props.rotation ?? [0, 0, 0]}
             />
         </React.Suspense>
     )

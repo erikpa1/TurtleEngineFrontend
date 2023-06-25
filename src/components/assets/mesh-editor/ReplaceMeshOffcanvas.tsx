@@ -2,7 +2,7 @@ import React from "react";
 import {TGui} from "@external/tgui";
 
 import MeshAsset from "@platform/assets/MeshAsset";
-import FileMeshPreview from "@components/assets/mesh-editor/mesh-previews";
+import MeshFilePickView from "@components/assets/mesh-editor/mesh-previews";
 import {Ext} from "@external/prelude";
 
 import FsTools from "@api/FsTools";
@@ -119,7 +119,7 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
     return (
         <>
 
-            <FileMeshPreview
+            <MeshFilePickView
                 expectedExtension={"glb"}
                 defaultMeshPath={FsTools.GetPlatformPath("Meshes/Default.glb")}
                 onMeshSelectDesktop={meshSelectedDesktop}

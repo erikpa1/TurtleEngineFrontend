@@ -10,19 +10,17 @@ import SceneAsset from "@platform/assets/SceneAsset";
 
 
 export default function SceneEditorDispatcher({}) {
-    const {projectuid, clouduid} = useParams()
+    const {projectuid, sceneuid} = useParams()
 
     const _projectUid: string = projectuid ?? ""
-    const _sceneUid: string = clouduid ?? ""
+    const _sceneUid: string = sceneuid ?? ""
 
     const [scene, setScene] = React.useState<SceneAsset | null>(null)
 
     React.useEffect(() => {
-
-        AssetsApi.GetAssetData(Assets.Scene, _projectUid, _sceneUid).then((value) => {
+        AssetsApi.GetAssetData<SceneAsset>(Assets.Scene, _projectUid, _sceneUid).then((value) => {
             setScene(value)
         })
-
     }, [_projectUid, _sceneUid])
 
     if (scene) {

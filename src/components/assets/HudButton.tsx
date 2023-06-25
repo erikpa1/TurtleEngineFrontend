@@ -38,7 +38,6 @@ export default function HudButton({
 
         }}
              onClick={(evnt) => {
-                 console.log("Clicking")
                  if (!disabled && onClick) {
                      onClick(evnt)
                  }

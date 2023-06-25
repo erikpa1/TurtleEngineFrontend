@@ -34,6 +34,18 @@ pub async fn DeleteFolder(folder: String) -> Result<bool, ()> {
 
 
 #[tauri::command]
+pub async fn FileExists(file: String) -> Result<String, ()> {
+    let file_exists = fs::metadata(file).is_ok();
+
+    if file_exists {
+        return Ok("true".into());
+    } else {
+        return Ok("false".into());
+    }
+}
+
+
+#[tauri::command]
 pub async fn WriteFileString(file: String, content: String) -> Result<bool, ()> {
     println!("Writting to file: {}", file);
 
@@ -77,6 +89,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
                 OpenFolder,
                 DeleteFolder,
                 WriteFileString,
+                FileExists,
                 ReadFileString,
                 GetWorkingDirectory
         ])
