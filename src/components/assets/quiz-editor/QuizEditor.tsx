@@ -10,6 +10,7 @@ import ImageAnswerEditor from "@components/assets/quiz-editor/ImageAnswerEditor"
 import SoundAnswerEditor from "@components/assets/quiz-editor/SoundAnswerEditor";
 import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswerEditor";
 import {ViewContainer} from "@components/ViewContainer";
+import {Assets} from "@platform/assets/Assets.ts";
 
 
 export default function QuizEditor({}) {
@@ -23,7 +24,7 @@ export default function QuizEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(QuizAsset, _projectUid, _quizUid).then((value) => {
+        AssetsApi.GetAssetData(Assets.Quiz, _projectUid, _quizUid).then((value) => {
             setQuiz(value)
         })
 

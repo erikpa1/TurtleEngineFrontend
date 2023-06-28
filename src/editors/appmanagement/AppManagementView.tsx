@@ -39,7 +39,7 @@ export default function AppManagementView({}) {
                         centered
                         textColor="inherit"
                     >
-                        <Tab label={t("projects")} value={"0"}/>
+                        {/*<Tab label={t("projects")} value={"0"}/>*/}
                         <Tab label={t("users")} value={"1"}/>
                         <Tab label={t("deployment")} value={"2"}/>
                         <Tab label={t("licences")} value={"3"}/>
@@ -49,7 +49,7 @@ export default function AppManagementView({}) {
             </TabContext>
 
             <TGui.Switch condition={tabValue}>
-                <TGui.Case value={"0"}><ProjectsManagementView/></TGui.Case>
+                {/*<TGui.Case value={"0"}><ProjectsManagementView/></TGui.Case>*/}
             </TGui.Switch>
 
         </ViewContainer>

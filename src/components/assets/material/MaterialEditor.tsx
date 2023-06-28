@@ -15,6 +15,7 @@ import * as three from "three"
 import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
+import {Assets} from "@platform/assets/Assets.ts";
 
 
 const TEXTURES = {
@@ -38,7 +39,7 @@ export default function MaterialEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(MaterialAsset, _projectUid, _materialUid).then((value) => {
+        AssetsApi.GetAssetData(Assets.Material, _projectUid, _materialUid).then((value) => {
             setMaterial(value)
         })
 

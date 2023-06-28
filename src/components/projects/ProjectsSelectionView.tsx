@@ -11,6 +11,9 @@ import ProjectUniversalCard from "@components/projects/ProjectUniversalCard";
 import {Col, Row, Spinner} from "react-bootstrap";
 import UniversalInputSearchBar from "@components/SearchBar";
 import {useAvailableProjects} from "@hooks/project";
+import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas.tsx";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus.ts";
+import {TurtleButton} from "@platform/components/TurtleButtons.tsx";
 
 
 export default function ProjectsSelectionView({}) {
@@ -21,8 +24,22 @@ export default function ProjectsSelectionView({}) {
 
     const [tabValue, setTabValue] = Ext.Cookie.useCookie("projects-selection-tab-main", "0")
 
+
+    const popupZus = useGlobalPopup()
+
     const tabChanged = (e: React.SyntheticEvent, newValue: string) => {
         setTabValue(newValue)
+    }
+
+    const createProjectPressed = () => {
+
+        popupZus.pushElement(
+            <CreateProjectDrawer
+                onClose={popupZus.popElement}
+                onRefresh={refresh}
+            />
+        )
+
     }
 
     if (isLoading) {
@@ -34,6 +51,7 @@ export default function ProjectsSelectionView({}) {
             <>
                 <div className={"vstack gap-3"}>
 
+
                     <Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>
 
                         <Tabs
@@ -43,11 +61,12 @@ export default function ProjectsSelectionView({}) {
                             centered
                             textColor="inherit"
                         >
-                            <Tab label={t("local")} value={"0"}/>
+                            <Tab  label={t("local")} value={"0"}/>
                             <Tab label={t("remote")} value={"1"}/>
                         </Tabs>
 
                     </Box>
+
 
                     <div style={{marginLeft: "auto", marginRight: "auto"}}>
                         <UniversalInputSearchBar placeHolder={"search"}/>
@@ -68,14 +87,27 @@ export default function ProjectsSelectionView({}) {
 
                     </Row>
 
+                    <div className={"hstack gap-3"} style={{
+                        marginTop: "25px"
+                    }}>
+                        <div style={{
+                            marginLeft: "auto",
+                            marginRight: "auto"
+                        }}>
+                            <TurtleButton
+                                onClick={createProjectPressed}
+                                label={"project.create"}
+                                variant={"outlined"}
+                            />
+                        </div>
+                    </div>
 
                 </div>
 
             </>
 
 
-
-    )
+        )
     }
 
 

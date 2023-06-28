@@ -8,6 +8,7 @@ import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 
 import PointCloudAsset from "@platform/assets/PointCloudAsset";
 import PointCloudEditorHud from "@components/assets/pointcould-editor/PointCloudEditorHud";
+import {Assets} from "@platform/assets/Assets.ts";
 
 export default function PointCloudEditor({}) {
     const {projectuid, clouduid} = useParams()
@@ -19,7 +20,7 @@ export default function PointCloudEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(PointCloudAsset, _projectUid, _cloudUid).then((value) => {
+        AssetsApi.GetAssetData(Assets.PointCloud, _projectUid, _cloudUid).then((value) => {
             setCloud(value)
         })
 

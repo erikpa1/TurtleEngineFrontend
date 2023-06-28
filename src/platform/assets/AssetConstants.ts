@@ -3,7 +3,7 @@ import {Assets} from "@platform/assets/Assets";
 
 export class AssetConstants {
 
-    static FOLDER_TYPES_MAP: Map<string, string> = new Map(Assets.values().map((asset) => {
+    static FOLDER_TYPES_MAP: Map<string, string> = new Map(Assets.worldAssets().map((asset) => {
         return [asset.TYPE, asset.FOLDER]
     }))
 

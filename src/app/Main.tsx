@@ -22,6 +22,8 @@ const AreaEditor = React.lazy(() => import("@components/assets/area-editor/AreaE
 const MaterialEditor = React.lazy(() => import("@components/assets/material/MaterialEditor"))
 const SceneEditorDispatcher = React.lazy(() => import("@components/assets/scene-editor/SceneEditorDispatcher"))
 const QuizEditor = React.lazy(() => import("@components/assets/quiz-editor/QuizEditor"))
+const DataFactoryEditor = React.lazy(() => import("@components/assets/data-factory/DataFactoryEditor"))
+const DataInstanceEditor = React.lazy(() => import("@components/assets/data-instance/DataInstanceEditor"))
 
 export default function Main() {
 
@@ -109,7 +111,13 @@ function _Main() {
                 <Route path={RoutesManager.ROUTE_QUIZ_EDITOR} element={
                     <QuizEditor/>
                 }/>
+                <Route path={RoutesManager.ROUTE_DATAFACTORY_EDITOR} element={
+                    <DataFactoryEditor/>
+                }/>
 
+                <Route path={RoutesManager.ROUTE_DATAINSTANCE_EDITOR} element={
+                    <DataInstanceEditor/>
+                }/>
             </Routes>
         </main>
     )

@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import MeshAsset from "@platform/assets/MeshAsset";
+
 import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
@@ -12,6 +12,7 @@ import AreaMarker from "@components/assets/area/AreaMarker";
 import AreaEditorHud from "@components/assets/area-editor/AreaEditorHud";
 import FsTools from "@api/FsTools";
 import ErrorBoundary from "@components/ErrorBoundary";
+import {Assets} from "@platform/assets/Assets.ts";
 
 
 export default function AreaEditor({}) {
@@ -20,11 +21,11 @@ export default function AreaEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _areaiud: string = areauid ?? ""
 
-    const [area, setArea] = React.useState<MeshAsset | null>(null)
+    const [area, setArea] = React.useState<AreaAsset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(AreaAsset, _projectUid, _areaiud).then((value) => {
+        AssetsApi.GetAssetData<AreaAsset>(Assets.Area, _projectUid, _areaiud).then((value) => {
             setArea(value)
         })
 

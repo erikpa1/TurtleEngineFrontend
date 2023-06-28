@@ -9,6 +9,8 @@ import AreaAsset from "@platform/assets/AreaAsset";
 import SceneAsset from "@platform/assets/SceneAsset";
 import SoundAsset from "@platform/assets/SoundAsset";
 import FontAsset from "@platform/assets/FontAsset";
+import DataFactoryAsset from "@platform/assets/DataFactoryAsset.ts";
+import DataInstanceAsset from "@platform/assets/DataInstanceAsset.ts";
 
 
 export class AssetDefinition {
@@ -46,28 +48,53 @@ export const Assets = {
     Scene: new AssetDefinition(SceneAsset),
     Sound: new AssetDefinition(SoundAsset),
     Font: new AssetDefinition(FontAsset),
+    DataFactory: new AssetDefinition(DataFactoryAsset),
+    DataInstance: new AssetDefinition(DataInstanceAsset),
 
-    values: () => {
+    dataAssets: () => {
+        return [
+            Assets.DataFactory,
+            Assets.DataInstance,
+            Assets.Quiz,
+        ]
+    },
+
+    mediaAssets: () => {
+        return [
+            Assets.Image,
+            Assets.Video,
+            Assets.Sound,
+
+        ]
+    },
+
+
+    worldAssets: () => {
         return [
             Assets.Scene,
-            Assets.Mesh,
-            Assets.Video,
             Assets.Panorama,
             Assets.Material,
             Assets.PointCloud,
-            Assets.Image,
-            Assets.Quiz,
+            Assets.Mesh,
             Assets.Area,
-            Assets.Sound,
+
             Assets.Font,
 
         ]
-    }
+    },
+
+    all: () => {
+        return [
+            ...Assets.dataAssets(),
+            ...Assets.mediaAssets(),
+            ...Assets.worldAssets()
+        ]
+    },
 
 
 }
 
-export const AssetsTypeMap = new Map<string, any>(Assets.values().map((value) => {
+export const AssetsTypeMap = new Map<string, any>(Assets.all().map((value) => {
     return [value.TYPE, value]
 }))
 

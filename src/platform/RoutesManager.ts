@@ -9,7 +9,8 @@ const PREFIX_MATERIAL_EDITOR = "/material-editor"
 const PREFIX_POINTCLOUD_EDITOR = "/point-cloud-editor"
 const PREFIX_PANORAMA_EDITOR = "/panorama-editor"
 const PREFIX_QUIZ_EDITOR = "/quiz-editor"
-
+const PREFIX_DATAFACTORY_EDITOR = "/data-factory-editor"
+const PREFIX_DATAINSTANCE_EDITOR = "/data-instance-editor"
 
 export default class RoutesManager {
 
@@ -24,6 +25,8 @@ export default class RoutesManager {
     static ROUTE_POINTCLOUD_EDITOR = `/${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
     static ROUTE_PANORAMA_EDITOR = `/${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
     static ROUTE_QUIZ_EDITOR = `/${PREFIX_QUIZ_EDITOR}/:projectuid/:quiz`
+    static ROUTE_DATAFACTORY_EDITOR = `/${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactory`
+    static ROUTE_DATAINSTANCE_EDITOR = `/${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstance`
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
@@ -47,6 +50,14 @@ export default class RoutesManager {
 
     static PointCloudEditor(projectUid: string, cloudUid: string): string {
         return `${PREFIX_POINTCLOUD_EDITOR}/${projectUid}/${cloudUid}`
+    }
+
+    static DataFactoryEditor(projectUid: string, dataFactroy: string): string {
+        return `${PREFIX_DATAFACTORY_EDITOR}/${projectUid}/${dataFactroy}`
+    }
+
+    static DataInstanceEditor(projectUid: string, dataInstance: string): string {
+        return `${PREFIX_DATAINSTANCE_EDITOR}/${projectUid}/${dataInstance}`
     }
 
     static PanoramaEditor(projectUid: string, panoramaUid: string): string {
@@ -79,5 +90,7 @@ const ASSET_ROUTES_MAP = new Map<string, any>([
     [Assets.Material.TYPE, RoutesManager.MaterialEditor],
     [Assets.Panorama.TYPE, RoutesManager.PanoramaEditor],
     [Assets.Scene.TYPE, RoutesManager.SceneEditor],
-    [Assets.PointCloud.TYPE, RoutesManager.PointCloudEditor]
+    [Assets.PointCloud.TYPE, RoutesManager.PointCloudEditor],
+    [Assets.DataFactory.TYPE, RoutesManager.DataFactoryEditor],
+    [Assets.DataInstance.TYPE, RoutesManager.DataInstanceEditor],
 ])
