@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {Box, Tab, Tabs} from "@mui/material";
 
-import {Offcanvas, Stack} from "react-bootstrap";
+import {Col, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
 
 import Switch, {Case} from "react-switch-case/lib/esm";
@@ -20,6 +20,8 @@ import {TurtleSingleFileInput} from "@platform/components/TurtleForms";
 
 export const TGui = {
     T: useTranslation,
+    Row: Row,
+    Col: Col,
     Offcanvas: TurtleOffcanvas,
     OffcanvasTitle: Offcanvas.Title,
     Box: Box,
@@ -41,6 +43,6 @@ export const TGui = {
 
 }
 
-interface TSwitch  {
+interface TSwitch {
     condition: string | number | any
 }

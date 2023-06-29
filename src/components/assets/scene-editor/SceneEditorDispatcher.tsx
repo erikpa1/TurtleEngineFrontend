@@ -24,12 +24,12 @@ export default function SceneEditorDispatcher({}) {
     }, [_projectUid, _sceneUid])
 
     if (scene) {
-        return (
-            <PanoramaSceneEditor scene={scene}/>
-        )
         // return (
-        //     <VirtualSceneEditor scene={scene}/>
+        //     <PanoramaSceneEditor scene={scene}/>
         // )
+        return (
+            <VirtualSceneEditor scene={scene}/>
+        )
     } else {
         return (
             <MiddleSpinner/>

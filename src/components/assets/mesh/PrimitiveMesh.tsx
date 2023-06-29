@@ -101,9 +101,6 @@ function _Mesh(props: PrimitiveMeshProps) {
 
     const meshPath = FsTools.ConvertFilePath(props.meshPath)
 
-    console.log(`Going to load: ${props.meshPath}`)
-    console.log(`Going to load: ${meshPath}`)
-
     const gltf = useGLTF(meshPath, true)
 
     return (

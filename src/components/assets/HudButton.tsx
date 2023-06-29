@@ -7,7 +7,7 @@ import {useTranslation} from "react-i18next";
 const IMAGE_STYLE = {
     width: "50px",
     height: "50px",
-    padding: "10px"
+    padding: "7px"
 }
 
 interface HudButtonProps {
@@ -48,7 +48,7 @@ export default function HudButton({
                 backgroundColor: isActive ? `rgb(100, 0, 0)` : `rgba(150, 150, 150, 0.8)`,
             }}>
                 <div style={{
-                    width: "50px",
+                    width: "55px",
                     height: "50px",
                 }}>
                     <Image style={{

@@ -18,12 +18,10 @@ interface VirtualSceneEditorProps {
 
 export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 
-
     const [sceneDefinition, setSceneDefinition] = React.useState<{ value: VirtualSceneDefinition } | null>()
 
     React.useEffect(() => {
-        SceneApi.GetSceneDefinition(VirtualSceneDefinition,scene.parent_project_uid, scene.uid).then((value) => {
-
+        SceneApi.GetSceneDefinition(VirtualSceneDefinition, scene.parent_project_uid, scene.uid).then((value) => {
             setSceneDefinition({value: value})
         })
 

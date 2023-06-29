@@ -82,8 +82,6 @@ export default class TauriAssetPlugin {
 
         const dataJsonPath = `${assetDefinition.FOLDER}/${asset_uid}/Default.json`
 
-        console.log(dataJsonPath)
-
         const response = await TauriOsPlugin.ReadFileString(FsTools.GetPathInProject(project_uid, dataJsonPath)).catch((err) => {
             console.error(`Unable to get asset data of: <${asset_uid}> because of ${err}`)
             return "{}"

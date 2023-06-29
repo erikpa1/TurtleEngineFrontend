@@ -27,11 +27,15 @@ export default function MeshFilePickView(props: FileMeshPreviewProps) {
     function selectMeshPressed() {
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenSingleMeshDialog(props.expectedExtension).then((filePath) => {
-                setMeshPath(filePath)
 
-                if (props.onMeshSelectDesktop) {
-                    props.onMeshSelectDesktop(filePath)
+                if (filePath !== "") {
+                    setMeshPath(filePath)
+
+                    if (props.onMeshSelectDesktop) {
+                        props.onMeshSelectDesktop(filePath)
+                    }
                 }
+
 
             })
         } else {

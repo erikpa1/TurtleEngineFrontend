@@ -37,6 +37,7 @@ export default class PlatformDispatcher {
             }]
         });
 
+
         if (selected) {
             return selected as string
         } else {

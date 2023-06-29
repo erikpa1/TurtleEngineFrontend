@@ -18,6 +18,9 @@ import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {SceneNode} from "@platform/scene/SceneNode";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
+import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper.tsx";
+import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas.tsx";
 
 
 interface SceneEditorHudProps {
@@ -75,6 +78,21 @@ function _Bottom(props: SceneEditorHudProps) {
 
     }
 
+    function otherPressed() {
+        const offCanvas = (
+            <SceneNodesSelectionOffcanvas
+                onHide={popup.popElement}
+                onSelect={(asset) => {
+                    props.sceneDefinition.AddAssetChildren(asset)
+                    popup.popElement()
+                    props.onSceneDefinitionChanged()
+                }}
+            />
+        )
+
+        popup.pushElement(offCanvas)
+    }
+
     return (
         <AssetEditorHud placement={"bottom"}>
 
@@ -103,6 +121,7 @@ function _Bottom(props: SceneEditorHudProps) {
             <HudButton
                 lang={"other"}
                 icon={"/icons/Create.Other.svg"}
+                onClick={otherPressed}
             />
 
         </AssetEditorHud>
@@ -149,10 +168,7 @@ function _Left(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"left"}>
 
-            <HudButton
-                lang={"replace"}
-                icon={"/icons/Map.svg"}
-            />
+            <HudGizmoSwapper/>
             <HudButton
                 lang={"edit"}
                 icon={"/icons/Management.svg"}
@@ -167,25 +183,40 @@ function _Left(props: SceneEditorHudProps) {
     )
 }
 
+
 function _Right(props: SceneEditorHudProps) {
 
-    function deleteSelectedPressed(node: SceneNode) {
-        //pass
+    const useActiveNode = useActiveNodeZus()
+
+
+    const activeNode = useActiveNode.activeNode
+
+    function deleteSelectedPressed() {
+        if (activeNode) {
+            props.sceneDefinition.DeleteChildrenWithUid(activeNode.uid)
+        }
     }
+
 
     return (
         <AssetEditorHud placement={"right"}>
 
-            <OpenAssetFolderButton asset={props.scene}/>
 
-            <HudButton
-                lang={"delete"}
-                icon={"/icons/Delete.svg"}
-            />
-            <HudButton
-                lang={"edit"}
-                icon={"/icons/Management.svg"}
-            />
+            {
+                activeNode && <>
+                    <HudButton
+                        lang={"delete"}
+                        icon={"/icons/Delete.svg"}
+                        onClick={deleteSelectedPressed}
+                    />
+                    <HudButton
+                        lang={"edit"}
+                        icon={"/icons/Management.svg"}
+                    />
+
+                </>
+            }
+
 
         </AssetEditorHud>
     )

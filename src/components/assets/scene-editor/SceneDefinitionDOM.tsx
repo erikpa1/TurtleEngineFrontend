@@ -1,7 +1,8 @@
 import React from "react";
 
 import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
-import {SceneMeshNode, SceneMeshView} from "@platform/scene/SceneMeshNode";
+import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshNode";
+import {SceneVideoNode, SceneVideoView} from "@platform/scene/media/SceneVideoNode.tsx";
 
 
 interface SceneDefinitionDomProps {
@@ -13,16 +14,41 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
 
     const [view, setView] = React.useState<any>()
 
+    function refresh() {
 
-    React.useEffect(() => {
         const elements = new Array<any>()
 
-        props.sceneDefinition.root.children.forEach((value) => {
-            elements.push(<SceneMeshView mesh={value as SceneMeshNode}/>)
+        const root = props.sceneDefinition.root
+
+        console.log(root.children)
+
+        root.children.forEach((value) => {
+
+            console.log(value)
+
+            if (value instanceof SceneMeshNode) {
+                elements.push(<SceneMeshNodeView
+                    key={value.uid}
+                    node={value as SceneMeshNode}
+                />)
+            } else if (value instanceof SceneVideoNode) {
+                elements.push(<SceneVideoView
+                    key={value.uid}
+                    node={value as SceneMeshNode}
+                />)
+            }
 
         })
 
         setView(elements)
+    }
+
+
+    React.useEffect(() => {
+        const root = props.sceneDefinition.root
+        root.onChildrenChanged = refresh
+
+        refresh()
 
     }, [])
 

@@ -111,9 +111,8 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
         params.project_uid = props.mesh.parent_project_uid
         params.destination_name = "Default.glb"
 
-        console.log(params)
 
-        TauriAssetPlugin.UploadAssetFile(params)
+        TauriAssetPlugin.UploadAssetFile(params).then(props.onRefresh)
     }
 
     return (

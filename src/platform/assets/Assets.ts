@@ -23,6 +23,7 @@ export class AssetDefinition {
     DEFAULT_PLATFORM_FILE = ""
     CLASS: any
 
+
     constructor(_clazz: any) {
         this.FOLDER = _clazz.FOLDER
         this.TYPE = _clazz.TYPE
@@ -50,12 +51,14 @@ export const Assets = {
     Font: new AssetDefinition(FontAsset),
     DataFactory: new AssetDefinition(DataFactoryAsset),
     DataInstance: new AssetDefinition(DataInstanceAsset),
+    Label: new AssetDefinition(DataInstanceAsset),
 
     dataAssets: () => {
         return [
             Assets.DataFactory,
             Assets.DataInstance,
             Assets.Quiz,
+            Assets.Label,
         ]
     },
 

@@ -11,6 +11,7 @@ import {
 import React from "react";
 
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
 
 interface UniversalMeshCanvasProps {
     children: any
@@ -19,6 +20,9 @@ interface UniversalMeshCanvasProps {
 }
 
 export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
+
+    const activeNodeZus = useActiveNodeZus()
+
     return (
         <div style={{
             backgroundColor: "#303035"
@@ -30,6 +34,10 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                 className={"gl-canvas"}
                 gl={{
                     preserveDrawingBuffer: props.preserveDrawingBuffer ?? false
+                }}
+
+                onDoubleClick={() => {
+                    activeNodeZus.setActiveNode(null)
                 }}
 
 

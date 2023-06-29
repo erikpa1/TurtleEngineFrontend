@@ -21,7 +21,6 @@ export default class MeshAsset extends AssetParent {
     }
 
     GetEntryFile(): string {
-        console.log(`${this.parent_project_path}${MeshAsset.FOLDER}/${this.uid}/Default.glb`)
         return `${this.parent_project_path}${MeshAsset.FOLDER}/${this.uid}/Default.glb`
     }
 

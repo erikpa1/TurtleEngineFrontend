@@ -1,9 +1,11 @@
 import {SceneNode} from "@platform/scene/SceneNode";
 import AssetParent from "@platform/assets/AssetParent";
 import MeshAsset from "@platform/assets/MeshAsset";
-import {SceneMeshNode} from "@platform/scene/SceneMeshNode";
+
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {Assets} from "@platform/assets/Assets";
+import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
+import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode.tsx";
 
 export default class VirtualSceneDefinition {
     root: SceneNode
@@ -25,13 +27,30 @@ export default class VirtualSceneDefinition {
     }
 
     AddAssetChildren(asset: AssetParentLight) {
+        //TODO Toto zautomatizovat
 
         if (asset.assetType === Assets.Mesh.TYPE) {
             const tmp = new SceneMeshNode()
-            tmp.meshUid = asset.uid
+            tmp.content_uid = asset.uid
+            this.root.children.push(tmp)
+        } else if (asset.assetType === Assets.Video.TYPE) {
+            const tmp = new SceneVideoNode()
+            tmp.content_uid = asset.uid
             this.root.children.push(tmp)
         }
 
+        if (this.root.onChildrenChanged) {
+            this.root.onChildrenChanged()
+        }
+    }
+
+    DeleteChildrenWithUid(nodeUid: string) {
+
+        this.root.children = this.root.children.filter(value => value.uid !== nodeUid)
+
+        if (this.root.onChildrenChanged) {
+            this.root.onChildrenChanged()
+        }
 
     }
 

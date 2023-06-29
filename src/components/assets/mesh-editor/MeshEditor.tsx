@@ -9,15 +9,12 @@ import MeshAsset from "@platform/assets/MeshAsset";
 
 import {MiddleSpinner} from "@components/Spinners";
 
-import {PivotControls} from "@react-three/drei";
-
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
 import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 import {Assets} from "@platform/assets/Assets";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
-import FsTools from "@api/FsTools";
 
 
 export default function MeshEditor({}) {
@@ -54,6 +51,10 @@ interface _MeshEditorProps {
 }
 
 function _MeshEditor({mesh}: _MeshEditorProps) {
+
+
+    const [meshPath, setMeshPath] = React.useState(`${mesh.GetEntryFile()}?rnd=${Math.random()}`)
+
     return (
         <div style={{
             position: "relative"
@@ -63,7 +64,6 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 <SceneCameraRotationGizmo/>
 
                 <UniversalWorldEnvironment/>
-
 
                 {/*<PivotControls*/}
                 {/*    rotation={[0, 0, 0]}*/}
@@ -79,17 +79,20 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 {/*    </mesh>*/}
                 {/*</PivotControls>*/}
 
-                <PrimitiveMesh meshPath={mesh.GetEntryFile()}/>
+
+                <PrimitiveMesh meshPath={meshPath}/>
 
             </UniversalMeshCanvas>
 
 
-            <MeshEditorHud mesh={mesh}/>
+            <MeshEditorHud mesh={mesh}
+                           onRefresh={() => {
+
+                               // const newPath = `${mesh.GetEntryFile()}?rnd=${Math.random()}`
+                               // setMeshPath(newPath)
+                           }}/>
 
         </div>
     )
 }
 
-function _MeshReprezentation({}) {
-
-}

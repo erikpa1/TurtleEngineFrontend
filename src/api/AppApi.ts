@@ -8,7 +8,8 @@ import ConstantsApi from "@api/ConstantsApi";
 import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
 import {SceneNode} from "@platform/scene/SceneNode";
 import {Scene} from "three";
-import {SceneMeshNode} from "@platform/scene/SceneMeshNode";
+import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode";
+import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
 
 
 export default class AppApi {
@@ -32,6 +33,8 @@ export default class AppApi {
 
         SceneNodesFactory.AddClass(SceneNode.TYPE, SceneNode)
         SceneNodesFactory.AddClass(SceneMeshNode.TYPE, SceneMeshNode)
+        SceneNodesFactory.AddClass(SceneVideoNode.TYPE, SceneVideoNode)
+
 
     }
 

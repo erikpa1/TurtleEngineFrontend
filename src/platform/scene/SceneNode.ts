@@ -15,6 +15,9 @@ export class SceneNode {
     rotation: [number, number, number] | number[] = [0, 0, 0]
     scale: [number, number, number] | number[] = [1, 1, 1]
 
+
+    onChildrenChanged: any = null
+
     constructor() {
         //pass
     }
