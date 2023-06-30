@@ -57,6 +57,25 @@ export default class TauriAssetPlugin {
         return asset
     }
 
+    static async CreateAssetFromLight(asset: AssetParentLight): Promise<string> {
+
+        asset.uid = crypto.randomUUID()
+
+        const QUERY = `INSERT INTO Assets (Uid, Name, Type, SubType, Extension)
+                       VALUES ('${asset.uid}', '${asset.name}', '${asset.type}', '${asset.subtype}',
+                               '${"json"}');`
+
+        const response = await TauriSqlitePlugin.Exec(QUERY)
+
+        await TauriOsPlugin.WriteFileString(
+            FsTools.GetPathInProject(asset.parent_project_uid, `${asset.assetDefinition.FOLDER}/${asset.uid}/Default.json`),
+            JSON.stringify(asset.ToJson())
+        )
+
+        return asset.uid
+    }
+
+
     static async DeleteAssetWithUid(project_uid: string, asset_uid: string): Promise<boolean> {
 
         const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}DeleteAssetWithUid`, {

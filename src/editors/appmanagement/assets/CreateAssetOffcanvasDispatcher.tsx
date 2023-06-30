@@ -18,17 +18,17 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import {TGui} from "@external/tgui";
 
-import {AnyAssetType, AssetDefinition, Assets} from "@platform/assets/Assets";
+import {AssetDefinition, Assets} from "@platform/assets/Assets";
 import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager";
 import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 
-import AssetsDispatcher from "@platform/assets/AssetsDispatcher";
 import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 import FsTools from "@api/FsTools";
 import AreaAssetManager from "@platform/assets-managers/AreaAssetManager";
+import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene.tsx";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -38,7 +38,39 @@ interface CreateAssetOffcanvasProps {
 
 }
 
-export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
+export default function CreateAssetOffcanvasDispatcher(props: CreateAssetOffcanvasProps) {
+
+    const [t] = TGui.T()
+
+    let body: any = null
+
+    if (props.assetDefinition.TYPE === Assets.Scene.TYPE) {
+        body = <CreateSceneOffcanvas {...props as any}/>
+    } else {
+        body = <_CreateOtherAssets {...props}/>
+    }
+
+    return (
+
+        <TurtleOffcanvas
+            onClose={props.onClose}
+            closeEnabled={true}
+            header={<Offcanvas.Title>{t("create.scene")}</Offcanvas.Title>}
+        >
+            <TGui.Box>
+                <Stack spacing={2}>
+                    {body}
+                </Stack>
+            </TGui.Box>
+
+        </TurtleOffcanvas>
+
+    )
+
+
+}
+
+function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
 
     const [t] = useTranslation()
 
@@ -104,49 +136,40 @@ export default function CreateAssetOffcanvas(props: CreateAssetOffcanvasProps) {
     }, [])
 
     return (
-        <TurtleOffcanvas
-            onClose={props.onClose}
-            closeEnabled={true}
-
-            header={<Offcanvas.Title>{t("create.asset")}</Offcanvas.Title>}
-        >
-
-            <Box>
-                <Stack spacing={2}>
-
-                    <TurtleTextField
-                        onChange={pNameChanged}
-                        label={"name"}
-                    />
-
-                    <TurtleTextField
-                        onChange={descChanged}
-                        label={"description"}
-                        multiline
-                    />
-
-                    <TurtleTextField
-                        label={"author"}
-                        disabled
-                    />
-
-                    <CreateAssetWithFileContent
-                        assetDefinition={assetDefinition}
-                        uploadFileParams={uploadFileParams}/>
-
-                    <TGui.Stack>
-                        <TurtleButton
-                            variant={"outlined"}
-                            onClick={createAssetPressed}
-                            label={"create.asset"}
-                        />
-                    </TGui.Stack>
+        <>
 
 
-                </Stack>
-            </Box>
+            <TurtleTextField
+                onChange={pNameChanged}
+                label={"name"}
+            />
+
+            <TurtleTextField
+                onChange={descChanged}
+                label={"description"}
+                multiline
+            />
+
+            <TurtleTextField
+                label={"author"}
+                disabled
+            />
+
+            <CreateAssetWithFileContent
+                assetDefinition={assetDefinition}
+                uploadFileParams={uploadFileParams}/>
+
+            <TGui.Stack>
+                <TurtleButton
+                    variant={"outlined"}
+                    onClick={createAssetPressed}
+                    label={"create.asset"}
+                />
+            </TGui.Stack>
 
 
-        </TurtleOffcanvas>
+        </>
+
+
     )
 }

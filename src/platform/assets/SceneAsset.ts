@@ -6,6 +6,13 @@ export default class SceneAsset extends AssetParent {
     static LANG = "scene-editor"
     static LANG_PLURAL = "scenes"
     static DEFAULT_PLATFORM_FILE = `Images/Previews/${SceneAsset.TYPE}-Preview.png`
+
+    static SUBTYPES = [
+        ["virtual", "scene.virtual"],
+        ["panorama", "scene.panorama"],
+        ["area", "scene.area"]
+    ]
+
 }
 
 export class SceneAssetData {

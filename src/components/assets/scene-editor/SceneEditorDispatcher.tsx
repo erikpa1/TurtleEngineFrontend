@@ -10,6 +10,7 @@ import SceneAsset from "@platform/assets/SceneAsset";
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
 
 export default function SceneEditorDispatcher({}) {
+
     const {projectuid, sceneuid} = useParams()
 
     const _projectUid: string = projectuid ?? ""
@@ -24,12 +25,15 @@ export default function SceneEditorDispatcher({}) {
     }, [_projectUid, _sceneUid])
 
     if (scene) {
-        // return (
-        //     <PanoramaSceneEditor scene={scene}/>
-        // )
-        return (
-            <VirtualSceneEditor scene={scene}/>
-        )
+        if (scene.subtype === "panorama") {
+            return (
+                <PanoramaSceneEditor scene={scene}/>
+            )
+        } else if (scene.subtype === "virtual") {
+            return (
+                <VirtualSceneEditor scene={scene}/>
+            )
+        }
     } else {
         return (
             <MiddleSpinner/>

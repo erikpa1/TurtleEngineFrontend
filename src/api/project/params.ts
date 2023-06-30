@@ -5,6 +5,7 @@ import {AssetDefinition} from "@platform/assets/Assets";
 export class CreateAssetParamas {
     name = ""
     uid = ""
+    subtype = ""
     extension = ""
     description = ""
     assetType = ""
@@ -15,6 +16,8 @@ export class CreateAssetParamas {
 
 
 }
+
+
 
 export interface CreateProjectParams {
     name: string,

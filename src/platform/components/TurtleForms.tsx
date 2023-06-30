@@ -3,7 +3,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 
 
-import {TextField} from "@mui/material";
+import {FormControl, InputLabel, TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField/TextField";
 import {TGui} from "@external/tgui";
 import {Form} from "react-bootstrap";
@@ -25,6 +25,48 @@ export function TurtleTextField(props: TextFieldProps | any): JSX.Element {
             {...props}
             label={t(_label)}
         />
+    )
+}
+
+interface TurtleSelectProps {
+    name: string
+    value: string
+    onChange: any
+    items: Array<[string, string]>
+}
+
+
+export function TurtleSelectField(props: TurtleSelectProps | any): JSX.Element {
+
+    const [t] = useTranslation()
+
+    const _label: string = props.label ? props.label as string : ""
+    const _translated = t(_label)
+
+    return (
+        <FormControl>
+            <InputLabel id={`TurtleSelectField-${_label}`}>{_translated}</InputLabel>
+            <TGui.Select
+                className={props.disabled ? "" : "turtle-shaded-button"}
+                labelId={`TurtleSelectField-${_label}`}
+                id={`TurtleSelectFieldId-${_label}`}
+                value={props.value}
+                label={_translated}
+                onChange={props.onChange}
+                {...props}
+            >
+                {
+                    props.items.map((value) => {
+                        return (
+                            <TGui.MenuItem key={value[0]} value={value[0]}>{t(value[1])}</TGui.MenuItem>
+                        )
+                    })
+                }
+
+            </TGui.Select>
+        </FormControl>
+
+
     )
 }
 

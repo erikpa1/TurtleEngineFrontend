@@ -60,5 +60,9 @@
   "add.marker": "Add marker",
   "select": "Select",
   "scene": "Scene",
-  "save": "Save"
+  "save": "Save",
+  "type": "Type",
+  "scene.area": "Area scene",
+  "scene.panorama": "Panorama scene",
+  "scene.virtual": "Virtual scene"
 }

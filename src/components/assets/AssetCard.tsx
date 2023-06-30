@@ -66,7 +66,6 @@ export default function AssetCard({
         })
     }
 
-
     return (
         <TGui.Card sx={{maxWidth: 345}}>
             <TGui.CardMedia
@@ -75,6 +74,24 @@ export default function AssetCard({
                 title={asset.name}
             />
             <TGui.CardContent>
+
+                {
+                    asset.subtype !== "" &&
+                    <TGui.Typography
+                        variant="body2"
+                        color="text.secondary"
+                        style={{
+                            minHeight: "50px",
+                            maxHeight: "50px"
+                        }}
+                    >
+                        {asset.subtype}
+                    </TGui.Typography>
+
+
+                }
+
+
                 <TGui.Typography gutterBottom variant="h5" component="div">
                     {asset.name}
                 </TGui.Typography>
@@ -94,6 +111,7 @@ export default function AssetCard({
                 {
                     mode === AssetCardModes.EDIT && <>
                         <TGui.Button onClick={editAssetPressed} label={"edit"}/>
+                        <TGui.Button onClick={editAssetPressed} label={"properties"}/>
                         <TGui.Button onClick={deletePressed} label={"delete"} color={"error"}/>
                     </>
                 }

@@ -3,11 +3,14 @@ import React from "react";
 
 import SceneAsset from "@platform/assets/SceneAsset";
 
-import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 
 import SceneApi from "@api/project/SceneApi";
 
-import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
+import {
+    UniversalMeshCanvas,
+    UniversalWorldEnvironment,
+    UniversalWorldGrid
+} from "@components/assets/canvases/UniversalMeshCanvas";
 
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
@@ -77,6 +80,8 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
 
                 <_PanoramaLoader panoramaUid={props.sceneDefinition.panoramaUid}/>
 
+                <UniversalWorldGrid height={-80}/>
+
 
             </UniversalMeshCanvas>
 
@@ -121,3 +126,5 @@ function _PanoramaAssetLoader({assetUid}) {
 
 
 }
+
+

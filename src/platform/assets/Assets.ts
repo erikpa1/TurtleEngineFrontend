@@ -22,6 +22,7 @@ export class AssetDefinition {
 
     DEFAULT_PLATFORM_FILE = ""
     CLASS: any
+    SUBTYPES = new Array<[string, string]>()
 
 
     constructor(_clazz: any) {
@@ -32,6 +33,9 @@ export class AssetDefinition {
         this.DEFAULT_PLATFORM_FILE = _clazz.DEFAULT_PLATFORM_FILE
         this.CLASS = _clazz
 
+        if (_clazz.SUBTYPES) {
+            this.SUBTYPES = _clazz.SUBTYPES
+        }
 
     }
 }

@@ -105,11 +105,21 @@ function _SubView({type}) {
                 </Box>
             </TabContext>
 
-
-            <UniversalAssetList parentProjectUid={projectuid ?? ""} assetDefinition={AssetsTypeMap.get(tabValue)}/>
+            <UniversalAssetList
+                parentProjectUid={projectuid ?? ""}
+                assetDefinition={AssetsTypeMap.get(tabValue)}
+            />
 
         </div>
 
-
     )
 }
+
+
+function _SubTypeView({}) {
+    return (
+        <></>
+    )
+}
+
+

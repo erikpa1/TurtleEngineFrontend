@@ -11,6 +11,7 @@ export default class AssetParent {
     public name = ""
     public description = ""
     public extension = ""
+    public subtype = ""
     public _folder = ""
 
     static LANG = "asset"
@@ -30,6 +31,7 @@ export default class AssetParent {
         this.name = jObject.name ?? ""
         this.description = jObject.description ?? ""
         this.extension = jObject.extension ?? ""
+        this.subtype = jObject.subtype ?? ""
     }
 
 

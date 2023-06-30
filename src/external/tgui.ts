@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Box, Tab, Tabs} from "@mui/material";
+import {Box, MenuItem, Select, Tab, Tabs} from "@mui/material";
 
 import {Col, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
@@ -16,7 +16,7 @@ import Switch, {Case} from "react-switch-case/lib/esm";
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import {TurtleSingleFileInput} from "@platform/components/TurtleForms";
+import {TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
 
 export const TGui = {
     T: useTranslation,
@@ -32,6 +32,9 @@ export const TGui = {
     Typography: Typography,
     CardActions: CardActions,
     Button: TurtleButton,
+    Select: Select,
+    TSelect: TurtleSelectField,
+    MenuItem: MenuItem,
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
     Switch: Switch,

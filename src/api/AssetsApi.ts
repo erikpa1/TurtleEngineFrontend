@@ -19,11 +19,8 @@ export default class AssetsApi {
     static async GetAllAssetsOfType(projectUid: string, assetType: string): Promise<Array<AssetParentLight>> {
 
         if (PlatformDispatcher.IsDesktop()) {
-
             const assets = await TauriAssetPlugin.GetAllAssetsOfType(projectUid, assetType)
-
             return assets
-
         } else {
             return []
         }
@@ -38,6 +35,15 @@ export default class AssetsApi {
         }
         alert("Create asset is not implemented for web")
         return new AssetParentLight()
+    }
+
+    static async CreateAssetFromLight(params: AssetParentLight) {
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriAssetPlugin.CreateAssetFromLight(params);
+        } else {
+            await axios.post("/api/assets/create-asset", params) //TODO Implement this one
+        }
+
     }
 
 

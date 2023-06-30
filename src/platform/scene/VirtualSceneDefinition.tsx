@@ -29,11 +29,11 @@ export default class VirtualSceneDefinition {
     AddAssetChildren(asset: AssetParentLight) {
         //TODO Toto zautomatizovat
 
-        if (asset.assetType === Assets.Mesh.TYPE) {
+        if (asset.type === Assets.Mesh.TYPE) {
             const tmp = new SceneMeshNode()
             tmp.content_uid = asset.uid
             this.root.children.push(tmp)
-        } else if (asset.assetType === Assets.Video.TYPE) {
+        } else if (asset.type === Assets.Video.TYPE) {
             const tmp = new SceneVideoNode()
             tmp.content_uid = asset.uid
             this.root.children.push(tmp)

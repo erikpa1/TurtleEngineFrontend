@@ -58,5 +58,9 @@
   "add.marker": "Add marker",
   "select": "Vybrať",
   "scene": "Scéna",
-  "save": "Uložiť"
+  "save": "Uložiť",
+  "type": "Typ",
+  "scene.area": "Area scene",
+  "scene.panorama": "Panorama scene",
+  "scene.virtual": "Virtual scene"
 }

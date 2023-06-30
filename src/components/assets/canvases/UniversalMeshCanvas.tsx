@@ -67,8 +67,6 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                                enableDamping={false}
                                maxPolarAngle={Math.PI / 2}/>
 
-                <UniversalWorldGrid/>
-
 
                 {
                     React.Children.toArray(props.children)
@@ -81,7 +79,12 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
     )
 }
 
-export function UniversalWorldGrid({}) {
+
+interface UniversalWorldGridProps {
+    height?: number
+}
+
+export function UniversalWorldGrid(props: UniversalWorldGridProps) {
     const gridConfig = {
         cellSize: 0.5,
         cellThickness: 0.5,
@@ -94,7 +97,11 @@ export function UniversalWorldGrid({}) {
         followCamera: false,
         infiniteGrid: true
     }
-    return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />
+    return <Grid
+        position={[0, props.height ?? -0.01, 0]}
+        args={[10.5, 10.5]}
+        {...gridConfig}
+    />
 }
 
 export function UniversalWorldEnvironment({}) {

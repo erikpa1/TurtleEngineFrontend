@@ -13,6 +13,7 @@ pub struct AssetParentLight {
     #[serde(default)]
     pub name: String,
 
+    #[serde(rename = "type")]
     pub assetType: String,
 
     #[serde(default)]
@@ -23,7 +24,6 @@ pub struct AssetParentLight {
 
     #[serde(default)]
     pub hasPreview: bool,
-
 
 }
 

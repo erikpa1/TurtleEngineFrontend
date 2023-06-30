@@ -9,7 +9,7 @@ import {TGui} from "@external/tgui";
 
 import LicenceManager from "@platform/licences/LicenceManager";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import CreateAssetOffcanvas from "@editors/appmanagement/assets/CreateAssetOffcanvas";
+import CreateAssetOffcanvasDispatcher from "@editors/appmanagement/assets/CreateAssetOffcanvasDispatcher.tsx";
 
 import AssetParentLight from "@platform/assets/AssetParentLight";
 import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
@@ -46,7 +46,7 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
 
     const createAssetPressed = () => {
         popupZus.pushElement(
-            <CreateAssetOffcanvas
+            <CreateAssetOffcanvasDispatcher
                 assetDefinition={props.assetDefinition}
                 onRefresh={refreshAssets}
                 onClose={popupZus.popElement}

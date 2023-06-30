@@ -160,6 +160,8 @@ function _Top(props: SceneEditorHudProps) {
                 onClick={savePressed}
             />
 
+            <_Compas/>
+
         </AssetEditorHud>
     )
 }
@@ -222,4 +224,13 @@ function _Right(props: SceneEditorHudProps) {
     )
 }
 
+
+function _Compas({}) {
+    return (
+        <HudButton
+            lang={"north"}
+            icon={"/icons/Compas.svg"}
+        />
+    )
+}
 

@@ -1,6 +1,10 @@
 import React from "react";
 
-import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
+import {
+    UniversalMeshCanvas,
+    UniversalWorldEnvironment,
+    UniversalWorldGrid
+} from "@components/assets/canvases/UniversalMeshCanvas";
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
@@ -65,6 +69,10 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
                 {/*<_ExampleMeshes/>*/}
 
                 <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
+
+
+                <UniversalWorldGrid/>
+
 
             </UniversalMeshCanvas>
 

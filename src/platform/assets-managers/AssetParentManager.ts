@@ -5,13 +5,14 @@ import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams"
 import {CreateThumbnailParams} from "@api/AssetApiParams";
 import FsTools from "@api/FsTools";
 import {Assets} from "@platform/assets/Assets";
-import AssetParent from "@platform/assets/AssetParent";
+import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
 
 
 export default class AssetParentManager {
     static async CreateAsset(params: CreateAssetParamas): Promise<AssetParentLight> {
         return await AssetsApi.CreateAsset(params)
     }
+
 
     static async CreateAssetThumbnail(basicParams: AssetParentLight, folder: string, uploadFileParams: UploadAssetFileParams) {
 

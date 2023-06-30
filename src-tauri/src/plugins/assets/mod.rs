@@ -83,7 +83,7 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let query = format!(
-        "SELECT Uid, Name, Type, HasPreview from Assets WHERE Type='{}'", asset_type
+        "SELECT Uid, Name, Type, SubType, HasPreview from Assets WHERE Type='{}'", asset_type
     );
 
     let mut statement = dbc.prepare(&query).unwrap();

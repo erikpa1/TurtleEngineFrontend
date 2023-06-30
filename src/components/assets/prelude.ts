@@ -11,7 +11,7 @@ export default function useOpenAssetDispatcher(): (asset: AssetParentLight) => v
     const openAsset = (asset: AssetParentLight) => {
         const projectUid = asset.parent_project_uid
         const assetUid = asset.uid
-        const assetType = asset.assetType
+        const assetType = asset.type
 
         navigate(RoutesManager.GetAssetRoute(projectUid, assetType, assetUid))
 
