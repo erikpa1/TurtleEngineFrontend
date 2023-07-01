@@ -1,21 +1,23 @@
 import React from "react";
 import {useParams} from "react-router-dom";
 
-import * as three from "three"
-
-import AssetsApi from "@api/AssetsApi";
-
-import MeshAsset from "@platform/assets/MeshAsset";
 
 import {MiddleSpinner} from "@components/Spinners";
 
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
-import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
+import {
+    UniversalMeshCanvas,
+    UniversalWorldEnvironment,
+    UniversalWorldGrid
+} from "@components/assets/canvases/UniversalMeshCanvas";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
+import Asset from "@platform/assets/Asset.ts";
 
+import {MeshAssetData} from "@platform/assets/mesh.ts";
+import AssetsApi from "@api/AssetsApi.ts";
 
 export default function MeshEditor({}) {
 
@@ -24,11 +26,11 @@ export default function MeshEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _meshuidUid: string = meshuid ?? ""
 
-    const [mesh, setMesh] = React.useState<MeshAsset | null>(null)
+    const [mesh, setMesh] = React.useState<MeshAssetData | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<MeshAsset>(Assets.Mesh, _projectUid, _meshuidUid).then((value) => {
+        AssetsApi.GetAssetData<MeshAssetData>(MeshAssetData, _projectUid, _meshuidUid).then((value) => {
             setMesh(value)
         })
 
@@ -47,7 +49,7 @@ export default function MeshEditor({}) {
 }
 
 interface _MeshEditorProps {
-    mesh: MeshAsset
+    mesh: MeshAssetData
 }
 
 function _MeshEditor({mesh}: _MeshEditorProps) {
@@ -60,6 +62,8 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
             position: "relative"
         }}>
             <UniversalMeshCanvas>
+
+                <UniversalWorldGrid/>
 
                 <SceneCameraRotationGizmo/>
 

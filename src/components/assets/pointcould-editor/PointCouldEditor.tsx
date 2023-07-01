@@ -6,9 +6,9 @@ import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 
-import PointCloudAsset from "@platform/assets/PointCloudAsset";
+import PointCloudAsset from "@platform/assets/pointcloud.ts";
 import PointCloudEditorHud from "@components/assets/pointcould-editor/PointCloudEditorHud";
-import {Assets} from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets.ts";
 
 export default function PointCloudEditor({}) {
     const {projectuid, clouduid} = useParams()
@@ -20,9 +20,9 @@ export default function PointCloudEditor({}) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(Assets.PointCloud, _projectUid, _cloudUid).then((value) => {
-            setCloud(value)
-        })
+        // AssetsApi.GetAssetData(Assets.PointCloud, _projectUid, _cloudUid).then((value) => {
+        //     setCloud(value)
+        // })
 
     }, [_projectUid, _cloudUid])
 

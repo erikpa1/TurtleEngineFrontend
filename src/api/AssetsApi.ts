@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import AssetParent, {AssetParentData} from "@platform/assets/AssetParent";
+import Asset, {AssetData, AssetParentData, ProjectSerializationContext} from "@platform/assets/Asset.ts";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 
 import TauriAssetPlugin from "../tauri/plugin_assets";
 
-import AssetParentLight from "@platform/assets/AssetParentLight";
+import Asset from "@platform/assets/Asset.ts";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
@@ -15,9 +15,7 @@ import {AssetDefinition} from "@platform/assets/Assets";
 
 export default class AssetsApi {
 
-
-    static async GetAllAssetsOfType(projectUid: string, assetType: string): Promise<Array<AssetParentLight>> {
-
+    static async GetAllAssetsOfType(projectUid: string, assetType: string): Promise<Array<Asset>> {
         if (PlatformDispatcher.IsDesktop()) {
             const assets = await TauriAssetPlugin.GetAllAssetsOfType(projectUid, assetType)
             return assets
@@ -27,25 +25,23 @@ export default class AssetsApi {
 
     }
 
-    static async CreateAsset(params: CreateAssetParamas): Promise<AssetParentLight> {
+    static async CreateAsset(params: CreateAssetParamas): Promise<Asset> {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriAssetPlugin.CreateAsset(params);
         } else {
             await axios.post("/api/assets/create-asset", params) //TODO Implement this one
         }
         alert("Create asset is not implemented for web")
-        return new AssetParentLight()
+        return new Asset()
     }
 
-    static async CreateAssetFromLight(params: AssetParentLight) {
+    static async CreateAssetFromLight(params: Asset) {
         if (PlatformDispatcher.IsDesktop()) {
             await TauriAssetPlugin.CreateAssetFromLight(params);
         } else {
             await axios.post("/api/assets/create-asset", params) //TODO Implement this one
         }
-
     }
-
 
     static async UpdateAssetFile(params: UploadAssetFileParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
@@ -66,7 +62,7 @@ export default class AssetsApi {
     }
 
 
-    static async DeleteAssetWithUid(asset: AssetParentLight): Promise<boolean> {
+    static async DeleteAssetWithUid(asset: Asset): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {
             await TauriAssetPlugin.DeleteAssetWithUid(asset.parent_project_uid, asset.uid);
             await TauriOsPlugin.DeleteFolder(asset.GetFolderPath());
@@ -76,45 +72,45 @@ export default class AssetsApi {
         return true
     }
 
-    static async UploadAssetLight(assetLight: AssetParentLight): Promise<boolean> {
+    static async UploadAssetLight(assetLight: Asset): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {
             await TauriAssetPlugin.UploadAssetLight(assetLight);
         } else {
-            await axios.post("/api/assets/create-asset") //TODO Implement this one
+            await axios.post("/api/assets/upload-asset") //TODO Implement this one
         }
         return true
     }
 
-    static async UploadAssetData(asset: AssetParentLight, assetParentData: AssetParentData): Promise<boolean> {
+    static async UploadAssetData(project_uid: string, asset_uid: string, assetParentData: any): Promise<boolean> {
         if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.UploadAssetData(asset, assetParentData);
+            await TauriAssetPlugin.UpdateAssetData(project_uid, asset_uid, assetParentData);
         } else {
             await axios.post("/api/assets/create-asset") //TODO Implement this one
         }
         return true
     }
 
+    static async GetAssetData<T extends AssetData>(clazz: any, project_uid: string, asset_uid: string): Promise<T> {
 
-    static async GetAssetData<T extends AssetParent>(assetDefinition: AssetDefinition, project_uid: string, asset_uid: string): Promise<T> {
+        const asset: any = new clazz()
 
-        const asset: AssetParent = new assetDefinition.CLASS()
+        const context = new ProjectSerializationContext()
+        context.project_uid = project_uid
+        context.project_path = useActiveProjectZus.getState().project.projectFolderPath
+
+        let data = {}
 
         if (PlatformDispatcher.IsDesktop()) {
-            const data = await TauriAssetPlugin.GetAssetData(project_uid, assetDefinition, asset_uid);
-
-            asset.FromJson(data)
-            asset.parent_project_uid = project_uid
-            asset.parent_project_path = useActiveProjectZus.getState().project.projectFolderPath
+            data = await TauriAssetPlugin.GetAssetData(project_uid, asset_uid);
         } else {
-            const data = await axios.get("/api/assets/get-asset", {
+            data = await axios.get("/api/assets/get-asset", {
                 params: {
                     project_uid: project_uid,
                     asset_uid: asset_uid
                 }
             })
-            asset.FromJson(data)
         }
-
+        asset.FromJson(context, data)
 
         return asset as any
 

@@ -3,14 +3,14 @@ import {useParams} from "react-router-dom";
 
 import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
-import QuizAsset from "@platform/assets/QuizAsset";
+import QuizAsset from "@platform/assets/quiz.ts";
 
 import TextAnswerEditor from "@components/assets/quiz-editor/TextAnswerEditor";
 import ImageAnswerEditor from "@components/assets/quiz-editor/ImageAnswerEditor";
 import SoundAnswerEditor from "@components/assets/quiz-editor/SoundAnswerEditor";
 import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswerEditor";
 import {ViewContainer} from "@components/ViewContainer";
-import {Assets} from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets.ts";
 
 
 export default function QuizEditor({}) {
@@ -23,10 +23,10 @@ export default function QuizEditor({}) {
     const [quiz, setQuiz] = React.useState<QuizAsset | null>(null)
 
     React.useEffect(() => {
-
-        AssetsApi.GetAssetData(Assets.Quiz, _projectUid, _quizUid).then((value) => {
-            setQuiz(value)
-        })
+        //
+        // AssetsApi.GetAssetData(Assets.Quiz, _projectUid, _quizUid).then((value) => {
+        //     setQuiz(value)
+        // })
 
     }, [_projectUid, _quizUid])
 

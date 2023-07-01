@@ -1,4 +1,4 @@
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 
 const PREFIX_ASSETS = "/assets"
 const PREFIX_PLAY = "/play"

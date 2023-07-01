@@ -8,15 +8,15 @@ import Modals from "@components/Modals";
 import {useTranslation} from "react-i18next";
 import AssetsApi from "@api/AssetsApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
-import AssetParentLight from "@platform/assets/AssetParentLight";
+import Asset from "@platform/assets/Asset.ts";
 import useOpenAssetDispatcher from "@components/assets/prelude";
 import FsTools from "@api/FsTools";
 
 
 interface AssetCardProps {
-    asset: AssetParentLight
+    asset: Asset
     onRefresh: any
-    onSelect?: (asset: AssetParentLight) => void
+    onSelect?: (asset: Asset) => void
     mode?: string
 }
 
@@ -66,6 +66,7 @@ export default function AssetCard({
         })
     }
 
+
     return (
         <TGui.Card sx={{maxWidth: 345}}>
             <TGui.CardMedia
@@ -80,14 +81,9 @@ export default function AssetCard({
                     <TGui.Typography
                         variant="body2"
                         color="text.secondary"
-                        style={{
-                            minHeight: "50px",
-                            maxHeight: "50px"
-                        }}
                     >
-                        {asset.subtype}
+                        {t("type")}: <b>{asset.subtype}</b>
                     </TGui.Typography>
-
 
                 }
 

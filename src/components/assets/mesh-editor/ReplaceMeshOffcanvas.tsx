@@ -1,7 +1,7 @@
 import React from "react";
 import {TGui} from "@external/tgui";
 
-import MeshAsset from "@platform/assets/MeshAsset";
+import Mesh from "@platform/assets/mesh.ts";
 import MeshFilePickView from "@components/assets/mesh-editor/mesh-previews";
 import {Ext} from "@external/prelude";
 
@@ -9,11 +9,11 @@ import FsTools from "@api/FsTools";
 
 import TauriAssetPlugin from "../../../tauri/plugin_assets";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 
 
 interface EditMeshAssetOffcanvas {
-    mesh: MeshAsset
+    mesh: Mesh
     onClose: () => void,
     onRefresh: () => void
 }
@@ -105,7 +105,6 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
         const params = new UploadAssetFileParams()
         params.path_from = meshPath
-        params.folder = Assets.Mesh.FOLDER
         params.asset_type = Assets.Mesh.TYPE
         params.asset_uid = props.mesh.uid
         params.project_uid = props.mesh.parent_project_uid

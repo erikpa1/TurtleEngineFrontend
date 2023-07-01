@@ -13,14 +13,14 @@ use rusqlite::ffi::sqlite3;
 
 use uuid::{Uuid};
 
-use tauri::{Asset, Runtime, State};
+use tauri::{Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
 
 use tfs;
 use tstructures::project::{CreateAssetParamas, UploadAssetFileParams};
 
 
-use tstructures::assets::{AssetManager, AssetParentLight};
+use tstructures::assets::{TurtleAsset};
 
 use serde_json;
 use serde_json::json;
@@ -37,7 +37,7 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
     let assetFolder = format!("{}{}\\{}\\{}\\",
                               GetProjectsPath(),
                               createParams.project_uid,
-                              createParams.folder,
+                              "Assets",
                               createParams.asset_uid);
     CreateFolders(&assetFolder);
 
@@ -56,7 +56,6 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
 #[tauri::command]
 pub async fn CreateAssetThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
     let mut createParams: params::CreateAssetThumbnailParams = serde_json::from_str(&createJson).unwrap();
-
 
     let path = Path::new(&createParams.destination_file);
 
@@ -89,13 +88,14 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
     let mut statement = dbc.prepare(&query).unwrap();
 
     let rows_iter = statement.query_map([], |row| {
-        let mut tmp = AssetParentLight::New();
+        let mut tmp = TurtleAsset::New();
 
         tmp.uid = row.get(0).unwrap_or("".into());
         tmp.name = row.get(1).unwrap_or("".into());
         tmp.assetType = row.get(2).unwrap_or("".into());
+        tmp.subtype = row.get(3).unwrap_or("".into());
 
-        tmp.hasPreview = if row.get(3).unwrap_or(0) == 0 {
+        tmp.hasPreview = if row.get(4).unwrap_or(0) == 0 {
             false
         } else {
             true
@@ -105,7 +105,7 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
         return Ok(tmp);
     }).unwrap();
 
-    let mut result: Vec<AssetParentLight> = vec![];
+    let mut result: Vec<TurtleAsset> = vec![];
 
     for myRow in rows_iter {
         if let Ok(lightAsset) = myRow {
@@ -138,27 +138,55 @@ pub async fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String,
 }
 
 #[tauri::command]
-pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_type: String, asset_uid: String) -> Result<String, ()> {
-    let assetFolder = AssetManager::GetAssetFolder(&asset_type);
+pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
-    let assetFolder = format!("{}{}\\{}\\{}\\", tfs::GetProjectsPath(), project_uid, assetFolder, asset_uid);
+    let query = format!(
+        "SELECT Uid, Name, Type, SubType, HasPreview from Assets WHERE Uid='{}'", asset_uid
+    );
 
-    let jsonFile = format!("{}{}", assetFolder, "Default.json");
+    let mut statement = dbc.prepare(&query).unwrap();
 
-    let fileStreamResult = fs::read(jsonFile);
+    let rows_iter = statement.query_map([], |row| {
+        let mut tmp = TurtleAsset::New();
 
-    if let Ok(stream) = fileStreamResult {
-        let returnStr = String::from_utf8(stream).unwrap_or("{}".into());
-        return Ok(returnStr);
-    } else {
-        return Ok("{}".into());
+        tmp.uid = row.get(0).unwrap_or("".into());
+        tmp.name = row.get(1).unwrap_or("".into());
+        tmp.assetType = row.get(2).unwrap_or("".into());
+        tmp.subtype = row.get(3).unwrap_or("".into());
+
+        tmp.hasPreview = if row.get(4).unwrap_or(0) == 0 {
+            false
+        } else {
+            true
+        };
+
+        return Ok(tmp);
+    }).unwrap();
+
+    let mut result: Vec<TurtleAsset> = vec![];
+
+    for myRow in rows_iter {
+        if let Ok(lightAsset) = myRow {
+            result.push(lightAsset);
+        }
     }
+
+    let tmp = &result[0];
+
+    let resultValue = json!(tmp);
+
+    let resString = serde_json::to_string(&resultValue)
+        .unwrap_or("\"assets\": []".into());
+
+    return Ok(resString);
 }
 
 
 #[tauri::command]
 pub async fn UploadAssetLight(state: State<'_, AppState>, jsonString: String) -> Result<(), String> {
-    let mut assetLight: AssetParentLight = serde_json::from_str(&jsonString).unwrap();
+    let mut assetLight: TurtleAsset = serde_json::from_str(&jsonString).unwrap();
 
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
     println!("Uploading asset");

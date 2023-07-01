@@ -6,9 +6,8 @@ import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
 import HudButton from "@components/assets/HudButton";
 
-import SceneAsset from "@platform/assets/SceneAsset";
 
-import {AssetDefinition, Assets} from "@platform/assets/Assets";
+import Assets, {AssetDefinition,} from "@platform/assets/Assets";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TGui} from "@external/tgui";
 import {useTranslation} from "react-i18next";
@@ -17,14 +16,14 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
-import {SceneNode} from "@platform/scene/SceneNode";
+
 import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
 import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper.tsx";
 import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas.tsx";
 
 
 interface SceneEditorHudProps {
-    scene: SceneAsset
+    scene: Asset
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }

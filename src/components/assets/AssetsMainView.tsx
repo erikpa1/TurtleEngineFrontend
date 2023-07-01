@@ -14,7 +14,8 @@ import {Ext} from "@external/prelude";
 import UniversalAssetList from "@components/assets/UniversalAssetList";
 
 
-import {Assets, AssetsTypeMap} from "@platform/assets/Assets";
+import Assets, {AssetsTypeMap} from "@platform/assets/Assets";
+
 import {useParams} from "react-router-dom";
 
 

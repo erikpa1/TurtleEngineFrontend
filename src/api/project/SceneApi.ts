@@ -3,7 +3,7 @@ import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneGraphicParams from "@platform/scene/SceneGraphicParams";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsTools from "@api/FsTools";
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 
 
 export default class SceneApi {
@@ -13,7 +13,7 @@ export default class SceneApi {
         const sceneDefinition = new clazz()
 
         if (PlatformDispatcher.IsDesktop()) {
-            const path = FsTools.GetPathInProject(projectUid, `${Assets.Scene.FOLDER}/${sceneUid}/SceneDefinition.json`)
+            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/SceneDefinition.json`)
 
             const exists = await TauriOsPlugin.FileExists(path);
 
@@ -34,7 +34,7 @@ export default class SceneApi {
 
 
         if (PlatformDispatcher.IsDesktop()) {
-            const path = FsTools.GetPathInProject(projectUid, `${Assets.Scene.FOLDER}/${sceneUid}/SceneDefinition.json`)
+            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/SceneDefinition.json`)
 
             const sceneDefinitionString = JSON.stringify(sceneDefinition.ToJson())
 

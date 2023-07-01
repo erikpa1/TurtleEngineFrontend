@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import SceneAsset from "@platform/assets/SceneAsset";
+import SceneAsset from "@platform/assets/scene.ts";
 
 
 import SceneApi from "@api/project/SceneApi";
@@ -18,13 +18,14 @@ import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionD
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
-import PanoramaSceneDefinition from "@platform/scene/PanoramaSceneDefinition";
-import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition.tsx";
+import PanoramaAsset from "@platform/assets/panorama.ts";
 import FsTools from "@api/FsTools";
+import {VirtualSceneData} from "@platform/assets/scene.ts";
 
 
 interface PanoramaSceneEditorProps {
-    scene: SceneAsset
+    scene: VirtualSceneData
 }
 
 export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
@@ -55,7 +56,7 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
 }
 
 interface _PanoramaSceneEditorProps {
-    scene: SceneAsset
+    scene: VirtualSceneData
     sceneDefinition: PanoramaSceneDefinition
     onSceneDefinitionChanged: () => void
 }

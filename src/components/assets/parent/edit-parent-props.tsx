@@ -1,11 +1,12 @@
 import React, {SyntheticEvent} from "react";
-import AssetParent from "@platform/assets/AssetParent";
+
 import {TurtleSelectField, TurtleTextField} from "@platform/components/TurtleForms";
-import AssetParentLight from "@platform/assets/AssetParentLight.ts";
+import Asset from "@platform/assets/Asset.ts";
 import {TGui} from "@external/tgui.ts";
+import {AssetSubtype} from "@platform/assets/Assets.ts";
 
 interface _AllProps {
-    asset: AssetParent | AssetParentLight
+    asset: Asset | Asset
 }
 
 export function EditAssetNameFormField({asset}: _AllProps) {
@@ -48,8 +49,8 @@ export function EditAssetDescriptionFormField({asset}: _AllProps) {
 }
 
 interface EditAssetTypeFormFieldProps {
-    asset: AssetParentLight
-    options: Array<[string, string]>
+    asset: Asset
+    options: Array<AssetSubtype>
     onSelected: any
 }
 
@@ -67,7 +68,9 @@ export function EditAssetSubTypeFormField(props: EditAssetTypeFormFieldProps) {
             }}
             label={"type"}
             value={value}
-            items={props.options}
+            items={props.options.map((val) => {
+                return [val.key, val.lang]
+            })}
 
         />
     )

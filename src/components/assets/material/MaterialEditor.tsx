@@ -1,6 +1,6 @@
 import React from "react";
 
-import MaterialAsset from "@platform/assets/MaterialAsset";
+import Material from "@platform/assets/material.ts";
 
 import {MiddleSpinner} from "@components/Spinners";
 import {useParams} from "react-router-dom";
@@ -15,7 +15,7 @@ import * as three from "three"
 import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
-import {Assets} from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets.ts";
 
 
 const TEXTURES = {
@@ -35,13 +35,13 @@ export default function MaterialEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _materialUid: string = materialuid ?? ""
 
-    const [material, setMaterial] = React.useState<MaterialAsset | null>(null)
+    const [material, setMaterial] = React.useState<Material | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData(Assets.Material, _projectUid, _materialUid).then((value) => {
-            setMaterial(value)
-        })
+        // AssetsApi.GetAssetData(Assets.Material, _projectUid, _materialUid).then((value) => {
+        //     setMaterial(value)
+        // })
 
     }, [_projectUid, _materialUid])
 
@@ -60,7 +60,7 @@ export default function MaterialEditor({}) {
 }
 
 interface _MaterialEditorProps {
-    material: MaterialAsset
+    material: Material
 }
 
 function _MaterialEditor({material}) {

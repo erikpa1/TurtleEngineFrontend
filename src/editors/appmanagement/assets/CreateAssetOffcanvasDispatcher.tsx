@@ -18,7 +18,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import {TGui} from "@external/tgui";
 
-import {AssetDefinition, Assets} from "@platform/assets/Assets";
+import Assets, {AssetDefinition} from "@platform/assets/Assets";
 import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
@@ -102,7 +102,7 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
             await AreaAssetManager.CreateAreaAsset(basicParams, uploadFileParams)
         } else {
             const createdAsset = await AssetParentManager.CreateAsset(basicParams)
-            await AssetParentManager.CreateAssetThumbnail(createdAsset, assetDefinition.FOLDER, uploadFileParams)
+            await AssetParentManager.CreateAssetThumbnail(createdAsset, uploadFileParams)
         }
 
         lock.unlock()
@@ -130,8 +130,7 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
 
         uploadFileParams.project_uid = projectUid
         uploadFileParams.asset_type = assetType
-        uploadFileParams.folder = assetDefinition.FOLDER
-        uploadFileParams.path_from = FsTools.GetPlatformPath(assetDefinition.DEFAULT_PLATFORM_FILE)
+        uploadFileParams.path_from = FsTools.GetPlatformPath(assetDefinition.DEFAULT_PREVIEW)
 
     }, [])
 

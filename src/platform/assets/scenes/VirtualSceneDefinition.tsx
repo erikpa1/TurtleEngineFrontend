@@ -1,9 +1,8 @@
 import {SceneNode} from "@platform/scene/SceneNode";
-import AssetParent from "@platform/assets/AssetParent";
-import MeshAsset from "@platform/assets/MeshAsset";
 
-import AssetParentLight from "@platform/assets/AssetParentLight";
-import {Assets} from "@platform/assets/Assets";
+
+import Assets from "@platform/assets/Assets";
+import Asset from "@platform/assets/Asset.ts";
 import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
 import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode.tsx";
 
@@ -26,7 +25,7 @@ export default class VirtualSceneDefinition {
         }
     }
 
-    AddAssetChildren(asset: AssetParentLight) {
+    AddAssetChildren(asset: Asset) {
         //TODO Toto zautomatizovat
 
         if (asset.type === Assets.Mesh.TYPE) {

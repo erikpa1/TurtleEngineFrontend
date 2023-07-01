@@ -2,10 +2,9 @@ import React from "react";
 
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
-import VideoAsset from "@platform/assets/VideoAsset.ts";
 
 import AssetsApi from "@api/AssetsApi";
 
@@ -54,12 +53,12 @@ export function SceneVideoView({node}: SceneVideoViewProps) {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<VideoAsset>(Assets.Video,
-            projectZus.project.uid,
-            node.content_uid
-        ).then((value) => {
-            setvideoAsset(value)
-        })
+        // AssetsApi.GetAssetData<VideoAsset>(Assets.Video,
+        //     projectZus.project.uid,
+        //     node.content_uid
+        // ).then((value) => {
+        //     setvideoAsset(value)
+        // })
     }, [node.content_uid])
 
 

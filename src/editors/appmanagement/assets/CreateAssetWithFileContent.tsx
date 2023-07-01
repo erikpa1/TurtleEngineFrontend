@@ -10,7 +10,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import FsTools from "@api/FsTools";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import PanoramaAsset from "@platform/assets/panorama.ts";
 import {AssetDefinition} from "@platform/assets/Assets";
 
 

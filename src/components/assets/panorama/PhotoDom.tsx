@@ -1,4 +1,4 @@
-import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import PanoramaAsset from "@platform/assets/panorama.ts";
 
 
 import * as three from "three";

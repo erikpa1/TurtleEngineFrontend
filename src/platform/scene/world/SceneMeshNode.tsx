@@ -1,10 +1,9 @@
 import React from "react";
 
-import MeshAsset from "@platform/assets/MeshAsset";
-import {PrimitiveMesh, PrimitiveMeshEditable} from "@components/assets/mesh/PrimitiveMesh";
+import {MeshAssetData} from "@platform/assets/mesh.ts";
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
-import AssetsApi from "@api/AssetsApi";
-import {Assets} from "@platform/assets/Assets";
+
 import {SceneNode} from "@platform/scene/SceneNode";
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover.tsx";
 
@@ -44,13 +43,13 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 
     const projectZus = useActiveProjectZus()
 
-    const [meshAsset, setMeshAsset] = React.useState<MeshAsset | null>(null)
+    const [meshAsset, setMeshAsset] = React.useState<MeshAssetData | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<MeshAsset>(Assets.Mesh, projectZus.project.uid, node.content_uid).then((value) => {
-            setMeshAsset(value)
-        })
+        // AssetsApi.GetAssetData<Mesh>(Assets.Mesh, projectZus.project.uid, node.content_uid).then((value) => {
+        //     setMeshAsset(value)
+        // })
     }, [node.content_uid])
 
 
@@ -69,7 +68,7 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 
 interface _SceneMeshViewProps {
     mesh: SceneMeshNode
-    meshAsset: MeshAsset
+    meshAsset: Mesh
 }
 
 function _SceneMeshView({meshAsset, mesh}: _SceneMeshViewProps) {

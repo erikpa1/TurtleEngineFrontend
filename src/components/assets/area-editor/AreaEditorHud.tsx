@@ -4,17 +4,17 @@ import HudButton from "@components/assets/HudButton";
 
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-import AreaAsset from "@platform/assets/AreaAsset";
+import Area from "@platform/assets/area.ts";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import UniversalAssetList from "@components/assets/UniversalAssetList";
-import {Assets} from "@platform/assets/Assets";
+import Assets from "@platform/assets/Assets";
 import {TGui} from "@external/tgui";
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {Offcanvas} from "react-bootstrap";
 
 interface AreaEditorHudProps {
-    area: AreaAsset
+    area: Area
 }
 
 export default function AreaEditorHud({area}: AreaEditorHudProps) {

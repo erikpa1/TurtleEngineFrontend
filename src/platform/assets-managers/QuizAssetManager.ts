@@ -1,11 +1,11 @@
-import {CreateAssetParamas} from "@api/project/params";
-import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 import AssetsApi from "@api/AssetsApi";
-import {CreateThumbnailParams} from "@api/AssetApiParams";
-import FsTools from "@api/FsTools";
-import {QuizAssetData} from "@platform/assets/QuizAsset";
-import {Assets} from "@platform/assets/Assets";
+
+import {CreateAssetParamas} from "@api/project/params";
+import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
+
+import QuizData from "@platform/assets/quiz.ts";
+
 
 
 export default class QuizAssetManager {
@@ -18,12 +18,12 @@ export default class QuizAssetManager {
 
         uploadFileParams.asset_uid = createdAsset.uid
 
-        await AssetParentManager.CreateAssetThumbnail(createdAsset, Assets.Quiz.FOLDER, uploadFileParams)
+        await AssetParentManager.CreateAssetThumbnail(createdAsset, uploadFileParams)
 
         createdAsset.hasPreview = true
 
         await AssetsApi.UploadAssetLight(createdAsset)
-        await AssetsApi.UploadAssetData(createdAsset, new QuizAssetData())
+        await AssetsApi.UploadAssetData(createdAsset, new QuizData().ToJson())
 
     }
 

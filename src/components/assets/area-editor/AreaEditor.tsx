@@ -6,13 +6,13 @@ import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
 
-import AreaAsset from "@platform/assets/AreaAsset";
+import Area from "@platform/assets/area.ts";
 
 import AreaMarker from "@components/assets/area/AreaMarker";
 import AreaEditorHud from "@components/assets/area-editor/AreaEditorHud";
 import FsTools from "@api/FsTools";
 import ErrorBoundary from "@components/ErrorBoundary";
-import {Assets} from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets.ts";
 
 
 export default function AreaEditor({}) {
@@ -21,13 +21,13 @@ export default function AreaEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _areaiud: string = areauid ?? ""
 
-    const [area, setArea] = React.useState<AreaAsset | null>(null)
+    const [area, setArea] = React.useState<Area | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<AreaAsset>(Assets.Area, _projectUid, _areaiud).then((value) => {
-            setArea(value)
-        })
+        // AssetsApi.GetAssetData<Area>(Assets.Area, _projectUid, _areaiud).then((value) => {
+        //     setArea(value)
+        // })
 
     }, [_projectUid, _areaiud])
 
@@ -43,7 +43,7 @@ export default function AreaEditor({}) {
 }
 
 interface _AreaEditorProps {
-    area: AreaAsset
+    area: Area
 }
 
 function _AreaEditor({area}: _AreaEditorProps) {
@@ -97,7 +97,7 @@ function _AreaEditor({area}: _AreaEditorProps) {
 }
 
 interface _AreaPlaneProps {
-    area: AreaAsset
+    area: Area
 }
 
 function _AreaPlane({area}: _AreaPlaneProps) {

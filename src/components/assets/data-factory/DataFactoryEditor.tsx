@@ -1,11 +1,11 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import QuizAsset from "@platform/assets/QuizAsset";
+import QuizAsset from "@platform/assets/quiz.ts";
 import AssetsApi from "@api/AssetsApi";
 import {ViewContainer} from "@components/ViewContainer";
 import {MiddleSpinner} from "@components/Spinners";
-import DataFactoryAsset from "@platform/assets/DataFactoryAsset";
-import {Assets} from "@platform/assets/Assets";
+import Datafactory from "@platform/assets/datafactory.ts";
+import Assets from "@platform/assets/Assets";
 
 export default function DataFactoryEditor() {
     const {projectuid, datafactoryuid} = useParams()
@@ -18,9 +18,9 @@ export default function DataFactoryEditor() {
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<DataFactoryAsset>(Assets.DataFactory, _projectUid, _dataFactoryUid).then((value) => {
-            setFactory(value)
-        })
+        // AssetsApi.GetAssetData<Datafactory>(Assets.DataFactory, _projectUid, _dataFactoryUid).then((value) => {
+        //     setFactory(value)
+        // })
 
     }, [_projectUid, _dataFactoryUid])
 
@@ -37,7 +37,7 @@ export default function DataFactoryEditor() {
     }
 }
 
-function _DataFactoryView({factory}: { factory: DataFactoryAsset }) {
+function _DataFactoryView({factory}: { factory: Datafactory }) {
     return (
         <>
         </>

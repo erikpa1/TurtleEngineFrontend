@@ -1,8 +1,8 @@
 import FsTools from "@api/FsTools";
-import {AssetConstants} from "@platform/assets/AssetConstants";
+
 import {AssetDefinition} from "@platform/assets/Assets.ts";
 
-export default class AssetParentLight {
+export default class Asset {
     public uid = ""
     public parent_project_uid = ""
     public name = ""
@@ -15,7 +15,7 @@ export default class AssetParentLight {
     public hasPreview = false
     public absolutePath = ""
 
-    from_json(jObject: any | AssetParentLight) {
+    from_json(jObject: any | Asset) {
 
         this.uid = jObject.uid ?? ""
         this.name = jObject.name ?? ""
@@ -31,7 +31,7 @@ export default class AssetParentLight {
 
     GetPreviewPath(): string {
         if (this.hasPreview) {
-            const path = FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.type)}/${this.uid}/Preview.png`)
+            const path = FsTools.GetProjectsPath(`${this.parent_project_uid}/Assets/${this.uid}/Preview.png`)
             return path
         } else {
             return FsTools.GetPlatformPath(`Images/Previews/${this.type}-Preview.png`)
@@ -39,7 +39,7 @@ export default class AssetParentLight {
     }
 
     GetFolderPath(): string {
-        return FsTools.GetProjectsPath(`${this.parent_project_uid}/${AssetConstants.GetFolderOnType(this.type)}/${this.uid}/`)
+        return FsTools.GetProjectsPath(`${this.parent_project_uid}/Assets/${this.uid}/`)
     }
 
     ToJson(): any {
@@ -50,6 +50,41 @@ export default class AssetParentLight {
             subtype: this.subtype,
             description: this.description,
         }
+    }
+
+}
+
+export class ProjectSerializationContext {
+    project_uid = ""
+    project_path = ""
+}
+
+export class AssetData {
+
+    uid = ""
+    subtype = ""
+    _project_uid = ""
+    _project_path = ""
+
+    ToJson() {
+        return {
+            uid: this.uid,
+            subtype: this.subtype
+        }
+    }
+
+    FromJson(context: ProjectSerializationContext | any, data: any) {
+
+        this._project_uid = context.uid
+        this._project_path = context.project_path
+
+        this.uid = data.uid ?? ""
+        this.subtype = data.subtype ?? ""
+
+    }
+
+    GetPreviewPath(): string {
+        return `${this._project_path}Assets/${this.uid}/Preview.png`
     }
 
 }

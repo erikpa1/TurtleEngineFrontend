@@ -11,15 +11,14 @@ import LicenceManager from "@platform/licences/LicenceManager";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import CreateAssetOffcanvasDispatcher from "@editors/appmanagement/assets/CreateAssetOffcanvasDispatcher.tsx";
 
-import AssetParentLight from "@platform/assets/AssetParentLight";
-import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
-import AssetParent from "@platform/assets/AssetParent";
+import Asset from "@platform/assets/Asset.ts";
+import {AssetDefinition} from "@platform/assets/Assets";
 
 
 interface UniversalAssetListProps {
     assetDefinition: AssetDefinition,
     mode?: string
-    onSelect?: (asset: AssetParentLight) => void
+    onSelect?: (asset: Asset) => void
     parentProjectUid: string,
     md?: number
 }
@@ -36,7 +35,7 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
 
     const popupZus = useGlobalPopup()
 
-    const [assets, setAssets] = React.useState(new Array<AssetParentLight>())
+    const [assets, setAssets] = React.useState(new Array<Asset>())
 
     const refreshAssets = () => {
         AssetsApi.GetAllAssetsOfType(props.parentProjectUid, props.assetDefinition.TYPE).then((response) => {

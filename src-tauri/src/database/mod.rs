@@ -2,7 +2,7 @@ use std::fmt::format;
 use std::fs;
 use rusqlite::{Connection, Result, OpenFlags, params};
 use uuid::Uuid;
-use tstructures::assets::{AssetManager, AssetParentLight};
+use tstructures::assets::{TurtleAsset};
 use tstructures::project::CreateAssetParamas;
 
 
@@ -38,7 +38,7 @@ pub fn FixProject(conn: &Connection) {
     println!("{:?}", result);
 }
 
-pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<AssetParentLight> {
+pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<TurtleAsset> {
     let query = format!(
         "SELECT Uid, Name, Type from Assets WHERE Uid='{}'", asset_uid
     );
@@ -46,7 +46,7 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
     let mut statement = dbc.prepare(&query).unwrap();
 
     let rows_iter = statement.query_map([], |row| {
-        let mut tmp = AssetParentLight::New();
+        let mut tmp = TurtleAsset::New();
 
         tmp.uid = row.get(0).unwrap_or("".into());
         tmp.name = row.get(1).unwrap_or("".into());
@@ -69,7 +69,7 @@ pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<Asse
     return None;
 }
 
-pub fn UpdateAsset(dbc: &Connection, assetLight: &AssetParentLight) -> Result<()> {
+pub fn UpdateAsset(dbc: &Connection, assetLight: &TurtleAsset) -> Result<()> {
     let uid = Uuid::new_v4().to_string();
 
     let hasPreview = if assetLight.hasPreview == true {

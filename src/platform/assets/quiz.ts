@@ -1,18 +1,7 @@
-import AssetParent, {AssetParentData} from "./AssetParent";
-
-export default class QuizAsset extends AssetParent {
-    static TYPE = "quiz"
-    static FOLDER = "Quizzes"
-    static LANG = "quiz"
-    static LANG_PLURAL = "quizzes"
-    static DEFAULT_PLATFORM_FILE = `Images/Previews/${QuizAsset.TYPE}-Preview.png`
-}
-
-export class QuizAssetData extends AssetParentData {
+export default class QuizData {
 
     answers = new Map<string, any>()
     questions = new Map<string, any>()
-
 
     ToJson(): any {
 
@@ -25,7 +14,6 @@ export class QuizAssetData extends AssetParentData {
         })
 
         return {
-            ...super.ToJson(),
             answers: _answers,
             questions: _questions
         }

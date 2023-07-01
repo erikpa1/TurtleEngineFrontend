@@ -16,7 +16,7 @@ use tfs;
 use tstructures::project::{CreateAssetParamas, UploadAssetFileParams};
 
 
-use tstructures::assets::{AssetManager, AssetParentLight};
+use tstructures::assets::{TurtleAsset};
 
 use serde_json;
 use serde_json::json;

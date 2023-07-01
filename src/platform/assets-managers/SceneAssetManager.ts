@@ -1,18 +1,21 @@
-import {CreateAssetParamas} from "@api/project/params.ts";
-import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams.ts";
-import AssetParentManager from "@platform/assets-managers/AssetParentManager.ts";
 import AssetsApi from "@api/AssetsApi.ts";
-import {CreateThumbnailParams} from "@api/AssetApiParams.ts";
-import FsTools from "@api/FsTools.ts";
-import AssetParentLight from "@platform/assets/AssetParentLight.ts";
-import {SceneAssetData} from "@platform/assets/SceneAsset.ts";
+
+import Asset from "@platform/assets/Asset.ts";
+import {VirtualSceneData} from "@platform/assets/scene.ts";
 
 export default class SceneAssetManager {
 
-    static async CreateSceneAsset(asset: AssetParentLight) {
+    static async CreateSceneAsset(asset: Asset) {
 
         await AssetsApi.CreateAssetFromLight(asset)
-        await AssetsApi.UploadAssetLight(asset)
+
+        const assetData = new VirtualSceneData()
+        assetData.uid = asset.uid
+        assetData.subtype = asset.subtype
+
+
+        await AssetsApi.UploadAssetData(asset.parent_project_uid, asset.uid, assetData.ToJson())
+
 
     }
 

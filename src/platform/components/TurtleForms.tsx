@@ -3,7 +3,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 
 
-import {FormControl, InputLabel, TextField} from "@mui/material";
+import {FormControl, InputLabel, Select, TextField} from "@mui/material";
 import {TextFieldProps} from "@mui/material/TextField/TextField";
 import {TGui} from "@external/tgui";
 import {Form} from "react-bootstrap";
@@ -46,7 +46,7 @@ export function TurtleSelectField(props: TurtleSelectProps | any): JSX.Element {
     return (
         <FormControl>
             <InputLabel id={`TurtleSelectField-${_label}`}>{_translated}</InputLabel>
-            <TGui.Select
+            <Select
                 className={props.disabled ? "" : "turtle-shaded-button"}
                 labelId={`TurtleSelectField-${_label}`}
                 id={`TurtleSelectFieldId-${_label}`}
@@ -63,12 +63,20 @@ export function TurtleSelectField(props: TurtleSelectProps | any): JSX.Element {
                     })
                 }
 
-            </TGui.Select>
+            </Select>
         </FormControl>
 
 
     )
 }
+
+interface TurtleClickSelectProps {
+    name: string
+    value: string
+    onClick: any
+
+}
+
 
 interface TurtleSingleFileInput {
     name: string

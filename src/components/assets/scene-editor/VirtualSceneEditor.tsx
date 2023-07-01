@@ -9,15 +9,19 @@ import {
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
-import SceneAsset from "@platform/assets/SceneAsset";
-import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.tsx";
+
 import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
 
 import SceneApi from "@api/project/SceneApi";
 
+import Asset from "@platform/assets/Asset.ts";
+
+import {VirtualSceneData} from "@platform/assets/scene.ts";
+
 
 interface VirtualSceneEditorProps {
-    scene: SceneAsset
+    scene: VirtualSceneData
 }
 
 export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
@@ -47,7 +51,7 @@ export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 }
 
 interface _VirtualSceneEditorProps {
-    scene: SceneAsset
+    scene: VirtualSceneData
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }

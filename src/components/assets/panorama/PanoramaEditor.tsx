@@ -1,19 +1,18 @@
 import React from "react";
 
-import * as three from "three"
 
 import {useParams} from "react-router-dom";
 
-import AssetsApi from "@api/AssetsApi";
 import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-three/drei";
 
-import PanoramaAsset from "@platform/assets/PanoramaAsset";
+import PanoramaAsset from "@platform/assets/panorama.ts";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
-import FsTools from "@api/FsTools";
-import {Assets} from "@platform/assets/Assets";
+
 import PhotoDom from "@components/assets/panorama/PhotoDom";
+import AssetsApi from "@api/AssetsApi.ts";
+import PanoramaData from "@platform/assets/panorama.ts";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()
@@ -21,11 +20,11 @@ export default function PanoramaEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _panoramaUid: string = panoramauid ?? ""
 
-    const [panorama, setPanorama] = React.useState<PanoramaAsset | null>(null)
+    const [panorama, setPanorama] = React.useState<PanoramaData | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<PanoramaAsset>(Assets.Panorama, _projectUid, _panoramaUid).then((value) => {
+        AssetsApi.GetAssetData<PanoramaData>(PanoramaData, _projectUid, _panoramaUid).then((value) => {
             setPanorama(value)
         })
 
@@ -43,7 +42,7 @@ export default function PanoramaEditor({}) {
 }
 
 interface _PanoramaEditorProps {
-    panorama: PanoramaAsset
+    panorama: PanoramaData
 }
 
 
@@ -86,6 +85,7 @@ function _PanoramaEditor({panorama}: _PanoramaEditorProps) {
                 <spotLight intensity={0.5} angle={0.1} penumbra={1} position={[10, 15, 10]} castShadow/>
 
             </Canvas>
+
             <PanoramaEditorHud panorama={panorama}/>
         </div>
     )

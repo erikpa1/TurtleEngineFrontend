@@ -1,10 +1,10 @@
 import React from "react";
 
-import AssetParentLight from "@platform/assets/AssetParentLight";
+import Asset from "@platform/assets/Asset.ts";
 
 import {TGui} from "@external/tgui.ts";
 
-import {Assets} from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets.ts";
 
 import {
     EditAssetDescriptionFormField,
@@ -15,14 +15,16 @@ import {
 import {TurtleButton} from "@platform/components/TurtleButtons";
 
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
-import AssetParentManager from "@platform/assets-managers/AssetParentManager";
+
 import SceneAssetManager from "@platform/assets-managers/SceneAssetManager.ts";
-import AssetParent from "@platform/assets/AssetParent.ts";
+
 import {Ext} from "@external/prelude.ts";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses.ts";
+import {VirtualSceneData} from "@platform/assets/scene.ts";
 
 
 interface CreateOrEditSceneOffContentProps {
@@ -35,7 +37,7 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
     const activeProjectZus = useActiveProjectZus()
 
-    const [asset, setAsset] = React.useState<AssetParentLight | null>(null)
+    const [asset, setAsset] = React.useState<Asset | null>(null)
 
 
     const [sceneType, setSceneType] = Ext.Cookie.useCookie("new-scene-type", "virtual")
@@ -54,8 +56,8 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
                 props.onClose()
             }
 
+
             await SceneAssetManager.CreateSceneAsset(asset)
-            // await AssetParentManager.CreateAssetThumbnail(createdAsset, assetDefinition.FOLDER, uploadFileParams)
 
             lock.unlock()
 
@@ -69,7 +71,7 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
     }
 
     React.useEffect(() => {
-        const _asset = new AssetParentLight()
+        const _asset = new Asset()
         _asset.type = Assets.Scene.TYPE
         _asset.subtype = sceneType
         _asset.assetDefinition = Assets.Scene
@@ -92,13 +94,32 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
                     onSelected={(selection) => {
                         setSceneType(selection)
                     }}
-
                 />
 
-                <CreateAssetWithFileContent
-                    assetDefinition={Assets.Scene}
-                    uploadFileParams={uploadFileParams}
-                />
+
+                {/*<CreateAssetWithFileContent*/}
+                {/*    assetDefinition={Assets.Scene}*/}
+                {/*    uploadFileParams={uploadFileParams}*/}
+                {/*/>*/}
+
+
+                <TGui.Switch condition={sceneType}>
+
+                    <TGui.Case value={"panorama"}>
+                        <TGui.Card>
+                            <TGui.CardMedia
+                                sx={{height: 140}}
+                            />
+                            <TGui.CardActions>
+                                <TGui.Button
+                                    label={"select"}
+                                />
+                            </TGui.CardActions>
+                        </TGui.Card>
+                    </TGui.Case>
+
+                </TGui.Switch>
+
 
                 <TGui.Stack>
                     <TurtleButton
@@ -118,7 +139,7 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 }
 
 interface EditSceneOffcanvasProps {
-    asset: AssetParentLight
+    asset: Asset
 }
 
 export function EditSceneOffcanvas(props: EditSceneOffcanvasProps) {

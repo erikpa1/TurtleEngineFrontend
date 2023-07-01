@@ -49,43 +49,27 @@ export default function ProjectsSelectionView({}) {
     } else {
         return (
             <>
-                <div className={"vstack gap-3"}>
+                <div className={"vstack gap-2"}>
 
 
-                    <Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>
+                    {/*<Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>*/}
 
-                        <Tabs
-                            value={tabValue}
-                            onChange={tabChanged}
-                            aria-label="basic tabs example"
-                            centered
-                            textColor="inherit"
-                        >
-                            <Tab  label={t("local")} value={"0"}/>
-                            <Tab label={t("remote")} value={"1"}/>
-                        </Tabs>
+                    {/*    <Tabs*/}
+                    {/*        value={tabValue}*/}
+                    {/*        onChange={tabChanged}*/}
+                    {/*        aria-label="basic tabs example"*/}
+                    {/*        centered*/}
+                    {/*        textColor="inherit"*/}
+                    {/*    >*/}
+                    {/*        <Tab  label={t("local")} value={"0"}/>*/}
+                    {/*        <Tab label={t("remote")} value={"1"}/>*/}
+                    {/*    </Tabs>*/}
 
-                    </Box>
-
+                    {/*</Box>*/}
 
                     <div style={{marginLeft: "auto", marginRight: "auto"}}>
                         <UniversalInputSearchBar placeHolder={"search"}/>
                     </div>
-
-
-                    <Row xs={1} md={4} className="g-4">
-
-                        {
-                            projects.map((value) => {
-                                return (
-                                    <Col key={value.uid}>
-                                        <ProjectUniversalCard project={value} onRefresh={refresh}/>
-                                    </Col>
-                                )
-                            })
-                        }
-
-                    </Row>
 
                     <div className={"hstack gap-3"} style={{
                         marginTop: "25px"
@@ -101,6 +85,21 @@ export default function ProjectsSelectionView({}) {
                             />
                         </div>
                     </div>
+
+                    <Row xs={1} md={4} className="g-4">
+
+                        {
+                            projects.map((value) => {
+                                return (
+                                    <Col key={value.uid}>
+                                        <ProjectUniversalCard project={value} onRefresh={refresh}/>
+                                    </Col>
+                                )
+                            })
+                        }
+
+                    </Row>
+
 
                 </div>
 

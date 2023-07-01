@@ -16,7 +16,7 @@ import Switch, {Case} from "react-switch-case/lib/esm";
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import {TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
+import { TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
 
 export const TGui = {
     T: useTranslation,
@@ -34,11 +34,12 @@ export const TGui = {
     Button: TurtleButton,
     Select: Select,
     TSelect: TurtleSelectField,
+
     MenuItem: MenuItem,
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
-    Switch: Switch,
-    Case: Case,
+    Switch: Switch as TSwitch | any,
+    Case: Case as TCase | any,
     Tabs: Tabs,
     Tab: Tab,
     PopupZus: useGlobalPopup,
@@ -48,4 +49,8 @@ export const TGui = {
 
 interface TSwitch {
     condition: string | number | any
+}
+
+interface TCase {
+    value: string | number | any
 }

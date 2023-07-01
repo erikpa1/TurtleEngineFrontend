@@ -6,14 +6,14 @@ import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
-import MeshAsset from "@platform/assets/MeshAsset";
+import Mesh from "@platform/assets/mesh.ts";
 
 import {TGui} from "@external/tgui";
 import EditMeshAssetOffcanvas from "@components/assets/mesh-editor/EditMeshAssetOffcanvas";
 import ReplaceMeshOffcanvas from "@components/assets/mesh-editor/ReplaceMeshOffcanvas";
 
 interface MeshEditorHud {
-    mesh: MeshAsset
+    mesh: Mesh
     onRefresh: any
 }
 
