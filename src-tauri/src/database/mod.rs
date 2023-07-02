@@ -17,6 +17,8 @@ pub fn FixProject(conn: &Connection) {
         "CREATE TABLE IF NOT EXISTS Assets (
              Uid text primary key,
              Name text DEFAULT '',
+             Description text DEFAULT '',
+             Tags text DEFAULT '',
              Type text,
              Subtype text DEFAULT '',
              Extension text DEFAULT '',
@@ -26,48 +28,8 @@ pub fn FixProject(conn: &Connection) {
     );
 
     println!("{:?}", result);
-
-    let result = conn.execute(
-        "CREATE TABLE IF NOT EXISTS AssetData (
-             Uid text primary key,
-             Data BLOB
-         );",
-        [],
-    );
-
-    println!("{:?}", result);
 }
 
-pub fn GetAssetFromDatabase(dbc: &Connection, asset_uid: &String) -> Option<TurtleAsset> {
-    let query = format!(
-        "SELECT Uid, Name, Type from Assets WHERE Uid='{}'", asset_uid
-    );
-
-    let mut statement = dbc.prepare(&query).unwrap();
-
-    let rows_iter = statement.query_map([], |row| {
-        let mut tmp = TurtleAsset::New();
-
-        tmp.uid = row.get(0).unwrap_or("".into());
-        tmp.name = row.get(1).unwrap_or("".into());
-        tmp.assetType = row.get(2).unwrap_or("".into());
-
-        return Ok(tmp);
-    }).unwrap();
-
-
-    for myRow in rows_iter {
-        if let Ok(lightAsset) = myRow {
-            println!("{:?}", lightAsset);
-
-            return Some(lightAsset);
-        } else {
-            return None;
-        }
-    }
-
-    return None;
-}
 
 pub fn UpdateAsset(dbc: &Connection, assetLight: &TurtleAsset) -> Result<()> {
     let uid = Uuid::new_v4().to_string();

@@ -53,7 +53,7 @@ async fn CreateProject(projectJson: String) -> String {
     }
 
 
-    return String::from("success");
+    return String::from(createParams.uid);
 }
 
 
@@ -147,21 +147,6 @@ async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> 
 
 
 
-#[tauri::command]
-async fn ChangeProjectCover(projectUid: String, sourcePath: String) -> bool {
-    let projectFolder = format!("{}{}", tfs::GetProjectsPath(), &projectUid);
-    let toPath = format!("{}\\{}", projectFolder, "Preview.png");
-
-    println!("Starting to copy");
-    println!("From: {}", &sourcePath);
-    println!("To: {}", &toPath);
-
-    let result = fs::copy(sourcePath, toPath);
-
-    println!("{:?}", result);
-
-    return true;
-}
 
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
@@ -173,7 +158,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             DeleteProject,
             ListProjects,
             GetProjectLight,
-            ChangeProjectCover,
         ])
         .build()
 }

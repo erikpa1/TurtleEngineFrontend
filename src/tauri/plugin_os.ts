@@ -26,6 +26,14 @@ export default class TauriOsPlugin {
         return true
     }
 
+    static async CopyFile(fromPath: string, toPath: string): Promise<boolean> {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}CopyFile`, {
+            fromPath: fromPath,
+            toPath: toPath,
+        })
+        return true
+    }
+
     static async ReadFileString(file: string): Promise<string> {
         const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}ReadFileString`, {
             file: file,

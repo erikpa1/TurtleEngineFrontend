@@ -61,7 +61,7 @@ pub async fn WriteFileString(file: String, content: String) -> Result<bool, ()> 
 
 #[tauri::command]
 pub async fn ReadFileString(file: String) -> Result<String, String> {
-    println!("Reading String from: {}", file);
+    println!("Reading file from: {}", file);
 
     let streamResult = fs::read(&file);
 
@@ -73,6 +73,22 @@ pub async fn ReadFileString(file: String) -> Result<String, String> {
         println!("{:?}", &file);
         return Result::Err("404".into());
     }
+}
+
+#[tauri::command]
+pub async fn CopyFile(from_path: String, to_path: String) -> Result<bool, String> {
+    println!("Copying file from: {}", &from_path);
+    println!("To: {}", &to_path);
+
+    let path = Path::new(&to_path);
+
+    let folderPath: String = String::from(path.parent().unwrap().to_str().unwrap());
+
+    tfs::CreateFolders(&folderPath);
+
+    fs::copy(&from_path, &to_path);
+
+    Ok(true)
 }
 
 
@@ -88,6 +104,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
                 OpenFolder,
                 DeleteFolder,
+                CopyFile,
                 WriteFileString,
                 FileExists,
                 ReadFileString,

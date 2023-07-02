@@ -7,12 +7,9 @@ import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams"
 import QuizData from "@platform/assets/quiz.ts";
 
 
-
 export default class QuizAssetManager {
 
-
     static async CreateQuizAsset(assetParams: CreateAssetParamas, uploadFileParams: UploadAssetFileParams) {
-
 
         const createdAsset = await AssetParentManager.CreateAsset(assetParams);
 
@@ -23,7 +20,7 @@ export default class QuizAssetManager {
         createdAsset.hasPreview = true
 
         await AssetsApi.UploadAssetLight(createdAsset)
-        await AssetsApi.UploadAssetData(createdAsset, new QuizData().ToJson())
+        await AssetsApi.UploadAssetData(createdAsset.parent_project_uid, createdAsset.uid, new QuizData().ToJson())
 
     }
 

@@ -1,4 +1,3 @@
-mod imops;
 mod params;
 
 use std::borrow::BorrowMut;
@@ -54,24 +53,6 @@ pub async fn UploadAssetFile(state: State<'_, AppState>, createJson: String) -> 
 
 
 #[tauri::command]
-pub async fn CreateAssetThumbnail(state: State<'_, AppState>, createJson: String) -> Result<(), String> {
-    let mut createParams: params::CreateAssetThumbnailParams = serde_json::from_str(&createJson).unwrap();
-
-    let path = Path::new(&createParams.destination_file);
-
-    tfs::CreateFolders(&String::from(path.parent().unwrap().to_str().unwrap()));
-
-    println!("Going to create thumbnail:");
-    println!("From: {}", &createParams.source_file);
-    println!("To: {}", &createParams.destination_file);
-
-
-    imops::CreateThumbnail(&createParams.source_file, &createParams.destination_file, createParams.maxWidth);
-    return Ok(());
-}
-
-
-#[tauri::command]
 pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String, asset_type: String) -> Result<String, ()> {
     // let mapLock = state.test.lock().unwrap();
     // let map = mapLock.as_mut().unwrap();
@@ -82,7 +63,7 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let query = format!(
-        "SELECT Uid, Name, Type, SubType, HasPreview from Assets WHERE Type='{}'", asset_type
+        "SELECT Uid, Name, Type, SubType, Tags, Description, HasPreview from Assets WHERE Type='{}'", asset_type
     );
 
     let mut statement = dbc.prepare(&query).unwrap();
@@ -94,8 +75,10 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
         tmp.name = row.get(1).unwrap_or("".into());
         tmp.assetType = row.get(2).unwrap_or("".into());
         tmp.subtype = row.get(3).unwrap_or("".into());
+        tmp.tags = row.get(4).unwrap_or("".into());
+        tmp.description = row.get(5).unwrap_or("".into());
 
-        tmp.hasPreview = if row.get(4).unwrap_or(0) == 0 {
+        tmp.hasPreview = if row.get(6).unwrap_or(0) == 0 {
             false
         } else {
             true
@@ -143,7 +126,7 @@ pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_uid
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
 
     let query = format!(
-        "SELECT Uid, Name, Type, SubType, HasPreview from Assets WHERE Uid='{}'", asset_uid
+        "SELECT Uid, Name, Type, SubType,Tags, Description, HasPreview from Assets WHERE Uid='{}'", asset_uid
     );
 
     let mut statement = dbc.prepare(&query).unwrap();
@@ -202,9 +185,9 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
             GetAllAssetsOfType,
+            GetAsset,
             DeleteAssetWithUid,
             UploadAssetFile,
-            CreateAssetThumbnail,
             UploadAssetLight,
             GetAsset
         ])

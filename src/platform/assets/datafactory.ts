@@ -1,4 +1,6 @@
-export default class DataFactoryData {
+import {AssetData} from "@platform/assets/Asset.ts";
+
+export default class DataFactoryData extends AssetData {
 
 
 }

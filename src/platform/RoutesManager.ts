@@ -1,5 +1,6 @@
 import Assets from "@platform/assets/Assets";
 
+const PREFIX_PROJECT_CONFIG = "/project-config"
 const PREFIX_ASSETS = "/assets"
 const PREFIX_PLAY = "/play"
 const PREFIX_SCENE_EDITOR = "/scene-editor"
@@ -16,20 +17,25 @@ export default class RoutesManager {
 
     static ROUTE_PROJECTS = `/projects`
     static ROUTE_MANAGEMENT = `/management`
-    static ROUTE_ASSETS = `/${PREFIX_ASSETS}/:projectuid`
-    static ROUTE_PLAY = `/${PREFIX_PLAY}/:projectuid`
-    static ROUTE_SCENE_EDITOR = `/${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
-    static ROUTE_AREA_EDITOR = `/${PREFIX_AREA_EDITOR}/:projectuid/:areauid`
-    static ROUTE_MATERIAL_EDITOR = `/${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
-    static ROUTE_MESH_EDITOR = `/${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
-    static ROUTE_POINTCLOUD_EDITOR = `/${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
-    static ROUTE_PANORAMA_EDITOR = `/${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
-    static ROUTE_QUIZ_EDITOR = `/${PREFIX_QUIZ_EDITOR}/:projectuid/:quiz`
-    static ROUTE_DATAFACTORY_EDITOR = `/${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactory`
-    static ROUTE_DATAINSTANCE_EDITOR = `/${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstance`
+    static ROUTE_ASSETS = `${PREFIX_ASSETS}/:projectuid`
+    static ROUTE_PROJECT_CONFIG = `${PREFIX_PROJECT_CONFIG}/:projectuid`
+    static ROUTE_PLAY = `${PREFIX_PLAY}/:projectuid`
+    static ROUTE_SCENE_EDITOR = `${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
+    static ROUTE_AREA_EDITOR = `${PREFIX_AREA_EDITOR}/:projectuid/:areauid`
+    static ROUTE_MATERIAL_EDITOR = `${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
+    static ROUTE_MESH_EDITOR = `${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
+    static ROUTE_POINTCLOUD_EDITOR = `${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
+    static ROUTE_PANORAMA_EDITOR = `${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
+    static ROUTE_QUIZ_EDITOR = `${PREFIX_QUIZ_EDITOR}/:projectuid/:quiz`
+    static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactory`
+    static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstance`
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
+    }
+
+    static ProjectConfig(projectUid: string): string {
+        return `${PREFIX_PROJECT_CONFIG}/${projectUid}`
     }
 
     static AreaEditor(projectUid: string, areaUid: string): string {

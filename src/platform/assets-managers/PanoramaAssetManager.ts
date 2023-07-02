@@ -4,6 +4,7 @@ import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 import AssetsApi from "@api/AssetsApi";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
 import FsTools from "@api/FsTools";
+import ImagesApi from "@api/ImagesApi.ts";
 
 
 export default class PanoramaAssetManager {
@@ -19,13 +20,9 @@ export default class PanoramaAssetManager {
         //Update assetoveho obrazka
         const destinationFile = await AssetsApi.UpdateAssetFile(uploadFileParams)
 
-        const thumbnailParams = new CreateThumbnailParams()
-        thumbnailParams.source_file = destinationFile
-        thumbnailParams.destination_file = FsTools.ReplaceFileNameAndExtension(destinationFile, "Preview.png")
-        thumbnailParams.maxWidth = 256
-
+        const destination = FsTools.ReplaceFileNameAndExtension(destinationFile, "Preview.png")
         //Vytvorenie thumbnailu
-        await AssetsApi.CreateAssetThumbnail(thumbnailParams)
+        await ImagesApi.GeneratePreviewDesktop(destinationFile, destination, 256 )
 
         createdAsset.hasPreview = true
 

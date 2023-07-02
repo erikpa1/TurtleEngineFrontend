@@ -22,6 +22,15 @@ export default class AssetsApi {
         } else {
             return []
         }
+    }
+
+    static async GetAsset(projectUid: string, assetUid: string): Promise<Asset> {
+        if (PlatformDispatcher.IsDesktop()) {
+            const asset = await TauriAssetPlugin.GetAsset(projectUid, assetUid)
+            return asset
+        } else {
+            return new Asset()
+        }
 
     }
 
@@ -43,6 +52,11 @@ export default class AssetsApi {
         }
     }
 
+    static async CopyAssetFileDesktop(fromPath: string, toPath: string): Promise<boolean> {
+        await TauriOsPlugin.CopyFile(fromPath, toPath)
+        return true
+    }
+
     static async UpdateAssetFile(params: UploadAssetFileParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriAssetPlugin.UploadAssetFile(params);
@@ -50,15 +64,6 @@ export default class AssetsApi {
             await axios.post("/api/assets/upload-asset-file", params) //TODO Implement this one
         }
         return ""
-    }
-
-    static async CreateAssetThumbnail(params: CreateThumbnailParams): Promise<boolean> {
-        if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.CreateAssetThumbnail(params);
-        } else {
-            await axios.post("/api/assets/upload-asset-file", params) //TODO Implement this one
-        }
-        return true
     }
 
 
@@ -92,7 +97,7 @@ export default class AssetsApi {
 
     static async GetAssetData<T extends AssetData>(clazz: any, project_uid: string, asset_uid: string): Promise<T> {
 
-        const asset: any = new clazz()
+        const asset: any | AssetData = new clazz()
 
         const context = new ProjectSerializationContext()
         context.project_uid = project_uid
@@ -111,6 +116,7 @@ export default class AssetsApi {
             })
         }
         asset.FromJson(context, data)
+
 
         return asset as any
 

@@ -1,19 +1,18 @@
 import React from "react";
 import {TGui} from "@external/tgui";
 
-import Mesh from "@platform/assets/mesh.ts";
+
 import MeshFilePickView from "@components/assets/mesh-editor/mesh-previews";
 import {Ext} from "@external/prelude";
 
 import FsTools from "@api/FsTools";
 
-import TauriAssetPlugin from "../../../tauri/plugin_assets";
-import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import Assets from "@platform/assets/Assets";
+import TauriOsPlugin from "../../../tauri/plugin_os.ts";
+import {MeshAssetData} from "@platform/assets/mesh.ts";
 
 
 interface EditMeshAssetOffcanvas {
-    mesh: Mesh
+    mesh: MeshAssetData
     onClose: () => void,
     onRefresh: () => void
 }
@@ -92,7 +91,6 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
     const [meshPath, setMeshPath] = React.useState(FsTools.GetPlatformPath("Meshes/Default.glb"))
 
     function meshSelectedDesktop(path: string) {
-        console.log(path)
         setMeshPath(path)
     }
 
@@ -102,16 +100,15 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
 
     function uploadPressed() {
+        const uid = props.mesh.uid
 
-        const params = new UploadAssetFileParams()
-        params.path_from = meshPath
-        params.asset_type = Assets.Mesh.TYPE
-        params.asset_uid = props.mesh.uid
-        params.project_uid = props.mesh.parent_project_uid
-        params.destination_name = "Default.glb"
+        const projectUid = props.mesh._project_uid
 
 
-        TauriAssetPlugin.UploadAssetFile(params).then(props.onRefresh)
+        const toPath = FsTools.GetPathInProject(projectUid, `Assets/${uid}/Default.glb`)
+
+        TauriOsPlugin.CopyFile(meshPath, toPath).then(props.onRefresh)
+
     }
 
     return (

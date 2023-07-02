@@ -1,6 +1,9 @@
-export default class QuizData {
+import {AssetData} from "@platform/assets/Asset.ts";
+
+export default class QuizData extends AssetData {
 
     answers = new Map<string, any>()
+
     questions = new Map<string, any>()
 
     ToJson(): any {
@@ -14,6 +17,7 @@ export default class QuizData {
         })
 
         return {
+            ...super.ToJson(),
             answers: _answers,
             questions: _questions
         }

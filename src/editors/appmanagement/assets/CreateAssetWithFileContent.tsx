@@ -73,3 +73,62 @@ export default function CreateAssetWithFileContent({
         </>
     )
 }
+
+interface ImagePickerProsp {
+    image: string
+    imagePickedDesktop: (image: string) => void
+    imagePickedWeb: (image: string) => void
+
+}
+
+export function ImagePicker({
+                                image,
+                                imagePickedDesktop,
+                                imagePickedWeb,
+
+                            }: ImagePickerProsp) {
+
+    const inputRef = React.useRef<any>()
+
+    function selectImageClicked() {
+        if (PlatformDispatcher.IsDesktop()) {
+            PlatformDispatcher.OpenImageDialog().then((filePath) => {
+                if (filePath) {
+                    imagePickedDesktop(filePath)
+                }
+            })
+        } else {
+            const curr: any = inputRef.current
+            curr.click()
+        }
+    }
+
+    function imageSelected() {
+        const curr: HTMLInputElement = inputRef.current as any
+    }
+
+    return (
+        <>
+            <TGui.Card>
+                <TGui.CardMedia
+                    sx={{height: 140}}
+                    image={FsTools.ConvertFilePath(image)}
+                />
+
+                <TGui.CardActions>
+                    <TGui.Button
+                        label={"replace"}
+                        onClick={selectImageClicked}
+
+                    />
+                    <input
+                        ref={inputRef}
+                        onChange={imageSelected}
+                        type={"file"}
+                        hidden
+                    />
+                </TGui.CardActions>
+            </TGui.Card>
+        </>
+    )
+}

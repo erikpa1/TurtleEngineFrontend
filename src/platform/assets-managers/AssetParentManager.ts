@@ -4,6 +4,7 @@ import Asset from "@platform/assets/Asset.ts";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
 import FsTools from "@api/FsTools";
+import ImagesApi from "@api/ImagesApi.ts";
 
 export default class AssetParentManager {
     static async CreateAsset(params: CreateAssetParamas): Promise<Asset> {
@@ -11,13 +12,9 @@ export default class AssetParentManager {
     }
 
     static async CreateAssetThumbnail(basicParams: Asset, uploadFileParams: UploadAssetFileParams) {
-
-        const thumbnailParams = new CreateThumbnailParams()
-        thumbnailParams.source_file = uploadFileParams.path_from
-        thumbnailParams.destination_file = FsTools.GetPathInProject(basicParams.parent_project_uid, `Assets/${basicParams.uid}/Preview.png`)
-        thumbnailParams.maxWidth = 256
-
-        await AssetsApi.CreateAssetThumbnail(thumbnailParams)
+        const destination = FsTools.GetPathInProject(basicParams.parent_project_uid, `Assets/${basicParams.uid}/Preview.png`)
+        //Vytvorenie thumbnailu
+        await ImagesApi.GeneratePreviewDesktop(uploadFileParams.path_from, destination, 256)
 
     }
 

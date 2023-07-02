@@ -19,27 +19,25 @@ export default function SceneEditorDispatcher({}) {
     const _sceneUid: string = sceneuid ?? ""
 
     const [scene, setScene] = React.useState<Asset | null>(null)
-    const [sceneData, setSceneData] = React.useState<SceneData | null>(null)
 
     async function refresh() {
         // setScene(await AssetsApi.(SceneAssetData, _projectUid, _sceneUid))
-
-        const data = await AssetsApi.GetAssetData<PanoramaSceneData>(PanoramaSceneData, _projectUid, _sceneUid)
-        setSceneData(data)
+        const data = await AssetsApi.GetAsset(_projectUid, _sceneUid)
+        setScene(data)
     }
 
     React.useEffect(() => {
         refresh()
     }, [_projectUid, _sceneUid])
 
-    if (sceneData) {
-        if (sceneData.subtype === "panorama") {
+    if (scene) {
+        if (scene.subtype === "panorama") {
             return (
-                <PanoramaSceneEditor scene={sceneData}/>
+                <PanoramaSceneEditor scene={scene}/>
             )
-        } else if (sceneData.subtype === "virtual") {
+        } else if (scene.subtype === "virtual") {
             return (
-                <VirtualSceneEditor scene={sceneData}/>
+                <VirtualSceneEditor scene={scene}/>
             )
         }
     } else {

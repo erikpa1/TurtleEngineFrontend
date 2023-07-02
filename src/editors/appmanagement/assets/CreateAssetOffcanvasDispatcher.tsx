@@ -19,7 +19,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {TGui} from "@external/tgui";
 
 import Assets, {AssetDefinition} from "@platform/assets/Assets";
-import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import CreateAssetWithFileContent, {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager";
@@ -29,6 +29,9 @@ import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 import FsTools from "@api/FsTools";
 import AreaAssetManager from "@platform/assets-managers/AreaAssetManager";
 import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene.tsx";
+import ImagesApi from "@api/ImagesApi.ts";
+import {preview} from "vite";
+import {AssetData} from "@platform/assets/Asset.ts";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -55,7 +58,9 @@ export default function CreateAssetOffcanvasDispatcher(props: CreateAssetOffcanv
         <TurtleOffcanvas
             onClose={props.onClose}
             closeEnabled={true}
-            header={<Offcanvas.Title>{t("create.scene")}</Offcanvas.Title>}
+            header={<Offcanvas.Title>
+                {t("create")}: <b style={{textTransform: "uppercase"}}>{t(props.assetDefinition.TYPE)}</b>
+            </Offcanvas.Title>}
         >
             <TGui.Box>
                 <Stack spacing={2}>
@@ -83,33 +88,53 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
 
     const projectUid = projectZus.project.uid
 
+    const [thumbnail, setThumbnail] = React.useState(FsTools.GetPlatformPath(props.assetDefinition.DEFAULT_PREVIEW))
+
     const [basicParams] = React.useState<CreateAssetParamas | any>(new CreateAssetParamas())
 
     const [uploadFileParams] = React.useState<UploadAssetFileParams>(new UploadAssetFileParams())
     const createAssetPressed = async () => {
 
         lock.lock()
-
-        if (props.onClose) {
-            props.onClose()
-        }
+        props.onClose && props.onClose()
 
         if (assetType === Assets.Panorama.TYPE) {
             await PanoramaAssetManager.CreatePanoramaAsset(basicParams, uploadFileParams)
-        } else if (assetType === Assets.Quiz.TYPE) {
-            await QuizAssetManager.CreateQuizAsset(basicParams, uploadFileParams)
-        } else if (assetType === Assets.Area.TYPE) {
-            await AreaAssetManager.CreateAreaAsset(basicParams, uploadFileParams)
         } else {
-            const createdAsset = await AssetParentManager.CreateAsset(basicParams)
-            await AssetParentManager.CreateAssetThumbnail(createdAsset, uploadFileParams)
+            const asset = await AssetsApi.CreateAsset(basicParams)
+
+
+            const targetPath = FsTools.GetPathInProject(projectUid, `Assets/${asset.uid}/Preview.png`)
+
+            const newDefaultData = props.assetDefinition.DEFAULT_DATA()
+
+            newDefaultData.uid = asset.uid
+
+            await AssetsApi.UploadAssetData(projectUid, asset.uid, newDefaultData.ToJson())
+
+            if (props.assetDefinition.DEFAULT_FILES.length > 0) {
+
+                props.assetDefinition.DEFAULT_FILES.map((value) => {
+                    const from = FsTools.GetPlatformPath(value[0])
+                    const inAssetPath = `Assets/${asset.uid}/${value[1]}`
+                    const pathTo = FsTools.GetPathInProject(projectUid, inAssetPath)
+
+                    AssetsApi.CopyAssetFileDesktop(from, pathTo)
+                })
+
+
+            }
+
+            asset.hasPreview = true
+
+            await AssetsApi.UploadAssetLight(asset)
+
+            await ImagesApi.GeneratePreviewDesktop(thumbnail, targetPath, 256)
+
         }
 
         lock.unlock()
-
-        if (props.onRefresh) {
-            props.onRefresh()
-        }
+        props.onRefresh && props.onRefresh()
     }
 
     const pNameChanged = (e: SyntheticEvent) => {
@@ -137,7 +162,6 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
     return (
         <>
 
-
             <TurtleTextField
                 onChange={pNameChanged}
                 label={"name"}
@@ -154,9 +178,24 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
                 disabled
             />
 
-            <CreateAssetWithFileContent
-                assetDefinition={assetDefinition}
-                uploadFileParams={uploadFileParams}/>
+            <ImagePicker
+                image={thumbnail}
+                imagePickedDesktop={(previewPath: string) => {
+                    setThumbnail(previewPath)
+                }}
+
+                imagePickedWeb={() => {
+                    alert("Unimplemented")
+                }}
+            />
+
+            {
+                props.assetDefinition.TYPE === Assets.Panorama.TYPE &&
+                <CreateAssetWithFileContent
+                    assetDefinition={assetDefinition}
+                    uploadFileParams={uploadFileParams}/>
+            }
+
 
             <TGui.Stack>
                 <TurtleButton

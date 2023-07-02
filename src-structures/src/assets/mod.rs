@@ -18,6 +18,9 @@ pub struct TurtleAsset {
     pub description: String,
 
     #[serde(default)]
+    pub tags: String,
+
+    #[serde(default)]
     pub extension: String,
 
     #[serde(default)]
@@ -31,6 +34,7 @@ impl TurtleAsset {
             uid: "".into(),
             name: "".into(),
             description: "".into(),
+            tags: "".into(),
             extension: "".into(),
             assetType: "".into(),
             subtype: "".into(),

@@ -8,6 +8,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
+import ProjectConfigView from "@components/projects/ProjectConfigView.tsx";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -20,10 +21,11 @@ const PointCloudEditor = React.lazy(() => import("@components/assets/pointcould-
 const PanoramaEditor = React.lazy(() => import( "@components/assets/panorama/PanoramaEditor"))
 const AreaEditor = React.lazy(() => import("@components/assets/area-editor/AreaEditor"))
 const MaterialEditor = React.lazy(() => import("@components/assets/material/MaterialEditor"))
-const SceneEditorDispatcher = React.lazy(() => import("@components/assets/scene-editor/SceneEditorDispatcher"))
 const QuizEditor = React.lazy(() => import("@components/assets/quiz-editor/QuizEditor"))
 const DataFactoryEditor = React.lazy(() => import("@components/assets/data-factory/DataFactoryEditor"))
 const DataInstanceEditor = React.lazy(() => import("@components/assets/data-instance/DataInstanceEditor"))
+
+const SceneEditorDispatcher = React.lazy(() => import("@components/assets/scene-editor/SceneEditorDispatcher"))
 
 export default function Main() {
 
@@ -83,40 +85,66 @@ function _Main() {
                     </MountTabWrapper>
                 }/>
 
+                <Route path={RoutesManager.ROUTE_PROJECT_CONFIG} element={
+                    <MountTabWrapper>
+                        <ProjectConfigView/>
+                    </MountTabWrapper>
+                }/>
+
 
                 <Route path={RoutesManager.ROUTE_MATERIAL_EDITOR} element={
-                    <MaterialEditor/>
+                    <MountTabWrapper>
+                        <MaterialEditor/>
+                    </MountTabWrapper>
+
                 }/>
 
                 <Route path={RoutesManager.ROUTE_MESH_EDITOR} element={
-                    <MeshEditor/>
+                    <MountTabWrapper>
+                        <MeshEditor/>
+                    </MountTabWrapper>
+
                 }/>
 
                 <Route path={RoutesManager.ROUTE_POINTCLOUD_EDITOR} element={
-                    <PointCloudEditor/>
+                    <MountTabWrapper>
+                        <PointCloudEditor/>
+                    </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_PANORAMA_EDITOR} element={
-                    <PanoramaEditor/>
+                    <MountTabWrapper>
+                        <PanoramaEditor/>
+                    </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_SCENE_EDITOR} element={
-                    <SceneEditorDispatcher/>
+                    <MountTabWrapper>
+                        <SceneEditorDispatcher/>
+                    </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_AREA_EDITOR} element={
-                    <AreaEditor/>
+                    <MountTabWrapper>
+                        <AreaEditor/>
+                    </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_QUIZ_EDITOR} element={
-                    <QuizEditor/>
+                    <MountTabWrapper>
+                        <QuizEditor/>
+                    </MountTabWrapper>
                 }/>
                 <Route path={RoutesManager.ROUTE_DATAFACTORY_EDITOR} element={
-                    <DataFactoryEditor/>
+                    <MountTabWrapper>
+                        <DataFactoryEditor/>
+                    </MountTabWrapper>
                 }/>
 
                 <Route path={RoutesManager.ROUTE_DATAINSTANCE_EDITOR} element={
-                    <DataInstanceEditor/>
+                    <MountTabWrapper>
+                        <DataInstanceEditor/>
+                    </MountTabWrapper>
                 }/>
             </Routes>
         </main>

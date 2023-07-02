@@ -1,3 +1,17 @@
+import {AssetData} from "@platform/assets/Asset.ts";
+import MaterialData from "@platform/assets/material.ts";
+import {MeshAssetData} from "@platform/assets/mesh.ts";
+import PointCloudData from "@platform/assets/pointcloud.ts";
+import PanoramaData from "@platform/assets/panorama.ts";
+import VideoData from "@platform/assets/video.ts";
+import ImageData from "@platform/assets/image.ts";
+import QuizData from "@platform/assets/quiz.ts";
+import AreaData from "@platform/assets/area.ts";
+import SoundData from "@platform/assets/sound.ts";
+import FontData from "@platform/assets/font.ts";
+import DataFactoryData from "@platform/assets/datafactory.ts";
+import DataInstanceData from "@platform/assets/datainstance.ts";
+
 export class AssetSubtype {
     key = ""
     lang = ""
@@ -10,10 +24,12 @@ export class AssetDefinition {
     LANG_PLURAL = ""
 
     DEFAULT_PREVIEW = ""
+    DEFAULT_FILES = new Array<[string, string]>()
+    DEFAULT_DATA: () => AssetData = () => {
+        return new AssetData()
+    }
     SUBTYPES = new Array<AssetSubtype>()
-
 }
-
 
 function _getPreview(type: string): string {
     return `Images/Previews/${type}-Preview.png`
@@ -25,49 +41,64 @@ MATERIAL.TYPE = "material"
 MATERIAL.LANG = "material"
 MATERIAL.LANG_PLURAL = "materials"
 MATERIAL.DEFAULT_PREVIEW = _getPreview(MATERIAL.TYPE)
+MATERIAL.DEFAULT_DATA = () => new MaterialData()
 
 const MESH = new AssetDefinition()
 MESH.TYPE = "mesh"
 MESH.LANG = "mesh"
 MESH.LANG_PLURAL = "meshes"
 MESH.DEFAULT_PREVIEW = _getPreview(MESH.TYPE)
-
+MESH.DEFAULT_DATA = () => {
+    const tmp = new MeshAssetData()
+    tmp.mesh_extension = "glb"
+    return tmp
+}
+MESH.DEFAULT_FILES = [
+    ["Defaults/Assets/default-mesh.glb", "Default.glb"]
+]
 
 const POINTCLOUD = new AssetDefinition()
 POINTCLOUD.TYPE = "pointcloud"
 POINTCLOUD.LANG = "pointcloud"
 POINTCLOUD.LANG_PLURAL = "pointclouds"
 POINTCLOUD.DEFAULT_PREVIEW = _getPreview(POINTCLOUD.TYPE)
+POINTCLOUD.DEFAULT_DATA = () => new PointCloudData()
+
 
 const PANORAMA = new AssetDefinition()
 PANORAMA.TYPE = "panorama"
 PANORAMA.LANG = "panorama"
 PANORAMA.LANG_PLURAL = "panoramas"
 PANORAMA.DEFAULT_PREVIEW = _getPreview(PANORAMA.TYPE)
+PANORAMA.DEFAULT_DATA = () => new PanoramaData()
 
 const VIDEO = new AssetDefinition()
 VIDEO.TYPE = "video"
 VIDEO.LANG = "video"
 VIDEO.LANG_PLURAL = "videos"
 VIDEO.DEFAULT_PREVIEW = _getPreview(VIDEO.TYPE)
+VIDEO.DEFAULT_DATA = () => new VideoData()
 
 const IMAGE = new AssetDefinition()
 IMAGE.TYPE = "image"
 IMAGE.LANG = "image"
 IMAGE.LANG_PLURAL = "images"
 IMAGE.DEFAULT_PREVIEW = _getPreview(IMAGE.TYPE)
+IMAGE.DEFAULT_DATA = () => new ImageData()
 
 const QUIZ = new AssetDefinition()
 QUIZ.TYPE = "quiz"
 QUIZ.LANG = "quiz"
 QUIZ.LANG_PLURAL = "quizzes"
 QUIZ.DEFAULT_PREVIEW = _getPreview(QUIZ.TYPE)
+QUIZ.DEFAULT_DATA = () => new QuizData()
 
 const AREA = new AssetDefinition()
 AREA.TYPE = "area"
 AREA.LANG = "area"
 AREA.LANG_PLURAL = "areas"
 AREA.DEFAULT_PREVIEW = _getPreview(AREA.TYPE)
+AREA.DEFAULT_DATA = () => new AreaData()
 
 const SCENE = new AssetDefinition()
 SCENE.TYPE = "scene"
@@ -98,30 +129,36 @@ SOUND.TYPE = "sound"
 SOUND.LANG = "sound"
 SOUND.LANG_PLURAL = "sounds"
 SOUND.DEFAULT_PREVIEW = _getPreview(SOUND.TYPE)
+SOUND.DEFAULT_DATA = () => new SoundData()
 
 const FONT = new AssetDefinition()
 FONT.TYPE = "font"
 FONT.LANG = "font"
 FONT.LANG_PLURAL = "fonts"
 FONT.DEFAULT_PREVIEW = _getPreview(FONT.TYPE)
+FONT.DEFAULT_DATA = () => new FontData()
 
 const DATAFACTORY = new AssetDefinition()
 DATAFACTORY.TYPE = "datafactory"
 DATAFACTORY.LANG = "datafactory"
 DATAFACTORY.LANG_PLURAL = "datafactories"
 DATAFACTORY.DEFAULT_PREVIEW = _getPreview(DATAFACTORY.TYPE)
+DATAFACTORY.DEFAULT_DATA = () => new DataFactoryData()
 
 const DATAINSTANCE = new AssetDefinition()
 DATAINSTANCE.TYPE = "datainstance"
 DATAINSTANCE.LANG = "datainstance"
 DATAINSTANCE.LANG_PLURAL = "datainstances"
 DATAINSTANCE.DEFAULT_PREVIEW = _getPreview(DATAINSTANCE.TYPE)
+DATAINSTANCE.DEFAULT_DATA = () => new DataInstanceData()
+
 
 const DATASET = new AssetDefinition()
 DATASET.TYPE = "dataset"
 DATASET.LANG = "dataset"
 DATASET.LANG_PLURAL = "datasets"
 DATASET.DEFAULT_PREVIEW = _getPreview(DATASET.TYPE)
+//TODO datase definition
 
 
 const DOCUMENT = new AssetDefinition()
@@ -129,7 +166,7 @@ DOCUMENT.TYPE = "document"
 DOCUMENT.LANG = "document"
 DOCUMENT.LANG_PLURAL = "documents"
 DOCUMENT.DEFAULT_PREVIEW = _getPreview(DOCUMENT.TYPE)
-
+//TODO document definition
 
 const LABEl = new AssetDefinition()
 LABEl.TYPE = "label"
@@ -180,14 +217,12 @@ const Assets = {
     worldAssets: () => {
         return [
             Assets.Scene,
+            Assets.Mesh,
             Assets.Panorama,
             Assets.Material,
-            Assets.PointCloud,
-            Assets.Mesh,
             Assets.Area,
-
+            Assets.PointCloud,
             Assets.Font,
-
         ]
     },
 

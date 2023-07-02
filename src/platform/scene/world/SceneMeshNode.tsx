@@ -6,6 +6,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import {SceneNode} from "@platform/scene/SceneNode";
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover.tsx";
+import AssetsApi from "@api/AssetsApi.ts";
 
 
 export class SceneMeshNode extends SceneNode {
@@ -47,9 +48,9 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 
     React.useEffect(() => {
 
-        // AssetsApi.GetAssetData<Mesh>(Assets.Mesh, projectZus.project.uid, node.content_uid).then((value) => {
-        //     setMeshAsset(value)
-        // })
+        AssetsApi.GetAssetData<MeshAssetData>(MeshAssetData, projectZus.project.uid, node.content_uid).then((value) => {
+            setMeshAsset(value)
+        })
     }, [node.content_uid])
 
 
@@ -68,16 +69,20 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 
 interface _SceneMeshViewProps {
     mesh: SceneMeshNode
-    meshAsset: Mesh
+    meshData: MeshAssetData
 }
 
-function _SceneMeshView({meshAsset, mesh}: _SceneMeshViewProps) {
+function _SceneMeshView({meshData, mesh}: _SceneMeshViewProps) {
+
 
     return (
         <SceneNodeMover node={mesh}>
-            <PrimitiveMesh
-                meshPath={meshAsset.GetEntryFile()}
-            />
+            {
+                meshData.meshExtension !== "" && <PrimitiveMesh
+                    meshPath={meshData.GetEntryFile()}
+                />
+            }
+
         </SceneNodeMover>
 
 

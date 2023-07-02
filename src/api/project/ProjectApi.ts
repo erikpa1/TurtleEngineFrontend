@@ -22,13 +22,13 @@ export default class ProjectApi {
         return null
     }
 
-    static async CreateProject(params: CreateProjectParams): Promise<boolean> {
+    static async CreateProject(params: CreateProjectParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.CreateProject(params)
         } else {
             alert("Create project is unimplemented for WEB")
         }
-        return false
+        return ""
     }
 
 
@@ -78,8 +78,5 @@ export default class ProjectApi {
         return true
     }
 
-    static async ChangeProjectCoverDesktop(projectUid: string, filePath: string): Promise<boolean> {
-        return await TauriProjectPlugin.ChangeProjectCover(projectUid, filePath)
-    }
 
 }

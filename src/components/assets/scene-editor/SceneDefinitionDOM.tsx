@@ -24,8 +24,6 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
 
         root.children.forEach((value) => {
 
-            console.log(value)
-
             if (value instanceof SceneMeshNode) {
                 elements.push(<SceneMeshNodeView
                     key={value.uid}

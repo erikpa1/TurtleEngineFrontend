@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import TurtleOffcanvas from "@components/Drawers";
 import Button from "@mui/material/Button";
 
-import {Box, Stack, TextField} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {ProjectLight} from "@data/project/ProjectLight";
@@ -21,6 +21,8 @@ import {Offcanvas} from "react-bootstrap";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TGui} from "@external/tgui";
 import PlatformDispatcher from "@api/PlatformDispatcher";
+import FsTools from "@api/FsTools.ts";
+import ImagesApi from "@api/ImagesApi.ts";
 
 interface EditProjectOffcanvasProps {
     uid: string
@@ -74,6 +76,8 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
     const lock = useGlobalAppLock()
 
     const inputRef = React.useRef()
+
+    const [coverPath, setCoverPath] = React.useState(FsTools.GetPathInProject(project.uid, "Preview.png"))
 
     const [name, setName] = React.useState(project.name)
     const [author, setAuthor] = React.useState(project.author)
@@ -151,7 +155,13 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
     function selectImageClicked() {
         if (PlatformDispatcher.IsDesktop()) {
             PlatformDispatcher.OpenImageDialog().then((filePath) => {
-                ProjectApi.ChangeProjectCoverDesktop(project.uid, filePath)
+                if (filePath !== "") {
+                    setCoverPath(filePath)
+
+                    ImagesApi.GeneratePreviewDesktop(filePath, FsTools.GetPathInProject(project.uid, "Preview.png"))
+
+                }
+
             })
         } else {
             const curr: any = inputRef.current
@@ -174,7 +184,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                     <TGui.Card>
                         <TGui.CardMedia
                             sx={{height: 140}}
-                            image={project.getFilePath("Preview.png")}
+                            image={FsTools.ConvertFilePath(coverPath)}
                         />
 
                         <TGui.CardActions>

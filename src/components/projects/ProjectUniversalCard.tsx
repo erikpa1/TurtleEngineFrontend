@@ -14,7 +14,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {useNavigate} from "react-router-dom";
 import RoutesManager from "@platform/RoutesManager";
-import {convertFileSrc} from "@tauri-apps/api/tauri";
+import FsTools from "@api/FsTools.ts";
 
 
 interface ProjectUniversalCardProps {
@@ -65,9 +65,13 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
         <Card sx={{maxWidth: 345}}>
             <CardMedia
                 sx={{height: 140}}
-                image={project.getFilePath("Preview.png")}
-                // image="/textures/UniversalTurtle.png"
+                image={FsTools.ConvertFilePath(FsTools.GetPathInProject(project.uid, "Preview.png"))}
+                // images="/textures/UniversalTurtle.png"
                 title="green iguana"
+                style={{
+                    cursor: "pointer"
+                }}
+                onClick={activateProjectPressed}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

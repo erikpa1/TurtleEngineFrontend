@@ -97,7 +97,7 @@ function _Bottom(props: SceneEditorHudProps) {
 
             <HudButton
                 lang={"scene"}
-                icon={"/icons/Create.Mesh.svg"}
+                icon={"/icons/Scene.svg"}
                 onClick={() => addAssetPressed(Assets.Scene)}
             />
 

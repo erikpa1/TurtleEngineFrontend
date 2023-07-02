@@ -8,6 +8,7 @@ export default class Asset {
     public name = ""
     public type = ""
     public subtype = ""
+    public tags = ""
     public description = ""
     public relativePath = ""
     public assetDefinition: AssetDefinition | any = null
@@ -15,7 +16,7 @@ export default class Asset {
     public hasPreview = false
     public absolutePath = ""
 
-    from_json(jObject: any | Asset) {
+    FromJson(jObject: any | Asset) {
 
         this.uid = jObject.uid ?? ""
         this.name = jObject.name ?? ""
@@ -23,6 +24,9 @@ export default class Asset {
         this.subtype = jObject.subtype ?? ""
         this.description = jObject.description ?? ""
         this.hasPreview = jObject.hasPreview ?? false
+        this.tags = jObject.tags ?? ""
+
+        console.log(jObject)
 
         if (!this.hasPreview) {
             this.relativePath = `/dev/assets/${this.type}/tmp-${this.type}/Preview.png`
@@ -31,7 +35,7 @@ export default class Asset {
 
     GetPreviewPath(): string {
         if (this.hasPreview) {
-            const path = FsTools.GetProjectsPath(`${this.parent_project_uid}/Assets/${this.uid}/Preview.png`)
+            const path = FsTools.GetPathInProject(this.parent_project_uid, `/Assets/${this.uid}/Preview.png`)
             return path
         } else {
             return FsTools.GetPlatformPath(`Images/Previews/${this.type}-Preview.png`)
@@ -39,7 +43,7 @@ export default class Asset {
     }
 
     GetFolderPath(): string {
-        return FsTools.GetProjectsPath(`${this.parent_project_uid}/Assets/${this.uid}/`)
+        return FsTools.GetPathInProject(this.parent_project_uid, `/Assets/${this.uid}/`)
     }
 
     ToJson(): any {
@@ -73,9 +77,9 @@ export class AssetData {
         }
     }
 
-    FromJson(context: ProjectSerializationContext | any, data: any) {
+    FromJson(context: ProjectSerializationContext, data: any) {
 
-        this._project_uid = context.uid
+        this._project_uid = context.project_uid
         this._project_path = context.project_path
 
         this.uid = data.uid ?? ""

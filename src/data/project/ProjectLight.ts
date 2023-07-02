@@ -21,9 +21,7 @@ export class ProjectLight {
 
     }
 
-    getFilePath(filePath: string): string {
-        return FsTools.ConvertFilePath(`${this.projectFolderPath}${filePath}`)
-    }
+
 
 
 }

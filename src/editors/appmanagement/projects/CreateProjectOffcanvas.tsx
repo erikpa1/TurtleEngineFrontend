@@ -10,6 +10,11 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
+import {TGui} from "@external/tgui.ts";
+import FsTools from "@api/FsTools.ts";
+import PlatformDispatcher from "@api/PlatformDispatcher.ts";
+import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent.tsx";
+import ImagesApi from "@api/ImagesApi.ts";
 
 interface CreateProjectOffcanvasProps {
     onClose: () => void
@@ -24,7 +29,11 @@ export default function CreateProjectOffcanvas({
 
     const [t] = useTranslation()
 
+    const inputRef = React.useRef<any>()
+
     const lock = useGlobalAppLock()
+
+    const [preview, setPreview] = React.useState(FsTools.GetPlatformPath("Images/Previews/project-Preview.png"))
 
     const [cpp] = React.useState<CreateProjectParams | any>({
         name: "",
@@ -34,16 +43,17 @@ export default function CreateProjectOffcanvas({
         lat_lon: ""
     })
 
-    const createProjectPressed = () => {
+    const createProjectPressed = async () => {
         lock.lock()
         onClose()
 
-        ProjectApi.CreateProject(cpp).then(() => {
-            lock.unlock()
-            if (onRefresh) {
-                onRefresh()
-            }
-        })
+        const newProjectUid = await ProjectApi.CreateProject(cpp)
+
+        await ImagesApi.GeneratePreviewDesktop(preview, FsTools.GetPathInProject(newProjectUid, "Preview.png"), 512)
+
+        lock.unlock()
+
+        onRefresh && onRefresh()
     }
 
     const pNameChanged = (e: SyntheticEvent) => {
@@ -63,11 +73,29 @@ export default function CreateProjectOffcanvas({
         cpp.lat_lon = e.target.value
     }
 
+    function imageSelectedDesktop(filePath: string) {
+        if (filePath !== "") {
+            setPreview(filePath)
+        }
+
+    }
+
+    function imageSelectedWeb(event: any) {
+    }
+
+
     return (
         <TurtleOffcanvas onClose={onClose}>
 
-            <Box>
+            <TGui.Box>
                 <Stack spacing={2}>
+
+
+                    <ImagePicker
+                        image={preview}
+                        imagePickedDesktop={imageSelectedDesktop}
+                        imagePickedWeb={imageSelectedWeb}/>
+
 
                     <TurtleTextField
                         onChange={pNameChanged}
@@ -91,7 +119,7 @@ export default function CreateProjectOffcanvas({
                     />
 
                 </Stack>
-            </Box>
+            </TGui.Box>
 
 
             <TurtleButton

@@ -18,13 +18,16 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
-import CreateAssetWithFileContent from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import CreateAssetWithFileContent, {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 
 import SceneAssetManager from "@platform/assets-managers/SceneAssetManager.ts";
 
 import {Ext} from "@external/prelude.ts";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses.ts";
 import {VirtualSceneData} from "@platform/assets/scene.ts";
+import FsTools from "@api/FsTools.ts";
+import ImagesApi from "@api/ImagesApi.ts";
+import {preview} from "vite";
 
 
 interface CreateOrEditSceneOffContentProps {
@@ -37,8 +40,9 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
     const activeProjectZus = useActiveProjectZus()
 
-    const [asset, setAsset] = React.useState<Asset | null>(null)
+    const [thumbnail, setThumbnail] = React.useState(FsTools.GetPlatformPath(Assets.Scene.DEFAULT_PREVIEW))
 
+    const [asset, setAsset] = React.useState<Asset | null>(null)
 
     const [sceneType, setSceneType] = Ext.Cookie.useCookie("new-scene-type", "virtual")
 
@@ -52,18 +56,21 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
             lock.lock()
 
-            if (props.onClose) {
-                props.onClose()
-            }
+            props.onClose && props.onClose()
 
+            asset.hasPreview = true
 
             await SceneAssetManager.CreateSceneAsset(asset)
 
+            await ImagesApi.GeneratePreviewDesktop(thumbnail,
+                FsTools.GetPathInProject(activeProjectZus.project.uid, `Assets/${asset.uid}/Preview.png`),
+                256
+            )
+
             lock.unlock()
 
-            if (props.onRefresh) {
-                props.onRefresh()
-            }
+            props.onRefresh && props.onRefresh()
+
 
         }
 
@@ -97,12 +104,6 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
                 />
 
 
-                {/*<CreateAssetWithFileContent*/}
-                {/*    assetDefinition={Assets.Scene}*/}
-                {/*    uploadFileParams={uploadFileParams}*/}
-                {/*/>*/}
-
-
                 <TGui.Switch condition={sceneType}>
 
                     <TGui.Case value={"panorama"}>
@@ -117,6 +118,18 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
                             </TGui.CardActions>
                         </TGui.Card>
                     </TGui.Case>
+
+                    <TGui.Default>
+                        <ImagePicker
+                            image={thumbnail}
+                            imagePickedDesktop={(newPath) => {
+                                setThumbnail(newPath)
+                            }}
+                            imagePickedWeb={() => {
+                                alert("Unimplemented")
+                            }}
+                        />
+                    </TGui.Default>
 
                 </TGui.Switch>
 

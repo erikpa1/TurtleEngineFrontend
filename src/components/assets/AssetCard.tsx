@@ -87,7 +87,6 @@ export default function AssetCard({
 
                 }
 
-
                 <TGui.Typography gutterBottom variant="h5" component="div">
                     {asset.name}
                 </TGui.Typography>

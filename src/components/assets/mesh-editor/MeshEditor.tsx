@@ -7,17 +7,18 @@ import {MiddleSpinner} from "@components/Spinners";
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
 import {
-    UniversalMeshCanvas,
+    UniversalMeshCanvas, UniversalMeshOrbitControls,
     UniversalWorldEnvironment,
     UniversalWorldGrid
 } from "@components/assets/canvases/UniversalMeshCanvas";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
-import Assets from "@platform/assets/Assets";
-import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
-import Asset from "@platform/assets/Asset.ts";
 
+import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {MeshAssetData} from "@platform/assets/mesh.ts";
+
 import AssetsApi from "@api/AssetsApi.ts";
+
+import {OrbitControls} from "@react-three/drei";
 
 export default function MeshEditor({}) {
 
@@ -55,7 +56,9 @@ interface _MeshEditorProps {
 function _MeshEditor({mesh}: _MeshEditorProps) {
 
 
-    const [meshPath, setMeshPath] = React.useState(`${mesh.GetEntryFile()}?rnd=${Math.random()}`)
+    const [meshPath, setMeshPath] = React.useState(`${mesh.GetEntryFile()}`)
+
+    console.log(meshPath)
 
     return (
         <div style={{
@@ -69,6 +72,7 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
 
                 <UniversalWorldEnvironment/>
 
+                <UniversalMeshOrbitControls/>
                 {/*<PivotControls*/}
                 {/*    rotation={[0, 0, 0]}*/}
                 {/*    anchor={[0, 0, 0]}*/}
@@ -83,6 +87,10 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 {/*    </mesh>*/}
                 {/*</PivotControls>*/}
 
+
+                {
+
+                }
 
                 <PrimitiveMesh meshPath={meshPath}/>
 

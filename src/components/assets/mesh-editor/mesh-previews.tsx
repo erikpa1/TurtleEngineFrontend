@@ -1,10 +1,15 @@
 import React from "react";
-import {UniversalMeshCanvas, UniversalWorldEnvironment} from "@components/assets/canvases/UniversalMeshCanvas";
+import {
+    UniversalMeshCanvas,
+    UniversalMeshOrbitControls,
+    UniversalWorldEnvironment
+} from "@components/assets/canvases/UniversalMeshCanvas";
 
 import {TGui} from "@external/tgui";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import FsTools from "@api/FsTools";
 import PlatformDispatcher from "@api/PlatformDispatcher";
+import {OrbitControls} from "@react-three/drei";
 
 
 interface FileMeshPreviewProps {
@@ -61,6 +66,9 @@ export default function MeshFilePickView(props: FileMeshPreviewProps) {
                         height: "250px"
                     }}>
                     <UniversalWorldEnvironment/>
+
+
+                    <UniversalMeshOrbitControls/>
 
                     <PrimitiveMesh meshPath={meshPath}/>
                 </UniversalMeshCanvas>

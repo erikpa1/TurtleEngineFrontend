@@ -9,11 +9,11 @@ export const PROJECTS_PLUGIN_NAME = "plugin:turtle_projects|"
 
 export default class TauriProjectPlugin {
 
-    static async CreateProject(params: CreateProjectParams): Promise<boolean> {
-        await invoke<string>(`${PROJECTS_PLUGIN_NAME}CreateProject`, {
+    static async CreateProject(params: CreateProjectParams): Promise<string> {
+        const uid = await invoke<string>(`${PROJECTS_PLUGIN_NAME}CreateProject`, {
             projectJson: JSON.stringify(params),
         })
-        return true
+        return uid
     }
 
     static async ActivateLastProject(): Promise<ProjectLight> {

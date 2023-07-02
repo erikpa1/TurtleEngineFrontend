@@ -63,10 +63,6 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
 
                 {/*<CameraControls/>*/}
 
-                <OrbitControls makeDefault target={[0, 0, 0]}
-                               enableDamping={false}
-                               maxPolarAngle={Math.PI / 2}/>
-
 
                 {
                     React.Children.toArray(props.children)
@@ -111,5 +107,13 @@ export function UniversalWorldEnvironment({}) {
 
 
         </React.Suspense>
+    )
+}
+
+export function UniversalMeshOrbitControls({}) {
+    return (
+        <OrbitControls makeDefault target={[0, 0, 0]}
+                       enableDamping={false}
+                       maxPolarAngle={Math.PI / 2}/>
     )
 }

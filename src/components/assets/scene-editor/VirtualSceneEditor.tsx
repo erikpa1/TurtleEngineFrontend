@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-    UniversalMeshCanvas,
+    UniversalMeshCanvas, UniversalMeshOrbitControls,
     UniversalWorldEnvironment,
     UniversalWorldGrid
 } from "@components/assets/canvases/UniversalMeshCanvas";
@@ -9,7 +9,7 @@ import {
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.tsx";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.ts";
 
 import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
 
@@ -18,10 +18,11 @@ import SceneApi from "@api/project/SceneApi";
 import Asset from "@platform/assets/Asset.ts";
 
 import {VirtualSceneData} from "@platform/assets/scene.ts";
+import {OrbitControls} from "@react-three/drei";
 
 
 interface VirtualSceneEditorProps {
-    scene: VirtualSceneData
+    scene: Asset
 }
 
 export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
@@ -73,7 +74,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
                 {/*<_ExampleMeshes/>*/}
 
                 <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
-
+                <UniversalMeshOrbitControls/>
 
                 <UniversalWorldGrid/>
 

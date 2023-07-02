@@ -1,7 +1,4 @@
 import React from "react";
-import {useTranslation} from "react-i18next";
-
-import Switch, {Case} from "react-switch-case/lib/esm";
 
 import {Box, Tab, Tabs} from "@mui/material";
 
@@ -9,19 +6,19 @@ import {TabContext} from "@mui/lab";
 
 import {ViewContainer} from "@components/ViewContainer";
 
-import {Ext} from "@external/prelude";
-
 import UniversalAssetList from "@components/assets/UniversalAssetList";
-
 
 import Assets, {AssetsTypeMap} from "@platform/assets/Assets";
 
+import {TGui} from "@external/tgui.ts";
+
 import {useParams} from "react-router-dom";
 
+import {Ext} from "@external/prelude";
 
 export default function AssetsMainView({}) {
 
-    const [t] = useTranslation()
+    const [t] = TGui.T()
 
 
     const [tabValue, setTabValue] = Ext.Cookie.useCookie("assets-tab-main", "0")
@@ -65,7 +62,7 @@ export default function AssetsMainView({}) {
 
 function _SubView({type}) {
 
-    const [t] = useTranslation()
+    const [t] = TGui.T()
 
     const {projectuid} = useParams()
 
@@ -117,10 +114,5 @@ function _SubView({type}) {
 }
 
 
-function _SubTypeView({}) {
-    return (
-        <></>
-    )
-}
 
 

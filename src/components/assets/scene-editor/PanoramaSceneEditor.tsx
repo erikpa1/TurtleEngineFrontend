@@ -18,14 +18,16 @@ import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionD
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
-import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition.tsx";
+import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition.ts";
 import PanoramaAsset from "@platform/assets/panorama.ts";
 import FsTools from "@api/FsTools";
 import {VirtualSceneData} from "@platform/assets/scene.ts";
+import {OrbitControls} from "@react-three/drei";
+import Asset from "@platform/assets/Asset.ts";
 
 
 interface PanoramaSceneEditorProps {
-    scene: VirtualSceneData
+    scene: Asset
 }
 
 export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
@@ -34,7 +36,6 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
 
     React.useEffect(() => {
         SceneApi.GetSceneDefinition(PanoramaSceneDefinition, scene.parent_project_uid, scene.uid).then((value) => {
-
             setSceneDefinition({value: value as PanoramaSceneDefinition})
         })
 
@@ -79,7 +80,14 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
 
                 <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
 
-                <_PanoramaLoader panoramaUid={props.sceneDefinition.panoramaUid}/>
+                <_PanoramaLoader panoramaUid={props.sceneDefinition.panorama_uid}/>
+
+
+                <OrbitControls makeDefault
+                               target={[0, 0.15, 0]}
+                               enableDamping={false}
+                               maxPolarAngle={Math.PI / 2}
+                />
 
                 <UniversalWorldGrid height={-80}/>
 

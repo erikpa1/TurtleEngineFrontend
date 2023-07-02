@@ -1,15 +1,14 @@
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.tsx";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.ts";
 
 export class PanoramaScenePhotoDomConfig {
 
 }
 
-
 export default class PanoramaSceneDefinition extends VirtualSceneDefinition {
 
     type = "panorama"
 
-    panoramaUid = ""
+    panorama_uid = ""
 
     constructor() {
         super();
@@ -18,13 +17,13 @@ export default class PanoramaSceneDefinition extends VirtualSceneDefinition {
     ToJson(): any {
         return {
             ...super.ToJson(),
-            panoramaUid: this.panoramaUid
+            panoramaUid: this.panorama_uid
         }
     }
 
     FromJson(jObject: any | PanoramaSceneDefinition) {
         super.FromJson(jObject);
-        this.panoramaUid = jObject.panoramaUid ?? ""
+        this.panorama_uid = jObject.panoramaUid ?? ""
     }
 
 

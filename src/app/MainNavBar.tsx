@@ -8,12 +8,14 @@ import {useNavigate} from "react-router-dom";
 
 import {Image} from "react-bootstrap";
 
-import useCookie from "react-use-cookie";
-
 import "./MainNavBar.css"
+
 import {ProjectLight} from "@data/project/ProjectLight";
+
 import {Ext} from "@external/prelude";
+
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+
 import RoutesManager from "@platform/RoutesManager";
 
 
@@ -209,6 +211,10 @@ function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
 
     return (
         <sb.Menu>
+            <MyNavbarItem
+                lang={"project.configuration"}
+                link={RoutesManager.ProjectConfig(project.uid)}
+                icon={"/icons/Alchemy.svg"}/>
 
             <MyNavbarItem
                 lang={"assets"}

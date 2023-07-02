@@ -61,5 +61,7 @@
   "type": "Typ",
   "scene.area": "Area scene",
   "scene.panorama": "Panorama scene",
-  "scene.virtual": "Virtual scene"
+  "scene.virtual": "Virtual scene",
+  "project.configuration": "Project configuration",
+  "create": "Create"
 }

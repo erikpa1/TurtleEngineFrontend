@@ -1,4 +1,6 @@
-export default class MaterialData {
+import {AssetData} from "@platform/assets/Asset.ts";
+
+export default class MaterialData extends AssetData {
 
 
 }

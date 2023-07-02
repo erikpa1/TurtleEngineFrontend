@@ -5,6 +5,7 @@ import {sep} from "@tauri-apps/api/path";
 export default class FsTools {
 
     static WORK_DIR = "/"
+
     static ConvertFilePath(path: string): string {
         if (PlatformDispatcher.IsDesktop()) {
             const tmp = convertFileSrc(path)//FsApi.normalizePath(FsApi.RESOURCES + path)
@@ -53,5 +54,10 @@ export default class FsTools {
         return finalPath
     }
 
+    static GetFileNameAndExtension(filePath: string): string {
+        const paths = filePath.split(sep)
+
+        return paths[paths.length - 1]
+    }
 
 }

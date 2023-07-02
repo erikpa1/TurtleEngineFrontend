@@ -5,23 +5,23 @@ import Assets from "@platform/assets/Assets";
 import Asset from "@platform/assets/Asset.ts";
 import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
 import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode.tsx";
+import SceneDefinition from "@platform/assets/scenes/SceneDefinition.ts";
 
-export default class VirtualSceneDefinition {
-    root: SceneNode
+export default class VirtualSceneDefinition extends SceneDefinition {
+
     type = "virtual"
 
     constructor() {
-        this.root = new SceneNode()
+        super()
     }
 
     FromJson(jObject: any) {
-        this.root.FromJson(jObject.root ?? {})
+        super.FromJson(jObject)
     }
 
     ToJson() {
         return {
-            type: this.type,
-            root: this.root.ToJson()
+            ...super.ToJson()
         }
     }
 

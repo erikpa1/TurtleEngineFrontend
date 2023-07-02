@@ -3,7 +3,7 @@ use image::{GenericImage, GenericImageView, ImageBuffer, RgbImage};
 
 pub fn CreateThumbnail(source: &String, destination: &String, newWidth: u32) {
     let img_path = Path::new(source);
-    let image = image::open(&img_path).expect("Failed to open image file");
+    let image = image::open(&img_path).expect("Failed to open images file");
 
     let (width, height) = image.dimensions();
     let (thumb_width, thumb_height) = calculate_thumbnail_size(width, height, newWidth, newWidth);

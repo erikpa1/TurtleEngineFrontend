@@ -13,7 +13,7 @@ export default class SceneApi {
         const sceneDefinition = new clazz()
 
         if (PlatformDispatcher.IsDesktop()) {
-            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/SceneDefinition.json`)
+            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/Default.json`)
 
             const exists = await TauriOsPlugin.FileExists(path);
 
@@ -34,7 +34,7 @@ export default class SceneApi {
 
 
         if (PlatformDispatcher.IsDesktop()) {
-            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/SceneDefinition.json`)
+            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/Default.json`)
 
             const sceneDefinitionString = JSON.stringify(sceneDefinition.ToJson())
 
