@@ -1,10 +1,10 @@
 import React from "react";
 
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 
-import {TGui} from "@external/tgui.ts";
+import {TGui} from "@external/tgui";
 
-import Assets from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets";
 
 import {
     EditAssetDescriptionFormField,
@@ -20,13 +20,13 @@ import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams"
 
 import CreateAssetWithFileContent, {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 
-import SceneAssetManager from "@platform/assets-managers/SceneAssetManager.ts";
+import SceneAssetManager from "@platform/assets-managers/SceneAssetManager";
 
-import {Ext} from "@external/prelude.ts";
-import {useActiveProjectZus} from "@platform/zustands/projectZuses.ts";
-import {VirtualSceneData} from "@platform/assets/scene.ts";
-import FsTools from "@api/FsTools.ts";
-import ImagesApi from "@api/ImagesApi.ts";
+import {Ext} from "@external/prelude";
+import {useActiveProjectZus} from "@platform/zustands/projectZuses";
+import {VirtualSceneData} from "@platform/assets/scene";
+import FsTools from "@api/FsTools";
+import ImagesApi from "@api/ImagesApi";
 import {preview} from "vite";
 
 

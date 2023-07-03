@@ -1,4 +1,4 @@
-import Asset, {AssetData} from "./Asset.ts";
+import Asset, {AssetData} from "./Asset";
 
 export default class PanoramaData extends AssetData {
 

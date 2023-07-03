@@ -1,7 +1,7 @@
 import React from "react";
 
 import HudButton from "@components/assets/HudButton";
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsTools from "@api/FsTools";
 import PlatformDispatcher from "@api/PlatformDispatcher";

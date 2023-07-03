@@ -14,7 +14,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {useNavigate} from "react-router-dom";
 import RoutesManager from "@platform/RoutesManager";
-import FsTools from "@api/FsTools.ts";
+import FsTools from "@api/FsTools";
 
 
 interface ProjectUniversalCardProps {

@@ -14,9 +14,9 @@ import {
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
-import {MeshAssetData} from "@platform/assets/mesh.ts";
+import {MeshAssetData} from "@platform/assets/mesh";
 
-import AssetsApi from "@api/AssetsApi.ts";
+import AssetsApi from "@api/AssetsApi";
 
 import {OrbitControls} from "@react-three/drei";
 

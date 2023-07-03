@@ -1,10 +1,10 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import QuizAsset from "@platform/assets/quiz.ts";
+import QuizAsset from "@platform/assets/quiz";
 import AssetsApi from "@api/AssetsApi";
 import {ViewContainer} from "@components/ViewContainer";
 import {MiddleSpinner} from "@components/Spinners";
-import Datafactory from "@platform/assets/datafactory.ts";
+import Datafactory from "@platform/assets/datafactory";
 import Assets from "@platform/assets/Assets";
 
 export default function DataFactoryEditor() {

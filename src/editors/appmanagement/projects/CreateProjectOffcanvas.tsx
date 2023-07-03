@@ -10,11 +10,11 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
-import {TGui} from "@external/tgui.ts";
-import FsTools from "@api/FsTools.ts";
-import PlatformDispatcher from "@api/PlatformDispatcher.ts";
-import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent.tsx";
-import ImagesApi from "@api/ImagesApi.ts";
+import {TGui} from "@external/tgui";
+import FsTools from "@api/FsTools";
+import PlatformDispatcher from "@api/PlatformDispatcher";
+import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import ImagesApi from "@api/ImagesApi";
 
 interface CreateProjectOffcanvasProps {
     onClose: () => void

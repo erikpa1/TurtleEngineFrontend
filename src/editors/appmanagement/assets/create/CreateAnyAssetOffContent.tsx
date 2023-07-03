@@ -1,5 +1,5 @@
 import React from "react";
-import {CreateAssetParamas} from "@api/project/params.ts";
+import {CreateAssetParamas} from "@api/project/params";
 
 
 export default function CreateSceneOffContent({onCreated}) {

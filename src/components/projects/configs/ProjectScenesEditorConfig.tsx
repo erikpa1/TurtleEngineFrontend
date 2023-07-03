@@ -1,8 +1,8 @@
 import React from "react";
 import {TabContext} from "@mui/lab";
-import {TGui} from "@external/tgui.ts";
+import {TGui} from "@external/tgui";
 import {Tab} from "@mui/material";
-import {Ext} from "@external/prelude.ts";
+import {Ext} from "@external/prelude";
 
 export default function ProjectScenesEditorConfig({}) {
 

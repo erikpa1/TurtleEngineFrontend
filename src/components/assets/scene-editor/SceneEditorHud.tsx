@@ -17,9 +17,9 @@ import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
-import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
-import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper.tsx";
-import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas.tsx";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
+import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper";
+import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas";
 
 
 interface SceneEditorHudProps {

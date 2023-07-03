@@ -1,12 +1,12 @@
 import React from "react";
-import {ViewContainer} from "@components/ViewContainer.tsx";
+import {ViewContainer} from "@components/ViewContainer";
 import {TabContext} from "@mui/lab";
 import {Box, Tab, Tabs} from "@mui/material";
 
-import {Ext} from "@external/prelude.ts";
-import {TGui} from "@external/tgui.ts";
-import ProjectPlayerConfig from "@components/projects/configs/ProjectPlayerConfig.tsx";
-import ProjectScenesEditorConfig from "@components/projects/configs/ProjectScenesEditorConfig.tsx";
+import {Ext} from "@external/prelude";
+import {TGui} from "@external/tgui";
+import ProjectPlayerConfig from "@components/projects/configs/ProjectPlayerConfig";
+import ProjectScenesEditorConfig from "@components/projects/configs/ProjectScenesEditorConfig";
 
 
 export default function ProjectConfigView({}) {

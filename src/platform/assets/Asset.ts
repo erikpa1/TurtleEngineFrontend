@@ -1,6 +1,6 @@
 import FsTools from "@api/FsTools";
 
-import {AssetDefinition} from "@platform/assets/Assets.ts";
+import {AssetDefinition} from "@platform/assets/Assets";
 
 export default class Asset {
     public uid = ""

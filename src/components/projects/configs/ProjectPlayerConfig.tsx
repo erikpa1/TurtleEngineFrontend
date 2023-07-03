@@ -1,5 +1,5 @@
 import React from "react";
-import {Ext} from "@external/prelude.ts";
+import {Ext} from "@external/prelude";
 
 
 export default function ProjectPlayerConfig({}) {

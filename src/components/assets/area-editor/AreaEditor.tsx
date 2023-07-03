@@ -6,13 +6,13 @@ import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
 
-import Area from "@platform/assets/area.ts";
+import Area from "@platform/assets/area";
 
 import AreaMarker from "@components/assets/area/AreaMarker";
 import AreaEditorHud from "@components/assets/area-editor/AreaEditorHud";
 import FsTools from "@api/FsTools";
 import ErrorBoundary from "@components/ErrorBoundary";
-import Assets from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets";
 
 
 export default function AreaEditor({}) {

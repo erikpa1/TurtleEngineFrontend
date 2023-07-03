@@ -2,7 +2,7 @@ import React from "react";
 
 import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshNode";
-import {SceneVideoNode, SceneVideoView} from "@platform/scene/media/SceneVideoNode.tsx";
+import {SceneVideoNode, SceneVideoView} from "@platform/scene/media/SceneVideoNode";
 
 
 interface SceneDefinitionDomProps {

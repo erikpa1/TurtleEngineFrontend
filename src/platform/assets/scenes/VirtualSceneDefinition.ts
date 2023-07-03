@@ -2,10 +2,10 @@ import {SceneNode} from "@platform/scene/SceneNode";
 
 
 import Assets from "@platform/assets/Assets";
-import Asset from "@platform/assets/Asset.ts";
-import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
-import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode.tsx";
-import SceneDefinition from "@platform/assets/scenes/SceneDefinition.ts";
+import Asset from "@platform/assets/Asset";
+import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode";
+import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode";
+import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
 
 export default class VirtualSceneDefinition extends SceneDefinition {
 

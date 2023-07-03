@@ -7,8 +7,8 @@ import {Ext} from "@external/prelude";
 
 import FsTools from "@api/FsTools";
 
-import TauriOsPlugin from "../../../tauri/plugin_os.ts";
-import {MeshAssetData} from "@platform/assets/mesh.ts";
+import TauriOsPlugin from "../../../tauri/plugin_os";
+import {MeshAssetData} from "@platform/assets/mesh";
 
 
 interface EditMeshAssetOffcanvas {

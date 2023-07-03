@@ -6,9 +6,9 @@ import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 
-import PointCloudAsset from "@platform/assets/pointcloud.ts";
+import PointCloudAsset from "@platform/assets/pointcloud";
 import PointCloudEditorHud from "@components/assets/pointcould-editor/PointCloudEditorHud";
-import Assets from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets";
 
 export default function PointCloudEditor({}) {
     const {projectuid, clouduid} = useParams()

@@ -11,7 +11,7 @@ import {
 import React from "react";
 
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
-import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 
 interface UniversalMeshCanvasProps {
     children: any

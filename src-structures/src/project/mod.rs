@@ -5,7 +5,7 @@ use ts_rs::TS;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
-#[ts(export, export_to = "../src/api/project/params.ts")]
+#[ts(export, export_to = "../src/api/project/params")]
 pub struct CreateProjectParams {
     #[serde(default)]
     pub name: String,
@@ -28,7 +28,7 @@ pub struct CreateProjectParams {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
-#[ts(export, export_to = "../src/api/project/params.ts")]
+#[ts(export, export_to = "../src/api/project/params")]
 pub struct CreateAssetParamas {
     #[serde(default)]
     pub name: String,
@@ -64,7 +64,7 @@ pub struct UploadAssetFileParams {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
-#[ts(export, export_to = "../src/data/project/ProjectLight.ts")]
+#[ts(export, export_to = "../src/data/project/ProjectLight")]
 pub struct ProjectLight {
     #[serde(default)]
     pub name: String,

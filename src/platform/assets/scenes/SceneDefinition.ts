@@ -1,5 +1,5 @@
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.ts";
-import {SceneNode} from "@platform/scene/SceneNode.ts";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
+import {SceneNode} from "@platform/scene/SceneNode";
 
 export default class SceneDefinition {
 

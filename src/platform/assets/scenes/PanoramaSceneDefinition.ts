@@ -1,4 +1,4 @@
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.ts";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 
 export class PanoramaScenePhotoDomConfig {
 

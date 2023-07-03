@@ -1,9 +1,9 @@
-import AssetsApi from "@api/AssetsApi.ts";
+import AssetsApi from "@api/AssetsApi";
 
-import Asset from "@platform/assets/Asset.ts";
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition.ts";
-import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition.ts";
-import SceneDefinition from "@platform/assets/scenes/SceneDefinition.ts";
+import Asset from "@platform/assets/Asset";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
+import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition";
+import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
 
 export default class SceneAssetManager {
 

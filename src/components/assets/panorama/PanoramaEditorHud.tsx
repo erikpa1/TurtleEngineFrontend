@@ -3,7 +3,7 @@ import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import HudButton from "@components/assets/HudButton";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
-import PanoramaAsset from "@platform/assets/panorama.ts";
+import PanoramaAsset from "@platform/assets/panorama";
 
 interface PanoramaEditorHudProps {
     panorama: PanoramaAsset

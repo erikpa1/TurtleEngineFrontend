@@ -9,9 +9,9 @@ import {TGui} from "@external/tgui";
 
 import LicenceManager from "@platform/licences/LicenceManager";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import CreateAssetOffcanvasDispatcher from "@editors/appmanagement/assets/CreateAssetOffcanvasDispatcher.tsx";
+import CreateAssetOffcanvasDispatcher from "@editors/appmanagement/assets/CreateAssetOffcanvasDispatcher";
 
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 import {AssetDefinition} from "@platform/assets/Assets";
 
 

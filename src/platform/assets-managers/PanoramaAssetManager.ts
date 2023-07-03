@@ -4,7 +4,7 @@ import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 import AssetsApi from "@api/AssetsApi";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
 import FsTools from "@api/FsTools";
-import ImagesApi from "@api/ImagesApi.ts";
+import ImagesApi from "@api/ImagesApi";
 
 
 export default class PanoramaAssetManager {

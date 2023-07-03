@@ -1,7 +1,7 @@
 import React from "react";
-import HudButton from "@components/assets/HudButton.tsx";
-import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
-import {GizmoTypes} from "@components/assets/canvases/SceneTransformHelper.tsx";
+import HudButton from "@components/assets/HudButton";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
+import {GizmoTypes} from "@components/assets/canvases/SceneTransformHelper";
 
 
 const GIZMO_ICONS = {}

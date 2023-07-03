@@ -9,7 +9,7 @@ import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
 import {SceneNode} from "@platform/scene/SceneNode";
 import {Scene} from "three";
 import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode";
-import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode.tsx";
+import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode";
 
 
 export default class AppApi {

@@ -1,7 +1,7 @@
 import React from "react";
-import {TGui} from "@external/tgui.ts";
-import HudButton from "@components/assets/HudButton.tsx";
-import UniversalInputSearchBar from "@components/SearchBar.tsx";
+import {TGui} from "@external/tgui";
+import HudButton from "@components/assets/HudButton";
+import UniversalInputSearchBar from "@components/SearchBar";
 
 
 interface SceneNodesSelectionOffcanvas {

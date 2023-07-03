@@ -1,12 +1,12 @@
 import axios from "axios";
 
-import Asset, {AssetData, AssetParentData, ProjectSerializationContext} from "@platform/assets/Asset.ts";
+import Asset, {AssetData, AssetParentData, ProjectSerializationContext} from "@platform/assets/Asset";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 
 import TauriAssetPlugin from "../tauri/plugin_assets";
 
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import {CreateThumbnailParams} from "@api/AssetApiParams";
@@ -122,5 +122,19 @@ export default class AssetsApi {
 
     }
 
+    static async GetAssetAndAssetData<T extends AssetData>(clazz: any, project_uid: string, asset_uid: string): Promise<{
+        asset: Asset,
+        data: T
+    }> {
+
+        const asset = await AssetsApi.GetAsset(project_uid, asset_uid)
+        const data = await AssetsApi.GetAssetData<T>(clazz, project_uid, asset_uid)
+
+        return {
+            asset, data
+        }
+
+
+    }
 
 }

@@ -1,4 +1,4 @@
-import {AssetData} from "@platform/assets/Asset.ts";
+import {AssetData} from "@platform/assets/Asset";
 
 export default class VideoData extends AssetData {
 

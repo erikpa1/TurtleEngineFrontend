@@ -2,7 +2,7 @@ import {invoke} from "@tauri-apps/api/tauri";
 
 import {CreateAssetParamas} from "@api/project/params";
 
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import TauriSqlitePlugin from "./plugin_sqlite";
 import FsTools from "@api/FsTools";

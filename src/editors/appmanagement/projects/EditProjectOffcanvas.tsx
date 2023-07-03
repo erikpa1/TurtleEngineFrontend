@@ -21,8 +21,8 @@ import {Offcanvas} from "react-bootstrap";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TGui} from "@external/tgui";
 import PlatformDispatcher from "@api/PlatformDispatcher";
-import FsTools from "@api/FsTools.ts";
-import ImagesApi from "@api/ImagesApi.ts";
+import FsTools from "@api/FsTools";
+import ImagesApi from "@api/ImagesApi";
 
 interface EditProjectOffcanvasProps {
     uid: string

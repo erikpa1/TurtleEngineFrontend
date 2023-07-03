@@ -10,7 +10,7 @@ import AssetsApi from "@api/AssetsApi";
 
 import {SceneNode} from "@platform/scene/SceneNode";
 
-import {VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas.tsx";
+import {VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas";
 
 
 export class SceneVideoNode extends SceneNode {

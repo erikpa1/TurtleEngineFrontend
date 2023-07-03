@@ -10,7 +10,7 @@ import UniversalAssetList from "@components/assets/UniversalAssetList";
 
 import Assets, {AssetsTypeMap} from "@platform/assets/Assets";
 
-import {TGui} from "@external/tgui.ts";
+import {TGui} from "@external/tgui";
 
 import {useParams} from "react-router-dom";
 

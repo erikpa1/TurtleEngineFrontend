@@ -11,9 +11,9 @@ import ProjectUniversalCard from "@components/projects/ProjectUniversalCard";
 import {Col, Row, Spinner} from "react-bootstrap";
 import UniversalInputSearchBar from "@components/SearchBar";
 import {useAvailableProjects} from "@hooks/project";
-import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas.tsx";
-import {useGlobalPopup} from "@platform/zustands/globalPopupZus.ts";
-import {TurtleButton} from "@platform/components/TurtleButtons.tsx";
+import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import {TurtleButton} from "@platform/components/TurtleButtons";
 
 
 export default function ProjectsSelectionView({}) {

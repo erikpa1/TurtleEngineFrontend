@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import SceneAsset from "@platform/assets/scene.ts";
+import SceneAsset from "@platform/assets/scene";
 
 
 import SceneApi from "@api/project/SceneApi";
@@ -18,12 +18,12 @@ import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionD
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
-import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition.ts";
-import PanoramaAsset from "@platform/assets/panorama.ts";
+import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition";
+import PanoramaAsset from "@platform/assets/panorama";
 import FsTools from "@api/FsTools";
-import {VirtualSceneData} from "@platform/assets/scene.ts";
+import {VirtualSceneData} from "@platform/assets/scene";
 import {OrbitControls} from "@react-three/drei";
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 
 
 interface PanoramaSceneEditorProps {

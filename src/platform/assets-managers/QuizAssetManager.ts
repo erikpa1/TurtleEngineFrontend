@@ -4,7 +4,7 @@ import AssetsApi from "@api/AssetsApi";
 import {CreateAssetParamas} from "@api/project/params";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
-import QuizData from "@platform/assets/quiz.ts";
+import QuizData from "@platform/assets/quiz";
 
 
 export default class QuizAssetManager {

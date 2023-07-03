@@ -1,6 +1,6 @@
 import React from "react";
 
-import Material from "@platform/assets/material.ts";
+import Material from "@platform/assets/material";
 
 import {MiddleSpinner} from "@components/Spinners";
 import {useParams} from "react-router-dom";
@@ -15,7 +15,7 @@ import * as three from "three"
 import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
-import Assets from "@platform/assets/Assets.ts";
+import Assets from "@platform/assets/Assets";
 
 
 const TEXTURES = {

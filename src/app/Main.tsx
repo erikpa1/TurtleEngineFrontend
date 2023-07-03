@@ -8,7 +8,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
-import ProjectConfigView from "@components/projects/ProjectConfigView.tsx";
+import ProjectConfigView from "@components/projects/ProjectConfigView";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))

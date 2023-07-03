@@ -7,12 +7,12 @@ import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, useTexture} from "@react-three/drei";
 
-import PanoramaAsset from "@platform/assets/panorama.ts";
+import PanoramaAsset from "@platform/assets/panorama";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 
 import PhotoDom from "@components/assets/panorama/PhotoDom";
-import AssetsApi from "@api/AssetsApi.ts";
-import PanoramaData from "@platform/assets/panorama.ts";
+import AssetsApi from "@api/AssetsApi";
+import PanoramaData from "@platform/assets/panorama";
 
 export default function PanoramaEditor({}) {
     const {projectuid, panoramauid} = useParams()

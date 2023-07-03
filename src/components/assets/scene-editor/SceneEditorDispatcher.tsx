@@ -8,8 +8,8 @@ import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEdit
 
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
 
-import {PanoramaSceneData, SceneData, VirtualSceneData} from "@platform/assets/scene.ts";
-import Asset from "@platform/assets/Asset.ts";
+import {PanoramaSceneData, SceneData, VirtualSceneData} from "@platform/assets/scene";
+import Asset from "@platform/assets/Asset";
 
 export default function SceneEditorDispatcher({}) {
 

@@ -28,10 +28,10 @@ import AssetParentManager from "@platform/assets-managers/AssetParentManager";
 import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 import FsTools from "@api/FsTools";
 import AreaAssetManager from "@platform/assets-managers/AreaAssetManager";
-import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene.tsx";
-import ImagesApi from "@api/ImagesApi.ts";
+import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene";
+import ImagesApi from "@api/ImagesApi";
 import {preview} from "vite";
-import {AssetData} from "@platform/assets/Asset.ts";
+import {AssetData} from "@platform/assets/Asset";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void

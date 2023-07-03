@@ -1,5 +1,5 @@
 import React from "react";
-import Asset from "@platform/assets/Asset.ts";
+import Asset from "@platform/assets/Asset";
 import {useNavigate} from "react-router-dom";
 import Assets from "@platform/assets/Assets";
 import RoutesManager from "@platform/RoutesManager";

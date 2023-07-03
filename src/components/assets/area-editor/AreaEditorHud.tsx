@@ -4,7 +4,7 @@ import HudButton from "@components/assets/HudButton";
 
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-import Area from "@platform/assets/area.ts";
+import Area from "@platform/assets/area";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import UniversalAssetList from "@components/assets/UniversalAssetList";
 import Assets from "@platform/assets/Assets";

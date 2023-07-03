@@ -6,7 +6,7 @@ import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
-import Mesh from "@platform/assets/mesh.ts";
+import Mesh from "@platform/assets/mesh";
 
 import {TGui} from "@external/tgui";
 import EditMeshAssetOffcanvas from "@components/assets/mesh-editor/EditMeshAssetOffcanvas";

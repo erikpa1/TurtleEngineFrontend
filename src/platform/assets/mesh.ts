@@ -1,5 +1,5 @@
-import {AssetData} from "@platform/assets/Asset.ts";
-import FsTools from "@api/FsTools.ts";
+import {AssetData} from "@platform/assets/Asset";
+import FsTools from "@api/FsTools";
 
 export class MeshAssetData extends AssetData {
 

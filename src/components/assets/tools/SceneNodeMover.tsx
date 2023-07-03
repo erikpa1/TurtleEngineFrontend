@@ -1,12 +1,12 @@
-import {SceneNode} from "@platform/scene/SceneNode.ts";
+import {SceneNode} from "@platform/scene/SceneNode";
 
 import {Plane} from "@react-three/drei";
 import * as three from "three";
 import React from "react";
-import {useMeshHover} from "@components/assets/tools/useMeshHover.ts";
-import SceneTransformHelper from "@components/assets/canvases/SceneTransformHelper.tsx";
+import {useMeshHover} from "@components/assets/tools/useMeshHover";
+import SceneTransformHelper from "@components/assets/canvases/SceneTransformHelper";
 
-import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses.ts";
+import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 
 
 const SCENE_MESH_MATERIAL = (

@@ -1,6 +1,6 @@
-import {SceneNode} from "@platform/scene/SceneNode.ts";
+import {SceneNode} from "@platform/scene/SceneNode";
 import create from "zustand";
-import {GizmoTypes} from "@components/assets/canvases/SceneTransformHelper.tsx";
+import {GizmoTypes} from "@components/assets/canvases/SceneTransformHelper";
 
 
 interface ActiveNodeZus {
