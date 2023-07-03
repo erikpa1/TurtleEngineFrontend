@@ -60,7 +60,7 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 
     if (meshAsset) {
         return (
-            <_SceneMeshView mesh={node} meshAsset={meshAsset}/>
+            <_SceneMeshView meshNode={node} meshData={meshAsset.data}/>
         )
     } else {
         return (
@@ -72,17 +72,17 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
 }
 
 interface _SceneMeshViewProps {
-    mesh: SceneMeshNode
+    meshNode: SceneMeshNode
     meshData: MeshAssetData
 }
 
-function _SceneMeshView({meshData, mesh}: _SceneMeshViewProps) {
+function _SceneMeshView({meshNode, meshData}: _SceneMeshViewProps) {
 
 
     return (
-        <SceneNodeMover node={mesh}>
+        <SceneNodeMover node={meshNode}>
             {
-                meshData.meshExtension !== "" && <PrimitiveMesh
+                meshData.mesh_extension !== "" && <PrimitiveMesh
                     meshPath={meshData.GetEntryFile()}
                 />
             }
