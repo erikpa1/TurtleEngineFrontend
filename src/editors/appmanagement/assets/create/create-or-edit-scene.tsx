@@ -28,6 +28,8 @@ import {VirtualSceneData} from "@platform/assets/scene";
 import FsTools from "@api/FsTools";
 import ImagesApi from "@api/ImagesApi";
 import {preview} from "vite";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
 
 
 interface CreateOrEditSceneOffContentProps {
@@ -38,11 +40,14 @@ interface CreateOrEditSceneOffContentProps {
 
 export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentProps) {
 
+    const popupZus = useGlobalPopup()
     const activeProjectZus = useActiveProjectZus()
 
     const [thumbnail, setThumbnail] = React.useState(FsTools.GetPlatformPath(Assets.Scene.DEFAULT_PREVIEW))
 
     const [asset, setAsset] = React.useState<Asset | null>(null)
+
+    const [subAsset, setSubAsset] = React.useState<Asset | null>(null)
 
     const [sceneType, setSceneType] = Ext.Cookie.useCookie("new-scene-type", "virtual")
 
@@ -60,7 +65,8 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
             asset.hasPreview = true
 
-            await SceneAssetManager.CreateSceneAsset(asset)
+            await SceneAssetManager.CreateSceneAsset(asset, subAsset)
+
 
             await ImagesApi.GeneratePreviewDesktop(thumbnail,
                 FsTools.GetPathInProject(activeProjectZus.project.uid, `Assets/${asset.uid}/Preview.png`),
@@ -73,7 +79,33 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
 
         }
+    }
 
+    function selectPanoramaPressed() {
+
+
+        const offCanvas = (
+            <TGui.Offcanvas
+                closeEnabled={true}
+                onClose={popupZus.popElement}
+                width={"1000px"}
+                header={<TGui.OffcanvasTitle>{"select"}</TGui.OffcanvasTitle>}
+            >
+                <UniversalAssetList
+                    md={4}
+                    assetDefinition={Assets.Panorama}
+                    parentProjectUid={activeProjectZus.project.uid}
+                    mode={UniversalAssetListModes.SELECT}
+                    onSelect={(asset) => {
+                        setSubAsset(asset)
+                        popupZus.popElement()
+                    }}
+
+                />
+            </TGui.Offcanvas>
+        )
+
+        popupZus.pushElement(offCanvas)
 
     }
 
@@ -110,9 +142,11 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
                         <TGui.Card>
                             <TGui.CardMedia
                                 sx={{height: 140}}
+                                image={FsTools.ConvertFilePath(subAsset ? subAsset.GetPreviewPath() : "")}
                             />
                             <TGui.CardActions>
                                 <TGui.Button
+                                    onClick={selectPanoramaPressed}
                                     label={"select"}
                                 />
                             </TGui.CardActions>

@@ -17,13 +17,13 @@ export default class PanoramaSceneDefinition extends VirtualSceneDefinition {
     ToJson(): any {
         return {
             ...super.ToJson(),
-            panoramaUid: this.panorama_uid
+            panorama_uid: this.panorama_uid
         }
     }
 
     FromJson(jObject: any | PanoramaSceneDefinition) {
         super.FromJson(jObject);
-        this.panorama_uid = jObject.panoramaUid ?? ""
+        this.panorama_uid = jObject.panorama_uid ?? ""
     }
 
 

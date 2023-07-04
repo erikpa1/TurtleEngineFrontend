@@ -7,7 +7,7 @@ import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
 
 export default class SceneAssetManager {
 
-    static async CreateSceneAsset(asset: Asset) {
+    static async CreateSceneAsset(asset: Asset, subAsset: Asset | null) {
 
         await AssetsApi.CreateAssetFromLight(asset)
 
@@ -17,6 +17,9 @@ export default class SceneAssetManager {
             assetData = new VirtualSceneDefinition()
         } else if (asset.subtype === "panorama") {
             assetData = new PanoramaSceneDefinition()
+            if (subAsset) {
+                assetData.panorama_uid = subAsset.uid
+            }
         } else {
             assetData = new SceneDefinition()
         }

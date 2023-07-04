@@ -12,6 +12,13 @@ export default class PanoramaData extends AssetData {
         return `${this._project_path}Assets/${this.uid}/Default.${this.extension}`
     }
 
+    ToJson(): any {
+        return {
+            ...super.ToJson(),
+            extension: this.extension
+        }
+    }
+
     FromJson(context: any, data: any) {
         super.FromJson(context, data)
 

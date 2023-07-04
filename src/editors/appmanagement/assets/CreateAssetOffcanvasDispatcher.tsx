@@ -122,7 +122,6 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
                     AssetsApi.CopyAssetFileDesktop(from, pathTo)
                 })
 
-
             }
 
             asset.hasPreview = true

@@ -70,7 +70,14 @@ PANORAMA.TYPE = "panorama"
 PANORAMA.LANG = "panorama"
 PANORAMA.LANG_PLURAL = "panoramas"
 PANORAMA.DEFAULT_PREVIEW = _getPreview(PANORAMA.TYPE)
-PANORAMA.DEFAULT_DATA = () => new PanoramaData()
+PANORAMA.DEFAULT_DATA = () => {
+    const tmp = new PanoramaData()
+    tmp.extension = "jpg"
+    return tmp
+}
+MESH.DEFAULT_FILES = [
+    ["Defaults/Assets/default-panorama.jpg", "Default.jpg"]
+]
 
 const VIDEO = new AssetDefinition()
 VIDEO.TYPE = "video"
