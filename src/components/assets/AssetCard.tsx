@@ -105,8 +105,8 @@ export default function AssetCard({
 
                 {
                     mode === AssetCardModes.EDIT && <>
+                        <TGui.Button onClick={editAssetPressed} label={"open"}/>
                         <TGui.Button onClick={editAssetPressed} label={"edit"}/>
-                        <TGui.Button onClick={editAssetPressed} label={"properties"}/>
                         <TGui.Button onClick={deletePressed} label={"delete"} color={"error"}/>
                     </>
                 }

@@ -84,7 +84,6 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
 
             }
 
-
             <Row xs={1} md={_md} className={`g-${_md}`}>
 
                 {
