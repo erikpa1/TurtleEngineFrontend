@@ -134,3 +134,4 @@ dist
 /target/release/
 /target/debug/
 /target/projects/
+/target/.rustc_info.json
