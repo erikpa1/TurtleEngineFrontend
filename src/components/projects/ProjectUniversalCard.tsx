@@ -15,6 +15,7 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {useNavigate} from "react-router-dom";
 import RoutesManager from "@platform/RoutesManager";
 import FsTools from "@api/FsTools";
+import {TGui} from "@external/tgui";
 
 
 interface ProjectUniversalCardProps {
@@ -89,16 +90,9 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
                     {val.project.description}
                 </Typography>
 
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    style={{
-                        minHeight: "50px",
-                        maxHeight: "50px",
-                    }}
-                >
+                <TGui.TextMicro>
                     ({val.project.uid})
-                </Typography>
+                </TGui.TextMicro>
 
             </CardContent>
             <CardActions>

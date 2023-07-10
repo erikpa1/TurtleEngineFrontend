@@ -21,7 +21,8 @@ export default function AssetsMainView({}) {
     const [t] = TGui.T()
 
 
-    const [tabValue, setTabValue] = Ext.Cookie.useCookie("assets-tab-main", "0")
+    // const [tabValue, setTabValue] = Ext.Cookie.useCookie("assets-tab-main", "0")
+    const [tabValue, setTabValue] = React.useState("world")
 
     const tabChanged = (e: React.SyntheticEvent, newValue: string) => {
         setTabValue(newValue)

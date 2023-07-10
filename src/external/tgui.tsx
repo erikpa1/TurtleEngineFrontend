@@ -16,8 +16,9 @@ import Switch, {Case} from "react-switch-case/lib/esm";
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import { TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
+import {TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
 import {Default} from "react-switch-case";
+import React from "react";
 
 export const TGui = {
     T: useTranslation,
@@ -45,7 +46,8 @@ export const TGui = {
     Tabs: Tabs,
     Tab: Tab,
     PopupZus: useGlobalPopup,
-    SingleFileInput: TurtleSingleFileInput
+    SingleFileInput: TurtleSingleFileInput,
+    TextMicro: _TextMicro
 
 }
 
@@ -55,4 +57,20 @@ interface TSwitch {
 
 interface TCase {
     value: string | number | any
+}
+
+function _TextMicro({children}) {
+
+    return (
+        <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{
+                maxHeight: "50px",
+            }}
+        >
+            {React.Children.toArray(children)}
+        </Typography>
+
+    )
 }
