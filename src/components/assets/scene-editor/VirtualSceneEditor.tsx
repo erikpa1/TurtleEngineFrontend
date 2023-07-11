@@ -16,9 +16,7 @@ import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionD
 import SceneApi from "@api/project/SceneApi";
 
 import Asset from "@platform/assets/Asset";
-
-import {VirtualSceneData} from "@platform/assets/scene";
-import {OrbitControls} from "@react-three/drei";
+import PhysicsWorld from "@platform/physics/PhysicsWorld";
 
 
 interface VirtualSceneEditorProps {
@@ -52,7 +50,7 @@ export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 }
 
 interface _VirtualSceneEditorProps {
-    scene: VirtualSceneData
+    scene: any
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }
@@ -77,6 +75,8 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
                 <UniversalMeshOrbitControls/>
 
                 <UniversalWorldGrid/>
+
+                <PhysicsWorld/>
 
 
             </UniversalMeshCanvas>
