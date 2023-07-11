@@ -21,6 +21,7 @@ import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper";
 import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas";
 import Asset from "@platform/assets/Asset";
+import SceneEditorBottomBar from "@components/assets/scene-editor/SceneEditorBottomBar";
 
 
 interface SceneEditorHudProps {
@@ -32,7 +33,7 @@ interface SceneEditorHudProps {
 export default function SceneEditorHud(props: SceneEditorHudProps) {
     return (
         <>
-            <_Bottom {...props}/>
+            <SceneEditorBottomBar {...props}/>
             <_Top {...props}/>
             <_Left {...props}/>
             <_Right {...props}/>
@@ -42,91 +43,7 @@ export default function SceneEditorHud(props: SceneEditorHudProps) {
     )
 }
 
-function _Bottom(props: SceneEditorHudProps) {
 
-
-    const [t] = useTranslation()
-
-    const popup = useGlobalPopup()
-    const projectZus = useActiveProjectZus()
-
-    function addAssetPressed(assetDefinition: AssetDefinition) {
-
-        const offCanvas = (
-            <TGui.Offcanvas
-                closeEnabled={true}
-                onClose={popup.popElement}
-                width={"1000px"}
-                header={<TGui.OffcanvasTitle>{"select"}</TGui.OffcanvasTitle>}
-            >
-                <UniversalAssetList
-                    md={4}
-                    assetDefinition={assetDefinition}
-                    parentProjectUid={projectZus.project.uid}
-                    mode={UniversalAssetListModes.SELECT}
-                    onSelect={(asset) => {
-                        props.sceneDefinition.AddAssetChildren(asset)
-                        popup.popElement()
-                        props.onSceneDefinitionChanged()
-                    }}
-
-                />
-            </TGui.Offcanvas>
-        )
-
-        popup.pushElement(offCanvas)
-
-    }
-
-    function otherPressed() {
-        const offCanvas = (
-            <SceneNodesSelectionOffcanvas
-                onHide={popup.popElement}
-                onSelect={(asset) => {
-                    props.sceneDefinition.AddAssetChildren(asset)
-                    popup.popElement()
-                    props.onSceneDefinitionChanged()
-                }}
-            />
-        )
-
-        popup.pushElement(offCanvas)
-    }
-
-    return (
-        <AssetEditorHud placement={"bottom"}>
-
-            <HudButton
-                lang={"scene"}
-                icon={"/icons/Scene.svg"}
-                onClick={() => addAssetPressed(Assets.Scene)}
-            />
-
-            <HudButton
-                lang={"mesh"}
-                icon={"/icons/Create.Mesh.svg"}
-                onClick={() => addAssetPressed(Assets.Mesh)}
-            />
-
-            <HudButton
-                lang={"video"}
-                icon={"/icons/Create.Video.svg"}
-                onClick={() => addAssetPressed(Assets.Video)}
-            />
-
-            <HudButton
-                lang={"Pdf"}
-                icon={"/icons/Create.Pdf.svg"}
-            />
-            <HudButton
-                lang={"other"}
-                icon={"/icons/Create.Other.svg"}
-                onClick={otherPressed}
-            />
-
-        </AssetEditorHud>
-    )
-}
 
 function _Top(props: SceneEditorHudProps) {
 

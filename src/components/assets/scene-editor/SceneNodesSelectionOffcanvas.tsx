@@ -30,47 +30,49 @@ export default function SceneNodesSelectionOffcanvas(props: SceneNodesSelectionO
 
 
 const SCENE_NODES = [
-    //World
-    ["/icons/Create.Mesh.svg",
-        "/icons/Create.Mesh.svg",
-        "/icons/Create.Mesh.svg",
-        "/icons/Create.Mesh.svg",
-        "/icons/Create.Mesh.svg",
-        "/icons/Create.Mesh.svg",
-    ],
-    //Media
-    ["/icons/Create.Image.svg",
-        "/icons/Create.Sound.svg",
-        "/icons/Create.Sound.svg",
-        "/icons/Create.Sound.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Video.svg",
-        "/icons/Create.Pdf.svg"],
-    //Data
-    ["/icons/Create.Quiz.svg",
-        "/icons/Create.Form.svg",
-        "/icons/Create.Form.svg",
-        "/icons/Create.Form.svg",
-        "/icons/Create.Form.svg"],
+
     //Physics
-    ["/icons/Alchemy.svg",
-        "/icons/Layers.svg",
-        "/icons/Alchemy.svg",
-        "/icons/Layers.svg",
-        "/icons/Connections.svg"]
+    {
+        name: "physics",
+        values: [
+            ["physics.plane", "/icons/Alchemy.svg"],
+            ["physics.avatar", "/icons/Alchemy.svg"],
+            ["physics.box", "/icons/Alchemy.svg"],
+            ["physics.sphere", "/icons/Alchemy.svg"],
+            ["physics.cylinder", "/icons/Alchemy.svg"],
+        ]
+    },
+
+    {
+        name: "Media",
+        values: [
+            ["media.video", "/icons/Alchemy.svg"],
+            ["media.document", "/icons/Alchemy.svg"],
+            ["media.audio", "/icons/Alchemy.svg"],
+        ]
+    },
+
+    {
+        name: "Data",
+        values: [
+            ["media.video", "/icons/Alchemy.svg"],
+            ["media.document", "/icons/Alchemy.svg"],
+            ["media.audio", "/icons/Alchemy.svg"],
+            ["media.audio", "/icons/Alchemy.svg"],
+            ["media.audio", "/icons/Alchemy.svg"],
+        ]
+    }
+
+
 ]
 
 
 function _SelectionView(props: SceneNodesSelectionOffcanvas) {
+
+    const [t] = TGui.T()
+
     return (
-        <div>
+        <TGui.Stack gap={3}>
             <div style={{
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -83,34 +85,33 @@ function _SelectionView(props: SceneNodesSelectionOffcanvas) {
 
                     return (
 
-                        <div key={index}>
+                        <TGui.Stack gap={3} key={index}>
 
 
-                            <h2>Some category</h2>
+                            <h2>{t(value.name)}</h2>
 
-                            <TGui.Row xs={1} md={4} className="g-4">
+                            <TGui.Stack direction={"horizontal"} gap={3}>
 
                                 {
-                                    value.map((val1, index) => {
+                                    value.values.map((val1, index) => {
                                         return (
-                                            <TGui.Col key={index}>
-                                                <HudButton
-                                                    icon={val1}
-                                                    lang={val1}
-                                                />
-                                            </TGui.Col>
+                                            <HudButton
+                                                key={index}
+                                                lang={val1[0]}
+                                                icon={val1[1]}
+                                            />
                                         )
                                     })
                                 }
 
-                            </TGui.Row>
+                            </TGui.Stack>
 
-                        </div>
+                        </TGui.Stack>
                     )
 
                 })
             }
 
-        </div>
+        </TGui.Stack>
     )
 }

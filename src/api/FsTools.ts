@@ -8,7 +8,7 @@ export default class FsTools {
 
     static ConvertFilePath(path: string): string {
         if (PlatformDispatcher.IsDesktop()) {
-            const tmp = convertFileSrc(path)//FsApi.normalizePath(FsApi.RESOURCES + path)
+            const tmp = `${convertFileSrc(path)}`//FsApi.normalizePath(FsApi.RESOURCES + path)
             return tmp
         } else {
             return path

@@ -88,10 +88,6 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
                 {/*</PivotControls>*/}
 
 
-                {
-
-                }
-
                 <PrimitiveMesh meshPath={meshPath}/>
 
             </UniversalMeshCanvas>
