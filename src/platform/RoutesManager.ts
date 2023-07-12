@@ -6,6 +6,7 @@ const PREFIX_PLAY = "/play"
 const PREFIX_SCENE_EDITOR = "/scene-editor"
 const PREFIX_MESH_EDITOR = "/mesh-editor"
 const PREFIX_AREA_EDITOR = "/area-editor"
+const PREFIX_VIDEO_EDITOR = "/video-editor"
 const PREFIX_MATERIAL_EDITOR = "/material-editor"
 const PREFIX_POINTCLOUD_EDITOR = "/point-cloud-editor"
 const PREFIX_PANORAMA_EDITOR = "/panorama-editor"
@@ -21,6 +22,7 @@ export default class RoutesManager {
     static ROUTE_PROJECT_CONFIG = `${PREFIX_PROJECT_CONFIG}/:projectuid`
     static ROUTE_PLAY = `${PREFIX_PLAY}/:projectuid`
     static ROUTE_SCENE_EDITOR = `${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
+    static ROUTE_VIDEO_EDITOR = `${PREFIX_VIDEO_EDITOR}/:projectuid/:videouid`
     static ROUTE_AREA_EDITOR = `${PREFIX_AREA_EDITOR}/:projectuid/:areauid`
     static ROUTE_MATERIAL_EDITOR = `${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
     static ROUTE_MESH_EDITOR = `${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
@@ -40,6 +42,9 @@ export default class RoutesManager {
 
     static AreaEditor(projectUid: string, areaUid: string): string {
         return `${PREFIX_AREA_EDITOR}/${projectUid}/${areaUid}`
+    }
+    static VideoEditor(projectUid: string, videoUid: string): string {
+        return `${PREFIX_VIDEO_EDITOR}/${projectUid}/${videoUid}`
     }
 
     static MeshEditor(projectUid: string, meshUid: string): string {
@@ -90,6 +95,7 @@ export default class RoutesManager {
 }
 
 const ASSET_ROUTES_MAP = new Map<string, any>([
+    [Assets.Video.TYPE, RoutesManager.VideoEditor],
     [Assets.Area.TYPE, RoutesManager.AreaEditor],
     [Assets.Quiz.TYPE, RoutesManager.QuizEditor],
     [Assets.Mesh.TYPE, RoutesManager.MeshEditor],

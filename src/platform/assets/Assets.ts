@@ -75,7 +75,7 @@ PANORAMA.DEFAULT_DATA = () => {
     tmp.extension = "jpg"
     return tmp
 }
-MESH.DEFAULT_FILES = [
+PANORAMA.DEFAULT_FILES = [
     ["Defaults/Assets/default-panorama.jpg", "Default.jpg"]
 ]
 
@@ -85,6 +85,15 @@ VIDEO.LANG = "video"
 VIDEO.LANG_PLURAL = "videos"
 VIDEO.DEFAULT_PREVIEW = _getPreview(VIDEO.TYPE)
 VIDEO.DEFAULT_DATA = () => new VideoData()
+
+VIDEO.DEFAULT_DATA = () => {
+    const tmp = new VideoData()
+    tmp.video_extension = "mp4"
+    return tmp
+}
+VIDEO.DEFAULT_FILES = [
+    ["Defaults/Assets/default-video.mp4", "Default.mp4"]
+]
 
 const IMAGE = new AssetDefinition()
 IMAGE.TYPE = "image"

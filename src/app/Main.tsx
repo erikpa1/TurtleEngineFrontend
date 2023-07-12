@@ -9,6 +9,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
 import ProjectConfigView from "@components/projects/ProjectConfigView";
+import VideoEditor from "@components/assets/video/VideoEditor";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -133,6 +134,12 @@ function _Main() {
                 <Route path={RoutesManager.ROUTE_QUIZ_EDITOR} element={
                     <MountTabWrapper>
                         <QuizEditor/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_VIDEO_EDITOR} element={
+                    <MountTabWrapper>
+                        <VideoEditor/>
                     </MountTabWrapper>
                 }/>
                 <Route path={RoutesManager.ROUTE_DATAFACTORY_EDITOR} element={

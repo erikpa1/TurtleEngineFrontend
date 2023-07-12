@@ -26,8 +26,6 @@ export default class Asset {
         this.hasPreview = jObject.hasPreview ?? false
         this.tags = jObject.tags ?? ""
 
-        console.log(jObject)
-
         if (!this.hasPreview) {
             this.relativePath = `/dev/assets/${this.type}/tmp-${this.type}/Preview.png`
         }
@@ -84,10 +82,13 @@ export class AssetData {
 
         this.uid = data.uid ?? ""
         this.subtype = data.subtype ?? ""
-
     }
 
     GetPreviewPath(): string {
+        return `${this._project_path}Assets/${this.uid}/Preview.png`
+    }
+
+    GetEntryPath(): string {
         return `${this._project_path}Assets/${this.uid}/Preview.png`
     }
 
