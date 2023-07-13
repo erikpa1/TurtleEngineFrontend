@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import Asset, {AssetData} from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
 import ConstantsApi from "@api/ConstantsApi";
+import html2canvas from "html2canvas";
+import VideoAssetPickView from "@components/assets/video/PickVideoView";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 
 export default function VideoEditor({}) {
 
@@ -64,6 +68,7 @@ function _VideoEditor({video, asset}: _VideoEditorProps) {
                         height: "650px"
                     }}>
                         <video
+                            id={"video-editor-player"}
                             controls
                             width={"100%"}
                             height={"100%"}
@@ -82,17 +87,72 @@ function _VideoEditor({video, asset}: _VideoEditorProps) {
 
                     </TGui.CardContent>
 
-                    <TGui.CardActions>
-                        <TGui.Button label={"snapshot"}/>
-                        <TGui.Button label={"replace"}/>
-                        <TGui.Button label={"clear"} color={"error"}/>
-                    </TGui.CardActions>
-
+                    <_VideoControlBars/>
                 </TGui.Card>
 
 
             </div>
 
         </div>
+    )
+}
+
+
+function _VideoControlBars({}) {
+
+    const snapRef = React.useRef<any>()
+
+
+    function takeSnapshot() {
+        alert("Unimplemented")
+    }
+
+
+    return (
+        <TGui.CardActions>
+            <TGui.Button
+                label={"snapshot"}
+                onClick={takeSnapshot}
+            />
+
+            <_ReplaceButton/>
+
+        </TGui.CardActions>
+    )
+}
+
+function _ReplaceButton() {
+
+
+    const inputRef = React.useRef<any>()
+
+    function selectVideoPressed() {
+        if (PlatformDispatcher.IsDesktop()) {
+            PlatformDispatcher.OpenAnySingleFileDialog("Video", "mp4").then((filePath) => {
+
+                if (filePath !== "") {
+                    console.log(filePath)
+                }
+
+
+            })
+        } else {
+            const curr: any = inputRef.current
+            curr.click()
+        }
+    }
+
+    return (
+        <>
+            <TGui.Button label={"replace"} onClick={selectVideoPressed}/>
+            <input
+                ref={inputRef}
+                onChange={selectVideoPressed}
+                type={"file"}
+                hidden
+            />
+        </>
+
+
     )
 }

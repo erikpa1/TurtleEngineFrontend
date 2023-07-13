@@ -45,5 +45,22 @@ export default class PlatformDispatcher {
         }
     }
 
+    static async OpenAnySingleFileDialog(title: string, extension: string): Promise<string> {
+        const selected = await open({
+            multiple: false,
+            filters: [{
+                name: title,
+                extensions: [extension]
+            }]
+        });
+
+
+        if (selected) {
+            return selected as string
+        } else {
+            return ""
+        }
+    }
+
 
 }

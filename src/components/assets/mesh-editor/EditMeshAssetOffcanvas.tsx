@@ -1,5 +1,5 @@
 import React from "react";
-import Mesh from "@platform/assets/mesh";
+import {Mesh} from "@platform/assets/mesh";
 
 import {TGui} from "@external/tgui";
 import {EditAssetDescriptionFormField, EditAssetNameFormField} from "@components/assets/parent/edit-parent-props";
