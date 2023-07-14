@@ -32,6 +32,13 @@ pub async fn DeleteFolder(folder: String) -> Result<bool, ()> {
     return Ok(true);
 }
 
+#[tauri::command]
+pub async fn DeleteFile(file: String) -> Result<bool, ()> {
+    println!("Deleting file: {}", file);
+    fs::remove_file(file);
+    return Ok(true);
+}
+
 
 #[tauri::command]
 pub async fn FileExists(file: String) -> Result<String, ()> {
@@ -103,6 +110,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_os")
         .invoke_handler(tauri::generate_handler![
                 OpenFolder,
+                DeleteFile,
                 DeleteFolder,
                 CopyFile,
                 WriteFileString,

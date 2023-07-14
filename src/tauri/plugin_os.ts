@@ -18,6 +18,13 @@ export default class TauriOsPlugin {
         return true
     }
 
+    static async DeleteFile(file: string): Promise<boolean> {
+        await invoke<string>(`${ASSETS_PLUGIN_NAME}DeleteFile`, {
+            file: file,
+        })
+        return true
+    }
+
     static async WriteFileString(file: string, content: string): Promise<boolean> {
         await invoke<string>(`${ASSETS_PLUGIN_NAME}WriteFileString`, {
             file: file,
