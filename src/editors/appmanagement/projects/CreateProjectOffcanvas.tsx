@@ -16,7 +16,7 @@ import ImagesApi from "@api/ImagesApi";
 
 interface CreateProjectOffcanvasProps {
     onClose: () => void
-    onRefresh: () => void
+    onRefresh?: () => void
 
 }
 
@@ -54,20 +54,20 @@ export default function CreateProjectOffcanvas({
         onRefresh && onRefresh()
     }
 
-    const pNameChanged = (e: SyntheticEvent) => {
+    const pNameChanged = (e: any) => {
         cpp.name = e.target.value
 
     }
 
-    const descChanged = (e: SyntheticEvent) => {
+    const descChanged = (e: any) => {
         cpp.description = e.target.value
     }
 
-    const authorChanged = (e: SyntheticEvent) => {
+    const authorChanged = (e: any) => {
         cpp.author = e.target.value
     }
 
-    const latLonChanged = (e: SyntheticEvent) => {
+    const latLonChanged = (e: any) => {
         cpp.lat_lon = e.target.value
     }
 
@@ -79,6 +79,7 @@ export default function CreateProjectOffcanvas({
     }
 
     function imageSelectedWeb(event: any) {
+        //pass
     }
 
 

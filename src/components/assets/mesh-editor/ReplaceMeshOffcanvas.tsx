@@ -123,7 +123,7 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
             <TGui.Button
                 variant={"outlined"}
-                label={t("upload")}
+                label={"upload"}
                 onClick={uploadPressed}
             />
 

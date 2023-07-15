@@ -3,12 +3,12 @@ import create from "zustand"
 import {ProjectLight} from "@data/project/ProjectLight";
 
 interface ActiveProjectZus {
-    project: ProjectLight
+    project: ProjectLight | any
     setProject: (project: ProjectLight) => void
 }
 
 export const useActiveProjectZus = create<ActiveProjectZus>((set) => ({
-    project: false,
+    project: null,
     setProject: (project: ProjectLight) => set((oldState) => ({
         project: project
     })),

@@ -33,7 +33,7 @@ export function EditAssetDescriptionFormField({asset}: _AllProps) {
 
     const [desciption, setDescription] = React.useState(asset.description)
 
-    const descChanged = (e: SyntheticEvent) => {
+    const descChanged = (e: any) => {
         const newDesc = e.target.value
         asset.description = newDesc
         setDescription(newDesc)

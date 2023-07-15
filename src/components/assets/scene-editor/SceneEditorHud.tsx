@@ -35,7 +35,6 @@ export default function SceneEditorHud(props: SceneEditorHudProps) {
 }
 
 
-
 function _Top(props: SceneEditorHudProps) {
 
     const lock = useGlobalAppLock()
@@ -111,7 +110,6 @@ function _Right(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"right"}>
 
-
             {
                 activeNode && <>
                     <HudButton
@@ -123,10 +121,8 @@ function _Right(props: SceneEditorHudProps) {
                         lang={"edit"}
                         icon={"/icons/Management.svg"}
                     />
-
                 </>
             }
-
 
         </AssetEditorHud>
     )

@@ -130,12 +130,12 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
         props.onRefresh && props.onRefresh()
     }
 
-    const pNameChanged = (e: SyntheticEvent) => {
+    const pNameChanged = (e: any) => {
         basicParams.name = e.target.value
 
     }
 
-    const descChanged = (e: SyntheticEvent) => {
+    const descChanged = (e: any) => {
         basicParams.description = e.target.value
     }
 

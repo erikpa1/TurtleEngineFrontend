@@ -81,7 +81,7 @@ export function AnimatedMeshEditable(props: AnimatedMeshEditableProps) {
                 />
             </Plane>
 
-            <_AnimatedMesh {...{...props, position: position}}/>
+            <_AnimatedMesh {...{...props, position: position} as any}/>
         </ErrorBoundary>
     )
 }

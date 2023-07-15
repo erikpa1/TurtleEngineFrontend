@@ -32,6 +32,7 @@ export default class Asset {
     }
 
     GetPreviewPath(): string {
+        console.log(this.hasPreview)
         if (this.hasPreview) {
             const path = FsTools.GetPathInProject(this.parent_project_uid, `/Assets/${this.uid}/Preview.png`)
             return path

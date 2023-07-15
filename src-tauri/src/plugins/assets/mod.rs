@@ -138,8 +138,10 @@ pub async fn GetAsset(state: State<'_, AppState>, project_uid: String, asset_uid
         tmp.name = row.get(1).unwrap_or("".into());
         tmp.assetType = row.get(2).unwrap_or("".into());
         tmp.subtype = row.get(3).unwrap_or("".into());
+        tmp.tags = row.get(4).unwrap_or("".into());
+        tmp.description = row.get(5).unwrap_or("".into());
 
-        tmp.hasPreview = if row.get(4).unwrap_or(0) == 0 {
+        tmp.hasPreview = if row.get(6).unwrap_or(0) == 0 {
             false
         } else {
             true

@@ -29,21 +29,25 @@ export function SceneTransformSingleton({position, valueChange}) {
 
     const scale = new three.Vector3(1, 1, 1)
 
+    const TCONTROLS: any = TransformControls
+
 
     return (
-        <TransformControls
+        <TCONTROLS
             ref={gizmoRef}
-            mode={"translate"} showY={true} enabled={true}
-            position={position}
-            rotation={rotation}
-            scale={scale}
+            mode={"translate"}
+            showY={true}
+            enabled={true}
+            position={position as any}
+            rotation={rotation as any}
+            scale={scale as any}
             // matrixWorld={() => new three.Euler().fromArray(content.global_rotation)}
             onObjectChange={() => valueChange(GizmoTypes.TRANSLATE)}
             size={0.75}
 
         >
 
-        </TransformControls>
+        </TCONTROLS>
     )
 }
 
@@ -73,10 +77,10 @@ export default function SceneTransformHelper({
             onValueChanged(_obj, gizmoType)
         }
     }
-
+    const TCONTROLS: any = TransformControls
 
     return (
-        <TransformControls
+        <TCONTROLS
             ref={gizmoRef}
             mode={_gizmoType as any} showY={true} enabled={true}
             position={position}
@@ -85,10 +89,8 @@ export default function SceneTransformHelper({
             // matrixWorld={() => new three.Euler().fromArray(content.global_rotation)}
             onObjectChange={() => valueChange(GizmoTypes.TRANSLATE)}
             size={0.75}
-
         >
 
-
-        </TransformControls>
+        </TCONTROLS>
     )
 }

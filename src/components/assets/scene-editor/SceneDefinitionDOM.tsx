@@ -1,8 +1,9 @@
 import React from "react";
 
-import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
+
 import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshNode";
 import {SceneVideoNode, SceneVideoView} from "@platform/scene/media/SceneVideoNode";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 
 
 interface SceneDefinitionDomProps {
@@ -19,8 +20,6 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
         const elements = new Array<any>()
 
         const root = props.sceneDefinition.root
-
-        console.log(root.children)
 
         root.children.forEach((value) => {
 

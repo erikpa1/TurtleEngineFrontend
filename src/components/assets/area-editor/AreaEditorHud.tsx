@@ -32,7 +32,7 @@ function _Bottom({area}: AreaEditorHudProps) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            <OpenAssetFolderButton asset={area}/>
+            {/*<OpenAssetFolderButton asset={area}/>*/}
 
             <HudButton
                 lang={"replace"}
@@ -84,20 +84,20 @@ function _Right({area}: AreaEditorHudProps) {
 
     function selectScenePressed() {
 
-        popupZus.pushElement(
-            <TurtleOffcanvas
-                header={<Offcanvas.Title>{t("select.scene")}</Offcanvas.Title>}
-                closeEnabled={true}
-                width={"800px"}
-                onClose={popupZus.popElement}>
-                <UniversalAssetList
-                    assetDefinition={Assets.Scene}
-                    parentProjectUid={area.parent_project_uid}
-                    md={1}
-
-                />
-            </TurtleOffcanvas>
-        )
+        // popupZus.pushElement(
+        //     <TurtleOffcanvas
+        //         header={<Offcanvas.Title>{t("select.scene")}</Offcanvas.Title>}
+        //         closeEnabled={true}
+        //         width={"800px"}
+        //         onClose={popupZus.popElement}>
+        //         <UniversalAssetList
+        //             assetDefinition={Assets.Scene}
+        //             parentProjectUid={area.parent_project_uid}
+        //             md={1}
+        //
+        //         />
+        //     </TurtleOffcanvas>
+        // )
     }
 
     return (

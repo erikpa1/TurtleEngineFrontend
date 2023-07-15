@@ -1,4 +1,4 @@
-import React, {SyntheticEvent} from "react";
+import React from "react";
 
 import {useTranslation} from "react-i18next";
 
@@ -73,7 +73,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
 
     const lock = useGlobalAppLock()
 
-    const inputRef = React.useRef()
+    const inputRef = React.useRef<any>()
 
     const [coverPath, setCoverPath] = React.useState(FsTools.GetPathInProject(project.uid, "Preview.png"))
 
@@ -83,19 +83,19 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
     const [latLon, setLatLon] = React.useState(project.lat_lon)
 
 
-    const pNameChanged = (e: SyntheticEvent) => {
+    const pNameChanged = (e: any) => {
         setName(e.target.value)
     }
 
-    const descChanged = (e: SyntheticEvent) => {
+    const descChanged = (e: any) => {
         setDescription(e.target.value)
     }
 
-    const authorChanged = (e: SyntheticEvent) => {
+    const authorChanged = (e: any) => {
         setAuthor(e.target.value)
     }
 
-    const latLonChanged = (e: SyntheticEvent) => {
+    const latLonChanged = (e: any) => {
         setLatLon(e.target.value)
     }
 
@@ -106,7 +106,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
             onClose()
         }
 
-        const params: CreateProjectParams = {
+        const params: any = {
             uid: project.uid,
             name: name,
             author: author,
@@ -156,7 +156,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                 if (filePath !== "") {
                     setCoverPath(filePath)
 
-                    ImagesApi.GeneratePreviewDesktop(filePath, FsTools.GetPathInProject(project.uid, "Preview.png"))
+                    ImagesApi.GeneratePreviewDesktop(filePath, FsTools.GetPathInProject(project.uid, "Preview.png"), 512)
 
                 }
 
@@ -176,7 +176,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
 
     return (
         <>
-            <Box style={{padding: "15px"}}>
+            <TGui.Box style={{padding: "15px"}}>
                 <Stack spacing={2}>
 
                     <TGui.Card>
@@ -249,7 +249,7 @@ function _InnerContent({project, onClose, onRefresh}: _InnerContentProps) {
                 </Stack>
 
 
-            </Box>
+            </TGui.Box>
 
 
         </>

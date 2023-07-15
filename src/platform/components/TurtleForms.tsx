@@ -87,7 +87,7 @@ interface TurtleSingleFileInput {
 export function TurtleSingleFileInput(props: TurtleSingleFileInput | any): JSX.Element {
 
 
-    const fileInputRef = React.useRef();
+    const fileInputRef = React.useRef<any>();
 
     const [t] = useTranslation()
 

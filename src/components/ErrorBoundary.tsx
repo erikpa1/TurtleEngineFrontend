@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 
 interface ErrorBoundaryProps {
     children: any
-    onError: any
+    onError?: any
 }
 
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {

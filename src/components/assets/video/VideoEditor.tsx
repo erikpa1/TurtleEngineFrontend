@@ -23,7 +23,7 @@ export default function VideoEditor({}) {
     const [video, setVideo] = React.useState<VideoData | null>(null)
 
     React.useEffect(() => {
-        AssetsApi.GetAssetAndAssetData(VideoData, _projectUid, _videoUid).then((value) => {
+        AssetsApi.GetAssetAndAssetData<VideoData>(VideoData, _projectUid, _videoUid).then((value) => {
             setVideo(value.data)
             setAsset(value.asset)
         })
@@ -55,24 +55,7 @@ function _VideoEditor({video, asset}: _VideoEditorProps) {
 
         <div className={"vstack gap-3"}>
 
-            <TGui.Card style={{
-                width: "400px"
-            }}>
-
-                <TGui.CardMedia
-                    sx={{height: 140}}
-                    image={FsTools.ConvertFilePath(asset.GetPreviewPath())}
-                />
-
-                <TGui.CardContent>
-                    <TGui.Typography gutterBottom variant="h5" component="div">
-                        {asset.name}
-                    </TGui.Typography>
-                </TGui.CardContent>
-
-                <_AssetControlBars asset={asset}/>
-            </TGui.Card>
-
+            <_PreviewCard asset={asset}/>
 
             <TGui.Card>
 
@@ -102,6 +85,38 @@ function _VideoEditor({video, asset}: _VideoEditorProps) {
 }
 
 
+function _PreviewCard({asset}) {
+
+    const [rnd, setRnd] = React.useState(Math.random())
+
+    function refresh() {
+        setRnd(Math.random())
+    }
+
+
+    return (
+        <TGui.Card style={{
+            width: "400px"
+        }}>
+
+            <TGui.CardMedia
+                sx={{height: 140}}
+                image={FsTools.ConvertFilePathRnd(asset.GetPreviewPath())}
+            />
+
+            <TGui.CardContent>
+                <TGui.Typography gutterBottom variant="h5" component="div">
+                    {asset.name}
+                </TGui.Typography>
+            </TGui.CardContent>
+
+            <_AssetControlBars asset={asset} onRefresh={refresh}/>
+        </TGui.Card>
+
+    )
+}
+
+
 function _VideoControlBars({asset, assetData}) {
 
     const snapRef = React.useRef<any>()
@@ -126,7 +141,7 @@ function _VideoControlBars({asset, assetData}) {
 }
 
 
-function _AssetControlBars({asset}: { asset: Asset }) {
+function _AssetControlBars({asset, onRefresh}: { asset: Asset, onRefresh: any }) {
 
     const lock = useGlobalAppLock()
 
@@ -140,9 +155,13 @@ function _AssetControlBars({asset}: { asset: Asset }) {
             const filePath = await PlatformDispatcher.OpenAnySingleFileDialog("Image", "png")
 
             if (filePath !== "") {
-                await ImagesApi.GeneratePreviewDesktop(filePath, asset.GetPreviewPath(), 512)
+                const pathToSave = `${asset.GetFolderPath()}/Preview.png`
+
+                await ImagesApi.GeneratePreviewDesktop(filePath, pathToSave, 512)
             }
             lock.unlock()
+
+            onRefresh()
 
         } else {
             const curr: any = inputRef.current

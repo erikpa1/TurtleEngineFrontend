@@ -26,7 +26,7 @@ export const TGui = {
     Col: Col,
     Offcanvas: TurtleOffcanvas,
     OffcanvasTitle: Offcanvas.Title,
-    Box: Box,
+    Box: Box as any,
     Card: Card,
     CardHeader: CardHeader,
     CardMedia: CardMedia,

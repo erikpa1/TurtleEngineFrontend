@@ -7,6 +7,9 @@ import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
 import {SceneNode} from "@platform/scene/SceneNode";
 
 import {VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas";
+import Asset from "@platform/assets/Asset";
+import VideoData from "@platform/assets/video";
+import AssetsApi from "@api/AssetsApi";
 
 
 export class SceneVideoNode extends SceneNode {
@@ -45,22 +48,24 @@ export function SceneVideoView({node}: SceneVideoViewProps) {
 
     const projectZus = useActiveProjectZus()
 
-    const [videoAsset, setvideoAsset] = React.useState<VideoAsset | null>(null)
+    const [videoData, setVideoDat] = React.useState<VideoData | null>(null)
+    const [asset, setAsset] = React.useState<Asset | null>(null)
 
     React.useEffect(() => {
 
-        // AssetsApi.GetAssetData<VideoAsset>(Assets.Video,
-        //     projectZus.project.uid,
-        //     node.content_uid
-        // ).then((value) => {
-        //     setvideoAsset(value)
-        // })
+        AssetsApi.GetAssetAndAssetData<VideoData>(VideoData,
+            projectZus.project.uid,
+            node.content_uid
+        ).then((value) => {
+            setAsset(value.asset)
+            setVideoDat(value.data)
+        })
     }, [node.content_uid])
 
 
-    if (videoAsset) {
+    if (asset && videoData) {
         return (
-            <_SceneVideoView video={node} videoAsset={videoAsset}/>
+            <_SceneVideoView video={node} videoAsset={asset}/>
         )
     } else {
         return (
@@ -73,7 +78,7 @@ export function SceneVideoView({node}: SceneVideoViewProps) {
 
 interface _SceneVideoViewProps {
     video: SceneVideoNode
-    videoAsset: VideoAsset
+    videoAsset: Asset
 }
 
 

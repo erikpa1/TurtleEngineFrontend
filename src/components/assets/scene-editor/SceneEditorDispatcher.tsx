@@ -9,7 +9,7 @@ import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEdit
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
 import Asset from "@platform/assets/Asset";
 
-export default function SceneEditorDispatcher({}) {
+export default function SceneEditorDispatcher({}): any {
 
     const {projectuid, sceneuid} = useParams()
 

@@ -6,14 +6,15 @@ import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
-import Mesh from "@platform/assets/mesh";
 
 import {TGui} from "@external/tgui";
 import EditMeshAssetOffcanvas from "@components/assets/mesh-editor/EditMeshAssetOffcanvas";
 import ReplaceMeshOffcanvas from "@components/assets/mesh-editor/ReplaceMeshOffcanvas";
 
+import {MeshAssetData} from "@platform/assets/mesh";
+
 interface MeshEditorHud {
-    mesh: Mesh
+    mesh: MeshAssetData
     onRefresh: any
 }
 
@@ -42,7 +43,7 @@ export default function MeshEditorHud(props: MeshEditorHud) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            <OpenAssetFolderButton asset={props.mesh}/>
+            {/*<OpenAssetFolderButton asset={props.mesh}/>*/}
 
             <HudButton
                 lang={"replace"}

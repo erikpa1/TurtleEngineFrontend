@@ -20,7 +20,7 @@ export default function OpenAssetFolderButton({asset}: OpenAssetFolderButton) {
         })
     }
 
-    if (PlatformDispatcher.IsDesktop() && asset.extension !== "") {
+    if (PlatformDispatcher.IsDesktop()) {
         return (
             <HudButton
 

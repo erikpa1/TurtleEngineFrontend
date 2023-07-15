@@ -72,7 +72,7 @@ export default function MeshFilePickView(props: FileMeshPreviewProps) {
                     <PrimitiveMesh meshPath={meshPath}/>
                 </UniversalMeshCanvas>
 
-                <TGui.Button label={t("select")} onClick={selectMeshPressed}/>
+                <TGui.Button label={"select"} onClick={selectMeshPressed}/>
 
                 <input
                     ref={inputRef}

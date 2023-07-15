@@ -1,8 +1,9 @@
 import PlatformDispatcher from "@api/PlatformDispatcher";
-import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
+
 import SceneGraphicParams from "@platform/scene/SceneGraphicParams";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsTools from "@api/FsTools";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 
 
 export default class SceneApi {

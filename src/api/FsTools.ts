@@ -15,6 +15,10 @@ export default class FsTools {
         }
     }
 
+    static ConvertFilePathRnd(path: string): string {
+        return `${FsTools.ConvertFilePath(path)}?rnd=${Math.random()}`
+    }
+
     static NormalizePath(path: string): string {
         return path.replaceAll("/", sep)
     }

@@ -6,7 +6,7 @@ import React from "react";
 export default function PointCloudEditorHud({}) {
     return (
         <AssetEditorHud placement={"bottom"}>
-            <OpenAssetFolderButton/>
+            {/*<OpenAssetFolderButton/>*/}
 
             <HudButton
                 lang={"replace"}

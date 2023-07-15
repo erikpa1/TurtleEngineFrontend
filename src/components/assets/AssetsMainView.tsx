@@ -34,7 +34,7 @@ export default function AssetsMainView({}) {
             <div className={"vstack gap-3"}>
                 <TabContext value={tabValue}>
 
-                    <Box
+                    <TGui.Box
                         sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
                     >
                         <Tabs
@@ -48,7 +48,7 @@ export default function AssetsMainView({}) {
                             <Tab label={"Data"} value={"data"}/>
                         </Tabs>
 
-                    </Box>
+                    </TGui.Box>
                 </TabContext>
 
                 <_SubView type={tabValue}/>
@@ -81,7 +81,7 @@ function _SubView({type}) {
         <div className={"vstack gap-3"}>
             <TabContext value={tabValue}>
 
-                <Box
+                <TGui.Box
                     sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
                 >
                     <Tabs
@@ -101,7 +101,7 @@ function _SubView({type}) {
                         }
                     </Tabs>
 
-                </Box>
+                </TGui.Box>
             </TabContext>
 
             <UniversalAssetList

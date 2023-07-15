@@ -66,5 +66,6 @@
   "scene.panorama": "Panorama scene",
   "scene.virtual": "Virtual scene",
   "project.configuration": "Project configuration",
-  "create": "Create"
+  "create": "Create",
+  "upload.snapshot": "Upload snapshot"
 }

@@ -1,9 +1,6 @@
 import React from "react";
 
 
-import {VirtualSceneData} from "@platform/assets/scene";
-
-
 import SceneApi from "@api/project/SceneApi";
 
 import {
@@ -56,7 +53,7 @@ export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
 }
 
 interface _PanoramaSceneEditorProps {
-    scene: VirtualSceneData
+    scene: Asset
     sceneDefinition: PanoramaSceneDefinition
     onSceneDefinitionChanged: () => void
 }

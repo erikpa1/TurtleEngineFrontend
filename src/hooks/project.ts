@@ -7,7 +7,7 @@ export function useAvailableProjects(): [projects: Array<ProjectLight>, isLoadin
 
     const [isLoading, setIsLoading] = React.useState(true)
 
-    const [projects, setProjects] = React.useState([])
+    const [projects, setProjects] = React.useState<Array<ProjectLight>>([])
 
     const refresh = () => {
         setIsLoading(true)
@@ -28,7 +28,7 @@ export function useLoadProjectLight(projectUid: string): [project: ProjectLight 
 
     const [isLoading, setIsLoading] = React.useState(true)
 
-    const [project, setProject] = React.useState(null)
+    const [project, setProject] = React.useState<ProjectLight | null>(null)
 
     React.useEffect(() => {
         setIsLoading(true)

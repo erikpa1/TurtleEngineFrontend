@@ -15,7 +15,7 @@ export default function PanoramaEditorHud({panorama}: PanoramaEditorHudProps) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            <OpenAssetFolderButton asset={panorama}/>
+            {/*<OpenAssetFolderButton asset={panorama}/>*/}
 
             <HudButton
                 lang={"replace"}

@@ -26,7 +26,7 @@ export default function AppManagementView({}) {
         <ViewContainer>
             <TabContext value={tabValue}>
 
-                <Box
+                <TGui.Box
                     sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
                     className={"turtle-shaded-bar"}
                 >
@@ -44,7 +44,7 @@ export default function AppManagementView({}) {
                         <Tab label={t("licences")} value={"3"}/>
                     </Tabs>
 
-                </Box>
+                </TGui.Box>
             </TabContext>
 
             <TGui.Switch condition={tabValue}>

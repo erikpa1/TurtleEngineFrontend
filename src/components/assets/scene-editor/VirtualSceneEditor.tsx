@@ -77,7 +77,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
 
                 <UniversalWorldGrid/>
 
-                <PhysicsWorld/>
+                {/*<PhysicsWorld/>*/}
 
 
             </UniversalMeshCanvas>
