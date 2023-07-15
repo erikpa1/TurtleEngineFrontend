@@ -1,15 +1,6 @@
 import React from "react";
 import {TGui} from "@external/tgui";
-import FsTools from "@api/FsTools";
 import PlatformDispatcher from "@api/PlatformDispatcher";
-
-import {
-    UniversalMeshCanvas,
-    UniversalMeshOrbitControls,
-    UniversalWorldEnvironment
-} from "@components/assets/canvases/UniversalMeshCanvas";
-
-import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 
 interface VideoFilePickViewProps {
 

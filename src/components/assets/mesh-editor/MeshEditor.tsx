@@ -7,7 +7,8 @@ import {MiddleSpinner} from "@components/Spinners";
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
 import {
-    UniversalMeshCanvas, UniversalMeshOrbitControls,
+    UniversalMeshCanvas,
+    UniversalMeshOrbitControls,
     UniversalWorldEnvironment,
     UniversalWorldGrid
 } from "@components/assets/canvases/UniversalMeshCanvas";
@@ -17,8 +18,6 @@ import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {MeshAssetData} from "@platform/assets/mesh";
 
 import AssetsApi from "@api/AssetsApi";
-
-import {OrbitControls} from "@react-three/drei";
 
 export default function MeshEditor({}) {
 

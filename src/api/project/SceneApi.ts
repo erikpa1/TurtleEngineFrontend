@@ -3,7 +3,6 @@ import VirtualSceneDefinition from "@platform/scene/VirtualSceneDefinition";
 import SceneGraphicParams from "@platform/scene/SceneGraphicParams";
 import TauriOsPlugin from "../../tauri/plugin_os";
 import FsTools from "@api/FsTools";
-import Assets from "@platform/assets/Assets";
 
 
 export default class SceneApi {

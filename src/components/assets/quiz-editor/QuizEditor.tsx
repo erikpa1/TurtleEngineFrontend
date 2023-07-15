@@ -14,7 +14,6 @@ import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswe
 import {ViewContainer} from "@components/ViewContainer";
 import QuizData from "@platform/assets/quiz";
 import AssetsApi from "@api/AssetsApi";
-import {Row} from "react-bootstrap";
 import {TGui} from "@external/tgui";
 import HudButton from "@components/assets/HudButton";
 

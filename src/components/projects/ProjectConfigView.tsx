@@ -1,7 +1,7 @@
 import React from "react";
 import {ViewContainer} from "@components/ViewContainer";
 import {TabContext} from "@mui/lab";
-import {Box, Tab, Tabs} from "@mui/material";
+import {Tab} from "@mui/material";
 
 import {Ext} from "@external/prelude";
 import {TGui} from "@external/tgui";

@@ -2,15 +2,10 @@ import React from "react";
 
 import {TGui} from "@external/tgui";
 
-import ProjectApi from "@api/project/ProjectApi";
-
 import PlatformDispatcher from "@api/PlatformDispatcher";
-
-import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import FsTools from "@api/FsTools";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import PanoramaAsset from "@platform/assets/panorama";
 import {AssetDefinition} from "@platform/assets/Assets";
 
 

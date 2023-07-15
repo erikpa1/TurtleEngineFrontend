@@ -4,10 +4,8 @@ import Material from "@platform/assets/material";
 
 import {MiddleSpinner} from "@components/Spinners";
 import {useParams} from "react-router-dom";
-import AssetsApi from "@api/AssetsApi";
-import {process} from "@tauri-apps/api";
-import {Canvas, useLoader, useThree} from "@react-three/fiber";
-import {ContactShadows, Environment, GizmoHelper, GizmoViewport, OrbitControls, Sphere} from "@react-three/drei";
+import {Canvas, useThree} from "@react-three/fiber";
+import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 import {TGui} from "@external/tgui";
 import {ViewContainer} from "@components/ViewContainer";
 
@@ -15,7 +13,6 @@ import * as three from "three"
 import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
-import Assets from "@platform/assets/Assets";
 
 
 const TEXTURES = {

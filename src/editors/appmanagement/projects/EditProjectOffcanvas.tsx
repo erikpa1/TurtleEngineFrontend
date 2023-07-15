@@ -3,7 +3,6 @@ import React, {SyntheticEvent} from "react";
 import {useTranslation} from "react-i18next";
 
 import TurtleOffcanvas from "@components/Drawers";
-import Button from "@mui/material/Button";
 
 import {Box, Stack} from "@mui/material";
 
@@ -18,7 +17,6 @@ import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
 import Modals from "@components/Modals";
 import {Offcanvas} from "react-bootstrap";
-import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TGui} from "@external/tgui";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import FsTools from "@api/FsTools";

@@ -1,11 +1,6 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 
-import {ViewContainer} from "@components/ViewContainer";
-
-
-import {Box, Tab, Tabs} from "@mui/material";
-
 import {Ext} from "@external/prelude";
 import ProjectUniversalCard from "@components/projects/ProjectUniversalCard";
 import {Col, Row, Spinner} from "react-bootstrap";

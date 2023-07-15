@@ -1,8 +1,7 @@
 import ErrorBoundary from "@components/ErrorBoundary";
-import {ErrorMesh} from "@components/assets/mesh/ErrorMesh";
 import React from "react";
 import FsTools from "@api/FsTools";
-import {Plane, useGLTF} from "@react-three/drei";
+import {Plane} from "@react-three/drei";
 
 interface VideoWorldCanvasProps {
     videoPath: string

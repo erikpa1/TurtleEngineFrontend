@@ -3,8 +3,8 @@ import TurtleOffcanvas from "@components/Drawers";
 import React, {SyntheticEvent} from "react";
 
 import {useTranslation} from "react-i18next";
-import {Box, Stack, TextField} from "@mui/material";
-import {CreateAssetParamas, CreateProjectParams} from "@api/project/params";
+import {Stack} from "@mui/material";
+import {CreateAssetParamas} from "@api/project/params";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {Offcanvas} from "react-bootstrap";
@@ -23,15 +23,9 @@ import CreateAssetWithFileContent, {ImagePicker} from "@editors/appmanagement/as
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
 import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager";
-import AssetParentManager from "@platform/assets-managers/AssetParentManager";
-
-import QuizAssetManager from "@platform/assets-managers/QuizAssetManager";
 import FsTools from "@api/FsTools";
-import AreaAssetManager from "@platform/assets-managers/AreaAssetManager";
 import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene";
 import ImagesApi from "@api/ImagesApi";
-import {preview} from "vite";
-import {AssetData} from "@platform/assets/Asset";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void

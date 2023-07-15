@@ -8,7 +8,6 @@ import Area from "@platform/assets/area";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import UniversalAssetList from "@components/assets/UniversalAssetList";
 import Assets from "@platform/assets/Assets";
-import {TGui} from "@external/tgui";
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {Offcanvas} from "react-bootstrap";

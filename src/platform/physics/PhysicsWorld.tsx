@@ -1,8 +1,6 @@
 import React from "react";
-import {Physics, Debug, useBox, usePlane} from '@react-three/cannon'
-import {Sphere} from "@react-three/drei";
+import {Debug, Physics, useBox, usePlane} from '@react-three/cannon'
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
-import FsTools from "@api/FsTools";
 import ConstantsApi from "@api/ConstantsApi";
 
 

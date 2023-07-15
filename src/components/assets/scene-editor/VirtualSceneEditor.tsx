@@ -1,7 +1,8 @@
 import React from "react";
 
 import {
-    UniversalMeshCanvas, UniversalMeshOrbitControls,
+    UniversalMeshCanvas,
+    UniversalMeshOrbitControls,
     UniversalWorldEnvironment,
     UniversalWorldGrid
 } from "@components/assets/canvases/UniversalMeshCanvas";

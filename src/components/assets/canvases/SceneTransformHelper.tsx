@@ -2,7 +2,7 @@ import React from "react";
 
 import * as three from "three"
 
-import {Plane, TransformControls} from "@react-three/drei";
+import {TransformControls} from "@react-three/drei";
 
 
 export class GizmoTypes {

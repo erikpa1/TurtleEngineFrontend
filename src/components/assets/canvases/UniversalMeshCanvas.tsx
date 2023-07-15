@@ -1,16 +1,7 @@
 import {Canvas} from "@react-three/fiber";
-import {
-    AccumulativeShadows,
-    CameraControls,
-    Environment, GizmoHelper, GizmoViewport,
-    Grid,
-    OrbitControls,
-    RandomizedLight
-} from "@react-three/drei";
+import {Environment, Grid, OrbitControls} from "@react-three/drei";
 
 import React from "react";
-
-import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 
 interface UniversalMeshCanvasProps {

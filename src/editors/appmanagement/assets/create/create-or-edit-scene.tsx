@@ -18,16 +18,14 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
-import CreateAssetWithFileContent, {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 
 import SceneAssetManager from "@platform/assets-managers/SceneAssetManager";
 
 import {Ext} from "@external/prelude";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
-import {VirtualSceneData} from "@platform/assets/scene";
 import FsTools from "@api/FsTools";
 import ImagesApi from "@api/ImagesApi";
-import {preview} from "vite";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
 

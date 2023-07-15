@@ -9,7 +9,6 @@ import {TGui} from "@external/tgui";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import FsTools from "@api/FsTools";
 import PlatformDispatcher from "@api/PlatformDispatcher";
-import {OrbitControls} from "@react-three/drei";
 
 
 interface FileMeshPreviewProps {

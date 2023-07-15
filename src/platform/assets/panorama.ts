@@ -1,4 +1,4 @@
-import Asset, {AssetData} from "./Asset";
+import {AssetData} from "./Asset";
 
 export default class PanoramaData extends AssetData {
 

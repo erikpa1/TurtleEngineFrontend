@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import SceneAsset from "@platform/assets/scene";
+import {VirtualSceneData} from "@platform/assets/scene";
 
 
 import SceneApi from "@api/project/SceneApi";
@@ -21,7 +21,6 @@ import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
 import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition";
 import PanoramaAsset from "@platform/assets/panorama";
 import FsTools from "@api/FsTools";
-import {VirtualSceneData} from "@platform/assets/scene";
 import {OrbitControls} from "@react-three/drei";
 import Asset from "@platform/assets/Asset";
 

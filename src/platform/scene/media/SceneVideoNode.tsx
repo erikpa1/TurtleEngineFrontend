@@ -2,11 +2,7 @@ import React from "react";
 
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
-import Assets from "@platform/assets/Assets";
-
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
-
-import AssetsApi from "@api/AssetsApi";
 
 import {SceneNode} from "@platform/scene/SceneNode";
 

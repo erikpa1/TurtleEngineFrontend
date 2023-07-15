@@ -1,5 +1,4 @@
 import {invoke} from "@tauri-apps/api/tauri";
-import {CreateProjectParams} from "@api/project/params";
 
 export const PROJECTS_PLUGIN_NAME = "plugin:turtle_sqlite|"
 

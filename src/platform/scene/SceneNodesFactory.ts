@@ -1,6 +1,3 @@
-import {SceneNode} from "@platform/scene/SceneNode";
-
-
 export default class SceneNodesFactory {
 
     static CLASSES_MAP = new Map<string, any>()

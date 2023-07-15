@@ -1,17 +1,13 @@
 import axios from "axios";
 
-import Asset, {AssetData, AssetParentData, ProjectSerializationContext} from "@platform/assets/Asset";
+import Asset, {AssetData, ProjectSerializationContext} from "@platform/assets/Asset";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {CreateAssetParamas} from "@api/project/params";
 
 import TauriAssetPlugin from "../tauri/plugin_assets";
-
-import Asset from "@platform/assets/Asset";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import {CreateThumbnailParams} from "@api/AssetApiParams";
 import TauriOsPlugin from "../tauri/plugin_os";
-import {AssetDefinition} from "@platform/assets/Assets";
 
 export default class AssetsApi {
 

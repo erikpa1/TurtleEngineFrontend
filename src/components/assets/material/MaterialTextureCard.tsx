@@ -2,7 +2,6 @@ import React from "react";
 import {TGui} from "@external/tgui";
 
 
-
 export default function MaterialTextureCard({type, path}) {
     return (
         <TGui.Card>

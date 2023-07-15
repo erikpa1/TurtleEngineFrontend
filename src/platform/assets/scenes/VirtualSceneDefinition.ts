@@ -1,6 +1,3 @@
-import {SceneNode} from "@platform/scene/SceneNode";
-
-
 import Assets from "@platform/assets/Assets";
 import Asset from "@platform/assets/Asset";
 import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode";

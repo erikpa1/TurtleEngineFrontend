@@ -1,10 +1,9 @@
 import TurtleOffcanvas from "@components/Drawers";
-import Button from "@mui/material/Button";
 import React, {SyntheticEvent} from "react";
 
 import ProjectApi from "@api/project/ProjectApi";
 import {useTranslation} from "react-i18next";
-import {Box, Stack, TextField} from "@mui/material";
+import {Stack} from "@mui/material";
 import {CreateProjectParams} from "@api/project/params";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
@@ -12,7 +11,6 @@ import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TurtleTextField} from "@platform/components/TurtleForms";
 import {TGui} from "@external/tgui";
 import FsTools from "@api/FsTools";
-import PlatformDispatcher from "@api/PlatformDispatcher";
 import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import ImagesApi from "@api/ImagesApi";
 

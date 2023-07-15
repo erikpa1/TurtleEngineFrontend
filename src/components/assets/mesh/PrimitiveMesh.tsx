@@ -9,7 +9,6 @@ import {ErrorMesh} from "@components/assets/mesh/ErrorMesh";
 
 import * as three from "three"
 import SceneTransformHelper from "@components/assets/canvases/SceneTransformHelper";
-import {use} from "i18next";
 import {useMeshHover} from "@components/assets/tools/useMeshHover";
 import FsTools from "@api/FsTools";
 

@@ -5,21 +5,12 @@ import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
 import HudButton from "@components/assets/HudButton";
-
-
-import Assets, {AssetDefinition,} from "@platform/assets/Assets";
-import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import {TGui} from "@external/tgui";
-import {useTranslation} from "react-i18next";
-import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
-import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 import SceneApi from "@api/project/SceneApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper";
-import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas";
 import Asset from "@platform/assets/Asset";
 import SceneEditorBottomBar from "@components/assets/scene-editor/SceneEditorBottomBar";
 

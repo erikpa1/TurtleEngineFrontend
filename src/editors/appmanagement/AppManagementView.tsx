@@ -9,7 +9,6 @@ import {ViewContainer} from "@components/ViewContainer";
 
 
 import {Ext} from "@external/prelude";
-import ProjectsManagementView from "@editors/appmanagement/projects/ProjectsManagementView";
 import {TGui} from "@external/tgui";
 
 export default function AppManagementView({}) {

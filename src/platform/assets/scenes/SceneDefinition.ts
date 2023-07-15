@@ -1,4 +1,3 @@
-import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 import {SceneNode} from "@platform/scene/SceneNode";
 
 export default class SceneDefinition {

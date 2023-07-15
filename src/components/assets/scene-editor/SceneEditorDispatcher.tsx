@@ -7,8 +7,6 @@ import {MiddleSpinner} from "@components/Spinners";
 import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEditor";
 
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
-
-import {PanoramaSceneData, SceneData, VirtualSceneData} from "@platform/assets/scene";
 import Asset from "@platform/assets/Asset";
 
 export default function SceneEditorDispatcher({}) {

@@ -1,23 +1,15 @@
 import {useParams} from "react-router-dom";
 import React from "react";
-import Material from "@platform/assets/material";
 import {ViewContainer} from "@components/ViewContainer";
 import {MiddleSpinner} from "@components/Spinners";
 import VideoData from "@platform/assets/video";
 import AssetsApi from "@api/AssetsApi";
-import Assets from "@platform/assets/Assets";
 import {TGui} from "@external/tgui";
-import Typography from "@mui/material/Typography";
-import Asset, {AssetData} from "@platform/assets/Asset";
+import Asset from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
-import ConstantsApi from "@api/ConstantsApi";
-import html2canvas from "html2canvas";
-import VideoAssetPickView from "@components/assets/video/PickVideoView";
-import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import TauriOsPlugin from "../../../tauri/plugin_os";
-import assets from "@platform/assets/Assets";
 import ImagesApi from "@api/ImagesApi";
 
 export default function VideoEditor({}) {

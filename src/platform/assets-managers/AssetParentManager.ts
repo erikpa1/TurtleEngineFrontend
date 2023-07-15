@@ -2,7 +2,6 @@ import AssetsApi from "@api/AssetsApi";
 import {CreateAssetParamas} from "@api/project/params";
 import Asset from "@platform/assets/Asset";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
-import {CreateThumbnailParams} from "@api/AssetApiParams";
 import FsTools from "@api/FsTools";
 import ImagesApi from "@api/ImagesApi";
 

@@ -1,6 +1,6 @@
 import React, {SyntheticEvent} from "react";
 
-import {TurtleSelectField, TurtleTextField} from "@platform/components/TurtleForms";
+import {TurtleTextField} from "@platform/components/TurtleForms";
 import Asset from "@platform/assets/Asset";
 import {TGui} from "@external/tgui";
 import {AssetSubtype} from "@platform/assets/Assets";
