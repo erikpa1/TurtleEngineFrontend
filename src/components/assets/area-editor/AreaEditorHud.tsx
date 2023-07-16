@@ -4,35 +4,34 @@ import HudButton from "@components/assets/HudButton";
 
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
-import Area from "@platform/assets/area";
+
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import UniversalAssetList from "@components/assets/UniversalAssetList";
-import Assets from "@platform/assets/Assets";
-import TurtleOffcanvas from "@components/Drawers";
+
 import {useTranslation} from "react-i18next";
-import {Offcanvas} from "react-bootstrap";
+
+import Asset from "@platform/assets/Asset";
 
 interface AreaEditorHudProps {
-    area: Area
+    asset: Asset
 }
 
-export default function AreaEditorHud({area}: AreaEditorHudProps) {
+export default function AreaEditorHud({asset}: AreaEditorHudProps) {
     return (
         <>
-            <_Bottom area={area}/>
-            <_Top area={area}/>
-            <_Left area={area}/>
-            <_Right area={area}/>
+            <_Bottom asset={asset}/>
+            <_Top asset={asset}/>
+            <_Left asset={asset}/>
+            <_Right asset={asset}/>
 
         </>
     )
 }
 
-function _Bottom({area}: AreaEditorHudProps) {
+function _Bottom({asset}: AreaEditorHudProps) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            {/*<OpenAssetFolderButton asset={area}/>*/}
+            <OpenAssetFolderButton asset={asset}/>
 
             <HudButton
                 lang={"replace"}
@@ -48,7 +47,7 @@ function _Bottom({area}: AreaEditorHudProps) {
 }
 
 
-function _Top({area}: AreaEditorHudProps) {
+function _Top({asset}: AreaEditorHudProps) {
     return (
         <AssetEditorHud placement={"top"}>
             <HudButton
@@ -63,7 +62,7 @@ function _Top({area}: AreaEditorHudProps) {
     )
 }
 
-function _Left({area}: AreaEditorHudProps) {
+function _Left({asset}: AreaEditorHudProps) {
     return (
         <AssetEditorHud placement={"left"}>
 
@@ -76,7 +75,7 @@ function _Left({area}: AreaEditorHudProps) {
     )
 }
 
-function _Right({area}: AreaEditorHudProps) {
+function _Right({asset}: AreaEditorHudProps) {
 
     const popupZus = useGlobalPopup()
 

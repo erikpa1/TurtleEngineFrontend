@@ -3,14 +3,15 @@ import {MeshAssetData} from "@platform/assets/mesh";
 
 import {TGui} from "@external/tgui";
 import {EditAssetDescriptionFormField, EditAssetNameFormField} from "@components/assets/parent/edit-parent-props";
+import Asset from "@platform/assets/Asset";
 
 interface EditMeshAssetOffcanvas {
-    mesh: MeshAssetData
+    asset: Asset
     onClose: () => void,
     onRefresh: () => void
 }
 
-export default function EditMeshAssetOffcanvas({mesh, onClose, onRefresh}: EditMeshAssetOffcanvas) {
+export default function EditMeshAssetOffcanvas({asset, onClose, onRefresh}: EditMeshAssetOffcanvas) {
 
     const [t] = TGui.T()
 

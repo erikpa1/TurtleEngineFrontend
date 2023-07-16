@@ -8,11 +8,12 @@ import {Ext} from "@external/prelude";
 import FsTools from "@api/FsTools";
 
 import TauriOsPlugin from "../../../tauri/plugin_os";
-import {MeshAssetData} from "@platform/assets/mesh";
 
+import {MeshAssetData} from "@platform/assets/mesh";
+import Asset from "@platform/assets/Asset";
 
 interface EditMeshAssetOffcanvas {
-    mesh: MeshAssetData
+    asset: Asset
     onClose: () => void,
     onRefresh: () => void
 }
@@ -86,6 +87,8 @@ export default function ReplaceMeshOffcanvas(props: EditMeshAssetOffcanvas) {
 
 function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
+    const mesh: MeshAssetData = props.asset.data
+
     const [t] = TGui.T()
 
     const [meshPath, setMeshPath] = React.useState(FsTools.GetPlatformPath("Meshes/Default.glb"))
@@ -100,9 +103,9 @@ function _GlbUpload(props: EditMeshAssetOffcanvas) {
 
 
     function uploadPressed() {
-        const uid = props.mesh.uid
+        const uid = mesh.uid
 
-        const projectUid = props.mesh._project_uid
+        const projectUid = mesh._project_uid
 
 
         const toPath = FsTools.GetPathInProject(projectUid, `Assets/${uid}/Default.glb`)

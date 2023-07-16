@@ -18,6 +18,7 @@ import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {MeshAssetData} from "@platform/assets/mesh";
 
 import AssetsApi from "@api/AssetsApi";
+import Asset from "@platform/assets/Asset";
 
 export default function MeshEditor({}) {
 
@@ -26,19 +27,20 @@ export default function MeshEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _meshuidUid: string = meshuid ?? ""
 
-    const [mesh, setMesh] = React.useState<MeshAssetData | null>(null)
+
+    const [asset, setAsset] = React.useState<Asset | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<MeshAssetData>(MeshAssetData, _projectUid, _meshuidUid).then((value) => {
-            setMesh(value)
+        AssetsApi.GetAssetAndAssetData<MeshAssetData>(MeshAssetData, _projectUid, _meshuidUid).then((value) => {
+            setAsset(value)
         })
 
     }, [_projectUid, _meshuidUid])
 
-    if (mesh) {
+    if (asset) {
         return (
-            <_MeshEditor mesh={mesh}/>
+            <_MeshEditor asset={asset}/>
         )
     } else {
         return (
@@ -49,11 +51,12 @@ export default function MeshEditor({}) {
 }
 
 interface _MeshEditorProps {
-    mesh: MeshAssetData
+    asset: Asset
 }
 
-function _MeshEditor({mesh}: _MeshEditorProps) {
+function _MeshEditor({asset}: _MeshEditorProps) {
 
+    const mesh: MeshAssetData = asset.data
 
     const [meshPath, setMeshPath] = React.useState(`${mesh.GetEntryFile()}`)
 
@@ -91,14 +94,11 @@ function _MeshEditor({mesh}: _MeshEditorProps) {
 
             </UniversalMeshCanvas>
 
-
-            <MeshEditorHud mesh={mesh}
+            <MeshEditorHud asset={asset}
                            onRefresh={() => {
-
                                // const newPath = `${mesh.GetEntryFile()}?rnd=${Math.random()}`
                                // setMeshPath(newPath)
                            }}/>
-
         </div>
     )
 }

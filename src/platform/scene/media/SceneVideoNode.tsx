@@ -80,7 +80,6 @@ export function SceneVideoNodeView({node}: SceneVideoViewProps) {
 
     const projectZus = useActiveProjectZus()
 
-    const [videoData, setVideoDat] = React.useState<VideoData | null>(null)
     const [asset, setAsset] = React.useState<Asset | null>(null)
 
     const [_node, setNode] = React.useState({v: node})
@@ -97,15 +96,14 @@ export function SceneVideoNodeView({node}: SceneVideoViewProps) {
             projectZus.project.uid,
             node.content_uid
         ).then((value) => {
-            setAsset(value.asset)
-            setVideoDat(value.data)
+            setAsset(value)
         })
     }, [node.content_uid])
 
 
-    if (asset && videoData) {
+    if (asset) {
         return (
-            <_SceneVideoView video={_node.v} videoAsset={asset}/>
+            <_SceneVideoView videoNode={_node.v} asset={asset}/>
         )
     } else {
         return (
@@ -117,12 +115,12 @@ export function SceneVideoNodeView({node}: SceneVideoViewProps) {
 }
 
 interface _SceneVideoViewProps {
-    video: SceneVideoNode
-    videoAsset: Asset
+    videoNode: SceneVideoNode
+    asset: Asset
 }
 
 
-function _SceneNoVideoView({videoAsset, video}: _SceneVideoViewProps) {
+function _SceneNoVideoView({asset, videoNode}: _SceneVideoViewProps) {
 
     return (
         <></>
@@ -147,28 +145,28 @@ function _SceneNoVideoView({videoAsset, video}: _SceneVideoViewProps) {
 }
 
 
-function _SceneVideoView({videoAsset, video}: _SceneVideoViewProps) {
+function _SceneVideoView({asset, videoNode}: _SceneVideoViewProps) {
 
 
-    const controlBarsHeight = (-video.scale[1] * 0.5) - (video.scale[1] * 0.1)
+    const controlBarsHeight = (-videoNode.scale[1] * 0.5) - (videoNode.scale[1] * 0.1)
 
-    const slidedBarHeight = (-video.scale[1] * 0.5) - (video.scale[1] * 0.025)
+    const slidedBarHeight = (-videoNode.scale[1] * 0.5) - (videoNode.scale[1] * 0.025)
 
     return (
-        <SceneNodeMover node={video}>
+        <SceneNodeMover node={videoNode}>
 
             {
-                video.view_mesh === "plane" &&
+                videoNode.view_mesh === "plane" &&
                 <VideoWorldCanvas
-                    nodeUid={video.uid}
+                    nodeUid={videoNode.uid}
                     videoPath={""}/>
             }
 
             {
-                video.view_mesh === "curved_plane" &&
+                videoNode.view_mesh === "curved_plane" &&
                 <CurvedVideoWorldCanvas
-                    scale={video.scale}
-                    nodeUid={video.uid}
+                    scale={videoNode.scale}
+                    nodeUid={videoNode.uid}
                     videoPath={""}
                 />
 

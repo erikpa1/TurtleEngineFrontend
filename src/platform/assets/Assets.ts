@@ -2,11 +2,11 @@ import {AssetData} from "@platform/assets/Asset";
 import MaterialData from "@platform/assets/material";
 import {MeshAssetData} from "@platform/assets/mesh";
 import PointCloudData from "@platform/assets/pointcloud";
-import PanoramaData from "@platform/assets/panorama";
+import PanoramaAssetData from "@platform/assets/panorama";
 import VideoData from "@platform/assets/video";
 import ImageData from "@platform/assets/image";
 import QuizData from "@platform/assets/quiz";
-import AreaData from "@platform/assets/area";
+import AreaAssetData from "@platform/assets/area";
 import SoundData from "@platform/assets/sound";
 import FontData from "@platform/assets/font";
 import DataFactoryData from "@platform/assets/datafactory";
@@ -71,7 +71,7 @@ PANORAMA.LANG = "panorama"
 PANORAMA.LANG_PLURAL = "panoramas"
 PANORAMA.DEFAULT_PREVIEW = _getPreview(PANORAMA.TYPE)
 PANORAMA.DEFAULT_DATA = () => {
-    const tmp = new PanoramaData()
+    const tmp = new PanoramaAssetData()
     tmp.extension = "jpg"
     return tmp
 }
@@ -114,7 +114,7 @@ AREA.TYPE = "area"
 AREA.LANG = "area"
 AREA.LANG_PLURAL = "areas"
 AREA.DEFAULT_PREVIEW = _getPreview(AREA.TYPE)
-AREA.DEFAULT_DATA = () => new AreaData()
+AREA.DEFAULT_DATA = () => new AreaAssetData()
 
 const SCENE = new AssetDefinition()
 SCENE.TYPE = "scene"

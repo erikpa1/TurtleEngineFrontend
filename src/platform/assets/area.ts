@@ -1,6 +1,6 @@
 import {AssetData} from "@platform/assets/Asset";
 
-export default class AreaData extends AssetData {
+export default class AreaAssetData extends AssetData {
 
 
 }

@@ -10,6 +10,9 @@ import AreaMarker from "@components/assets/area/AreaMarker";
 import AreaEditorHud from "@components/assets/area-editor/AreaEditorHud";
 import FsTools from "@api/FsTools";
 import ErrorBoundary from "@components/ErrorBoundary";
+import AreaAssetData from "@platform/assets/area";
+import Asset from "@platform/assets/Asset";
+import AssetsApi from "@api/AssetsApi";
 
 
 export default function AreaEditor({}) {
@@ -18,19 +21,19 @@ export default function AreaEditor({}) {
     const _projectUid: string = projectuid ?? ""
     const _areaiud: string = areauid ?? ""
 
-    const [area, setArea] = React.useState<Area | null>(null)
+    const [asset, setAsset] = React.useState<Asset | null>(null)
 
     React.useEffect(() => {
 
-        // AssetsApi.GetAssetData<Area>(Assets.Area, _projectUid, _areaiud).then((value) => {
-        //     setArea(value)
-        // })
+        AssetsApi.GetAssetAndAssetData<AreaAssetData>(AreaAssetData, _projectUid, _areaiud).then((value) => {
+            setAsset(value)
+        })
 
     }, [_projectUid, _areaiud])
 
-    if (area) {
+    if (asset) {
         return (
-            <_AreaEditor area={area}/>
+            <_AreaEditor asset={asset}/>
         )
     } else {
         return (
@@ -40,10 +43,13 @@ export default function AreaEditor({}) {
 }
 
 interface _AreaEditorProps {
-    area: Area
+    asset: Asset
 }
 
-function _AreaEditor({area}: _AreaEditorProps) {
+function _AreaEditor({asset}: _AreaEditorProps) {
+
+    const area: AreaAssetData = asset.data
+
     return (
         <div style={{
             position: "relative"
@@ -88,7 +94,7 @@ function _AreaEditor({area}: _AreaEditorProps) {
                 <AreaMarker position={[6, 0, 2]}/>
             </Canvas>
 
-            <AreaEditorHud area={area}/>
+            <AreaEditorHud asset={asset}/>
         </div>
     )
 }

@@ -4,18 +4,19 @@ import HudButton from "@components/assets/HudButton";
 import OpenAssetFolderButton from "@components/assets/OpenAssetFolderButton";
 
 import PanoramaAsset from "@platform/assets/panorama";
+import Asset from "@platform/assets/Asset";
 
 interface PanoramaEditorHudProps {
-    panorama: PanoramaAsset
+    asset: Asset
 }
 
-export default function PanoramaEditorHud({panorama}: PanoramaEditorHudProps) {
+export default function PanoramaEditorHud({asset}: PanoramaEditorHudProps) {
 
 
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            {/*<OpenAssetFolderButton asset={panorama}/>*/}
+            <OpenAssetFolderButton asset={asset}/>
 
             <HudButton
                 lang={"replace"}

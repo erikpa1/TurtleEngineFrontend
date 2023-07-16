@@ -20,20 +20,18 @@ export default function VideoEditor({}) {
     const _videoUid: string = videouid ?? ""
 
     const [asset, setAsset] = React.useState<Asset | null>(null)
-    const [video, setVideo] = React.useState<VideoData | null>(null)
 
     React.useEffect(() => {
         AssetsApi.GetAssetAndAssetData<VideoData>(VideoData, _projectUid, _videoUid).then((value) => {
-            setVideo(value.data)
-            setAsset(value.asset)
+            setAsset(value)
         })
 
     }, [_projectUid, _videoUid])
 
-    if (video && asset) {
+    if (asset) {
         return (
             <ViewContainer>
-                <_VideoEditor asset={asset} video={video}/>
+                <_VideoEditor asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -44,12 +42,12 @@ export default function VideoEditor({}) {
 }
 
 interface _VideoEditorProps {
-    video: VideoData
     asset: Asset
 }
 
-function _VideoEditor({video, asset}: _VideoEditorProps) {
+function _VideoEditor({asset}: _VideoEditorProps) {
 
+    const video: VideoData = asset.data
 
     return (
 

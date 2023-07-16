@@ -16,6 +16,8 @@ export default class Asset {
     public hasPreview = false
     public absolutePath = ""
 
+    public data: any = null
+
     FromJson(jObject: any | Asset) {
 
         this.uid = jObject.uid ?? ""
@@ -32,7 +34,6 @@ export default class Asset {
     }
 
     GetPreviewPath(): string {
-        console.log(this.hasPreview)
         if (this.hasPreview) {
             const path = FsTools.GetPathInProject(this.parent_project_uid, `/Assets/${this.uid}/Preview.png`)
             return path

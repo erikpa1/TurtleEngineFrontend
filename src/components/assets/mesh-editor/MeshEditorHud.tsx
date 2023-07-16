@@ -12,9 +12,10 @@ import EditMeshAssetOffcanvas from "@components/assets/mesh-editor/EditMeshAsset
 import ReplaceMeshOffcanvas from "@components/assets/mesh-editor/ReplaceMeshOffcanvas";
 
 import {MeshAssetData} from "@platform/assets/mesh";
+import Asset from "@platform/assets/Asset";
 
 interface MeshEditorHud {
-    mesh: MeshAssetData
+    asset: Asset
     onRefresh: any
 }
 
@@ -22,10 +23,9 @@ export default function MeshEditorHud(props: MeshEditorHud) {
 
     const popup = TGui.PopupZus()
 
-
     function replaceMeshPressed() {
         popup.pushElement(<ReplaceMeshOffcanvas
-            mesh={props.mesh}
+            asset={props.asset}
             onClose={popup.popElement}
             onRefresh={props.onRefresh}/>
         )
@@ -34,7 +34,7 @@ export default function MeshEditorHud(props: MeshEditorHud) {
     function editAssetPressed() {
 
         popup.pushElement(<EditMeshAssetOffcanvas
-            mesh={props.mesh}
+            asset={props.asset}
             onClose={popup.popElement}
             onRefresh={props.onRefresh}/>
         )
@@ -43,7 +43,7 @@ export default function MeshEditorHud(props: MeshEditorHud) {
     return (
         <AssetEditorHud placement={"bottom"}>
 
-            {/*<OpenAssetFolderButton asset={props.mesh}/>*/}
+            <OpenAssetFolderButton asset={props.asset}/>
 
             <HudButton
                 lang={"replace"}

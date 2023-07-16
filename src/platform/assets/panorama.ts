@@ -1,6 +1,6 @@
 import {AssetData} from "./Asset";
 
-export default class PanoramaData extends AssetData {
+export default class PanoramaAssetData extends AssetData {
 
     extension = "jpg"
 

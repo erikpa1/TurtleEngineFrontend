@@ -1,14 +1,15 @@
-import PanoramaAsset from "@platform/assets/panorama";
-
-
 import * as three from "three";
 import {useTexture} from "@react-three/drei";
 import FsTools from "@api/FsTools";
 
 import React from "react";
+import Asset from "@platform/assets/Asset";
+import PanoramaAssetData from "@platform/assets/panorama";
 
 
-export default function PhotoDom({panorama}: { panorama: PanoramaAsset }) {
+export default function PhotoDom({asset}: { asset: Asset }) {
+
+    const panorama: PanoramaAssetData = asset.data
 
     const texutre = useTexture(FsTools.ConvertFilePath(panorama.GetFullPanoramaPath()))
 
