@@ -22,15 +22,15 @@ import {DnDBox3D} from "@components/assets/tools/DndBox";
 
 
 interface VirtualSceneEditorProps {
-    scene: Asset
+    asset: Asset
 }
 
-export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
+export default function VirtualSceneEditor({asset}: VirtualSceneEditorProps) {
 
     const [sceneDefinition, setSceneDefinition] = React.useState<{ value: VirtualSceneDefinition } | null>()
 
     React.useEffect(() => {
-        SceneApi.GetSceneDefinition(VirtualSceneDefinition, scene.parent_project_uid, scene.uid).then((value) => {
+        SceneApi.GetSceneDefinition(VirtualSceneDefinition, asset.parent_project_uid, asset.uid).then((value) => {
             setSceneDefinition({value: value})
         })
 
@@ -39,7 +39,7 @@ export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
     if (sceneDefinition) {
         return (
             <_VirtualSceneEditor
-                scene={scene}
+                asset={asset}
                 sceneDefinition={sceneDefinition.value}
                 onSceneDefinitionChanged={() => {
                     setSceneDefinition({value: sceneDefinition.value})
@@ -52,7 +52,7 @@ export default function VirtualSceneEditor({scene}: VirtualSceneEditorProps) {
 }
 
 interface _VirtualSceneEditorProps {
-    scene: any
+    asset: any
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }
@@ -86,7 +86,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
 
             <SceneEditorHud
                 sceneDefinition={props.sceneDefinition}
-                scene={props.scene}
+                asset={props.asset}
                 onSceneDefinitionChanged={props.onSceneDefinitionChanged}
             />
 

@@ -16,7 +16,8 @@ export default function OpenAssetFolderButton({asset}: OpenAssetFolderButton) {
 
         const folder = FsTools.NormalizePath(asset.GetFolderPath())
         TauriOsPlugin.OpenFolder(folder).then(() => {
-            console.log("Opened")
+            console.log(`Opened: ${asset.GetFolderPath()}`)
+
         })
     }
 

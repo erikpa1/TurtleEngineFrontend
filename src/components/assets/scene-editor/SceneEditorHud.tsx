@@ -19,7 +19,7 @@ import SceneNodeEditOffcanvasDispatcher
 
 
 interface SceneEditorHudProps {
-    scene: Asset
+    asset: Asset
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }
@@ -47,8 +47,8 @@ function _Top(props: SceneEditorHudProps) {
         lock.lock()
 
         SceneApi.SaveSceneDefinition(
-            props.scene.parent_project_uid,
-            props.scene.uid,
+            props.asset.parent_project_uid,
+            props.asset.uid,
             props.sceneDefinition
         ).then(() => {
             lock.unlock()
@@ -61,8 +61,6 @@ function _Top(props: SceneEditorHudProps) {
 
     return (
         <AssetEditorHud placement={"top"}>
-
-            <OpenAssetFolderButton asset={props.scene}/>
 
             <HudButton
                 icon={"/icons/Save.svg"}
@@ -79,6 +77,8 @@ function _Top(props: SceneEditorHudProps) {
 function _Left(props: SceneEditorHudProps) {
     return (
         <AssetEditorHud placement={"left"}>
+
+            <OpenAssetFolderButton asset={props.asset}/>
 
             <HudGizmoSwapper/>
             <HudButton

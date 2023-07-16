@@ -92,7 +92,7 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
 
             <SceneEditorHud
                 sceneDefinition={props.sceneDefinition}
-                scene={props.scene}
+                asset={props.scene}
                 onSceneDefinitionChanged={props.onSceneDefinitionChanged}
             />
 

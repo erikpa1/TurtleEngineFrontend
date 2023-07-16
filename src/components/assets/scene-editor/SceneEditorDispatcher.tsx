@@ -35,7 +35,7 @@ export default function SceneEditorDispatcher({}): any {
             )
         } else if (scene.subtype === "virtual") {
             return (
-                <VirtualSceneEditor scene={scene}/>
+                <VirtualSceneEditor asset={scene}/>
             )
         }
     } else {

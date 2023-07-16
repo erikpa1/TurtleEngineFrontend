@@ -13,7 +13,7 @@ import HudButton from "@components/assets/HudButton";
 
 
 interface SceneEditorHudProps {
-    scene: Asset
+    asset: Asset
     sceneDefinition: VirtualSceneDefinition
     onSceneDefinitionChanged: () => void
 }

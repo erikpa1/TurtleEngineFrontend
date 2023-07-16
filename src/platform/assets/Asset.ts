@@ -42,7 +42,7 @@ export default class Asset {
     }
 
     GetFolderPath(): string {
-        return FsTools.GetPathInProject(this.parent_project_uid, `/Assets/${this.uid}/`)
+        return FsTools.GetPathInProject(this.parent_project_uid, `Assets/${this.uid}/`)
     }
 
     ToJson(): any {
