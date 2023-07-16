@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import QuizAsset from "@platform/assets/quiz";
+import QuizAsset from "@platform/assets/exam";
 import {ViewContainer} from "@components/ViewContainer";
 import {MiddleSpinner} from "@components/Spinners";
 import Datafactory from "@platform/assets/datafactory";

@@ -12,7 +12,7 @@ import SoundAnswerEditor from "@components/assets/quiz-editor/SoundAnswerEditor"
 import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswerEditor";
 
 import {ViewContainer} from "@components/ViewContainer";
-import QuizData from "@platform/assets/quiz";
+import ExamAssetData from "@platform/assets/exam";
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
 import HudButton from "@components/assets/HudButton";
@@ -25,11 +25,11 @@ export default function QuizEditor({}) {
 
     const _quizUid: string = quizuuid ?? ""
 
-    const [quiz, setQuiz] = React.useState<QuizData | null>(null)
+    const [quiz, setQuiz] = React.useState<ExamAssetData | null>(null)
 
     React.useEffect(() => {
 
-        AssetsApi.GetAssetData<QuizData>(QuizData, _projectUid, _quizUid).then((value) => {
+        AssetsApi.GetAssetData<ExamAssetData>(ExamAssetData, _projectUid, _quizUid).then((value) => {
             setQuiz(value)
         })
 

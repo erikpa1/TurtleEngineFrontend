@@ -5,7 +5,7 @@ import PointCloudData from "@platform/assets/pointcloud";
 import PanoramaAssetData from "@platform/assets/panorama";
 import VideoData from "@platform/assets/video";
 import ImageData from "@platform/assets/image";
-import QuizData from "@platform/assets/quiz";
+import ExamAssetData from "@platform/assets/exam";
 import AreaAssetData from "@platform/assets/area";
 import SoundData from "@platform/assets/sound";
 import FontData from "@platform/assets/font";
@@ -102,12 +102,12 @@ IMAGE.LANG_PLURAL = "images"
 IMAGE.DEFAULT_PREVIEW = _getPreview(IMAGE.TYPE)
 IMAGE.DEFAULT_DATA = () => new ImageData()
 
-const QUIZ = new AssetDefinition()
-QUIZ.TYPE = "quiz"
-QUIZ.LANG = "quiz"
-QUIZ.LANG_PLURAL = "quizzes"
-QUIZ.DEFAULT_PREVIEW = _getPreview(QUIZ.TYPE)
-QUIZ.DEFAULT_DATA = () => new QuizData()
+const EXAM = new AssetDefinition()
+EXAM.TYPE = "quiz"
+EXAM.LANG = "quiz"
+EXAM.LANG_PLURAL = "quizzes"
+EXAM.DEFAULT_PREVIEW = _getPreview(EXAM.TYPE)
+EXAM.DEFAULT_DATA = () => new ExamAssetData()
 
 const AREA = new AssetDefinition()
 AREA.TYPE = "area"
@@ -198,7 +198,7 @@ const Assets = {
     Panorama: PANORAMA,
     Video: VIDEO,
     Image: IMAGE,
-    Quiz: QUIZ,
+    Exam: EXAM,
     Area: AREA,
     Scene: SCENE,
     Sound: SOUND,
@@ -214,7 +214,7 @@ const Assets = {
             Assets.DataFactory,
             Assets.DataInstance,
             Assets.DataSet,
-            Assets.Quiz,
+            Assets.Exam,
             Assets.Label,
         ]
     },

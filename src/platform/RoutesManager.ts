@@ -97,7 +97,7 @@ export default class RoutesManager {
 const ASSET_ROUTES_MAP = new Map<string, any>([
     [Assets.Video.TYPE, RoutesManager.VideoEditor],
     [Assets.Area.TYPE, RoutesManager.AreaEditor],
-    [Assets.Quiz.TYPE, RoutesManager.QuizEditor],
+    [Assets.Exam.TYPE, RoutesManager.QuizEditor],
     [Assets.Mesh.TYPE, RoutesManager.MeshEditor],
     [Assets.Material.TYPE, RoutesManager.MaterialEditor],
     [Assets.Panorama.TYPE, RoutesManager.PanoramaEditor],

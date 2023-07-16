@@ -4,7 +4,7 @@ import AssetsApi from "@api/AssetsApi";
 import {CreateAssetParamas} from "@api/project/params";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 
-import QuizData from "@platform/assets/quiz";
+import ExamAssetData from "@platform/assets/exam";
 
 
 export default class QuizAssetManager {
@@ -20,7 +20,7 @@ export default class QuizAssetManager {
         createdAsset.hasPreview = true
 
         await AssetsApi.UploadAssetLight(createdAsset)
-        await AssetsApi.UploadAssetData(createdAsset.parent_project_uid, createdAsset.uid, new QuizData().ToJson())
+        await AssetsApi.UploadAssetData(createdAsset.parent_project_uid, createdAsset.uid, new ExamAssetData().ToJson())
 
     }
 

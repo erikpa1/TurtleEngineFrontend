@@ -1,6 +1,6 @@
 import {AssetData} from "@platform/assets/Asset";
 
-export default class QuizData extends AssetData {
+export default class ExamAssetData extends AssetData {
 
     answers = new Map<string, any>()
 
