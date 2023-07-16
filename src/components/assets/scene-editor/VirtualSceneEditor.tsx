@@ -18,6 +18,7 @@ import SceneApi from "@api/project/SceneApi";
 
 import Asset from "@platform/assets/Asset";
 import PhysicsWorld from "@platform/physics/PhysicsWorld";
+import {DnDBox3D} from "@components/assets/tools/DndBox";
 
 
 interface VirtualSceneEditorProps {
@@ -79,6 +80,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
 
                 {/*<PhysicsWorld/>*/}
 
+                <DnDBox3D/>
 
             </UniversalMeshCanvas>
 

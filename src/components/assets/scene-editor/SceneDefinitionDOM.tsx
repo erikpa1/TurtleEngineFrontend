@@ -2,8 +2,9 @@ import React from "react";
 
 
 import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshNode";
-import {SceneVideoNode, SceneVideoView} from "@platform/scene/media/SceneVideoNode";
+import {SceneVideoNode, SceneVideoNodeView} from "@platform/scene/media/SceneVideoNode";
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
+import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
 
 
 interface SceneDefinitionDomProps {
@@ -23,18 +24,11 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
 
         root.children.forEach((value) => {
 
-            if (value instanceof SceneMeshNode) {
-                elements.push(<SceneMeshNodeView
-                    key={value.uid}
-                    node={value as SceneMeshNode}
-                />)
-            } else if (value instanceof SceneVideoNode) {
-                elements.push(<SceneVideoView
-                    key={value.uid}
-                    node={value as SceneMeshNode}
-                />)
-            }
+            const NodeHandler: any = SceneNodesFactory.GetFiberHandler(value.type)
 
+            elements.push(
+                <NodeHandler key={value.uid} node={value}/>
+            )
         })
 
         setView(elements)

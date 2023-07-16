@@ -129,13 +129,7 @@ function _VideoControlBars({asset, assetData}) {
 
     return (
         <TGui.CardActions>
-            <TGui.Button
-                label={"snapshot"}
-                onClick={takeSnapshot}
-            />
-
             <_ReplaceVideoButton asset={asset} assetData={assetData}/>
-
         </TGui.CardActions>
     )
 }

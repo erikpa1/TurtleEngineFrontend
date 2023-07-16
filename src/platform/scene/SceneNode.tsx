@@ -1,6 +1,7 @@
 // import * as three from "three"
 
 import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
+import React from "react";
 
 export class SceneNode {
 
@@ -17,6 +18,7 @@ export class SceneNode {
 
 
     onChildrenChanged: any = null
+    onChanged: any = null
 
     constructor() {
         //pass
@@ -61,3 +63,11 @@ export class SceneNode {
 }
 
 
+export function SceneNodeView({}) {
+    return (
+        <mesh>
+            <boxGeometry args={[1, 1, 1]}/>
+            <meshBasicMaterial color={"#f70fe8"}/>
+        </mesh>
+    )
+}

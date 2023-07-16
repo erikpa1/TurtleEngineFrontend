@@ -6,10 +6,11 @@ import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
 
 import {SceneNode} from "@platform/scene/SceneNode";
 
-import {VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas";
+import {CurvedVideoWorldCanvas, VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas";
 import Asset from "@platform/assets/Asset";
 import VideoData from "@platform/assets/video";
 import AssetsApi from "@api/AssetsApi";
+import {Plane, useTexture} from "@react-three/drei";
 
 
 export class SceneVideoNode extends SceneNode {
@@ -20,6 +21,16 @@ export class SceneVideoNode extends SceneNode {
 
     type = SceneVideoNode.TYPE
 
+    looping = false
+    muted = false
+    auto_play = false
+    progress_enabled = true
+    controls_enabled = true
+    pre_play_preview = true
+    theatre_mode = false
+
+    view_mesh = "plane"
+
     constructor() {
         //pass
         super()
@@ -29,12 +40,33 @@ export class SceneVideoNode extends SceneNode {
     FromJson(jObject: any | SceneVideoNode) {
         super.FromJson(jObject);
         this.content_uid = jObject.content_uid ?? ""
+
+
+        this.looping = jObject.looping && this.looping
+        this.muted = jObject.muted && this.muted
+        this.auto_play = jObject.auto_play && this.auto_play
+        this.progress_enabled = jObject.progress_enabled && this.progress_enabled
+        this.controls_enabled = jObject.controls_enabled && this.controls_enabled
+        this.pre_play_preview = jObject.pre_play_preview && this.pre_play_preview
+        this.theatre_mode = jObject.theatre_mode && this.theatre_mode
+
+        this.view_mesh = jObject.view_mesh && this.view_mesh
+
+
     }
 
     ToJson(): any {
         return {
             ...super.ToJson(),
-            content_uid: this.content_uid
+            content_uid: this.content_uid,
+            looping: this.looping,
+            muted: this.muted,
+            auto_play: this.auto_play,
+            progress_enabled: this.progress_enabled,
+            controls_enabled: this.controls_enabled,
+            pre_play_preview: this.pre_play_preview,
+            theatre_mode: this.theatre_mode,
+
         }
     }
 
@@ -44,14 +76,22 @@ interface SceneVideoViewProps {
     node: SceneVideoNode
 }
 
-export function SceneVideoView({node}: SceneVideoViewProps) {
+export function SceneVideoNodeView({node}: SceneVideoViewProps) {
 
     const projectZus = useActiveProjectZus()
 
     const [videoData, setVideoDat] = React.useState<VideoData | null>(null)
     const [asset, setAsset] = React.useState<Asset | null>(null)
 
+    const [_node, setNode] = React.useState({v: node})
+
+
     React.useEffect(() => {
+
+        node.onChanged = () => {
+            console.log("Here")
+            setNode({v: node})
+        }
 
         AssetsApi.GetAssetAndAssetData<VideoData>(VideoData,
             projectZus.project.uid,
@@ -65,7 +105,7 @@ export function SceneVideoView({node}: SceneVideoViewProps) {
 
     if (asset && videoData) {
         return (
-            <_SceneVideoView video={node} videoAsset={asset}/>
+            <_SceneVideoView video={_node.v} videoAsset={asset}/>
         )
     } else {
         return (
@@ -85,28 +125,138 @@ interface _SceneVideoViewProps {
 function _SceneNoVideoView({videoAsset, video}: _SceneVideoViewProps) {
 
     return (
-        <SceneNodeMover node={video}>
-            <VideoWorldCanvas
-                videoPath={""}
-            />
-        </SceneNodeMover>
-
-
+        <></>
     )
+    // const [node, setNode] = React.useState({v: video})
+    //
+    // video.onChanged = () => {
+    //     console.log("Here")
+    //     setNode({v: video})
+    // }
+    //
+    // return (
+    //     <SceneNodeMover node={node.v}>
+    //         <VideoWorldCanvas
+    //             nodeUid={node.v.uid}
+    //             videoPath={""}
+    //         />
+    //     </SceneNodeMover>
+    //
+    //
+    // )
 }
 
 
 function _SceneVideoView({videoAsset, video}: _SceneVideoViewProps) {
 
+
+    const controlBarsHeight = (-video.scale[1] * 0.5) - (video.scale[1] * 0.1)
+
+    const slidedBarHeight = (-video.scale[1] * 0.5) - (video.scale[1] * 0.025)
+
     return (
         <SceneNodeMover node={video}>
-            <VideoWorldCanvas
-                videoPath={""}
-            />
+
+            {
+                video.view_mesh === "plane" &&
+                <VideoWorldCanvas
+                    nodeUid={video.uid}
+                    videoPath={""}/>
+            }
+
+            {
+                video.view_mesh === "curved_plane" &&
+                <CurvedVideoWorldCanvas
+                    scale={video.scale}
+                    nodeUid={video.uid}
+                    videoPath={""}
+                />
+
+            }
+
+            <group scale={[0.8, 1, 1]}>
+                <_ProgressBard position={[0, slidedBarHeight, 0]}/>
+                <_ControlBar position={[0, controlBarsHeight, 0]}/>
+            </group>
+
+
         </SceneNodeMover>
 
 
     )
 }
 
+
+function _ProgressBard({position}) {
+    return (
+        <group position={position}>
+            <Plane
+                scale={[1, 0.01, 0.1]}
+            >
+                <meshBasicMaterial
+                    color={"white"}
+                />
+            </Plane>
+
+            <Plane
+                position={[-0.5, 0, 0.0005]}
+                scale={[0.04, 0.04, 0.04]}
+            >
+                <meshBasicMaterial
+                    color={"#d06972"}
+                />
+            </Plane>
+        </group>
+    )
+}
+
+function _ControlBar({position}) {
+
+    const playTexture = useTexture("/icons/128/Play.png")
+
+    const pauseTexture = useTexture("/icons/128/Pause.png")
+
+    const mute = useTexture("/icons/128/Mute.png")
+
+    const umute = useTexture("/icons/128/Unmute.png")
+
+    React.useEffect(() => {
+        //pass
+    }, [])
+
+    return (
+        <group position={position}>
+            <Plane
+                name={"videocontrol-play"}
+                scale={[0.1, 0.1, 0.1]}
+                position={[-0.15, 0, 0]}
+            >
+                <meshBasicMaterial
+                    transparent={true}
+                    map={playTexture}
+                />
+            </Plane>
+            <Plane
+                name={"videocontrol-pause"}
+                scale={[0.1, 0.1, 0.1]}
+                position={[0, 0, 0]}
+            >
+                <meshBasicMaterial
+                    transparent={true}
+                    map={pauseTexture}
+                />
+            </Plane>
+            <Plane
+                name={"videocontrol-pause"}
+                scale={[0.1, 0.1, 0.1]}
+                position={[0.15, 0, 0]}
+            >
+                <meshBasicMaterial
+                    transparent={true}
+                    map={mute}
+                />
+            </Plane>
+        </group>
+    )
+}
 

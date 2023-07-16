@@ -11,13 +11,16 @@ import {Box, MenuItem, Select, Tab, Tabs} from "@mui/material";
 import {Col, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
 
-import Switch, {Case} from "react-switch-case/lib/esm";
+import {default as IfSwitch, Case} from "react-switch-case/lib/esm";
 
 import TurtleOffcanvas from "@components/Drawers";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TurtleSelectField, TurtleSingleFileInput} from "@platform/components/TurtleForms";
 import {Default} from "react-switch-case";
+
+import {Switch} from "@mui/material";
+
 import React from "react";
 
 export const TGui = {
@@ -37,10 +40,12 @@ export const TGui = {
     Select: Select,
     TSelect: TurtleSelectField,
 
+    BtnSwitch: Switch,
+
     MenuItem: MenuItem,
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
-    Switch: Switch as TSwitch | any,
+    Switch: IfSwitch as TSwitch | any,
     Case: Case as TCase | any,
     Default: Default as any,
     Tabs: Tabs,

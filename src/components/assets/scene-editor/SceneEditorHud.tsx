@@ -13,6 +13,9 @@ import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
 import HudGizmoSwapper from "@components/assets/scene-editor/SceneGizmoSwapper";
 import Asset from "@platform/assets/Asset";
 import SceneEditorBottomBar from "@components/assets/scene-editor/SceneEditorBottomBar";
+import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
+import SceneNodeEditOffcanvasDispatcher
+    from "@components/assets/scene-editor/scene-nodes/SceneNodeEditOffcanvasDispatcher";
 
 
 interface SceneEditorHudProps {
@@ -95,6 +98,8 @@ function _Left(props: SceneEditorHudProps) {
 
 function _Right(props: SceneEditorHudProps) {
 
+    const popup = useGlobalPopup()
+
     const useActiveNode = useActiveNodeZus()
 
 
@@ -104,6 +109,15 @@ function _Right(props: SceneEditorHudProps) {
         if (activeNode) {
             props.sceneDefinition.DeleteChildrenWithUid(activeNode.uid)
         }
+    }
+
+
+    function editPressed() {
+        popup.pushElement(<SceneNodeEditOffcanvasDispatcher
+                node={activeNode}
+                onClose={popup.popElement}
+            />
+        )
     }
 
 
@@ -119,6 +133,7 @@ function _Right(props: SceneEditorHudProps) {
                     />
                     <HudButton
                         lang={"edit"}
+                        onClick={editPressed}
                         icon={"/icons/Management.svg"}
                     />
                 </>
