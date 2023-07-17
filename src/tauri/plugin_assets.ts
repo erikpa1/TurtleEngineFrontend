@@ -56,8 +56,8 @@ export default class TauriAssetPlugin {
 
         params.uid = `${params.assetType}-${crypto.randomUUID()}`
 
-        const QUERY = `INSERT INTO Assets (Uid, Name, Type, Extension)
-                       VALUES ('${params.uid}', '${params.name}', '${params.assetType}', '${params.extension}');`
+        const QUERY = `INSERT INTO Assets (Uid, Name, Type)
+                       VALUES ('${params.uid}', '${params.name}', '${params.assetType}');`
 
         const response = await TauriSqlitePlugin.Exec(QUERY)
 
@@ -80,15 +80,14 @@ export default class TauriAssetPlugin {
 
         const hastPreview = asset.hasPreview ? 1 : 0
 
-        const QUERY = `INSERT INTO Assets (Uid, Name, Description, Tags, HasPreview, Type, SubType, Extension)
+        const QUERY = `INSERT INTO Assets (Uid, Name, Description, Tags, HasPreview, Type, SubType)
                        VALUES ('${asset.uid}',
                                '${asset.name}',
                                '${asset.description}',
                                '${asset.tags}',
                                '${hastPreview}',
                                '${asset.type}',
-                               '${asset.subtype}',
-                               '${"json"}');`
+                               '${asset.subtype}');`
 
         const response = await TauriSqlitePlugin.Exec(QUERY)
 

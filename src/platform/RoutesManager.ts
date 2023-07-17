@@ -28,7 +28,7 @@ export default class RoutesManager {
     static ROUTE_MESH_EDITOR = `${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
     static ROUTE_POINTCLOUD_EDITOR = `${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
     static ROUTE_PANORAMA_EDITOR = `${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
-    static ROUTE_QUIZ_EDITOR = `${PREFIX_QUIZ_EDITOR}/:projectuid/:quiz`
+    static ROUTE_QUIZ_EDITOR = `${PREFIX_QUIZ_EDITOR}/:projectuid/:examuid`
     static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactory`
     static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstance`
 

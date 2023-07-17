@@ -105,7 +105,7 @@ IMAGE.DEFAULT_DATA = () => new ImageData()
 const EXAM = new AssetDefinition()
 EXAM.TYPE = "quiz"
 EXAM.LANG = "quiz"
-EXAM.LANG_PLURAL = "quizzes"
+EXAM.LANG_PLURAL = "exams"
 EXAM.DEFAULT_PREVIEW = _getPreview(EXAM.TYPE)
 EXAM.DEFAULT_DATA = () => new ExamAssetData()
 
@@ -211,11 +211,11 @@ const Assets = {
 
     dataAssets: () => {
         return [
+            Assets.Exam,
+            Assets.Label,
             Assets.DataFactory,
             Assets.DataInstance,
             Assets.DataSet,
-            Assets.Exam,
-            Assets.Label,
         ]
     },
 

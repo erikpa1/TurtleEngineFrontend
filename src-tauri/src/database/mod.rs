@@ -21,7 +21,6 @@ pub fn FixProject(conn: &Connection) {
              Tags text DEFAULT '',
              Type text,
              Subtype text DEFAULT '',
-             Extension text DEFAULT '',
              HasPreview integer DEFAULT 0
          );",
         [],
@@ -55,16 +54,3 @@ pub fn UpdateAsset(dbc: &Connection, assetLight: &TurtleAsset) -> Result<()> {
     return Ok(());
 }
 
-pub fn CreateAssetData(dbc: &Connection, assetUid: &String, blobData: &[u8]) -> Result<()> {
-    let uid = Uuid::new_v4().to_string();
-
-    let query = format!(
-        "INSERT INTO AssetData (Uid, Data) VALUES ('{}', (?));",
-        uid
-    );
-
-    dbc.execute(&query, params![blobData]).unwrap();
-
-
-    return Ok(());
-}

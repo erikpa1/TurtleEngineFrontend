@@ -24,7 +24,7 @@
   "editor.area": "Area editor",
   "play": "Play",
   "all": "All",
-  "quizzes": "Quizzes",
+  "exams": "Exams",
   "images": "Images",
   "videos": "Videos",
   "panoramas": "Panoramas",
@@ -67,5 +67,13 @@
   "scene.virtual": "Virtual scene",
   "project.configuration": "Project configuration",
   "create": "Create",
-  "upload.snapshot": "Upload snapshot"
+  "upload.snapshot": "Upload snapshot",
+  "question.selection": "Selection",
+  "question.decision": "Decision",
+  "question.connection": "Connection",
+  "question.description": "Description",
+  "question.completion": "Completion",
+  "question.sequence": "Sequence",
+  "question.sorting": "Sorting",
+  "create.question": "Create question"
 }

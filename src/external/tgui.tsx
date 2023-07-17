@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {Box, MenuItem, Select, Tab, Tabs} from "@mui/material";
 
-import {Col, Offcanvas, Row, Stack} from "react-bootstrap";
+import {Col, Modal, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
 
 import {default as IfSwitch, Case} from "react-switch-case/lib/esm";
@@ -22,14 +22,18 @@ import {Default} from "react-switch-case";
 import {Switch} from "@mui/material";
 
 import React from "react";
+import {TurtleModal} from "@components/Modals";
 
 export const TGui = {
     T: useTranslation,
     Row: Row,
     Col: Col,
+    Modal: TurtleModal,
+    ModalTitle: Modal.Title,
     Offcanvas: TurtleOffcanvas,
     OffcanvasTitle: Offcanvas.Title,
     Box: Box as any,
+    PaperBox: _PaperBox as any,
     Card: Card,
     CardHeader: CardHeader,
     CardMedia: CardMedia,
@@ -54,6 +58,16 @@ export const TGui = {
     SingleFileInput: TurtleSingleFileInput,
     TextMicro: _TextMicro
 
+}
+
+function _PaperBox({children}) {
+    return (
+        <TGui.Box
+            sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
+        >
+            {React.Children.toArray(children)}
+        </TGui.Box>
+    )
 }
 
 interface TSwitch {

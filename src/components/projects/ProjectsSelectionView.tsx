@@ -9,6 +9,7 @@ import {useAvailableProjects} from "@hooks/project";
 import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TGui} from "@external/tgui";
 
 
 export default function ProjectsSelectionView({}) {
@@ -81,7 +82,7 @@ export default function ProjectsSelectionView({}) {
                         </div>
                     </div>
 
-                    <Row xs={1} md={4} className="g-4">
+                    <TGui.Row xs={1} md={4} className="g-4">
 
                         {
                             projects.map((value) => {
@@ -93,7 +94,7 @@ export default function ProjectsSelectionView({}) {
                             })
                         }
 
-                    </Row>
+                    </TGui.Row>
 
 
                 </div>

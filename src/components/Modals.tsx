@@ -14,28 +14,45 @@ const Modals = {
 
 
 interface TurtleModalProps {
+    children?: any
+    size?: any
     header?: any
     closeEnabled?: boolean
     body?: any
-    footer?: any
     onHide?: () => void
 }
 
+
 export function TurtleModal(props: TurtleModalProps) {
+
+    const children = React.Children.toArray(props.children)
+
+    const style = {
+        backgroundColor: '#e7ebf0',
+    }
+
     return (
         <Modal
             show={true}
-
+            size={props.size ?? null}
             onHide={props.onHide}
             aria-labelledby="contained-modal-title-vcenter"
             centered
+
         >
-            <Modal.Header closeButton={props.closeEnabled}>{props.header}</Modal.Header>
+            <Modal.Header
+                closeButton={props.closeEnabled}
+                style={style}
+            >
+                {props.header}
+            </Modal.Header>
+
+            <Modal.Body
+                style={style}
+            >{children[0]}</Modal.Body>
+
             {
-                props.body && <Modal.Body>{props.body}</Modal.Body>
-            }
-            {
-                props.footer && <Modal.Footer>{props.footer}</Modal.Footer>
+                children[1] && <Modal.Footer style={style}>{children[1]}</Modal.Footer>
             }
 
         </Modal>
