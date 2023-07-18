@@ -10,7 +10,10 @@ export default function SelectQuizModal({onSelected, onClose}) {
 
     const [t] = TGui.T()
 
-    const [category, setCategory] = React.useState(ExamQuestionTypes.SELECTION)
+
+    const types = ExamQuestionTypes.ToArray()
+
+    const [type, setType] = React.useState(types[0])
 
     return (
         <TGui.Modal
@@ -22,21 +25,29 @@ export default function SelectQuizModal({onSelected, onClose}) {
             <TGui.Row style={{padding: "1em"}}>
 
 
-                <TGui.Col>
+                <TGui.Col xs={3}>
                     <TGui.Card>
-                        <div className={"vstack gap-2"}>
-                            {
-                                ExamQuestionTypes.ToArray().map((value) => {
-                                    return (
-                                        <div key={value}>
-                                            <TGui.Typography>
-                                                {t(`question.${value}`)}
-                                            </TGui.Typography>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+
+                        <TGui.CardContent>
+                            <TGui.ButtonGroup
+                                orientation="vertical"
+                                aria-label="vertical contained button group"
+                                variant="text"
+                            >
+                                {
+                                    types.map((value) => {
+                                        return (
+                                            <TGui.Button
+                                                key={value}
+                                                label={`question.${value}`}
+                                                onClick={() => setType(value)}
+                                            />
+                                        )
+                                    })
+                                }
+                            </TGui.ButtonGroup>
+                        </TGui.CardContent>
+
                     </TGui.Card>
                 </TGui.Col>
 
@@ -59,7 +70,13 @@ export default function SelectQuizModal({onSelected, onClose}) {
             </TGui.Row>
 
             <div>
-                <TGui.Button label={"select"}/>
+                <TGui.Button
+                    label={"select"}
+                    onClick={() => {
+                        onSelected(type)
+                        onClose()
+                    }}
+                />
             </div>
 
 

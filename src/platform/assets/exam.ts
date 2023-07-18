@@ -2,22 +2,20 @@ import {AssetData} from "@platform/assets/Asset";
 
 
 export class ExamQuestionTypes {
-    static SELECTION = "selection" // Vyber z viacerych moznosti
+    static MULTIPLE_CHOICE = "multiple_choice" // Vyber z viacerych moznosti
     static DECISION = "decision" //Rozhodovanie o obsahu veci
-    static CONNECTION = "connection" //Spajanie veci
+    static MATCHING = "matching" //Spajanie veci
     static DESCRIPTION = "description" //Essey a opis danej veci
     static COMPLETION = "completion" //Dopisovanie do policok
-    static SEQUENCE = "sequence" //Davanie do spravneho poradia
     static SORTING = "sorting" //Prehadzovanie medzi chlievikmi
 
     static ToArray(): Array<string> {
         return [
-            ExamQuestionTypes.SELECTION,
+            ExamQuestionTypes.MULTIPLE_CHOICE,
             ExamQuestionTypes.DECISION,
-            ExamQuestionTypes.CONNECTION,
+            ExamQuestionTypes.MATCHING,
             ExamQuestionTypes.DESCRIPTION,
             ExamQuestionTypes.COMPLETION,
-            ExamQuestionTypes.SEQUENCE,
             ExamQuestionTypes.SORTING,
         ]
     }
@@ -49,6 +47,13 @@ export default class ExamAssetData extends AssetData {
 
     }
 
+    PushQuestionOfType(type: string) {
+
+        const tmp = new ExamQuestion()
+        tmp.type = type
+        this.questions.push(tmp)
+    }
+
 }
 
 export class ExamQuestionLayouts {
@@ -58,15 +63,16 @@ export class ExamQuestionLayouts {
 
 export class ExamQuestion {
 
+    uid = crypto.randomUUID()
     header = ""
-    type = ExamQuestionTypes.SELECTION
+    type = ExamQuestionTypes.MULTIPLE_CHOICE
     type_data = {}
     layout = ExamQuestionLayouts.ONE_X_N
 
     answers = new Array<QuestionAnswer>()
 
-
     FromJson(jobj: any) {
+        this.uid = jobj.uid ?? this.uid
         this.header = jobj.header ?? this.header
         this.type = jobj.type ?? this.type
         this.type_data = jobj.type_data ?? this.type_data
@@ -75,6 +81,7 @@ export class ExamQuestion {
 
     ToJson() {
         return {
+            uid: this.uid,
             header: this.header,
             type: this.type,
             type_data: this.type_data,

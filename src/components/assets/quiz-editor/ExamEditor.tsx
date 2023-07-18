@@ -12,7 +12,7 @@ import SoundAnswerEditor from "@components/assets/quiz-editor/SoundAnswerEditor"
 import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswerEditor";
 
 import {ViewContainer} from "@components/ViewContainer";
-import ExamAssetData from "@platform/assets/exam";
+import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
 import HudButton from "@components/assets/HudButton";
@@ -34,10 +34,6 @@ export default function ExamEditor({}) {
     const [asset, setAsset] = React.useState<Asset | null>(null)
 
     React.useEffect(() => {
-
-        console.log(_projectUid)
-        console.log(_examUid)
-
         AssetsApi.GetAssetAndAssetData<ExamAssetData>(ExamAssetData, _projectUid, _examUid).then((value) => {
             setAsset(value)
         })
@@ -47,7 +43,7 @@ export default function ExamEditor({}) {
     if (asset) {
         return (
             <ViewContainer style={{padding: "25px", paddingTop: "55px"}}>
-                <_ExamEditor exam={asset}/>
+                <_ExamEditor asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -57,22 +53,32 @@ export default function ExamEditor({}) {
     }
 }
 
-function _ExamEditor({exam}) {
+
+function _ExamEditor({asset}: { asset: Asset }) {
+
+    const _exam: ExamAssetData = asset.data
 
     return (
         <div className={"vstack gap-3"}>
-            <_QuizAssetCard asset={exam}/>
+            <_QuizAssetCard asset={asset}/>
 
             <TGui.Row>
                 <TGui.Col xs={3}>
-                    <_AnswersList asset={exam}/>
+                    <_AnswersList asset={asset}/>
                 </TGui.Col>
                 <TGui.Col>
                     <div className={"vstack gap-3"}>
-                        <TextAnswerEditor/>
-                        <ImageAnswerEditor/>
-                        <SoundAnswerEditor/>
-                        <SceneTaskAnswerEditor/>
+
+                        {
+                            _exam.questions.map((value) => {
+                                return (
+                                    <div key={value.uid}>
+                                        {value.header}
+                                    </div>
+                                )
+                            })
+                        }
+
                     </div>
                 </TGui.Col>
 
@@ -130,6 +136,14 @@ function _AnswersList({asset}: { asset: Asset }) {
 
     const exam: ExamAssetData = asset.data
 
+    const [questions, setQuestions] = React.useState<Array<ExamQuestion>>([])
+
+    function refresh() {
+        setQuestions([...exam.questions])
+
+    }
+
+    React.useEffect(refresh, [])
 
     return (
 
@@ -139,9 +153,13 @@ function _AnswersList({asset}: { asset: Asset }) {
                 <TGui.CardContent>
                     <div className={"vstack gap-3"}>
                         {
-                            exam.questions.map((value) => {
+                            questions.map((value, index) => {
                                 return (
-                                    <_QuestionLine key={value} question={value} index={value}/>
+                                    <_QuestionLine
+                                        key={value.uid}
+                                        question={value}
+                                        index={index}
+                                    />
                                 )
                             })
                         }
@@ -152,8 +170,7 @@ function _AnswersList({asset}: { asset: Asset }) {
                 <TGui.CardActions>
                     <_AddButton
                         asset={asset}
-                        onRefresh={() => {
-                        }}
+                        onRefresh={refresh}
                     />
                 </TGui.CardActions>
             </TGui.Card>
@@ -186,6 +203,8 @@ function _QuestionLine({question, index}) {
 
 function _AddButton({asset, onRefresh}) {
 
+    const _exam: ExamAssetData = asset.data
+
 
     const popupZus = useGlobalPopup()
 
@@ -194,7 +213,8 @@ function _AddButton({asset, onRefresh}) {
             <SelectQuizModal
                 onClose={popupZus.popElement}
                 onSelected={(type) => {
-                    alert("Unimplemented")
+                    _exam.PushQuestionOfType(type)
+                    onRefresh()
                 }}
             />
         )

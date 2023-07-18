@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Box, MenuItem, Select, Tab, Tabs} from "@mui/material";
+import {Box, ButtonGroup, MenuItem, Select, Tab, Tabs} from "@mui/material";
 
 import {Col, Modal, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
@@ -41,6 +41,7 @@ export const TGui = {
     Typography: Typography,
     CardActions: CardActions,
     Button: TurtleButton,
+    ButtonGroup: ButtonGroup,
     Select: Select,
     TSelect: TurtleSelectField,
 
