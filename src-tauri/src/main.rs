@@ -11,8 +11,15 @@ mod plugins;
 mod database;
 
 
+use tfs;
+
+
 fn main() {
     let mut app = app::AppState::New();
+
+    println!("-----------");
+    println!("Running Turtle engine on path: {}", &tfs::GetExePath());
+    println!("-----------");
 
     tauri::Builder::default()
         .manage(app)

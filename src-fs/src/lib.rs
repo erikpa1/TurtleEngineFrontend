@@ -4,7 +4,7 @@ use std::env;
 use std::fmt::format;
 use std::fs;
 use std::fs::{File};
-use std::path::{Path, PathBuf};
+use std::path::{Path, PathBuf, Component};
 
 
 pub fn GetExePath() -> String {
@@ -19,17 +19,11 @@ pub fn GetExePath() -> String {
 }
 
 pub fn GetProjectsPath() -> String {
-    let original_path = format!("{}/../projects/", GetExePath());
+    let original_path = format!("{}\\..\\projects\\", &GetExePath());
     // Create a PathBuf from the original path
-    let mut path_buf = PathBuf::from(original_path);
+    let mut path_buf = PathBuf::from(&original_path);
 
-    let canonical_path = match path_buf.canonicalize() {
-        Ok(path) => path,
-        Err(err) => {
-            println!("Failed to canonicalize path: {}", err);
-            return "".into();
-        }
-    };
+    let canonical_path = NormalizePath(&path_buf);
 
     let final_path = match canonical_path.to_str() {
         Some(path_str) => path_str.to_string(),
@@ -47,6 +41,33 @@ pub fn GetProjectsPath() -> String {
     };
 
     return path_without_prefix.into();
+}
+
+pub fn NormalizePath(path: &Path) -> PathBuf {
+    let mut components = path.components().peekable();
+    let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
+        components.next();
+        PathBuf::from(c.as_os_str())
+    } else {
+        PathBuf::new()
+    };
+
+    for component in components {
+        match component {
+            Component::Prefix(..) => unreachable!(),
+            Component::RootDir => {
+                ret.push(component.as_os_str());
+            }
+            Component::CurDir => {}
+            Component::ParentDir => {
+                ret.pop();
+            }
+            Component::Normal(c) => {
+                ret.push(c);
+            }
+        }
+    }
+    ret
 }
 
 

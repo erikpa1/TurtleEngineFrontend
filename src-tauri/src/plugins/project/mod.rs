@@ -29,12 +29,20 @@ use crate::database::FixProject;
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
     let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
+
     createParams.uid = Uuid::new_v4().to_string();
+
+    println!("--------");
+    println!("{}", tfs::GetExePath());
+    println!("{}", tfs::GetProjectsPath());
 
 
     let projectFolder = format!("{}{}/", tfs::GetProjectsPath(), createParams.uid);
 
     let dbPath = format!("{}/project.db", projectFolder);
+
+    println!("Exe path: {}", &tfs::GetExePath());
+    println!("Creating project folder: {}", &projectFolder);
 
     tfs::CreateFolders(&projectFolder);
 
@@ -144,9 +152,6 @@ async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -
 async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> {
     return Ok(state.activeProjectUid.lock().unwrap().clone());
 }
-
-
-
 
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
