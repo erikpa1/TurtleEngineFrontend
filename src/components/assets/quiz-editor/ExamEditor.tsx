@@ -3,13 +3,6 @@ import {useParams} from "react-router-dom";
 
 import {MiddleSpinner} from "@components/Spinners";
 
-import TextAnswerEditor from "@components/assets/quiz-editor/TextAnswerEditor";
-
-import ImageAnswerEditor from "@components/assets/quiz-editor/ImageAnswerEditor";
-
-import SoundAnswerEditor from "@components/assets/quiz-editor/SoundAnswerEditor";
-
-import SceneTaskAnswerEditor from "@components/assets/quiz-editor/SceneTaskAnswerEditor";
 
 import {ViewContainer} from "@components/ViewContainer";
 import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
@@ -21,6 +14,8 @@ import FsTools from "@api/FsTools";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import SelectQuizModal from "@components/assets/quiz-editor/SelectQuizTypeModal";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
+import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
 
 export default function ExamEditor({}) {
 
@@ -42,8 +37,8 @@ export default function ExamEditor({}) {
 
     if (asset) {
         return (
-            <ViewContainer style={{padding: "25px", paddingTop: "55px"}}>
-                <_ExamEditor asset={asset}/>
+            <ViewContainer style={{padding: "0em", paddingTop: "3em"}}>
+                <_ViewDispatcher asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -53,10 +48,49 @@ export default function ExamEditor({}) {
     }
 }
 
+function _ViewDispatcher({asset}) {
+
+    const [t] = TGui.T()
+
+    const [tab, setTab] = React.useState("0")
+
+    return (
+        <div className={"vstack gap-3"}>
+            <TGui.PaperBox>
+                <TGui.Tabs
+                    value={tab}
+                    onChange={(_, value) => {
+                        setTab(value)
+                    }}
+                    centered
+                >
+                    <TGui.Tab value={"0"} label={t("edit")}/>
+                    <TGui.Tab value={"1"} label={t("preview")}/>
+                </TGui.Tabs>
+            </TGui.PaperBox>
+
+            <TGui.Switch condition={tab}>
+                <TGui.Case value={"0"}>
+                    <_ExamEditor asset={asset}/>
+                </TGui.Case>
+
+                <TGui.Case value={"1"}>
+                    Preview is not implemented
+                </TGui.Case>
+
+            </TGui.Switch>
+        </div>
+    )
+
+}
 
 function _ExamEditor({asset}: { asset: Asset }) {
 
-    const _exam: ExamAssetData = asset.data
+    const [exam, setExam] = React.useState<[ExamAssetData]>([asset.data])
+
+    function refresh() {
+        setExam([asset.data])
+    }
 
     return (
         <div className={"vstack gap-3"}>
@@ -64,17 +98,21 @@ function _ExamEditor({asset}: { asset: Asset }) {
 
             <TGui.Row>
                 <TGui.Col xs={3}>
-                    <_AnswersList asset={asset}/>
+                    <ExamQuestionsList exam={exam[0]} onRefresh={refresh}/>
                 </TGui.Col>
                 <TGui.Col>
+
                     <div className={"vstack gap-3"}>
 
                         {
-                            _exam.questions.map((value) => {
+                            exam[0].questions.map((value) => {
                                 return (
-                                    <div key={value.uid}>
-                                        {value.header}
-                                    </div>
+                                    <QuestionEditCard
+                                        exam={exam[0]}
+                                        question={value}
+                                        key={value.uid}
+                                        onRefresh={refresh}
+                                    />
                                 )
                             })
                         }
@@ -132,108 +170,3 @@ function _QuizAssetCard({asset}: { asset: Asset }) {
     )
 }
 
-function _AnswersList({asset}: { asset: Asset }) {
-
-    const exam: ExamAssetData = asset.data
-
-    const [questions, setQuestions] = React.useState<Array<ExamQuestion>>([])
-
-    function refresh() {
-        setQuestions([...exam.questions])
-
-    }
-
-    React.useEffect(refresh, [])
-
-    return (
-
-        <div className={"vstack gap-3"}>
-
-            <TGui.Card>
-                <TGui.CardContent>
-                    <div className={"vstack gap-3"}>
-                        {
-                            questions.map((value, index) => {
-                                return (
-                                    <_QuestionLine
-                                        key={value.uid}
-                                        question={value}
-                                        index={index}
-                                    />
-                                )
-                            })
-                        }
-
-                    </div>
-                </TGui.CardContent>
-
-                <TGui.CardActions>
-                    <_AddButton
-                        asset={asset}
-                        onRefresh={refresh}
-                    />
-                </TGui.CardActions>
-            </TGui.Card>
-
-
-        </div>
-
-
-    )
-}
-
-function _QuestionLine({question, index}) {
-    return (
-        <div className={"hstack gap-1"}>
-            <b>{index + 1}.</b>
-            <TGui.Typography>
-                {"Some name"}
-            </TGui.Typography>
-
-            <div className={"hstack gap-1"} style={{marginLeft: "auto"}}>
-                <div>{"<"}</div>
-                <div>{">"}</div>
-                <div>{"x"}</div>
-
-            </div>
-
-        </div>
-    )
-}
-
-function _AddButton({asset, onRefresh}) {
-
-    const _exam: ExamAssetData = asset.data
-
-
-    const popupZus = useGlobalPopup()
-
-    function addPressed() {
-        popupZus.pushElement(
-            <SelectQuizModal
-                onClose={popupZus.popElement}
-                onSelected={(type) => {
-                    _exam.PushQuestionOfType(type)
-                    onRefresh()
-                }}
-            />
-        )
-
-    }
-
-    return (
-        <TGui.Button
-            label={"add"}
-            onClick={addPressed}
-        />
-    )
-
-}
-
-function _Print() {
-    return (
-        <TGui.Button
-            label={"print"}
-        />
-    )
-}

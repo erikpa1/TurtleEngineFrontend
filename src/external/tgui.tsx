@@ -44,7 +44,7 @@ export const TGui = {
     ButtonGroup: ButtonGroup,
     Select: Select,
     TSelect: TurtleSelectField,
-
+    IconClickButton: _IconClickButton as React.FC<_IconClickButtonProps>,
     BtnSwitch: Switch,
 
     MenuItem: MenuItem,
@@ -92,5 +92,27 @@ function _TextMicro({children}) {
             {React.Children.toArray(children)}
         </Typography>
 
+    )
+}
+
+interface _IconClickButtonProps {
+    size: string
+    image: string
+    onClick?: any
+
+}
+
+function _IconClickButton(props: _IconClickButtonProps) {
+
+    return (
+        <img
+            style={{
+                width: props.size,
+                height: props.size,
+                cursor: "pointer",
+            }}
+            onClick={props.onClick}
+            src={props.image}
+        />
     )
 }

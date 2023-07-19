@@ -30,7 +30,7 @@ use crate::database::FixProject;
 async fn CreateProject(projectJson: String) -> String {
     let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
 
-    createParams.uid = Uuid::new_v4().to_string();
+    createParams.uid = format!("project-{}", Uuid::new_v4().to_string());
 
     println!("--------");
     println!("{}", tfs::GetExePath());

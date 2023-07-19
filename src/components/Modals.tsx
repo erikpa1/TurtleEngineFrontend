@@ -118,9 +118,14 @@ export function YesNoModal(props: YesNoModalProps) {
             closeEnabled={true}
             header={<Modal.Title>{t("confirm")}</Modal.Title>}
             body={<>{t(_lang)}</>}
-            footer={footer}
 
-        />
+        >
+            <div/>
+            {
+                footer
+            }
+
+        </TurtleModal>
     )
 }
 

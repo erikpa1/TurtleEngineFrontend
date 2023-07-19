@@ -35,7 +35,7 @@ export default class ExamAssetData extends AssetData {
     }
 
 
-    FromJson(jobj: any) {
+    FromJson(context, jobj: any) {
         const _questions = jobj.questions ?? []
 
         for (const i of _questions) {
@@ -47,10 +47,22 @@ export default class ExamAssetData extends AssetData {
 
     }
 
-    PushQuestionOfType(type: string) {
+    CreateQuestionOfType(type: string) {
 
         const tmp = new ExamQuestion()
+        tmp.header = "Is turtle best engine"
         tmp.type = type
+
+        const tmpTrue = new QuestionAnswer()
+        tmpTrue.text = "true"
+
+        const tmpFalse = new QuestionAnswer()
+        tmpFalse.text = "false"
+
+        tmp.answers.push(tmpTrue)
+        tmp.answers.push(tmpFalse)
+
+
         this.questions.push(tmp)
     }
 
@@ -98,8 +110,19 @@ export class ExamQuestion {
 
 export class QuestionAnswer {
 
+    uid = crypto.randomUUID()
+    text = ""
+
     ToJson() {
-        return {}
+        return {
+            uid: this.uid,
+            text: this.text
+        }
+    }
+
+    FromJson(jobj: any) {
+        this.uid = jobj.uid ?? this.uid
+        this.text = jobj.text ?? this.text
     }
 
 }
