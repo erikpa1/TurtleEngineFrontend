@@ -17,26 +17,12 @@ import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRot
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {MeshAssetData} from "@platform/assets/mesh";
 
-import AssetsApi from "@api/AssetsApi";
 import Asset from "@platform/assets/Asset";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 export default function MeshEditor({}) {
 
-    const {projectuid, meshuid} = useParams()
-
-    const _projectUid: string = projectuid ?? ""
-    const _meshuidUid: string = meshuid ?? ""
-
-
-    const [asset, setAsset] = React.useState<Asset | null>(null)
-
-    React.useEffect(() => {
-
-        AssetsApi.GetAssetAndAssetData<MeshAssetData>(MeshAssetData, _projectUid, _meshuidUid).then((value) => {
-            setAsset(value)
-        })
-
-    }, [_projectUid, _meshuidUid])
+    const asset = useLoadAssetFromParams()
 
     if (asset) {
         return (

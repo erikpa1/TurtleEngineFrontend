@@ -12,13 +12,14 @@ export default class VirtualSceneDefinition extends SceneDefinition {
         super()
     }
 
-    FromJson(jObject: any) {
-        super.FromJson(jObject)
+    FromJson(context: any, jObject: any) {
+        super.FromJson(context, jObject)
+
     }
 
     ToJson() {
         return {
-            ...super.ToJson()
+            ...super.ToJson(),
         }
     }
 

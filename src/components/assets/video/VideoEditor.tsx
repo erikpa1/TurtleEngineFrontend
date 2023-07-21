@@ -11,22 +11,12 @@ import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import TauriOsPlugin from "../../../tauri/plugin_os";
 import ImagesApi from "@api/ImagesApi";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 export default function VideoEditor({}) {
 
-    const {projectuid, videouid} = useParams()
+    const asset = useLoadAssetFromParams()
 
-    const _projectUid: string = projectuid ?? ""
-    const _videoUid: string = videouid ?? ""
-
-    const [asset, setAsset] = React.useState<Asset | null>(null)
-
-    React.useEffect(() => {
-        AssetsApi.GetAssetAndAssetData<VideoData>(VideoData, _projectUid, _videoUid).then((value) => {
-            setAsset(value)
-        })
-
-    }, [_projectUid, _videoUid])
 
     if (asset) {
         return (

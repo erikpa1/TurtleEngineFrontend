@@ -13,22 +13,11 @@ import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 import PhotoDom from "@components/assets/panorama/PhotoDom";
 import AssetsApi from "@api/AssetsApi";
 import Asset from "@platform/assets/Asset";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 export default function PanoramaEditor({}) {
-    const {projectuid, panoramauid} = useParams()
 
-    const _projectUid: string = projectuid ?? ""
-    const _panoramaUid: string = panoramauid ?? ""
-
-    const [asset, setAsset] = React.useState<Asset | null>(null)
-
-    React.useEffect(() => {
-
-        AssetsApi.GetAssetAndAssetData<PanoramaAssetData>(PanoramaAssetData, _projectUid, _panoramaUid).then((value) => {
-            setAsset(value)
-        })
-
-    }, [_projectUid, _panoramaUid])
+    const asset = useLoadAssetFromParams()
 
     if (asset) {
         return (

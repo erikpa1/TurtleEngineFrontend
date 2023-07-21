@@ -2,7 +2,7 @@ import React from "react";
 import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
 import {TGui} from "@external/tgui";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import SelectQuizModal from "@components/assets/quiz-editor/SelectQuizTypeModal";
+import SelectQuestionModal from "@components/assets/quiz-editor/SelectQuestionTypeModal";
 
 
 interface ExamQuestionsListProps {
@@ -108,7 +108,7 @@ function _AddButton({exam, onRefresh}) {
 
     function addPressed() {
         popupZus.pushElement(
-            <SelectQuizModal
+            <SelectQuestionModal
                 onClose={popupZus.popElement}
                 onSelected={(type) => {
                     _exam.CreateQuestionOfType(type)

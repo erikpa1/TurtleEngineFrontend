@@ -21,8 +21,8 @@ export default class PanoramaSceneDefinition extends VirtualSceneDefinition {
         }
     }
 
-    FromJson(jObject: any | PanoramaSceneDefinition) {
-        super.FromJson(jObject);
+    FromJson(context: any, jObject: any | PanoramaSceneDefinition) {
+        super.FromJson(context, jObject);
         this.panorama_uid = jObject.panorama_uid ?? ""
     }
 

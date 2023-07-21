@@ -6,7 +6,7 @@ import Assets from "@platform/assets/Assets";
 import FsTools from "@api/FsTools";
 
 
-export default function SelectQuizModal({onSelected, onClose}) {
+export default function SelectQuestionModal({onSelected, onClose}) {
 
     const [t] = TGui.T()
 

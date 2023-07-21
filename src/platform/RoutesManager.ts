@@ -10,7 +10,7 @@ const PREFIX_VIDEO_EDITOR = "/video-editor"
 const PREFIX_MATERIAL_EDITOR = "/material-editor"
 const PREFIX_POINTCLOUD_EDITOR = "/point-cloud-editor"
 const PREFIX_PANORAMA_EDITOR = "/panorama-editor"
-const PREFIX_QUIZ_EDITOR = "/quiz-editor"
+const PREFIX_EXAM_EDITOR = "/exam-editor"
 const PREFIX_DATAFACTORY_EDITOR = "/data-factory-editor"
 const PREFIX_DATAINSTANCE_EDITOR = "/data-instance-editor"
 const PREFIX_TRAININGTASKSET_EDITOR = "/training-task-set-editor"
@@ -22,17 +22,17 @@ export default class RoutesManager {
     static ROUTE_ASSETS = `${PREFIX_ASSETS}/:projectuid`
     static ROUTE_PROJECT_CONFIG = `${PREFIX_PROJECT_CONFIG}/:projectuid`
     static ROUTE_PLAY = `${PREFIX_PLAY}/:projectuid`
-    static ROUTE_SCENE_EDITOR = `${PREFIX_SCENE_EDITOR}/:projectuid/:sceneuid`
-    static ROUTE_VIDEO_EDITOR = `${PREFIX_VIDEO_EDITOR}/:projectuid/:videouid`
-    static ROUTE_AREA_EDITOR = `${PREFIX_AREA_EDITOR}/:projectuid/:areauid`
-    static ROUTE_MATERIAL_EDITOR = `${PREFIX_MATERIAL_EDITOR}/:projectuid/:materialuid`
-    static ROUTE_MESH_EDITOR = `${PREFIX_MESH_EDITOR}/:projectuid/:meshuid`
-    static ROUTE_POINTCLOUD_EDITOR = `${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
-    static ROUTE_PANORAMA_EDITOR = `${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
-    static ROUTE_QUIZ_EDITOR = `${PREFIX_QUIZ_EDITOR}/:projectuid/:examuid`
-    static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactoryuid`
-    static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstanceuid`
-    static ROUTE_TRAININGTASKSET_EDITOR = `${PREFIX_TRAININGTASKSET_EDITOR}/:projectuid/:trainingtaskuid`
+    static ROUTE_SCENE_EDITOR = `${PREFIX_SCENE_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_VIDEO_EDITOR = `${PREFIX_VIDEO_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_AREA_EDITOR = `${PREFIX_AREA_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_MATERIAL_EDITOR = `${PREFIX_MATERIAL_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_MESH_EDITOR = `${PREFIX_MESH_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_POINTCLOUD_EDITOR = `${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_PANORAMA_EDITOR = `${PREFIX_PANORAMA_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_QUIZ_EDITOR = `${PREFIX_EXAM_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:assetuid`
+    static ROUTE_TRAININGTASKSET_EDITOR = `${PREFIX_TRAININGTASKSET_EDITOR}/:projectuid/:assetuid`
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
@@ -78,8 +78,8 @@ export default class RoutesManager {
         return `${PREFIX_PANORAMA_EDITOR}/${projectUid}/${panoramaUid}`
     }
 
-    static QuizEditor(projectUid: string, quizUid: string): string {
-        return `${PREFIX_QUIZ_EDITOR}/${projectUid}/${quizUid}`
+    static ExamEditor(projectUid: string, examuid: string): string {
+        return `${PREFIX_EXAM_EDITOR}/${projectUid}/${examuid}`
     }
 
     static TrainingTaskSetEditor(projectUid: string, trainingtasksetuid: string): string {
@@ -103,7 +103,7 @@ export default class RoutesManager {
 const ASSET_ROUTES_MAP = new Map<string, any>([
     [Assets.Video.TYPE, RoutesManager.VideoEditor],
     [Assets.Area.TYPE, RoutesManager.AreaEditor],
-    [Assets.Exam.TYPE, RoutesManager.QuizEditor],
+    [Assets.Exam.TYPE, RoutesManager.ExamEditor],
     [Assets.Mesh.TYPE, RoutesManager.MeshEditor],
     [Assets.Material.TYPE, RoutesManager.MaterialEditor],
     [Assets.Panorama.TYPE, RoutesManager.PanoramaEditor],

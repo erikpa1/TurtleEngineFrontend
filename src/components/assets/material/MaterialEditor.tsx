@@ -1,9 +1,8 @@
 import React from "react";
 
-import Material from "@platform/assets/material";
 
 import {MiddleSpinner} from "@components/Spinners";
-import {useParams} from "react-router-dom";
+
 import {Canvas, useThree} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 import {TGui} from "@external/tgui";
@@ -13,6 +12,9 @@ import * as three from "three"
 import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+import MaterialData from "@platform/assets/material";
+import Asset from "@platform/assets/Asset";
 
 
 const TEXTURES = {
@@ -27,25 +29,12 @@ const TEXTURES = {
 export default function MaterialEditor({}) {
 
 
-    const {projectuid, materialuid} = useParams()
+    const asset = useLoadAssetFromParams()
 
-    const _projectUid: string = projectuid ?? ""
-    const _materialUid: string = materialuid ?? ""
-
-    const [material, setMaterial] = React.useState<Material | null>(null)
-
-    React.useEffect(() => {
-
-        // AssetsApi.GetAssetData(Assets.Material, _projectUid, _materialUid).then((value) => {
-        //     setMaterial(value)
-        // })
-
-    }, [_projectUid, _materialUid])
-
-    if (material) {
+    if (asset) {
         return (
             <ViewContainer>
-                <_MaterialEditor material={material}/>
+                <_MaterialEditor asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -57,10 +46,13 @@ export default function MaterialEditor({}) {
 }
 
 interface _MaterialEditorProps {
-    material: Material
+    asset: Asset
 }
 
-function _MaterialEditor({material}) {
+function _MaterialEditor({asset}: _MaterialEditorProps) {
+
+    const material: MaterialData = asset.data
+
     return (
         <div className={"hstack gap-3"}>
 

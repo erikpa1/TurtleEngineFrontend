@@ -114,13 +114,12 @@ export default class AssetsApi {
         asset.FromJson(context, data)
 
         return asset as any
-
     }
 
-    static async GetAssetAndAssetData<T extends AssetData>(clazz: any, project_uid: string, asset_uid: string): Promise<Asset> {
+    static async GetAssetAndAssetData(clazz: any, project_uid: string, asset_uid: string): Promise<Asset> {
 
         const asset = await AssetsApi.GetAsset(project_uid, asset_uid)
-        const data = await AssetsApi.GetAssetData<T>(clazz, project_uid, asset_uid)
+        const data = await AssetsApi.GetAssetData<any>(clazz, project_uid, asset_uid)
 
         asset.data = data
 

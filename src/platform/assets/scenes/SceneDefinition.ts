@@ -1,19 +1,21 @@
 import {SceneNode} from "@platform/scene/SceneNode";
+import {AssetData, ProjectSerializationContext} from "@platform/assets/Asset";
 
-export default class SceneDefinition {
+export default class SceneDefinition extends AssetData {
 
-    uid = ""
     root = new SceneNode()
+    type = "base"
 
     ToJson(): any {
         return {
-            uid: this.uid,
-            root: this.root
+            ...super.ToJson(),
+            root: this.root,
         }
     }
 
-    FromJson(jObject: any) {
-        this.uid = jObject.uid ?? ""
+    FromJson(context: ProjectSerializationContext, jObject: any) {
+        super.FromJson(context, jObject)
+
         this.root.FromJson(jObject.root ?? {})
     }
 

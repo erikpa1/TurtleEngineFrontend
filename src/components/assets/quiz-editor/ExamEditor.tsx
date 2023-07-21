@@ -12,28 +12,15 @@ import HudButton from "@components/assets/HudButton";
 import Asset from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import SelectQuizModal from "@components/assets/quiz-editor/SelectQuizTypeModal";
+import SelectQuestionModal from "@components/assets/quiz-editor/SelectQuestionTypeModal";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 export default function ExamEditor({}) {
 
-    const {projectuid, examuid} = useParams()
-
-    const _projectUid: string = projectuid ?? ""
-
-    const _examUid: string = examuid ?? ""
-
-
-    const [asset, setAsset] = React.useState<Asset | null>(null)
-
-    React.useEffect(() => {
-        AssetsApi.GetAssetAndAssetData<ExamAssetData>(ExamAssetData, _projectUid, _examUid).then((value) => {
-            setAsset(value)
-        })
-
-    }, [_projectUid, _examUid])
+    const asset = useLoadAssetFromParams()
 
     if (asset) {
         return (

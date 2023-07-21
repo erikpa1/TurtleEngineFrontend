@@ -1,31 +1,19 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import QuizAsset from "@platform/assets/exam";
+
 import {ViewContainer} from "@components/ViewContainer";
 import {MiddleSpinner} from "@components/Spinners";
 import Datafactory from "@platform/assets/datafactory";
+import Asset from "@platform/assets/Asset";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 export default function DataFactoryEditor() {
-    const {projectuid, datafactoryuid} = useParams()
 
-    const _projectUid: string = projectuid ?? ""
+    const asset = useLoadAssetFromParams()
 
-    const _dataFactoryUid: string = datafactoryuid ?? ""
-
-    const [factory, setFactory] = React.useState<QuizAsset | null>(null)
-
-    React.useEffect(() => {
-
-        // AssetsApi.GetAssetData<Datafactory>(Assets.DataFactory, _projectUid, _dataFactoryUid).then((value) => {
-        //     setFactory(value)
-        // })
-
-    }, [_projectUid, _dataFactoryUid])
-
-    if (factory) {
+    if (asset) {
         return (
             <ViewContainer>
-                <_DataFactoryView factory={factory}/>
+                <_DataFactoryView asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -35,9 +23,10 @@ export default function DataFactoryEditor() {
     }
 }
 
-function _DataFactoryView({factory}: { factory: Datafactory }) {
+function _DataFactoryView({asset}: { asset: Asset }) {
     return (
         <>
+            Unimplemented
         </>
     )
 }

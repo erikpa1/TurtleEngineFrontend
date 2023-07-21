@@ -8,28 +8,6 @@ import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefiniti
 
 export default class SceneApi {
 
-    static async GetSceneDefinition(clazz: any, projectUid: string, sceneUid: string): Promise<VirtualSceneDefinition> {
-
-        const sceneDefinition = new clazz()
-
-        if (PlatformDispatcher.IsDesktop()) {
-            const path = FsTools.GetPathInProject(projectUid, `Assets/${sceneUid}/Default.json`)
-
-            const exists = await TauriOsPlugin.FileExists(path);
-
-            if (!exists) {
-                await TauriOsPlugin.WriteFileString(path, "{}")
-            }
-            const fileData = await TauriOsPlugin.ReadFileString(path)
-            sceneDefinition.FromJson(JSON.parse(fileData))
-
-        } else {
-            //pass
-        }
-
-        return sceneDefinition
-    }
-
     static async SaveSceneDefinition(projectUid: string, sceneUid: string, sceneDefinition: VirtualSceneDefinition): Promise<boolean> {
 
 

@@ -20,30 +20,25 @@ import PanoramaAsset from "@platform/assets/panorama";
 import FsTools from "@api/FsTools";
 import {OrbitControls} from "@react-three/drei";
 import Asset from "@platform/assets/Asset";
+import {useLoadAsset, useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 
 interface PanoramaSceneEditorProps {
-    scene: Asset
+    asset: Asset
 }
 
-export default function PanoramaSceneEditor({scene}: PanoramaSceneEditorProps) {
+export default function PanoramaSceneEditor({asset}: PanoramaSceneEditorProps) {
 
-    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: PanoramaSceneDefinition } | null>()
+    const [sceneDefinition, setSceneDefinition] = React.useState<[PanoramaSceneDefinition] | null>([asset.data])
 
-    React.useEffect(() => {
-        SceneApi.GetSceneDefinition(PanoramaSceneDefinition, scene.parent_project_uid, scene.uid).then((value) => {
-            setSceneDefinition({value: value as PanoramaSceneDefinition})
-        })
-
-    }, [])
 
     if (sceneDefinition) {
         return (
             <_PanoramaSceneEditor
-                scene={scene}
-                sceneDefinition={sceneDefinition.value}
+                scene={asset}
+                sceneDefinition={sceneDefinition[0]}
                 onSceneDefinitionChanged={() => {
-                    setSceneDefinition({value: sceneDefinition.value})
+                    setSceneDefinition([asset.data])
                 }}
             />
         )
@@ -76,8 +71,10 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
 
                 <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
 
-                <_PanoramaLoader panoramaUid={props.sceneDefinition.panorama_uid}/>
-
+                <_PanoramaLoader
+                    projectUid={props.scene.parent_project_uid}
+                    panoramaUid={props.sceneDefinition.panorama_uid}
+                />
 
                 <OrbitControls makeDefault
                                target={[0, 0.15, 0]}
@@ -86,7 +83,6 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
                 />
 
                 <UniversalWorldGrid height={-80}/>
-
 
             </UniversalMeshCanvas>
 
@@ -100,12 +96,12 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
     )
 }
 
-function _PanoramaLoader({panoramaUid}) {
+function _PanoramaLoader({projectUid, panoramaUid}) {
 
 
     if (panoramaUid && panoramaUid !== "") {
         return (
-            <_PanoramaAssetLoader assetUid={panoramaUid}/>
+            <_PanoramaAssetLoader projectUid={projectUid} assetUid={panoramaUid}/>
         )
     } else {
 
@@ -116,14 +112,14 @@ function _PanoramaLoader({panoramaUid}) {
 }
 
 
-function _PanoramaAssetLoader({assetUid}) {
+function _PanoramaAssetLoader({projectUid, assetUid}) {
 
 
-    const [panoAsset, setPanoAsset] = React.useState<PanoramaAsset | null>(null)
+    const asset = useLoadAsset(projectUid, assetUid)
 
-    if (panoAsset) {
+    if (asset) {
         return (
-            <PhotoDom panorama={panoAsset}/>
+            <PhotoDom asset={asset}/>
         )
     } else {
         return (<></>)

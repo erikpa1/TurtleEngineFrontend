@@ -27,22 +27,15 @@ interface VirtualSceneEditorProps {
 
 export default function VirtualSceneEditor({asset}: VirtualSceneEditorProps) {
 
-    const [sceneDefinition, setSceneDefinition] = React.useState<{ value: VirtualSceneDefinition } | null>()
-
-    React.useEffect(() => {
-        SceneApi.GetSceneDefinition(VirtualSceneDefinition, asset.parent_project_uid, asset.uid).then((value) => {
-            setSceneDefinition({value: value})
-        })
-
-    }, [])
+    const [sceneDefinition, setSceneDefinition] = React.useState<[VirtualSceneDefinition] | null>([asset.data])
 
     if (sceneDefinition) {
         return (
             <_VirtualSceneEditor
                 asset={asset}
-                sceneDefinition={sceneDefinition.value}
+                sceneDefinition={sceneDefinition[0]}
                 onSceneDefinitionChanged={() => {
-                    setSceneDefinition({value: sceneDefinition.value})
+                    setSceneDefinition([asset.data])
                 }}
             />
         )

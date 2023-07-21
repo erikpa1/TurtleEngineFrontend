@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import AssetsApi from "@api/AssetsApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import Asset from "@platform/assets/Asset";
-import useOpenAssetDispatcher from "@components/assets/prelude";
+import {useOpenAssetDispatcher} from "@components/assets/assets_hooks";
 import FsTools from "@api/FsTools";
 
 

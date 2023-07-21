@@ -12,6 +12,9 @@ import FontData from "@platform/assets/font";
 import DataFactoryData from "@platform/assets/datafactory";
 import DataInstanceData from "@platform/assets/datainstance";
 import TrainingTaskSetData from "@platform/assets/trainingTaskSetData";
+import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
+import PanoramaSceneDefinition from "@platform/assets/scenes/PanoramaSceneDefinition";
+import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
 
 export class AssetSubtype {
     key = ""
@@ -26,9 +29,11 @@ export class AssetDefinition {
 
     DEFAULT_PREVIEW = ""
     DEFAULT_FILES = new Array<[string, string]>()
+    SUBTYPES_CONSTRUCTORS: any | null = {}
     DEFAULT_DATA: () => AssetData = () => {
         return new AssetData()
     }
+
     SUBTYPES = new Array<AssetSubtype>()
 }
 
@@ -43,12 +48,14 @@ MATERIAL.LANG = "material"
 MATERIAL.LANG_PLURAL = "materials"
 MATERIAL.DEFAULT_PREVIEW = _getPreview(MATERIAL.TYPE)
 MATERIAL.DEFAULT_DATA = () => new MaterialData()
+MATERIAL.SUBTYPES_CONSTRUCTORS = {"": MaterialData}
 
 const MESH = new AssetDefinition()
 MESH.TYPE = "mesh"
 MESH.LANG = "mesh"
 MESH.LANG_PLURAL = "meshes"
 MESH.DEFAULT_PREVIEW = _getPreview(MESH.TYPE)
+MESH.SUBTYPES_CONSTRUCTORS = {"": MeshAssetData}
 MESH.DEFAULT_DATA = () => {
     const tmp = new MeshAssetData()
     tmp.mesh_extension = "glb"
@@ -64,13 +71,14 @@ POINTCLOUD.LANG = "pointcloud"
 POINTCLOUD.LANG_PLURAL = "pointclouds"
 POINTCLOUD.DEFAULT_PREVIEW = _getPreview(POINTCLOUD.TYPE)
 POINTCLOUD.DEFAULT_DATA = () => new PointCloudData()
-
+POINTCLOUD.SUBTYPES_CONSTRUCTORS = {"": PointCloudData}
 
 const PANORAMA = new AssetDefinition()
 PANORAMA.TYPE = "panorama"
 PANORAMA.LANG = "panorama"
 PANORAMA.LANG_PLURAL = "panoramas"
 PANORAMA.DEFAULT_PREVIEW = _getPreview(PANORAMA.TYPE)
+PANORAMA.SUBTYPES_CONSTRUCTORS = {"": PanoramaAssetData}
 PANORAMA.DEFAULT_DATA = () => {
     const tmp = new PanoramaAssetData()
     tmp.extension = "jpg"
@@ -86,6 +94,7 @@ VIDEO.LANG = "video"
 VIDEO.LANG_PLURAL = "videos"
 VIDEO.DEFAULT_PREVIEW = _getPreview(VIDEO.TYPE)
 VIDEO.DEFAULT_DATA = () => new VideoData()
+VIDEO.SUBTYPES_CONSTRUCTORS = {"": VideoData}
 
 VIDEO.DEFAULT_DATA = () => {
     const tmp = new VideoData()
@@ -102,6 +111,7 @@ IMAGE.LANG = "image"
 IMAGE.LANG_PLURAL = "images"
 IMAGE.DEFAULT_PREVIEW = _getPreview(IMAGE.TYPE)
 IMAGE.DEFAULT_DATA = () => new ImageData()
+IMAGE.SUBTYPES_CONSTRUCTORS = {"": ImageData}
 
 const EXAM = new AssetDefinition()
 EXAM.TYPE = "quiz"
@@ -109,6 +119,7 @@ EXAM.LANG = "quiz"
 EXAM.LANG_PLURAL = "exams"
 EXAM.DEFAULT_PREVIEW = _getPreview(EXAM.TYPE)
 EXAM.DEFAULT_DATA = () => new ExamAssetData()
+EXAM.SUBTYPES_CONSTRUCTORS = {"": ExamAssetData}
 
 const AREA = new AssetDefinition()
 AREA.TYPE = "area"
@@ -116,12 +127,14 @@ AREA.LANG = "area"
 AREA.LANG_PLURAL = "areas"
 AREA.DEFAULT_PREVIEW = _getPreview(AREA.TYPE)
 AREA.DEFAULT_DATA = () => new AreaAssetData()
+AREA.SUBTYPES_CONSTRUCTORS = {"": AreaAssetData}
 
 const SCENE = new AssetDefinition()
 SCENE.TYPE = "scene"
 SCENE.LANG = "scene"
 SCENE.LANG_PLURAL = "scenes"
 SCENE.DEFAULT_PREVIEW = _getPreview(SCENE.TYPE)
+
 
 const SCENE_PANORAMA_SUBTYPE = new AssetSubtype()
 SCENE_PANORAMA_SUBTYPE.key = "virtual"
@@ -141,12 +154,20 @@ SCENE.SUBTYPES = [
     SCENE_AREA_SUBTYPE,
 ]
 
+SCENE.SUBTYPES_CONSTRUCTORS = {
+    "virtual": VirtualSceneDefinition,
+    "panorama": PanoramaSceneDefinition,
+    "area": SceneDefinition,
+
+}
+
 const SOUND = new AssetDefinition()
 SOUND.TYPE = "sound"
 SOUND.LANG = "sound"
 SOUND.LANG_PLURAL = "sounds"
 SOUND.DEFAULT_PREVIEW = _getPreview(SOUND.TYPE)
 SOUND.DEFAULT_DATA = () => new SoundData()
+SOUND.SUBTYPES_CONSTRUCTORS = {"": SoundData}
 
 const FONT = new AssetDefinition()
 FONT.TYPE = "font"
@@ -154,6 +175,7 @@ FONT.LANG = "font"
 FONT.LANG_PLURAL = "fonts"
 FONT.DEFAULT_PREVIEW = _getPreview(FONT.TYPE)
 FONT.DEFAULT_DATA = () => new FontData()
+FONT.SUBTYPES_CONSTRUCTORS = {"": FontData}
 
 const DATAFACTORY = new AssetDefinition()
 DATAFACTORY.TYPE = "datafactory"
@@ -161,6 +183,7 @@ DATAFACTORY.LANG = "datafactory"
 DATAFACTORY.LANG_PLURAL = "datafactories"
 DATAFACTORY.DEFAULT_PREVIEW = _getPreview(DATAFACTORY.TYPE)
 DATAFACTORY.DEFAULT_DATA = () => new DataFactoryData()
+DATAFACTORY.SUBTYPES_CONSTRUCTORS = {"": DataFactoryData}
 
 const DATAINSTANCE = new AssetDefinition()
 DATAINSTANCE.TYPE = "datainstance"
@@ -168,6 +191,7 @@ DATAINSTANCE.LANG = "datainstance"
 DATAINSTANCE.LANG_PLURAL = "datainstances"
 DATAINSTANCE.DEFAULT_PREVIEW = _getPreview(DATAINSTANCE.TYPE)
 DATAINSTANCE.DEFAULT_DATA = () => new DataInstanceData()
+DATAINSTANCE.SUBTYPES_CONSTRUCTORS = {"": DataInstanceData}
 
 
 const DATASET = new AssetDefinition()

@@ -8,8 +8,6 @@ import MountTabWrapper from "@components/MountTabWrapper";
 
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
-import ProjectConfigView from "@components/projects/ProjectConfigView";
-import VideoEditor from "@components/assets/video/VideoEditor";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -28,6 +26,9 @@ const DataInstanceEditor = React.lazy(() => import("@components/assets/data-inst
 
 const SceneEditorDispatcher = React.lazy(() => import("@components/assets/scene-editor/SceneEditorDispatcher"))
 
+const VideoEditor = React.lazy(() => import("@components/assets/video/VideoEditor"))
+const TrainingTaskSetEditorView = React.lazy(() => import("@components/assets/training-task-set/TrainingTaskSetEditorView"))
+const ProjectConfigView = React.lazy(() => import("@components/projects/ProjectConfigView"))
 
 export default function Main() {
 
@@ -135,6 +136,12 @@ function _Main() {
                 <Route path={RoutesManager.ROUTE_QUIZ_EDITOR} element={
                     <MountTabWrapper>
                         <QuizEditor/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_TRAININGTASKSET_EDITOR} element={
+                    <MountTabWrapper>
+                        <TrainingTaskSetEditorView/>
                     </MountTabWrapper>
                 }/>
 

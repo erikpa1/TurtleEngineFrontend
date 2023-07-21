@@ -13,23 +13,11 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import AreaAssetData from "@platform/assets/area";
 import Asset from "@platform/assets/Asset";
 import AssetsApi from "@api/AssetsApi";
+import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 
 export default function AreaEditor({}) {
-    const {projectuid, areauid} = useParams()
-
-    const _projectUid: string = projectuid ?? ""
-    const _areaiud: string = areauid ?? ""
-
-    const [asset, setAsset] = React.useState<Asset | null>(null)
-
-    React.useEffect(() => {
-
-        AssetsApi.GetAssetAndAssetData<AreaAssetData>(AreaAssetData, _projectUid, _areaiud).then((value) => {
-            setAsset(value)
-        })
-
-    }, [_projectUid, _areaiud])
+    const asset = useLoadAssetFromParams()
 
     if (asset) {
         return (
