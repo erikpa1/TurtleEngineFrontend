@@ -56,7 +56,10 @@ function _ViewDispatcher({asset}) {
 
     return (
         <div className={"vstack gap-3"}>
-            <TGui.PaperBox>
+
+            <_QuizAssetCard asset={asset}/>
+
+            <TGui.Card>
                 <TGui.Tabs
                     value={tab}
                     onChange={(_, value) => {
@@ -67,7 +70,7 @@ function _ViewDispatcher({asset}) {
                     <TGui.Tab value={"0"} label={t("edit")}/>
                     <TGui.Tab value={"1"} label={t("preview")}/>
                 </TGui.Tabs>
-            </TGui.PaperBox>
+            </TGui.Card>
 
             <TGui.Switch condition={tab}>
                 <TGui.Case value={"0"}>
@@ -94,7 +97,6 @@ function _ExamEditor({asset}: { asset: Asset }) {
 
     return (
         <div className={"vstack gap-3"}>
-            <_QuizAssetCard asset={asset}/>
 
             <TGui.Row>
                 <TGui.Col xs={3}>

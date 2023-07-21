@@ -11,6 +11,7 @@ import SoundData from "@platform/assets/sound";
 import FontData from "@platform/assets/font";
 import DataFactoryData from "@platform/assets/datafactory";
 import DataInstanceData from "@platform/assets/datainstance";
+import TrainingTaskSetData from "@platform/assets/trainingTaskSetData";
 
 export class AssetSubtype {
     key = ""
@@ -190,6 +191,12 @@ LABEl.LANG = "label"
 LABEl.LANG_PLURAL = "labels"
 LABEl.DEFAULT_PREVIEW = _getPreview(LABEl.TYPE)
 
+const TRAININGTASKSET = new AssetDefinition()
+TRAININGTASKSET.TYPE = "trainingtaskset"
+TRAININGTASKSET.LANG = "trainingtaskset"
+TRAININGTASKSET.LANG_PLURAL = "trainingtasksets"
+TRAININGTASKSET.DEFAULT_PREVIEW = _getPreview(TRAININGTASKSET.TYPE)
+TRAININGTASKSET.DEFAULT_DATA = () => new TrainingTaskSetData()
 
 const Assets = {
     Material: MATERIAL,
@@ -208,10 +215,12 @@ const Assets = {
     Label: LABEl,
     Document: DOCUMENT,
     DataSet: DATASET,
+    TrainingTaskSet: TRAININGTASKSET,
 
     dataAssets: () => {
         return [
             Assets.Exam,
+            Assets.TrainingTaskSet,
             Assets.Label,
             Assets.DataFactory,
             Assets.DataInstance,

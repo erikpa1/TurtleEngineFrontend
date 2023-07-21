@@ -63,12 +63,14 @@ export default function ExamQuestionsList({exam, onRefresh}: ExamQuestionsListPr
 }
 
 function _QuestionLine({question, index}) {
+
+
     return (
         <TGui.PaperBox>
             <div className={"hstack gap-1"} style={{margin: "0.25em"}}>
                 <b>{index + 1}.</b>
                 <TGui.Typography>
-                    {"Some name"}
+                    {question.header}
                 </TGui.Typography>
 
                 <div className={"hstack gap-1"} style={{marginLeft: "auto"}}>

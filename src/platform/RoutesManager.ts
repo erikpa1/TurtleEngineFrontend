@@ -13,6 +13,7 @@ const PREFIX_PANORAMA_EDITOR = "/panorama-editor"
 const PREFIX_QUIZ_EDITOR = "/quiz-editor"
 const PREFIX_DATAFACTORY_EDITOR = "/data-factory-editor"
 const PREFIX_DATAINSTANCE_EDITOR = "/data-instance-editor"
+const PREFIX_TRAININGTASKSET_EDITOR = "/training-task-set-editor"
 
 export default class RoutesManager {
 
@@ -29,8 +30,9 @@ export default class RoutesManager {
     static ROUTE_POINTCLOUD_EDITOR = `${PREFIX_POINTCLOUD_EDITOR}/:projectuid/:clouduid`
     static ROUTE_PANORAMA_EDITOR = `${PREFIX_PANORAMA_EDITOR}/:projectuid/:panoramauid`
     static ROUTE_QUIZ_EDITOR = `${PREFIX_QUIZ_EDITOR}/:projectuid/:examuid`
-    static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactory`
-    static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstance`
+    static ROUTE_DATAFACTORY_EDITOR = `${PREFIX_DATAFACTORY_EDITOR}/:projectuid/:datafactoryuid`
+    static ROUTE_DATAINSTANCE_EDITOR = `${PREFIX_DATAINSTANCE_EDITOR}/:projectuid/:datainstanceuid`
+    static ROUTE_TRAININGTASKSET_EDITOR = `${PREFIX_TRAININGTASKSET_EDITOR}/:projectuid/:trainingtaskuid`
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
@@ -43,6 +45,7 @@ export default class RoutesManager {
     static AreaEditor(projectUid: string, areaUid: string): string {
         return `${PREFIX_AREA_EDITOR}/${projectUid}/${areaUid}`
     }
+
     static VideoEditor(projectUid: string, videoUid: string): string {
         return `${PREFIX_VIDEO_EDITOR}/${projectUid}/${videoUid}`
     }
@@ -79,6 +82,10 @@ export default class RoutesManager {
         return `${PREFIX_QUIZ_EDITOR}/${projectUid}/${quizUid}`
     }
 
+    static TrainingTaskSetEditor(projectUid: string, trainingtasksetuid: string): string {
+        return `${PREFIX_TRAININGTASKSET_EDITOR}/${projectUid}/${trainingtasksetuid}`
+    }
+
     static Play(projectUid: string): string {
         return `${PREFIX_PLAY}/${projectUid}`
     }
@@ -91,7 +98,6 @@ export default class RoutesManager {
             return "/"
         }
     }
-
 }
 
 const ASSET_ROUTES_MAP = new Map<string, any>([
@@ -105,4 +111,5 @@ const ASSET_ROUTES_MAP = new Map<string, any>([
     [Assets.PointCloud.TYPE, RoutesManager.PointCloudEditor],
     [Assets.DataFactory.TYPE, RoutesManager.DataFactoryEditor],
     [Assets.DataInstance.TYPE, RoutesManager.DataInstanceEditor],
+    [Assets.TrainingTaskSet.TYPE, RoutesManager.TrainingTaskSetEditor],
 ])

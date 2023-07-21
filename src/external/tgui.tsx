@@ -23,11 +23,13 @@ import {Switch} from "@mui/material";
 
 import React from "react";
 import {TurtleModal} from "@components/Modals";
+import {ViewContainer} from "@components/ViewContainer";
 
 export const TGui = {
     T: useTranslation,
     Row: Row,
     Col: Col,
+    ViewContainer: ViewContainer,
     Modal: TurtleModal,
     ModalTitle: Modal.Title,
     Offcanvas: TurtleOffcanvas,
