@@ -119,11 +119,19 @@ function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
     const [t] = useTranslation()
 
     const iconComponent = (
-        <Image src={icon} style={{
-            margin: "auto",
-            width: "20px",
-            height: "20px"
-        }}/>
+        <>
+            <div style={{
+                height: "100%",
+                width: "1px",
+                backgroundColor: "#006ba8"
+            }}/>
+            <Image src={icon} style={{
+                margin: "auto",
+                width: "20px",
+                height: "20px"
+            }}/>
+
+        </>
     )
 
     return (
@@ -212,7 +220,7 @@ function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
     return (
         <sb.Menu>
             <MyNavbarItem
-                lang={"project.configuration"}
+                lang={"project"}
                 link={RoutesManager.ProjectConfig(project.uid)}
                 icon={"/icons/Alchemy.svg"}/>
 

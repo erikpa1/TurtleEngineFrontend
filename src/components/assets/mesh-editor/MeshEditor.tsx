@@ -16,7 +16,7 @@ import {MeshAssetData} from "@platform/assets/mesh";
 
 import Asset from "@platform/assets/Asset";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
-
+import {TGui} from "@external/tgui";
 export default function MeshEditor({}) {
 
     const asset = useLoadAssetFromParams()

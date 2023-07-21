@@ -74,5 +74,6 @@
   "question.description": "Description",
   "question.completion": "Completion",
   "question.sorting": "Sorting",
-  "create.question": "Create question"
+  "create.question": "Create question",
+  "project": "Project"
 }

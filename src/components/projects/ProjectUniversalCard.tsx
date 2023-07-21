@@ -16,6 +16,7 @@ import {useNavigate} from "react-router-dom";
 import RoutesManager from "@platform/RoutesManager";
 import FsTools from "@api/FsTools";
 import {TGui} from "@external/tgui";
+import TauriWindowPlugin from "../../tauri/plugin_window";
 
 
 interface ProjectUniversalCardProps {
@@ -58,6 +59,8 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
             lock.unlock()
             projectZus.setProject(project)
             navigate(RoutesManager.Assets(project.uid))
+            TauriWindowPlugin.ChangeWindowTitle(project.name)
+
         })
     }
 

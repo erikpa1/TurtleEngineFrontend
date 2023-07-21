@@ -7,6 +7,7 @@ import {Ext} from "@external/prelude";
 import {TGui} from "@external/tgui";
 import ProjectPlayerConfig from "@components/projects/configs/ProjectPlayerConfig";
 import ProjectScenesEditorConfig from "@components/projects/configs/ProjectScenesEditorConfig";
+import VTSProjectConfigView from "@components/projects/configs/VTSProjectConfigView";
 
 
 export default function ProjectConfigView({}) {
@@ -36,7 +37,8 @@ export default function ProjectConfigView({}) {
                             textColor="inherit"
                         >
                             <Tab label={"player"} value={"0"}/>
-                            <Tab label={"scene-editor"} value={"1"}/>
+                            <Tab label={"vts"} value={"1"}/>
+                            <Tab label={"scene-editor"} value={"2"}/>
                         </TGui.Tabs>
 
                     </TGui.Box>
@@ -47,6 +49,9 @@ export default function ProjectConfigView({}) {
                         <ProjectPlayerConfig/>
                     </TGui.Case>
                     <TGui.Case value={"1"}>
+                        <VTSProjectConfigView/>
+                    </TGui.Case>
+                    <TGui.Case value={"2"}>
                         <ProjectScenesEditorConfig/>
                     </TGui.Case>
 
