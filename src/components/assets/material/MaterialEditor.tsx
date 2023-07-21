@@ -1,7 +1,6 @@
 import React from "react";
 
 
-import {MiddleSpinner} from "@components/Spinners";
 
 import {Canvas, useThree} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
@@ -39,7 +38,7 @@ export default function MaterialEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 

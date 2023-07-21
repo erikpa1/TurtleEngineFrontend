@@ -1,18 +1,14 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-
-import {MiddleSpinner} from "@components/Spinners";
 
 
 import {ViewContainer} from "@components/ViewContainer";
 import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
-import HudButton from "@components/assets/HudButton";
+
 import Asset from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
-import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import SelectQuestionModal from "@components/assets/quiz-editor/SelectQuestionTypeModal";
+
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
@@ -30,7 +26,7 @@ export default function ExamEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

@@ -1,6 +1,5 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import {MiddleSpinner} from "@components/Spinners";
+
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from "@react-three/drei";
 
@@ -12,7 +11,9 @@ import FsTools from "@api/FsTools";
 import ErrorBoundary from "@components/ErrorBoundary";
 import AreaAssetData from "@platform/assets/area";
 import Asset from "@platform/assets/Asset";
-import AssetsApi from "@api/AssetsApi";
+
+import {TGui} from "@external/tgui";
+
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
 
@@ -25,7 +26,7 @@ export default function AreaEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

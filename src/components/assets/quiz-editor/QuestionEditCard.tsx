@@ -18,7 +18,7 @@ export default function QuestionEditCard({exam, question, onRefresh}: QuestionEd
     }
 
     return (
-        <TGui.Card style={{backgroundColor: "#f4f4f4"}}>
+        <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
 
             <TGui.CardContent>
 

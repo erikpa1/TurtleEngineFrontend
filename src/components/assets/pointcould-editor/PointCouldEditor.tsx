@@ -1,9 +1,9 @@
 import React from "react";
 
-import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 
+import {TGui} from "@external/tgui";
 
 import PointCloudEditorHud from "@components/assets/pointcould-editor/PointCloudEditorHud";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
@@ -19,7 +19,7 @@ export default function PointCloudEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

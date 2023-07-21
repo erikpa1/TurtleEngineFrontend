@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import React from "react";
 import {ViewContainer} from "@components/ViewContainer";
-import {MiddleSpinner} from "@components/Spinners";
+
 import VideoData from "@platform/assets/video";
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
@@ -26,7 +26,7 @@ export default function VideoEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

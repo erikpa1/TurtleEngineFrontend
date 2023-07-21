@@ -1,10 +1,12 @@
 import React from "react";
 import {TGui} from "@external/tgui";
-import {MiddleSpinner} from "@components/Spinners";
+
 import Asset from "@platform/assets/Asset";
 
 
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+import TaskSetEditView from "@components/assets/training-task-set/TrainingTaskSetEditView";
+import TrainingTaskSetPreviewView from "@components/assets/training-task-set/TrainingTaskSetPreviewView";
 
 
 export default function TrainingTaskSetEditorView({}) {
@@ -17,7 +19,7 @@ export default function TrainingTaskSetEditorView({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 
@@ -29,14 +31,61 @@ interface _TaskSetEditorProps {
 }
 
 function _TaskSetEditor({asset}: _TaskSetEditorProps) {
+
+    const [t] = TGui.T()
+
+    const [viewType, setViewType] = React.useState("edit")
+
     return (
         <TGui.ViewContainer>
 
-            <TGui.Tabs>
+            <TGui.Stack gap={3}>
+                <TGui.Card>
+                    <TGui.Tabs
+                        value={viewType}
+                        onChange={(_, value) => setViewType(value)}
+                        centered
+                    >
+                        <TGui.Tab label={"edit"} value={"edit"}/>
+                        <TGui.Tab label={"view"} value={"view"}/>
+                    </TGui.Tabs>
+                </TGui.Card>
 
-            </TGui.Tabs>
+                <TGui.Switch condition={viewType}>
+                    <TGui.Case value={"edit"}>
+                        <TaskSetEditView asset={asset}/>
+                    </TGui.Case>
+                    <TGui.Case value={"view"}>
+                        <_PreviewMode asset={asset}/>
+                    </TGui.Case>
+                </TGui.Switch>
+
+            </TGui.Stack>
 
 
         </TGui.ViewContainer>
+    )
+}
+
+function _PreviewMode({asset}) {
+
+    const [language, setLanguage] = React.useState("en")
+
+    return (
+        <>
+            <TGui.Card>
+                <TGui.Tabs
+                    value={language}
+                    onChange={(_, value) => setLanguage(value)}
+                    centered
+                >
+                    <TGui.Tab label={"en"} value={"en"}/>
+                    <TGui.Tab label={"cz"} value={"cz"}/>
+                </TGui.Tabs>
+            </TGui.Card>
+
+            <TrainingTaskSetPreviewView asset={asset} forceLang={language}/>
+
+        </>
     )
 }

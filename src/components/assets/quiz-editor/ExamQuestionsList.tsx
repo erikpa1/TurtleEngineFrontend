@@ -26,7 +26,7 @@ export default function ExamQuestionsList({exam, onRefresh}: ExamQuestionsListPr
 
         <div className={"vstack gap-3"}>
 
-            <TGui.Card style={{backgroundColor: "#f4f4f4"}}>
+            <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
                 <TGui.CardContent>
                     <div className={"vstack gap-2"}>
                         {

@@ -1,9 +1,6 @@
 import React from "react";
 
 
-import {useParams} from "react-router-dom";
-
-import {MiddleSpinner} from "@components/Spinners";
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 
@@ -11,9 +8,11 @@ import PanoramaAssetData from "@platform/assets/panorama";
 import PanoramaEditorHud from "@components/assets/panorama/PanoramaEditorHud";
 
 import PhotoDom from "@components/assets/panorama/PhotoDom";
-import AssetsApi from "@api/AssetsApi";
+
 import Asset from "@platform/assets/Asset";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+
+import {TGui} from "@external/tgui";
 
 export default function PanoramaEditor({}) {
 
@@ -25,7 +24,7 @@ export default function PanoramaEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

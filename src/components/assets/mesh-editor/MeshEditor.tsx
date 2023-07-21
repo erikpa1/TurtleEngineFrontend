@@ -1,8 +1,5 @@
 import React from "react";
-import {useParams} from "react-router-dom";
 
-
-import {MiddleSpinner} from "@components/Spinners";
 
 import MeshEditorHud from "@components/assets/mesh-editor/MeshEditorHud";
 
@@ -30,7 +27,7 @@ export default function MeshEditor({}) {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
-import {MiddleSpinner} from "@components/Spinners";
+import {TGui} from "@external/tgui";
 
 export default function DataInstanceEditor() {
 
@@ -12,7 +12,7 @@ export default function DataInstanceEditor() {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 

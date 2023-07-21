@@ -24,6 +24,7 @@ import {Switch} from "@mui/material";
 import React from "react";
 import {TurtleModal} from "@components/Modals";
 import {ViewContainer} from "@components/ViewContainer";
+import {MiddleSpinner} from "@components/Spinners";
 
 export const TGui = {
     T: useTranslation,
@@ -48,7 +49,7 @@ export const TGui = {
     TSelect: TurtleSelectField,
     IconClickButton: _IconClickButton as React.FC<_IconClickButtonProps>,
     BtnSwitch: Switch,
-
+    MiddleSpinner: MiddleSpinner,
     MenuItem: MenuItem,
     Stack: Stack,
     MiddleSearchBar: MiddleSearchBar,
@@ -59,7 +60,12 @@ export const TGui = {
     Tab: Tab,
     PopupZus: useGlobalPopup,
     SingleFileInput: TurtleSingleFileInput,
-    TextMicro: _TextMicro
+    TextMicro: _TextMicro,
+    Colors: {
+        WhiteBack: "#e7ebf0",
+        WhiteMiddle: "#f4f4f4",
+        WhiteFront: "#ffffff",
+    }
 
 }
 

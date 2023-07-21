@@ -1,10 +1,10 @@
 import React from "react";
 
 import {ViewContainer} from "@components/ViewContainer";
-import {MiddleSpinner} from "@components/Spinners";
-import Datafactory from "@platform/assets/datafactory";
+
 import Asset from "@platform/assets/Asset";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+import {TGui} from "@external/tgui";
 
 export default function DataFactoryEditor() {
 
@@ -18,7 +18,7 @@ export default function DataFactoryEditor() {
         )
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }

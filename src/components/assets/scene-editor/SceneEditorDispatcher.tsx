@@ -1,12 +1,13 @@
 import React from "react";
 
-import {MiddleSpinner} from "@components/Spinners";
 
 import VirtualSceneEditor from "@components/assets/scene-editor/VirtualSceneEditor";
 
 import PanoramaSceneEditor from "@components/assets/scene-editor/PanoramaSceneEditor";
 
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+
+import {TGui} from "@external/tgui";
 
 export default function SceneEditorDispatcher({}): any {
 
@@ -24,7 +25,7 @@ export default function SceneEditorDispatcher({}): any {
         }
     } else {
         return (
-            <MiddleSpinner/>
+            <TGui.MiddleSpinner/>
         )
     }
 }
