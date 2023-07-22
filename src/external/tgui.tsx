@@ -104,19 +104,23 @@ function _TextMicro({children}) {
 }
 
 interface _IconClickButtonProps {
-    size: string
+    size?: string
     image: string
     onClick?: any
+    style?: any
 
 }
 
 function _IconClickButton(props: _IconClickButtonProps) {
 
+    const _size = props.size ?? "1.5em"
+
     return (
         <img
             style={{
-                width: props.size,
-                height: props.size,
+                ...(props.style ?? {}),
+                width: _size,
+                height: _size,
                 cursor: "pointer",
             }}
             onClick={props.onClick}

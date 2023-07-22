@@ -82,9 +82,12 @@ export default class AssetsApi {
         return true
     }
 
+    //Je jedno akeho su data typu
     static async UploadAssetData(project_uid: string, asset_uid: string, assetParentData: any): Promise<boolean> {
+        const toUpload = assetParentData instanceof AssetData ? assetParentData.ToJson() : assetParentData
+
         if (PlatformDispatcher.IsDesktop()) {
-            await TauriAssetPlugin.UpdateAssetData(project_uid, asset_uid, assetParentData);
+            await TauriAssetPlugin.UpdateAssetData(project_uid, asset_uid, toUpload);
         } else {
             await axios.post("/api/assets/create-asset") //TODO Implement this one
         }

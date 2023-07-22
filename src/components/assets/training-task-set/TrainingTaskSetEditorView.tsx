@@ -7,6 +7,8 @@ import Asset from "@platform/assets/Asset";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 import TaskSetEditView from "@components/assets/training-task-set/TrainingTaskSetEditView";
 import TrainingTaskSetPreviewView from "@components/assets/training-task-set/TrainingTaskSetPreviewView";
+import AssetsApi from "@api/AssetsApi";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 
 export default function TrainingTaskSetEditorView({}) {
@@ -34,10 +36,26 @@ function _TaskSetEditor({asset}: _TaskSetEditorProps) {
 
     const [t] = TGui.T()
 
+    const lock = useGlobalAppLock()
+
     const [viewType, setViewType] = React.useState("edit")
+
+
+    async function savePressed() {
+        lock.lock()
+
+        await AssetsApi.UploadAssetData(asset.parent_project_uid, asset.uid, asset.data)
+
+        lock.unlock()
+    }
 
     return (
         <TGui.ViewContainer>
+
+            <TGui.Button
+                label={"save"}
+                onClick={savePressed}
+            />
 
             <TGui.Stack gap={3}>
                 <TGui.Card>
