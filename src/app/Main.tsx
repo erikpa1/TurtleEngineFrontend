@@ -4,11 +4,10 @@ import {ProSidebarProvider} from "react-pro-sidebar";
 
 import {Route, Routes} from "react-router-dom";
 import MountTabWrapper from "@components/MountTabWrapper";
-
+import AppApi from "@api/AppApi";
 
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
-import AppApi from "@api/AppApi";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -31,6 +30,11 @@ const VideoEditor = React.lazy(() => import("@components/assets/video/VideoEdito
 const TrainingTaskSetEditorView = React.lazy(() => import("@components/assets/training-task-set/TrainingTaskSetEditorView"))
 const ProjectConfigView = React.lazy(() => import("@components/projects/ProjectConfigView"))
 
+//VTS
+const VtsStatisticsView = React.lazy(() => import( "@players/vts/VtsStatisticsView"))
+const VtsUsersView = React.lazy(() => import( "@players/vts/VtsUsersView"))
+const VtsTrainingsView = React.lazy(() => import( "@players/vts/VtsTrainingsView"))
+const VtsTrainingLevelsView = React.lazy(() => import("@players/vts/VtsTrainingLevelsView"))
 export default function Main() {
 
     return (
@@ -68,11 +72,35 @@ function _PlayerMain() {
                     </MountTabWrapper>
                 }/>
 
-                <Route path={RoutesManager.ROUTE_STATISTICS} element={
+                <Route path={RoutesManager.ROUTE_PROJECTS} element={
                     <MountTabWrapper>
                         <ViewContainer>
                             <ProjectsSelectionView/>
                         </ViewContainer>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_TRAINING_STATISTICS} element={
+                    <MountTabWrapper>
+                        <VtsStatisticsView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_TRAINING_USERS} element={
+                    <MountTabWrapper>
+                        <VtsUsersView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_TRAININGS} element={
+                    <MountTabWrapper>
+                        <VtsTrainingsView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/levels"} element={
+                    <MountTabWrapper>
+                        <VtsTrainingLevelsView/>
                     </MountTabWrapper>
                 }/>
 

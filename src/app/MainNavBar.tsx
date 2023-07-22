@@ -94,10 +94,19 @@ function _PlayerMenu() {
 
     return (
         <sb.Menu>
-            <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
-            <MyNavbarItem lang={"users"} link={"/trainees"} icon={"/icons/Users.svg"}/>
-            <MyNavbarItem lang={"statistics"} link={"/training-statistics"} icon={"/icons/PieChart.svg"}/>
-            <MyNavbarItem lang={"trainings"} link={"/trainings"} icon={"/icons/Trainings.svg"}/>
+            <MyNavbarItem lang={"projects"} l
+                          ink={RoutesManager.ROUTE_PROJECTS} icon={"/icons/Projects.svg"}/>
+
+            <MyNavbarItem lang={"users"}
+                          link={RoutesManager.ROUTE_TRAINING_USERS} icon={"/icons/Users.svg"}/>
+
+            <MyNavbarItem lang={"statistics"}
+                          link={RoutesManager.ROUTE_TRAINING_STATISTICS}
+                          icon={"/icons/PieChart.svg"}/>
+
+            <MyNavbarItem lang={"trainings"}
+                          link={RoutesManager.ROUTE_TRAININGS}
+                          icon={"/icons/Trainings.svg"}/>
         </sb.Menu>
     )
 }
