@@ -17,6 +17,10 @@ const PREFIX_TRAININGTASKSET_EDITOR = "/training-task-set-editor"
 
 export default class RoutesManager {
 
+    static ROUTE_USERS = `/users`
+    static ROUTE_STATISTICS = `/statistics`
+    static ROUTE_TRAININGS = `/trainings`
+
     static ROUTE_PROJECTS = `/projects`
     static ROUTE_MANAGEMENT = `/management`
     static ROUTE_ASSETS = `${PREFIX_ASSETS}/:projectuid`

@@ -8,6 +8,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 
 import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
+import AppApi from "@api/AppApi";
 
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
@@ -39,13 +40,52 @@ export default function Main() {
             </ProSidebarProvider>
 
             <div style={{flexGrow: 1}}>
-                <_Main/>
+
+                {
+                    AppApi.IsEditor() && <_EditorMain/>
+                }
+                {
+                    AppApi.IsPlayer() && <_PlayerMain/>
+                }
+
             </div>
         </div>
     )
 }
 
-function _Main() {
+function _PlayerMain() {
+    return (
+        <main style={{
+            overflowY: "hidden",
+            overflowX: "hidden",
+        }}>
+            <Routes>
+                <Route path={"/"} element={
+                    <MountTabWrapper>
+                        <ViewContainer>
+                            <ProjectsSelectionView/>
+                        </ViewContainer>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_STATISTICS} element={
+                    <MountTabWrapper>
+                        <ViewContainer>
+                            <ProjectsSelectionView/>
+                        </ViewContainer>
+                    </MountTabWrapper>
+                }/>
+
+            </Routes>
+
+
+        </main>
+    )
+
+}
+
+
+function _EditorMain() {
     return (
         //The overflow Y and X is more important it could looks like at first see
         <main style={{

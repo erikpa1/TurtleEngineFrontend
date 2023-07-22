@@ -10,10 +10,21 @@ import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshN
 import {SceneVideoNode, SceneVideoNodeView} from "@platform/scene/media/SceneVideoNode";
 import VideoSceneNodeContentEditor from "@components/assets/scene-editor/scene-nodes/VideoSceneNodeOffcanvasContent";
 import DefaultSceneEditorContent from "@components/assets/scene-editor/scene-nodes/DefaultSceneEditorContent";
+import App from "../App";
 
 
 export default class AppApi {
 
+
+    static MODE = "player"
+
+    static IsPlayer() {
+        return AppApi.MODE === "player"
+    }
+
+    static IsEditor() {
+        return AppApi.MODE === "editor"
+    }
 
     static async Init() {
 

@@ -17,19 +17,17 @@ import {Ext} from "@external/prelude";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import RoutesManager from "@platform/RoutesManager";
+import AppApi from "@api/AppApi";
 
 
 export default function MainNavBar() {
 
-    const [t] = useTranslation()
 
     const [isCollapsed, setisCollapsed] = Ext.Cookie.useCookieBoolean("navbar-collapsed", false)
 
     const collapse = () => {
         setisCollapsed(!isCollapsed as any)
     }
-
-    const projectZus = useActiveProjectZus()
 
 
     return (
@@ -75,34 +73,69 @@ export default function MainNavBar() {
 
                 </sb.Menu>
 
-                <sb.Menu>
-                    <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
-                    <MyNavbarItem lang={"management"} link={"/management"} icon={"/icons/Management.svg"}/>
-                </sb.Menu>
-
-                <Hr/>
 
                 {
-                    projectZus.project && <_ActiveProjectBar project={projectZus.project}/>
+                    AppApi.IsEditor() && <_EditorMenu/>
+                }
+                {
+                    AppApi.IsPlayer() && <_PlayerMenu/>
                 }
 
-                <sb.Menu
-                    style={{
-                        position: "absolute",
-                        bottom: "0px",
-                        width: "100%"
-                    }}
-                >
-                    <Hr/>
 
-                    {/*<_SettingsNavItem/>*/}
-
-                </sb.Menu>
             </sb.Sidebar>
         </div>
 
     )
 }
+
+function _PlayerMenu() {
+
+    const projectZus = useActiveProjectZus()
+
+    return (
+        <sb.Menu>
+            <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
+            <MyNavbarItem lang={"users"} link={"/trainees"} icon={"/icons/Users.svg"}/>
+            <MyNavbarItem lang={"statistics"} link={"/training-statistics"} icon={"/icons/PieChart.svg"}/>
+            <MyNavbarItem lang={"trainings"} link={"/trainings"} icon={"/icons/Trainings.svg"}/>
+        </sb.Menu>
+    )
+}
+
+
+function _EditorMenu() {
+
+    const projectZus = useActiveProjectZus()
+
+
+    return (
+        <>
+            <sb.Menu>
+                <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
+                <MyNavbarItem lang={"management"} link={"/management"} icon={"/icons/Management.svg"}/>
+            </sb.Menu>
+
+            <Hr/>
+
+            {
+                projectZus.project && <_ActiveProjectBar project={projectZus.project}/>
+            }
+
+            <sb.Menu
+                style={{
+                    position: "absolute",
+                    bottom: "0px",
+                    width: "100%"
+                }}
+            >
+                <Hr/>
+                {/*<_SettingsNavItem/>*/}
+
+            </sb.Menu>
+        </>
+    )
+}
+
 
 interface MyNavbarItemProps {
     lang: string
