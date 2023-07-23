@@ -36,7 +36,7 @@ export default function ProjectConfigView({}) {
                             aria-label="Asset tabs"
                             textColor="inherit"
                         >
-                            <Tab label={"player"} value={"0"}/>
+                            <Tab label={"player-guis"} value={"0"}/>
                             <Tab label={"vts"} value={"1"}/>
                             <Tab label={"scene-editor"} value={"2"}/>
                         </TGui.Tabs>

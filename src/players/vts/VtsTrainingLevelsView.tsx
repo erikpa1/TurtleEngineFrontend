@@ -8,6 +8,7 @@ import {TGui} from "@external/tgui";
 import FsTools from "@api/FsTools";
 
 import TrainingsApi from "@api/TraningsApi"
+import {useNavigate} from "react-router-dom";
 
 export default function VtsTrainingLevelsView({}) {
 
@@ -34,8 +35,10 @@ export default function VtsTrainingLevelsView({}) {
 
 }
 
-
 function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
+
+    const navigate = useNavigate()
+
     return (
         <TGui.Row xs={1} md={4} className="g-4">
 
@@ -49,6 +52,12 @@ function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
                                     image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("/Images/Question.Text.png"))}
                                 />
                                 <TGui.CardContent>
+                                    <TGui.Typography>
+                                        {value.lang}
+                                    </TGui.Typography>
+                                    <TGui.TextMicro>
+                                        {value.desciption}
+                                    </TGui.TextMicro>
 
                                 </TGui.CardContent>
 
@@ -56,7 +65,7 @@ function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
                                     <TGui.Button
                                         label={"open"}
                                         onClick={() => {
-                                            alert("Unimplemented")
+                                            navigate("/trainings-player-guis")
                                         }}
                                     />
                                 </TGui.CardActions>

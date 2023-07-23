@@ -16,10 +16,10 @@ import App from "../App";
 export default class AppApi {
 
 
-    static MODE = "player"
+    static MODE = "player-guis"
 
     static IsPlayer() {
-        return AppApi.MODE === "player"
+        return AppApi.MODE === "player-guis"
     }
 
     static IsEditor() {

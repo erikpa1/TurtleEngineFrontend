@@ -1,19 +1,12 @@
 import React from "react";
-import MainNavBar from "./MainNavBar";
-import {ProSidebarProvider} from "react-pro-sidebar";
-
 import {Route, Routes} from "react-router-dom";
 import MountTabWrapper from "@components/MountTabWrapper";
-import AppApi from "@api/AppApi";
-
-import RoutesManager from "@platform/RoutesManager";
 import {ViewContainer} from "@components/ViewContainer";
-
+import RoutesManager from "@platform/RoutesManager";
 
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
 const AssetsMainView = React.lazy(() => import("@components/assets/AssetsMainView"))
 const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppManagementView"))
-
 
 const MeshEditor = React.lazy(() => import("@components/assets/mesh-editor/MeshEditor"))
 const PointCloudEditor = React.lazy(() => import("@components/assets/pointcould-editor/PointCouldEditor"))
@@ -30,92 +23,9 @@ const VideoEditor = React.lazy(() => import("@components/assets/video/VideoEdito
 const TrainingTaskSetEditorView = React.lazy(() => import("@components/assets/training-task-set/TrainingTaskSetEditorView"))
 const ProjectConfigView = React.lazy(() => import("@components/projects/ProjectConfigView"))
 
-//VTS
-const VtsStatisticsView = React.lazy(() => import( "@players/vts/VtsStatisticsView"))
-const VtsUsersView = React.lazy(() => import( "@players/vts/VtsUsersView"))
-const VtsTrainingsView = React.lazy(() => import( "@players/vts/VtsTrainingsView"))
-const VtsTrainingLevelsView = React.lazy(() => import("@players/vts/VtsTrainingLevelsView"))
-export default function Main() {
 
+export default function AppRoutes_Editor() {
     return (
-        <div>
-            <ProSidebarProvider>
-                <MainNavBar/>
-            </ProSidebarProvider>
-
-            <div style={{flexGrow: 1}}>
-
-                {
-                    AppApi.IsEditor() && <_EditorMain/>
-                }
-                {
-                    AppApi.IsPlayer() && <_PlayerMain/>
-                }
-
-            </div>
-        </div>
-    )
-}
-
-function _PlayerMain() {
-    return (
-        <main style={{
-            overflowY: "hidden",
-            overflowX: "hidden",
-        }}>
-            <Routes>
-                <Route path={"/"} element={
-                    <MountTabWrapper>
-                        <ViewContainer>
-                            <ProjectsSelectionView/>
-                        </ViewContainer>
-                    </MountTabWrapper>
-                }/>
-
-                <Route path={RoutesManager.ROUTE_PROJECTS} element={
-                    <MountTabWrapper>
-                        <ViewContainer>
-                            <ProjectsSelectionView/>
-                        </ViewContainer>
-                    </MountTabWrapper>
-                }/>
-
-                <Route path={RoutesManager.ROUTE_TRAINING_STATISTICS} element={
-                    <MountTabWrapper>
-                        <VtsStatisticsView/>
-                    </MountTabWrapper>
-                }/>
-
-                <Route path={RoutesManager.ROUTE_TRAINING_USERS} element={
-                    <MountTabWrapper>
-                        <VtsUsersView/>
-                    </MountTabWrapper>
-                }/>
-
-                <Route path={RoutesManager.ROUTE_TRAININGS} element={
-                    <MountTabWrapper>
-                        <VtsTrainingsView/>
-                    </MountTabWrapper>
-                }/>
-
-                <Route path={"/levels"} element={
-                    <MountTabWrapper>
-                        <VtsTrainingLevelsView/>
-                    </MountTabWrapper>
-                }/>
-
-            </Routes>
-
-
-        </main>
-    )
-
-}
-
-
-function _EditorMain() {
-    return (
-        //The overflow Y and X is more important it could looks like at first see
         <main style={{
             overflowY: "hidden",
             overflowX: "hidden",
@@ -233,4 +143,3 @@ function _EditorMain() {
         </main>
     )
 }
-

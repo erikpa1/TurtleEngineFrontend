@@ -51,7 +51,7 @@ function _VideoEditor({asset}: _VideoEditorProps) {
                     height: "650px"
                 }}>
                     <video
-                        id={"video-editor-player"}
+                        id={"video-editor-player-guis"}
                         controls
                         width={"100%"}
                         height={"100%"}

@@ -5,6 +5,7 @@ export default class TraningLevelDefinition {
     uid = crypto.randomUUID()
     type = "scene"
     lang = ""
+    desciption = ""
     asset_uid = ""
 
     level_materials = new Array<Asset>()

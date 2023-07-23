@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './App.css'
-import Main from "./app/Main";
+import AppRoutes from "@app/AppRoutes";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import AppApi from "@api/AppApi";
@@ -58,7 +58,7 @@ export default function App() {
 
 function _LoggedContent() {
     return (
-        <Main/>
+        <AppRoutes/>
     )
 }
 

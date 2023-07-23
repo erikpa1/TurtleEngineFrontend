@@ -30,18 +30,22 @@ export default class TraningsApi {
         const aa = new TraningLevelDefinition()
         aa.type = "scene"
         aa.lang = "Usage"
+        aa.desciption = "This is some level"
 
         const ab = new TraningLevelDefinition()
         ab.type = "scene"
         ab.lang = "Usage - test"
+        ab.desciption = "This is some level"
 
         const ac = new TraningLevelDefinition()
         ac.type = "quiz"
         ac.lang = "Usage - quiz"
+        ac.desciption = "This is some level"
 
         const ad = new TraningLevelDefinition()
         ad.type = "scene"
         ad.lang = "Usage - video"
+        ad.desciption = "This is some level"
 
         return [aa, ab, ac, ad]
     }
