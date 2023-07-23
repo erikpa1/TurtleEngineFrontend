@@ -77,5 +77,15 @@
   "create.question": "Create question",
   "project": "Project",
   "statistics": "Statistics",
-  "trainings": "Trainings"
+  "trainings": "Trainings",
+  "training.materials": "Training materials",
+  "roles": "Roles",
+  "preview": "Preview",
+  "times": "Times",
+  "tasks": "Tasks",
+  "penalizations": "Penalizations",
+  "vts.time.expected": "Expected time",
+  "vts.time.training": "Training time",
+  "vts.time.penalisations": "Penalisations time",
+  "vts.time.total": "Total time"
 }
