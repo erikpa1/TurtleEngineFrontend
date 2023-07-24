@@ -1,14 +1,17 @@
 import React from "react";
 import ExamAssetData, {ExamQuestion, QuestionAnswer} from "@platform/assets/exam";
 import {TGui} from "@external/tgui";
+import LanguagesManager from "@app/LanguagesManager";
+import FsTools from "@api/FsTools";
 
 interface QuestionEditCardProps {
+    index: number
     exam: ExamAssetData
     question: ExamQuestion
     onRefresh: any
 }
 
-export default function QuestionEditCard({exam, question, onRefresh}: QuestionEditCardProps) {
+export default function QuestionEditCard({exam, index, question, onRefresh}: QuestionEditCardProps) {
 
 
     const [_question, setQuestion] = React.useState<[ExamQuestion]>([question])
@@ -25,70 +28,63 @@ export default function QuestionEditCard({exam, question, onRefresh}: QuestionEd
 
                 <div className={"vstack gap-3"}>
 
-                    <TGui.PaperBox>
-                        <div className={"hstack gap-3"}>
-                            <img
-                                src={"/icons/Exam.svg"}
-                                style={{
-                                    width: "3em",
-                                    height: "3em",
-                                    margin: "0.1em"
-                                }}/>
-
-                            <_EditHeaderLabel question={question}/>
+                    <TGui.Card>
+                        <div
+                            className={"hstack gap-3"}
+                            style={{padding: "0.5em"}}
+                        >
+                            {index + 1}.
+                            <_QuestionEditHeader
+                                question={question}
+                                onRefresh={onRefresh}
+                            />
 
                         </div>
-                    </TGui.PaperBox>
+                    </TGui.Card>
 
-                    <div className={"hstack gap-3"}>
+                    <TGui.Row>
 
-                        <div style={{width: "2em"}}/>
+                        <TGui.Col xs={3}>
+                            <TGui.Card>
+                                <TGui.IconClickButton
+                                    size={"10em"}
+                                    image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("Images/ProjectPreview.png"))}
+                                    style={{
+                                        padding: "5px"
+                                    }}
+                                />
+                            </TGui.Card>
 
-                        <div className={"vstack gap-3"}>
+                        </TGui.Col>
 
-                            {
-                                _question[0].answers.map((value, index) => {
-                                    return (
+                        <TGui.Col>
+                            <TGui.Stack gap={3}>
 
-                                        <div
-                                            key={value.uid}
-                                            className={"hstack gap-3"}
-                                        >
+                                {
+                                    _question[0].answers.map((value, index) => {
+                                        return (
 
-                                            <TGui.PaperBox>
-                                                <div
+                                            <div
+                                                key={value.uid}
+                                                className={"hstack gap-3"}
+                                            >
+
+                                                <TGui.Card
                                                     style={{
-                                                        margin: "1em"
-                                                    }}
-                                                    className={"hstack gap-3"}
-                                                >
-                                                    <b>{index + 1}.</b>
-                                                    <_EditAnswerTextLabel answer={value}/>
-
-                                                    <div className={"hstack gap-3"} style={{
-                                                        marginLeft: "auto"
+                                                        padding: "0.35em"
                                                     }}>
-                                                        <TGui.IconClickButton
-                                                            size={"1.5em"}
-                                                            image={"/icons/Delete.svg"}
-                                                        />
-                                                    </div>
+                                                    <_EditAnswerTextLabel answer={value} index={index}/>
+                                                </TGui.Card>
 
-                                                </div>
+                                            </div>
 
-                                            </TGui.PaperBox>
+                                        )
+                                    })
+                                }
 
-
-                                        </div>
-
-                                    )
-                                })
-                            }
-
-
-                        </div>
-                    </div>
-
+                            </TGui.Stack>
+                        </TGui.Col>
+                    </TGui.Row>
 
                 </div>
 
@@ -96,73 +92,18 @@ export default function QuestionEditCard({exam, question, onRefresh}: QuestionEd
 
             </TGui.CardContent>
 
-
-            <_CardActions question={_question[0]}
-                          exam={exam}
-                          onRefresh={refresh}
-                          onFullRefresh={onRefresh}
-            />
-
-
         </TGui.Card>
     )
 }
 
-interface _CardActionsProps {
-    exam: ExamAssetData
+interface _EditHeaderLabelProps {
     question: ExamQuestion
     onRefresh: any
-    onFullRefresh: any
 }
 
-function _CardActions({
-                          exam,
-                          question,
-                          onRefresh,
-                          onFullRefresh
-                      }: _CardActionsProps) {
+function _QuestionEditHeader({question, onRefresh}: _EditHeaderLabelProps) {
 
-    function deleteQuestion() {
-        exam.questions = exam.questions.filter(val => val != question)
-        onFullRefresh()
-    }
-
-    function moveUp() {
-        alert("Unimplemented")
-        onFullRefresh()
-    }
-
-    function moveDown() {
-        alert("Unimplemented")
-        onFullRefresh()
-    }
-
-    return (
-        <TGui.CardActions>
-            <div style={{marginLeft: "auto"}} className={"hstack gap-1"}>
-                <TGui.IconClickButton
-                    size={"2em"}
-                    image={"/icons/Arrow.Down.svg"}
-                />
-                <TGui.IconClickButton
-                    size={"2em"}
-                    image={"/icons/Arrow.Up.svg"}
-                />
-
-                <div style={{width: "1em"}}/>
-
-                <TGui.IconClickButton
-                    size={"2em"}
-                    image={"/icons/Delete.svg"}
-                />
-
-            </div>
-        </TGui.CardActions>
-    )
-}
-
-
-function _EditHeaderLabel({question}: { question: ExamQuestion }) {
+    const [type, setType] = React.useState("text-multi-answer")
 
     const [text, setText] = React.useState(question.header)
 
@@ -174,18 +115,97 @@ function _EditHeaderLabel({question}: { question: ExamQuestion }) {
     }
 
     return (
-        <div>
+        <TGui.Stack gap={3} direction={"horizontal"}>
             <input
                 type={"text"}
                 value={text}
                 onChange={typing}
             />
 
-        </div>
+            <TGui.TextMicro>
+                {LanguagesManager.T(text)}
+            </TGui.TextMicro>
+
+            <TGui.IconClickButton
+                image={"/icons/Checkbox.Ok.svg"}
+            />
+
+            <_CardActions
+                question={question}
+                onFullRefresh={onRefresh}
+            />
+
+        </TGui.Stack>
     )
 }
 
-function _EditAnswerTextLabel({answer}: { answer: QuestionAnswer }) {
+interface _CardActionsProps {
+    question: ExamQuestion
+    onFullRefresh: any
+}
+
+
+function _CardActions({
+                          question,
+                          onFullRefresh
+                      }: _CardActionsProps) {
+
+    function deleteQuestion() {
+        question.RemoveFromParent()
+        onFullRefresh()
+    }
+
+    function moveUp() {
+        question.RotateUp()
+        onFullRefresh()
+    }
+
+    function moveDown() {
+        question.RotateDown()
+        onFullRefresh()
+    }
+
+    return (
+
+        <TGui.Stack
+            direction={"horizontal"}
+            gap={1}
+            style={{
+                marginLeft: "5em"
+            }}
+        >
+            <TGui.IconClickButton
+                size={"1.5em"}
+                image={"/icons/Arrow.Down.svg"}
+                onClick={moveDown}
+            />
+            <TGui.IconClickButton
+                size={"1.5em"}
+                image={"/icons/Arrow.Up.svg"}
+                onClick={moveUp}
+            />
+
+            {
+                question._parent.questions.length > 1 &&
+                <TGui.IconClickButton
+                    size={"1.5em"}
+                    image={"/icons/Delete.svg"}
+                    onClick={deleteQuestion}
+                />
+            }
+
+
+        </TGui.Stack>
+
+    )
+}
+
+interface _EditAnswerTextLabelProps {
+    answer: QuestionAnswer
+    index: number
+}
+
+function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
 
     const [text, setText] = React.useState(answer.text)
 
@@ -197,16 +217,79 @@ function _EditAnswerTextLabel({answer}: { answer: QuestionAnswer }) {
     }
 
     return (
-        <div>
+        <TGui.Stack
+            direction={"horizontal"}
+            gap={3}
+
+        >
+            <TGui.IconClickButton
+                image={"/icons/Radio.Off.svg"}
+                size={"1em"}
+            />
+
+            <b>{index + 1}.</b>
+
+
             <input
                 type={"text"}
                 value={text}
                 onChange={typing}
             />
 
-        </div>
+            <_AnswerActions
+                answer={answer}
+                onRefresh={() => {
+                    //pass
+                }}
+            />
+
+        </TGui.Stack>
     )
 }
+
+
+interface _AnswerOptionsProps {
+    answer: QuestionAnswer
+    onRefresh: any
+
+}
+
+
+function _AnswerActions({answer, onRefresh}: _AnswerOptionsProps) {
+
+    function deletePressed() {
+        answer.RemoveFromParent()
+        onRefresh()
+    }
+
+    return (
+        <TGui.Stack direction={"horizontal"} gap={1}>
+
+            <div style={{width: "3em"}}/>
+
+            <TGui.IconClickButton
+                size={"1.5em"}
+                image={"/icons/Arrow.Down.svg"}
+            />
+            <TGui.IconClickButton
+                size={"1.5em"}
+                image={"/icons/Arrow.Up.svg"}
+            />
+
+            {
+                answer._parent.answers.length > 2 &&
+                <TGui.IconClickButton
+                    size={"1.5em"}
+                    image={"/icons/Delete.svg"}
+                    onClick={deletePressed}
+                />
+            }
+
+        </TGui.Stack>
+    )
+
+}
+
 
 function _QuestionLayoutBody({question}) {
     return (

@@ -28,6 +28,7 @@ export default function AssetsMainView({}) {
         setTabValue(newValue)
     }
 
+
     return (
         <ViewContainer>
 
@@ -46,12 +47,26 @@ export default function AssetsMainView({}) {
                             <Tab label={"World"} value={"world"}/>
                             <Tab label={"Media"} value={"media"}/>
                             <Tab label={"Data"} value={"data"}/>
+                            <Tab label={"Vts"} value={"vts"}/>
                         </Tabs>
 
                     </TGui.Box>
                 </TabContext>
 
-                <_SubView type={tabValue}/>
+                <TGui.Switch condition={tabValue}>
+                    <TGui.Case value={"world"}>
+                        <_SubView type={"world"}/>
+                    </TGui.Case>
+                    <TGui.Case value={"media"}>
+                        <_SubView type={"media"}/>
+                    </TGui.Case>
+                    <TGui.Case value={"data"}>
+                        <_SubView type={"data"}/>
+                    </TGui.Case>
+                    <TGui.Case value={"vts"}>
+                        <_SubView type={"vts"}/>
+                    </TGui.Case>
+                </TGui.Switch>
 
             </div>
 
@@ -62,6 +77,7 @@ export default function AssetsMainView({}) {
 }
 
 function _SubView({type}) {
+
 
     const [t] = TGui.T()
 

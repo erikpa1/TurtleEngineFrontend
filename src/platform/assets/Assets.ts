@@ -245,11 +245,16 @@ const Assets = {
     dataAssets: () => {
         return [
             Assets.Exam,
-            Assets.TrainingTaskSet,
             Assets.Label,
             Assets.DataFactory,
             Assets.DataInstance,
             Assets.DataSet,
+        ]
+    },
+
+    vtsAssets: () => {
+        return [
+            Assets.TrainingTaskSet,
         ]
     },
 
@@ -280,7 +285,8 @@ const Assets = {
         return [
             ...Assets.dataAssets(),
             ...Assets.mediaAssets(),
-            ...Assets.worldAssets()
+            ...Assets.worldAssets(),
+            ...Assets.vtsAssets()
         ]
     },
 

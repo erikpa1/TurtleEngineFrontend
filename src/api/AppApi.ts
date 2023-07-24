@@ -16,7 +16,7 @@ import App from "../App";
 export default class AppApi {
 
 
-    static MODE = "player-guis"
+    static MODE = "editor"
 
     static IsPlayer() {
         return AppApi.MODE === "player-guis"

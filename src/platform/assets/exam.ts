@@ -1,9 +1,11 @@
 import {AssetData} from "@platform/assets/Asset";
 
 
+//TODO dorobit moznost pridat vec na opisanie pod otazku
 export class ExamQuestionTypes {
     static MULTIPLE_CHOICE = "multiple_choice" // Vyber z viacerych moznosti
-    static DECISION = "decision" //Rozhodovanie o obsahu veci
+    static SINGLE_CHOICE = "single_choice" // Vyber z viacerych moznosti
+
     static MATCHING = "matching" //Spajanie veci
     static DESCRIPTION = "description" //Essey a opis danej veci
     static COMPLETION = "completion" //Dopisovanie do policok
@@ -12,7 +14,8 @@ export class ExamQuestionTypes {
     static ToArray(): Array<string> {
         return [
             ExamQuestionTypes.MULTIPLE_CHOICE,
-            ExamQuestionTypes.DECISION,
+            ExamQuestionTypes.SINGLE_CHOICE,
+
             ExamQuestionTypes.MATCHING,
             ExamQuestionTypes.DESCRIPTION,
             ExamQuestionTypes.COMPLETION,
@@ -40,7 +43,8 @@ export default class ExamAssetData extends AssetData {
 
         for (const i of _questions) {
             const tmp = new ExamQuestion()
-            tmp.FromJson(tmp)
+            tmp._parent = this
+            tmp.FromJson(i)
             this.questions.push(tmp)
         }
 
@@ -50,13 +54,16 @@ export default class ExamAssetData extends AssetData {
     CreateQuestionOfType(type: string) {
 
         const tmp = new ExamQuestion()
+        tmp._parent = this
         tmp.header = "Is turtle best engine"
         tmp.type = type
 
         const tmpTrue = new QuestionAnswer()
+        tmpTrue._parent = tmp
         tmpTrue.text = "true"
 
         const tmpFalse = new QuestionAnswer()
+        tmpFalse._parent = tmp
         tmpFalse.text = "false"
 
         tmp.answers.push(tmpTrue)
@@ -79,16 +86,32 @@ export class ExamQuestion {
     header = ""
     type = ExamQuestionTypes.MULTIPLE_CHOICE
     type_data = {}
+
+
+
     layout = ExamQuestionLayouts.ONE_X_N
 
     answers = new Array<QuestionAnswer>()
 
+    _parent: any = null
+
     FromJson(jobj: any) {
+
         this.uid = jobj.uid ?? this.uid
         this.header = jobj.header ?? this.header
         this.type = jobj.type ?? this.type
         this.type_data = jobj.type_data ?? this.type_data
         this.layout = jobj.layout ?? this.layout
+
+        const _answers = jobj.answers ?? []
+
+        for (const i of _answers) {
+            const tmp = new QuestionAnswer()
+            tmp._parent = this
+            tmp.FromJson(i)
+            this.answers.push(tmp)
+        }
+
     }
 
     ToJson() {
@@ -106,12 +129,25 @@ export class ExamQuestion {
         //pass
     }
 
+    RemoveFromParent() {
+        this._parent.questions = this._parent.questions.filter(value => value !== this)
+    }
+
+    RotateUp() {
+        alert("Rotate up is not implemented")
+    }
+
+    RotateDown() {
+        alert("Rotate down is not implemented")
+    }
+
 }
 
 export class QuestionAnswer {
 
     uid = crypto.randomUUID()
     text = ""
+    _parent: any = null
 
     ToJson() {
         return {
@@ -125,6 +161,19 @@ export class QuestionAnswer {
         this.text = jobj.text ?? this.text
     }
 
+    RemoveFromParent() {
+        this._parent.answers = this._parent.answers.filter(value => value !== this)
+    }
+
+    RotateUp() {
+        alert("Rotate up is not implemented")
+    }
+
+    RotateDown() {
+        alert("Rotate down is not implemented")
+    }
+
+
 }
 
 export class ConnectionQuestionAnswer {
@@ -133,3 +182,4 @@ export class ConnectionQuestionAnswer {
     }
 
 }
+

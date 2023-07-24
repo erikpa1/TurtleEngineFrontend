@@ -14,7 +14,7 @@ import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 
-export default function ExamEditor({}) {
+export default function ExamEditorView({}) {
 
     const asset = useLoadAssetFromParams()
 
@@ -40,7 +40,6 @@ function _ViewDispatcher({asset}) {
     return (
         <div className={"vstack gap-3"}>
 
-            <_QuizAssetCard asset={asset}/>
 
             <TGui.Card>
                 <TGui.Tabs
@@ -83,17 +82,23 @@ function _ExamEditor({asset}: { asset: Asset }) {
 
             <TGui.Row>
                 <TGui.Col xs={3}>
-                    <ExamQuestionsList exam={exam[0]} onRefresh={refresh}/>
+                    <TGui.Stack gap={3}>
+                        <_QuizAssetCard asset={asset}/>
+                        <ExamQuestionsList exam={exam[0]} onRefresh={refresh}/>
+                    </TGui.Stack>
+
+
                 </TGui.Col>
                 <TGui.Col>
 
                     <div className={"vstack gap-3"}>
 
                         {
-                            exam[0].questions.map((value) => {
+                            exam[0].questions.map((value, index) => {
                                 return (
                                     <QuestionEditCard
                                         exam={exam[0]}
+                                        index={index}
                                         question={value}
                                         key={value.uid}
                                         onRefresh={refresh}
@@ -118,16 +123,17 @@ function _QuizAssetCard({asset}: { asset: Asset }) {
 
     async function savePressed() {
         lock.lock()
+
         await AssetsApi.UploadAssetData(asset.parent_project_uid, asset.uid, exam.ToJson())
         lock.unlock()
     }
 
     return (
 
-        <TGui.Card style={{marginLeft: "auto", marginRight: "auto"}}>
+        <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
 
             <TGui.CardMedia
-                sx={{height: 140}}
+                sx={{height: 120}}
                 image={FsTools.ConvertFilePathRnd(asset.GetPreviewPath())}
             />
 

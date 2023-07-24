@@ -63,7 +63,7 @@ function _TimeLine({lang, time}) {
 
     return (
         <TGui.Card style={{
-            minHeight: MIN_LINE_HEIGHT
+            padding: "0.75em"
         }}>
             <TGui.Row>
                 <TGui.Col>
@@ -101,7 +101,7 @@ function _TasksView({}) {
                                     size={"0.75em"}
                                 />
 
-                                <div>{index + 1}</div>
+                                <div>{index + 1}.</div>
                                 <div>{value}</div>
 
                                 <div style={{marginLeft: "auto"}}>
@@ -124,20 +124,21 @@ function _PenalisationsView({}) {
 
 
     const penalisations = [
-        "A", "B", "C", "D"
+        "A", "B", "C", "D", "E", "F", "G", "H"
     ]
 
 
     return (
-        <TGui.Stack gap={2}>
+        <TGui.Stack gap={2} style={{
+        }}>
             {
                 penalisations.map((value, index) => {
                     return (
                         <TGui.Card key={value} style={{
-                            minHeight: MIN_LINE_HEIGHT
+                            padding: "0.75em"
                         }}>
-                            <TGui.Stack direction={"horizontal"}>
-                                <div>{index + 1}</div>
+                            <TGui.Stack direction={"horizontal"} gap={1}>
+                                <div>{index + 1}.</div>
                                 <div>{value}</div>
 
                                 <div style={{marginLeft: "auto"}}>

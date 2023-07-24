@@ -68,18 +68,20 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
                     _mode === UniversalAssetListModes.EDIT)
                 &&
                 <TGui.Stack>
-                    <TGui.Button
-                        label={"asset.create"}
-                        color={"success"}
-                        variant={"outlined"}
-                        onClick={createAssetPressed}
+                    <TGui.Card
+
                         style={{
                             marginLeft: "auto",
                             marginRight: "auto"
                         }}
+                    >
+                        <TGui.Button
+                            label={"asset.create"}
+                            color={"success"}
+                            onClick={createAssetPressed}
+                        />
 
-                    />
-
+                    </TGui.Card>
                 </TGui.Stack>
 
             }

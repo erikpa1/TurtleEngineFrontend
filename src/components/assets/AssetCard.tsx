@@ -45,7 +45,6 @@ export default function AssetCard({
         dispatchAsset(asset)
     }
 
-
     const deleteConfirmed = () => {
 
         lockZus.lock()
@@ -73,6 +72,10 @@ export default function AssetCard({
                 sx={{height: 140}}
                 image={FsTools.ConvertFilePath(asset.GetPreviewPath())}
                 title={asset.name}
+                style={{
+                    cursor: "pointer"
+                }}
+                onClick={editAssetPressed}
             />
             <TGui.CardContent>
 

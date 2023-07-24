@@ -12,7 +12,6 @@ interface ExamQuestionsListProps {
 
 export default function ExamQuestionsList({exam, onRefresh}: ExamQuestionsListProps) {
 
-
     const [questions, setQuestions] = React.useState<Array<ExamQuestion>>([])
 
     function refresh() {
@@ -33,6 +32,10 @@ export default function ExamQuestionsList({exam, onRefresh}: ExamQuestionsListPr
                             questions.map((value, index) => {
                                 return (
                                     <_QuestionLine
+                                        onFullRefresh={() => {
+                                            refresh()
+                                            onRefresh()
+                                        }}
                                         key={value.uid}
                                         question={value}
                                         index={index}
@@ -62,7 +65,20 @@ export default function ExamQuestionsList({exam, onRefresh}: ExamQuestionsListPr
     )
 }
 
-function _QuestionLine({question, index}) {
+interface _QuestionLineProps {
+    question: ExamQuestion
+    onFullRefresh: () => any
+    index: number
+}
+
+function _QuestionLine({question, onFullRefresh, index}: _QuestionLineProps) {
+
+
+    function deletePressed() {
+        question.RemoveFromParent()
+        onFullRefresh()
+
+    }
 
 
     return (
@@ -89,6 +105,7 @@ function _QuestionLine({question, index}) {
                     <TGui.IconClickButton
                         size={"1.5em"}
                         image={"/icons/Delete.svg"}
+                        onClick={deletePressed}
                     />
 
 
