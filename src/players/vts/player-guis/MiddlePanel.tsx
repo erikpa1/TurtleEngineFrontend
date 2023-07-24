@@ -33,11 +33,7 @@ export function MiddlePanel({}) {
                     />
                 </TGui.Card>
 
-                <TGui.Card>
-                    <div style={{height: "5em"}}>
-
-                    </div>
-                </TGui.Card>
+                <_BottomBar/>
             </TGui.Stack>
 
 
@@ -46,3 +42,153 @@ export function MiddlePanel({}) {
     )
 }
 
+
+function _BottomBar({}) {
+
+    const [t] = TGui.T()
+
+
+    function unloadPressed() {
+        setVisibleGui(<_LoadView onLoad={loadPressed}/>)
+    }
+
+    function playPressed() {
+        setVisibleGui(<_PauseView onPause={pausePressed}/>)
+    }
+
+    function pausePressed() {
+        setVisibleGui(<_PlayUnloadView onPlay={playPressed} onUnload={unloadPressed}/>)
+    }
+
+    function loadPressed() {
+
+        setVisibleGui(<_PlayUnloadView onPlay={playPressed} onUnload={unloadPressed}/>)
+    }
+
+
+    const [visibleGui, setVisibleGui] = React.useState(<_LoadView onLoad={loadPressed}/>)
+
+
+    return (
+        <TGui.Stack direction={"horizontal"} gap={3}>
+            {visibleGui}
+        </TGui.Stack>
+    )
+}
+
+
+function _CardWrapper({children, onClick}) {
+    return (
+        <TGui.Card
+            style={{
+                cursor: "pointer",
+                marginLeft: "auto",
+                marginRight: "auto",
+                position: "relative",
+                padding: "1em"
+            }}
+            onClick={onClick}
+        >
+            {React.Children.toArray(children)}
+        </TGui.Card>
+    )
+}
+
+function _LoadView({onLoad}) {
+
+    const [t] = TGui.T()
+
+
+    return (
+        <_CardWrapper onClick={onLoad}>
+            <TGui.Stack
+                direction={"horizontal"}
+                gap={2}
+            >
+                <TGui.IconClickButton
+                    image={"/icons/Load.svg"}
+                />
+
+                <h3>{t("load")}</h3>
+
+            </TGui.Stack>
+        </_CardWrapper>
+
+    )
+}
+
+function _PlayUnloadView({onUnload, onPlay}) {
+
+
+    const [t] = TGui.T()
+
+
+    return (
+        <TGui.Stack gap={3}
+                    direction={"horizontal"}
+                    style={{
+                        marginLeft: "auto",
+                        marginRight: "auto"
+                    }}
+        >
+
+            <_CardWrapper onClick={onUnload}>
+                <TGui.Stack
+                    direction={"horizontal"}
+                    gap={2}
+                >
+                    <TGui.IconClickButton
+                        image={"/icons/Stop.svg"}
+                    />
+
+                    <h3>{t("unload")}</h3>
+
+                </TGui.Stack>
+            </_CardWrapper>
+
+            <_CardWrapper onClick={onPlay}>
+                <TGui.Stack
+                    direction={"horizontal"}
+                    gap={2}
+                >
+                    <TGui.IconClickButton
+                        image={"/icons/Play.svg"}
+                    />
+
+                    <h3>{t("play")}</h3>
+
+                </TGui.Stack>
+            </_CardWrapper>
+        </TGui.Stack>
+    )
+}
+
+function _PauseView({onPause}) {
+
+    const [t] = TGui.T()
+
+    return (
+        <TGui.Stack gap={3}
+                    direction={"horizontal"}
+                    style={{
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                    }}
+        >
+
+            <_CardWrapper onClick={onPause}>
+                <TGui.Stack
+                    direction={"horizontal"}
+                    gap={2}
+                >
+                    <TGui.IconClickButton
+                        image={"/icons/Pause.svg"}
+                    />
+
+                    <h3>{t("pause")}</h3>
+                </TGui.Stack>
+            </_CardWrapper>
+        </TGui.Stack>
+    )
+
+}
