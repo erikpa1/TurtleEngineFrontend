@@ -95,17 +95,8 @@ export default class ExamAssetData extends AssetData {
         tmp.header = "Is turtle best engine"
         tmp.type = type
 
-        const tmpTrue = new QuestionAnswer()
-        tmpTrue._parent = tmp
-        tmpTrue.text = "true"
-
-        const tmpFalse = new QuestionAnswer()
-        tmpFalse._parent = tmp
-        tmpFalse.text = "false"
-
-        tmp.answers.push(tmpTrue)
-        tmp.answers.push(tmpFalse)
-
+        tmp.AddRandomAnswer()
+        tmp.AddRandomAnswer()
 
         this.questions.push(tmp)
     }
