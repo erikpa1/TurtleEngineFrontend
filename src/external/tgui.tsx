@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Box, ButtonGroup, MenuItem, Select, Tab, Tabs} from "@mui/material";
+import {Box, ButtonGroup, MenuItem, Popover, Select, Tab, Tabs} from "@mui/material";
 
 import {Col, Modal, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
@@ -30,6 +30,7 @@ export const TGui = {
     T: useTranslation,
     Row: Row,
     Col: Col,
+    Popover: Popover,
     ViewContainer: ViewContainer,
     Modal: TurtleModal,
     ModalTitle: Modal.Title,
@@ -104,6 +105,7 @@ function _TextMicro({children}) {
 }
 
 interface _IconClickButtonProps {
+    ref?: any
     size?: string
     image: string
     onClick?: any
@@ -117,6 +119,7 @@ function _IconClickButton(props: _IconClickButtonProps) {
 
     return (
         <img
+            ref={props.ref}
             style={{
                 ...(props.style ?? {}),
                 width: _size,

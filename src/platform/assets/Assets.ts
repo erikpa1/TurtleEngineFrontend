@@ -26,6 +26,7 @@ export class AssetDefinition {
     TYPE = ""
     LANG = ""
     LANG_PLURAL = ""
+    ICON = ""
 
     DEFAULT_PREVIEW = ""
     DEFAULT_FILES = new Array<[string, string]>()
@@ -43,6 +44,7 @@ function _getPreview(type: string): string {
 
 
 const MATERIAL = new AssetDefinition()
+MATERIAL.ICON = "Create.Material.svg"
 MATERIAL.TYPE = "material"
 MATERIAL.LANG = "material"
 MATERIAL.LANG_PLURAL = "materials"
@@ -52,6 +54,7 @@ MATERIAL.SUBTYPES_CONSTRUCTORS = {"": MaterialData}
 
 const MESH = new AssetDefinition()
 MESH.TYPE = "mesh"
+MESH.ICON = "Create.Mesh.svg"
 MESH.LANG = "mesh"
 MESH.LANG_PLURAL = "meshes"
 MESH.DEFAULT_PREVIEW = _getPreview(MESH.TYPE)
@@ -67,6 +70,7 @@ MESH.DEFAULT_FILES = [
 
 const POINTCLOUD = new AssetDefinition()
 POINTCLOUD.TYPE = "pointcloud"
+POINTCLOUD.ICON = "Create.Pointcloud.svg"
 POINTCLOUD.LANG = "pointcloud"
 POINTCLOUD.LANG_PLURAL = "pointclouds"
 POINTCLOUD.DEFAULT_PREVIEW = _getPreview(POINTCLOUD.TYPE)
@@ -75,6 +79,7 @@ POINTCLOUD.SUBTYPES_CONSTRUCTORS = {"": PointCloudData}
 
 const PANORAMA = new AssetDefinition()
 PANORAMA.TYPE = "panorama"
+PANORAMA.ICON = "Scene.svg"
 PANORAMA.LANG = "panorama"
 PANORAMA.LANG_PLURAL = "panoramas"
 PANORAMA.DEFAULT_PREVIEW = _getPreview(PANORAMA.TYPE)
@@ -90,6 +95,7 @@ PANORAMA.DEFAULT_FILES = [
 
 const VIDEO = new AssetDefinition()
 VIDEO.TYPE = "video"
+VIDEO.ICON = "Create.Video.svg"
 VIDEO.LANG = "video"
 VIDEO.LANG_PLURAL = "videos"
 VIDEO.DEFAULT_PREVIEW = _getPreview(VIDEO.TYPE)
@@ -107,6 +113,7 @@ VIDEO.DEFAULT_FILES = [
 
 const IMAGE = new AssetDefinition()
 IMAGE.TYPE = "image"
+IMAGE.ICON = "Create.Image.svg"
 IMAGE.LANG = "image"
 IMAGE.LANG_PLURAL = "images"
 IMAGE.DEFAULT_PREVIEW = _getPreview(IMAGE.TYPE)
@@ -114,8 +121,9 @@ IMAGE.DEFAULT_DATA = () => new ImageData()
 IMAGE.SUBTYPES_CONSTRUCTORS = {"": ImageData}
 
 const EXAM = new AssetDefinition()
-EXAM.TYPE = "quiz"
-EXAM.LANG = "quiz"
+EXAM.TYPE = "exam"
+EXAM.ICON = "Create.Exam.svg"
+EXAM.LANG = "exam"
 EXAM.LANG_PLURAL = "exams"
 EXAM.DEFAULT_PREVIEW = _getPreview(EXAM.TYPE)
 EXAM.DEFAULT_DATA = () => new ExamAssetData()
@@ -123,6 +131,7 @@ EXAM.SUBTYPES_CONSTRUCTORS = {"": ExamAssetData}
 
 const AREA = new AssetDefinition()
 AREA.TYPE = "area"
+AREA.ICON = "Create.Area.svg"
 AREA.LANG = "area"
 AREA.LANG_PLURAL = "areas"
 AREA.DEFAULT_PREVIEW = _getPreview(AREA.TYPE)
@@ -131,6 +140,7 @@ AREA.SUBTYPES_CONSTRUCTORS = {"": AreaAssetData}
 
 const SCENE = new AssetDefinition()
 SCENE.TYPE = "scene"
+SCENE.ICON = "Scene.svg"
 SCENE.LANG = "scene"
 SCENE.LANG_PLURAL = "scenes"
 SCENE.DEFAULT_PREVIEW = _getPreview(SCENE.TYPE)
@@ -163,6 +173,7 @@ SCENE.SUBTYPES_CONSTRUCTORS = {
 
 const SOUND = new AssetDefinition()
 SOUND.TYPE = "sound"
+SOUND.ICON = "Create.Sound.svg"
 SOUND.LANG = "sound"
 SOUND.LANG_PLURAL = "sounds"
 SOUND.DEFAULT_PREVIEW = _getPreview(SOUND.TYPE)
@@ -171,6 +182,7 @@ SOUND.SUBTYPES_CONSTRUCTORS = {"": SoundData}
 
 const FONT = new AssetDefinition()
 FONT.TYPE = "font"
+FONT.ICON = "Create.Font.svg"
 FONT.LANG = "font"
 FONT.LANG_PLURAL = "fonts"
 FONT.DEFAULT_PREVIEW = _getPreview(FONT.TYPE)

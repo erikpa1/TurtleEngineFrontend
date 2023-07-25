@@ -3,6 +3,8 @@ import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
 import {TGui} from "@external/tgui";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import SelectQuestionModal from "@components/assets/quiz-editor/SelectQuestionTypeModal";
+import AnswerActions from "@components/assets/quiz-editor/AnswerActions";
+import QuestionActions from "@components/assets/quiz-editor/QuestionActions";
 
 
 interface ExamQuestionsListProps {
@@ -74,13 +76,6 @@ interface _QuestionLineProps {
 function _QuestionLine({question, onFullRefresh, index}: _QuestionLineProps) {
 
 
-    function deletePressed() {
-        question.RemoveFromParent()
-        onFullRefresh()
-
-    }
-
-
     return (
         <TGui.PaperBox>
             <div className={"hstack gap-1"} style={{margin: "0.25em"}}>
@@ -91,21 +86,10 @@ function _QuestionLine({question, onFullRefresh, index}: _QuestionLineProps) {
 
                 <div className={"hstack gap-1"} style={{marginLeft: "auto"}}>
 
-                    <TGui.IconClickButton
-                        size={"1.5em"}
-                        image={"/icons/Arrow.Down.svg"}
-                    />
-                    <TGui.IconClickButton
-                        size={"1.5em"}
-                        image={"/icons/Arrow.Up.svg"}
-                    />
-
-                    <div style={{width: "0.5em"}}/>
-
-                    <TGui.IconClickButton
-                        size={"1.5em"}
-                        image={"/icons/Delete.svg"}
-                        onClick={deletePressed}
+                    <QuestionActions
+                        index={index}
+                        question={question}
+                        onFullRefresh={onFullRefresh}
                     />
 
 

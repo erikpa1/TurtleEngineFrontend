@@ -1,7 +1,44 @@
 import {AssetData} from "@platform/assets/Asset";
+import TurtleRandom from "@math/TurtleRandom";
+import TurtleArrays from "@math/TurtleArrays";
 
+
+const RANDOM_ANSWERS = [
+    "$yes",
+    "$no",
+    "$true",
+    "$false",
+    "$maybe",
+    "$thisone",
+    "$never",
+    "$once",
+    "$twice",
+]
 
 //TODO dorobit moznost pridat vec na opisanie pod otazku
+export class ExamQuestionContentTypes {
+    static NONE = ""
+    static IMAGE = "image"
+    static SOUND = "sound"
+    static VIDEO = "video"
+    static MESH = "mesh"
+    static PANORAMA = "panorama"
+    static SCENE = "scene"
+
+    static ToArray(): Array<string> {
+        return [
+            ExamQuestionContentTypes.IMAGE,
+            ExamQuestionContentTypes.SOUND,
+            ExamQuestionContentTypes.VIDEO,
+            ExamQuestionContentTypes.MESH,
+            ExamQuestionContentTypes.PANORAMA,
+            ExamQuestionContentTypes.SCENE,
+
+        ]
+    }
+
+}
+
 export class ExamQuestionTypes {
     static MULTIPLE_CHOICE = "multiple_choice" // Vyber z viacerych moznosti
     static SINGLE_CHOICE = "single_choice" // Vyber z viacerych moznosti
@@ -85,8 +122,11 @@ export class ExamQuestion {
     uid = crypto.randomUUID()
     header = ""
     type = ExamQuestionTypes.MULTIPLE_CHOICE
+    content_type = ""
+    content_uid = ""
     type_data = {}
 
+    isMultiChoice = false
 
 
     layout = ExamQuestionLayouts.ONE_X_N
@@ -102,6 +142,7 @@ export class ExamQuestion {
         this.type = jobj.type ?? this.type
         this.type_data = jobj.type_data ?? this.type_data
         this.layout = jobj.layout ?? this.layout
+        this.isMultiChoice = jobj.isMultiChoice ?? this.isMultiChoice
 
         const _answers = jobj.answers ?? []
 
@@ -111,7 +152,6 @@ export class ExamQuestion {
             tmp.FromJson(i)
             this.answers.push(tmp)
         }
-
     }
 
     ToJson() {
@@ -121,6 +161,7 @@ export class ExamQuestion {
             type: this.type,
             type_data: this.type_data,
             layout: this.layout,
+            isMultiChoice: this.isMultiChoice,
             answers: this.answers.map(value => value.ToJson())
         }
     }
@@ -133,12 +174,20 @@ export class ExamQuestion {
         this._parent.questions = this._parent.questions.filter(value => value !== this)
     }
 
-    RotateUp() {
-        alert("Rotate up is not implemented")
+    Rotate(index, direction) {
+        TurtleArrays.SwapElementsInDirection(this._parent.questions, index, direction)
     }
 
-    RotateDown() {
-        alert("Rotate down is not implemented")
+    RotateAnswers(index, direction) {
+        TurtleArrays.SwapElementsInDirection(this.answers, index, direction)
+    }
+
+    AddRandomAnswer() {
+        const tmp = new QuestionAnswer()
+        tmp.text = RANDOM_ANSWERS[TurtleRandom.GetRandomFromZero(RANDOM_ANSWERS.length)]
+        tmp._parent = this
+
+        this.answers.push(tmp)
     }
 
 }
@@ -147,30 +196,26 @@ export class QuestionAnswer {
 
     uid = crypto.randomUUID()
     text = ""
+    isRight = false
+
     _parent: any = null
 
     ToJson() {
         return {
             uid: this.uid,
-            text: this.text
+            text: this.text,
+            isRight: this.isRight
         }
     }
 
     FromJson(jobj: any) {
         this.uid = jobj.uid ?? this.uid
         this.text = jobj.text ?? this.text
+        this.isRight = jobj.isRight ?? this.isRight
     }
 
     RemoveFromParent() {
         this._parent.answers = this._parent.answers.filter(value => value !== this)
-    }
-
-    RotateUp() {
-        alert("Rotate up is not implemented")
-    }
-
-    RotateDown() {
-        alert("Rotate down is not implemented")
     }
 
 

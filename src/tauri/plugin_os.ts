@@ -48,6 +48,16 @@ export default class TauriOsPlugin {
         return response
     }
 
+    static async ReadFileStringSafe(file: string, defaultString: string): Promise<string> {
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}ReadFileString`, {
+            file: file,
+        }).catch((e) => {
+            console.error(e)
+            return defaultString
+        })
+        return response
+    }
+
     static async FileExists(file: string): Promise<boolean> {
         const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}FileExists`, {
             file: file,
@@ -60,8 +70,6 @@ export default class TauriOsPlugin {
         const data = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetWorkingDirectory`)
         return data
     }
-
-
 
 
 }

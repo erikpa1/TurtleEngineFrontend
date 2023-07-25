@@ -1,8 +1,13 @@
 import React from "react";
-import ExamAssetData, {ExamQuestion, QuestionAnswer} from "@platform/assets/exam";
+import ExamAssetData, {ExamQuestion, ExamQuestionContentTypes, QuestionAnswer} from "@platform/assets/exam";
 import {TGui} from "@external/tgui";
-import LanguagesManager from "@app/LanguagesManager";
+
 import FsTools from "@api/FsTools";
+
+import LanguagesApi from "@api/LanguagesApi";
+import AnswerActions from "@components/assets/quiz-editor/AnswerActions";
+import QuestionActions from "@components/assets/quiz-editor/QuestionActions";
+import {AssetsTypeMap} from "@platform/assets/Assets";
 
 interface QuestionEditCardProps {
     index: number
@@ -16,8 +21,16 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
 
     const [_question, setQuestion] = React.useState<[ExamQuestion]>([question])
 
+    const [answers, setAnswers] = React.useState(_question[0].answers)
+
     function refresh() {
+        setAnswers([...question.answers])
         setQuestion([question])
+    }
+
+    function addAnswerPressed() {
+        question.AddRandomAnswer()
+        refresh()
     }
 
     return (
@@ -37,6 +50,7 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
                             <_QuestionEditHeader
                                 question={question}
                                 onRefresh={onRefresh}
+                                index={index}
                             />
 
                         </div>
@@ -73,22 +87,27 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
                                                     style={{
                                                         padding: "0.35em"
                                                     }}>
-                                                    <_EditAnswerTextLabel answer={value} index={index}/>
+                                                    <_EditAnswerLine
+                                                        answer={value}
+                                                        index={index}
+                                                        onRefresh={refresh}
+                                                    />
                                                 </TGui.Card>
-
                                             </div>
-
                                         )
                                     })
                                 }
-
                             </TGui.Stack>
+
+                            <TGui.Button
+                                style={{marginTop: "1em"}}
+                                label={"add"}
+                                onClick={addAnswerPressed}
+                            />
                         </TGui.Col>
                     </TGui.Row>
 
                 </div>
-
-                <_QuestionLayoutBody question={_question[0]}/>
 
             </TGui.CardContent>
 
@@ -99,20 +118,28 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
 interface _EditHeaderLabelProps {
     question: ExamQuestion
     onRefresh: any
+    index: number
 }
 
-function _QuestionEditHeader({question, onRefresh}: _EditHeaderLabelProps) {
-
-    const [type, setType] = React.useState("text-multi-answer")
+function _QuestionEditHeader({question, index, onRefresh}: _EditHeaderLabelProps) {
 
     const [text, setText] = React.useState(question.header)
+
 
     function typing(e) {
         const _newVal = e.target.value
         question.header = _newVal
         setText(_newVal)
-
     }
+
+    function typeChanged() {
+        question.isMultiChoice = !question.isMultiChoice
+        onRefresh()
+    }
+
+
+    const icon = question.isMultiChoice ? "/icons/Checkbox.Ok.svg" : "/icons/Radio.On.svg"
+
 
     return (
         <TGui.Stack gap={3} direction={"horizontal"}>
@@ -123,14 +150,22 @@ function _QuestionEditHeader({question, onRefresh}: _EditHeaderLabelProps) {
             />
 
             <TGui.TextMicro>
-                {LanguagesManager.T(text)}
+                {LanguagesApi.T(text)}
             </TGui.TextMicro>
 
+
             <TGui.IconClickButton
-                image={"/icons/Checkbox.Ok.svg"}
+                image={icon}
+                onClick={typeChanged}
             />
 
-            <_CardActions
+            <_EditQuestionContentButton
+                question={question}
+                onRefresh={onRefresh}
+            />
+
+            <QuestionActions
+                index={index}
                 question={question}
                 onFullRefresh={onRefresh}
             />
@@ -139,73 +174,14 @@ function _QuestionEditHeader({question, onRefresh}: _EditHeaderLabelProps) {
     )
 }
 
-interface _CardActionsProps {
-    question: ExamQuestion
-    onFullRefresh: any
-}
-
-
-function _CardActions({
-                          question,
-                          onFullRefresh
-                      }: _CardActionsProps) {
-
-    function deleteQuestion() {
-        question.RemoveFromParent()
-        onFullRefresh()
-    }
-
-    function moveUp() {
-        question.RotateUp()
-        onFullRefresh()
-    }
-
-    function moveDown() {
-        question.RotateDown()
-        onFullRefresh()
-    }
-
-    return (
-
-        <TGui.Stack
-            direction={"horizontal"}
-            gap={1}
-            style={{
-                marginLeft: "5em"
-            }}
-        >
-            <TGui.IconClickButton
-                size={"1.5em"}
-                image={"/icons/Arrow.Down.svg"}
-                onClick={moveDown}
-            />
-            <TGui.IconClickButton
-                size={"1.5em"}
-                image={"/icons/Arrow.Up.svg"}
-                onClick={moveUp}
-            />
-
-            {
-                question._parent.questions.length > 1 &&
-                <TGui.IconClickButton
-                    size={"1.5em"}
-                    image={"/icons/Delete.svg"}
-                    onClick={deleteQuestion}
-                />
-            }
-
-
-        </TGui.Stack>
-
-    )
-}
 
 interface _EditAnswerTextLabelProps {
     answer: QuestionAnswer
     index: number
+    onRefresh: any
 }
 
-function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
+function _EditAnswerLine({answer, index, onRefresh}: _EditAnswerTextLabelProps) {
 
     const [text, setText] = React.useState(answer.text)
 
@@ -213,7 +189,33 @@ function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
         const _newVal = e.target.value
         answer.text = _newVal
         setText(_newVal)
+    }
 
+    function validityPressed() {
+
+        if (answer._parent.isMultiChoice) {
+            answer.isRight = !answer.isRight
+            onRefresh()
+        } else {
+
+            for (const i of answer._parent.answers) {
+                i.isRight = false
+            }
+
+            answer.isRight = true
+            onRefresh()
+        }
+
+    }
+
+    const isMulti = answer._parent.isMultiChoice
+
+    let icon = ""
+
+    if (isMulti) {
+        icon = answer.isRight ? "/icons/Checkbox.Ok.svg" : "/icons/Checkbox.Empty.svg"
+    } else {
+        icon = answer.isRight ? "/icons/Radio.On.svg" : "/icons/Radio.Off.svg"
     }
 
     return (
@@ -223,8 +225,9 @@ function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
 
         >
             <TGui.IconClickButton
-                image={"/icons/Radio.Off.svg"}
-                size={"1em"}
+                image={icon}
+                size={"1.5em"}
+                onClick={validityPressed}
             />
 
             <b>{index + 1}.</b>
@@ -236,11 +239,12 @@ function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
                 onChange={typing}
             />
 
-            <_AnswerActions
+            <div style={{width: "3em"}}/>
+
+            <AnswerActions
                 answer={answer}
-                onRefresh={() => {
-                    //pass
-                }}
+                onRefresh={onRefresh}
+                index={index}
             />
 
         </TGui.Stack>
@@ -248,52 +252,89 @@ function _EditAnswerTextLabel({answer, index}: _EditAnswerTextLabelProps) {
 }
 
 
-interface _AnswerOptionsProps {
-    answer: QuestionAnswer
+interface _EditQuestionContentButtonProps {
+    question: ExamQuestion
     onRefresh: any
-
 }
 
+function _EditQuestionContentButton({question, onRefresh}: _EditQuestionContentButtonProps) {
 
-function _AnswerActions({answer, onRefresh}: _AnswerOptionsProps) {
 
-    function deletePressed() {
-        answer.RemoveFromParent()
+    const ref = React.useRef<any>()
+
+    const [t] = TGui.T()
+
+    const [popoverVisible, setPopoverVisible] = React.useState(false)
+
+    function contentTypeChanged(newType: string) {
+        question.content_type = ""
+        question.content_uid = ""
         onRefresh()
     }
 
+
+    const contentTypeIcon = "/icons/Checkbox.Empty.svg"
+
     return (
-        <TGui.Stack direction={"horizontal"} gap={1}>
-
-            <div style={{width: "3em"}}/>
-
+        <div ref={ref}>
             <TGui.IconClickButton
-                size={"1.5em"}
-                image={"/icons/Arrow.Down.svg"}
+                image={contentTypeIcon}
+                onClick={() => setPopoverVisible(true)}
             />
-            <TGui.IconClickButton
-                size={"1.5em"}
-                image={"/icons/Arrow.Up.svg"}
-            />
+            <TGui.Popover
+                id={question.uid}
+                open={popoverVisible}
+                anchorEl={ref.current}
+                onClose={() => setPopoverVisible(false)}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.5)"
+                }}
 
-            {
-                answer._parent.answers.length > 2 &&
-                <TGui.IconClickButton
-                    size={"1.5em"}
-                    image={"/icons/Delete.svg"}
-                    onClick={deletePressed}
-                />
-            }
+            >
+                <div style={{
+                    padding: "1em",
+                    backgroundColor: TGui.Colors.WhiteMiddle
+                }}>
+                    <TGui.Stack gap={2}>
+                        {
+                            ExamQuestionContentTypes.ToArray().map((value) => {
+                                return (
+                                    <TGui.Card
+                                        key={value}
+                                        style={{
+                                            cursor: "pointer"
+                                        }}
+                                        onClick={() => {
+                                            contentTypeChanged(value)
+                                            setPopoverVisible(false)
+                                        }}
+                                    >
+                                        <TGui.Stack
+                                            direction={"horizontal"}
+                                            gap={3}
+                                        >
+                                            <TGui.IconClickButton
+                                                image={`/icons/${AssetsTypeMap.get(value)?.ICON}`}
+                                                size={"2em"}
+                                                style={{
+                                                    margin: "0.5em"
+                                                }}
+                                            />
+                                            <TGui.Typography>{t(value)}</TGui.Typography>
+                                        </TGui.Stack>
+                                    </TGui.Card>
+                                )
+                            })
+                        }
 
-        </TGui.Stack>
-    )
+                    </TGui.Stack>
+                </div>
+            </TGui.Popover>
+        </div>
 
-}
-
-
-function _QuestionLayoutBody({question}) {
-    return (
-        <>
-        </>
     )
 }

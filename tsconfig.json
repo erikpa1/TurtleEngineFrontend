@@ -26,6 +26,9 @@
       "@platform/*": [
         "src/platform/*"
       ],
+      "@math/*": [
+        "src/math/*"
+      ],
       "@app/*": [
         "src/app/*"
       ],

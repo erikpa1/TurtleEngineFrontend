@@ -77,6 +77,8 @@ function _ExamEditor({asset}: { asset: Asset }) {
         setExam([asset.data])
     }
 
+    crypto.randomUUID()
+
     return (
         <div className={"vstack gap-3"}>
 

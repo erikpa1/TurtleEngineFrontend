@@ -5,9 +5,11 @@ import {Tab} from "@mui/material";
 
 import {Ext} from "@external/prelude";
 import {TGui} from "@external/tgui";
-import ProjectPlayerConfig from "@components/projects/configs/ProjectPlayerConfig";
-import ProjectScenesEditorConfig from "@components/projects/configs/ProjectScenesEditorConfig";
-import VTSProjectConfigView from "@components/projects/configs/VTSProjectConfigView";
+
+const ProjectPlayerConfig = React.lazy(() => import(  "@components/projects/configs/ProjectPlayerConfig"))
+const ProjectScenesEditorConfig = React.lazy(() => import(  "@components/projects/configs/ProjectScenesEditorConfig"))
+const VTSProjectConfigView = React.lazy(() => import(  "@components/projects/configs/VTSProjectConfigView"))
+const LanguagesEditView = React.lazy(() => import( "@components/projects/LanguagesEditView"))
 
 
 export default function ProjectConfigView({}) {
@@ -36,9 +38,10 @@ export default function ProjectConfigView({}) {
                             aria-label="Asset tabs"
                             textColor="inherit"
                         >
-                            <Tab label={"player-guis"} value={"0"}/>
-                            <Tab label={"vts"} value={"1"}/>
-                            <Tab label={"scene-editor"} value={"2"}/>
+                            <Tab label={"languages"} value={"0"}/>
+                            <Tab label={"player-guis"} value={"1"}/>
+                            <Tab label={"vts"} value={"2"}/>
+                            <Tab label={"scene-editor"} value={"3"}/>
                         </TGui.Tabs>
 
                     </TGui.Box>
@@ -46,12 +49,15 @@ export default function ProjectConfigView({}) {
 
                 <TGui.Switch condition={tabValue}>
                     <TGui.Case value={"0"}>
-                        <ProjectPlayerConfig/>
+                        <LanguagesEditView/>
                     </TGui.Case>
                     <TGui.Case value={"1"}>
-                        <VTSProjectConfigView/>
+                        <ProjectPlayerConfig/>
                     </TGui.Case>
                     <TGui.Case value={"2"}>
+                        <VTSProjectConfigView/>
+                    </TGui.Case>
+                    <TGui.Case value={"3"}>
                         <ProjectScenesEditorConfig/>
                     </TGui.Case>
 

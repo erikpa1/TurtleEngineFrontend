@@ -25,7 +25,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, a
                 return this.props.onError
             } else {
                 return (
-                    <_ErrorView/>
+                    <_ErrorView error={error}/>
                 );
             }
 
@@ -73,6 +73,10 @@ function _ErrorView({error = ""}): any {
                             >
                                 {t("continue")}
                             </button>
+                        </div>
+
+                        <div style={{color: "red"}}>
+                            {error}
                         </div>
                     </div>
                 </div>

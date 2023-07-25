@@ -9,6 +9,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@platform': path.resolve(__dirname, "src/platform"),
+            '@math': path.resolve(__dirname, "src/math"),
             '@app': path.resolve(__dirname, "src/app"),
             '@editors': path.resolve(__dirname, "src/editors"),
             '@players': path.resolve(__dirname, "src/players"),
