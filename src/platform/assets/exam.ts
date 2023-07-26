@@ -134,6 +134,8 @@ export class ExamQuestion {
         this.type_data = jobj.type_data ?? this.type_data
         this.layout = jobj.layout ?? this.layout
         this.isMultiChoice = jobj.isMultiChoice ?? this.isMultiChoice
+        this.content_type = jobj.content_type ?? this.content_type
+        this.content_uid = jobj.content_uid ?? this.content_uid
 
         const _answers = jobj.answers ?? []
 
@@ -152,6 +154,8 @@ export class ExamQuestion {
             type: this.type,
             type_data: this.type_data,
             layout: this.layout,
+            content_type: this.content_type,
+            content_uid: this.content_uid,
             isMultiChoice: this.isMultiChoice,
             answers: this.answers.map(value => value.ToJson())
         }

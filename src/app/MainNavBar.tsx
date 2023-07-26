@@ -94,8 +94,8 @@ function _PlayerMenu() {
 
     return (
         <sb.Menu>
-            <MyNavbarItem lang={"projects"} l
-                          ink={RoutesManager.ROUTE_PROJECTS} icon={"/icons/Projects.svg"}/>
+            <MyNavbarItem lang={"projects"}
+                          link={RoutesManager.ROUTE_PROJECTS} icon={"/icons/Projects.svg"}/>
 
             <MyNavbarItem lang={"users"}
                           link={RoutesManager.ROUTE_TRAINING_USERS} icon={"/icons/Users.svg"}/>

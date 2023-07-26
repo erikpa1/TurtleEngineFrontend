@@ -48,7 +48,7 @@ export function SceneMeshNodeView({node}: SceneMeshViewProps) {
     const [meshAsset, setMeshAsset] = React.useState<Asset | null>(null)
 
     React.useEffect(() => {
-        AssetsApi.GetAssetAndAssetData<MeshAssetData>(MeshAssetData, projectZus.project.uid, node.content_uid).then((value) => {
+        AssetsApi.GetAssetAndAssetData(MeshAssetData, projectZus.project.uid, node.content_uid).then((value) => {
             setMeshAsset(value)
         })
     }, [node.content_uid])

@@ -48,7 +48,7 @@ export default function EditProjectOffcanvas({
         >
 
             {
-                (isLoading || !project) ? <MiddleSpinner/> : <_InnerContent
+                (isLoading || !project) ? <TGui.MiddleSpinner/> : <_InnerContent
                     project={project}
                     onClose={onClose}
                     onRefresh={onRefresh}

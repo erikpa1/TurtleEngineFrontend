@@ -8,6 +8,7 @@ import LanguagesApi from "@api/LanguagesApi";
 import AnswerActions from "@components/assets/quiz-editor/AnswerActions";
 import QuestionActions from "@components/assets/quiz-editor/QuestionActions";
 import {AssetsTypeMap} from "@platform/assets/Assets";
+import QuestionContentTypeView from "@components/assets/quiz-editor/QeustionContentTypeView";
 
 interface QuestionEditCardProps {
     index: number
@@ -18,6 +19,7 @@ interface QuestionEditCardProps {
 
 export default function QuestionEditCard({exam, index, question, onRefresh}: QuestionEditCardProps) {
 
+    const [t] = TGui.T()
 
     const [_question, setQuestion] = React.useState<[ExamQuestion]>([question])
 
@@ -38,12 +40,10 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
 
             <TGui.CardContent>
 
-
-                <div className={"vstack gap-3"}>
+                <TGui.Stack gap={3}>
 
                     <TGui.Card>
-                        <div
-                            className={"hstack gap-3"}
+                        <TGui.Stack gap={3} direction={"horizontal"}
                             style={{padding: "0.5em"}}
                         >
                             {index + 1}.
@@ -53,22 +53,30 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
                                 index={index}
                             />
 
-                        </div>
+                        </TGui.Stack>
                     </TGui.Card>
 
                     <TGui.Row>
 
-                        <TGui.Col xs={3}>
-                            <TGui.Card>
-                                <TGui.IconClickButton
-                                    size={"10em"}
-                                    image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("Images/ProjectPreview.png"))}
-                                    style={{
-                                        padding: "5px"
-                                    }}
-                                />
-                            </TGui.Card>
+                        <TGui.Col xs={4}>
 
+                            <TGui.Stack gap={3}>
+
+                                <TGui.Card style={{padding: "0.5em"}}>
+                                    <TGui.Stack gap={3} direction={"horizontal"}>
+                                        <TGui.TextMicro>
+                                            {t("type")}:
+                                        </TGui.TextMicro>
+                                        <_EditQuestionContentButton
+                                            question={question}
+                                            onRefresh={onRefresh}
+                                        />
+                                    </TGui.Stack>
+                                </TGui.Card>
+
+                                <QuestionContentTypeView question={question} onRefresh={onRefresh}/>
+
+                            </TGui.Stack>
                         </TGui.Col>
 
                         <TGui.Col>
@@ -107,7 +115,7 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
                         </TGui.Col>
                     </TGui.Row>
 
-                </div>
+                </TGui.Stack>
 
             </TGui.CardContent>
 
@@ -157,11 +165,6 @@ function _QuestionEditHeader({question, index, onRefresh}: _EditHeaderLabelProps
             <TGui.IconClickButton
                 image={icon}
                 onClick={typeChanged}
-            />
-
-            <_EditQuestionContentButton
-                question={question}
-                onRefresh={onRefresh}
             />
 
             <QuestionActions
@@ -267,13 +270,22 @@ function _EditQuestionContentButton({question, onRefresh}: _EditQuestionContentB
     const [popoverVisible, setPopoverVisible] = React.useState(false)
 
     function contentTypeChanged(newType: string) {
-        question.content_type = ""
+
+        if (newType === "none") {
+            question.content_type = ""
+        } else {
+            question.content_type = newType
+        }
+
+
         question.content_uid = ""
+        setPopoverVisible(false)
+
         onRefresh()
     }
 
 
-    const contentTypeIcon = "/icons/Checkbox.Empty.svg"
+    const contentTypeIcon = question.content_type === "" ? "/icons/Checkbox.Empty.svg" : `/icons/${AssetsTypeMap.get(question.content_type)?.ICON}`
 
     return (
         <div ref={ref}>
@@ -300,33 +312,23 @@ function _EditQuestionContentButton({question, onRefresh}: _EditQuestionContentB
                     backgroundColor: TGui.Colors.WhiteMiddle
                 }}>
                     <TGui.Stack gap={2}>
+
+                        <_PopoverSelectionItem
+                            icon={"/icons/Checkbox.Empty.svg"}
+                            value={"none"}
+                            contentTypeChanged={contentTypeChanged}
+
+                        />
+
                         {
                             ExamQuestionContentTypes.ToArray().map((value) => {
                                 return (
-                                    <TGui.Card
-                                        key={value}
-                                        style={{
-                                            cursor: "pointer"
-                                        }}
-                                        onClick={() => {
-                                            contentTypeChanged(value)
-                                            setPopoverVisible(false)
-                                        }}
-                                    >
-                                        <TGui.Stack
-                                            direction={"horizontal"}
-                                            gap={3}
-                                        >
-                                            <TGui.IconClickButton
-                                                image={`/icons/${AssetsTypeMap.get(value)?.ICON}`}
-                                                size={"2em"}
-                                                style={{
-                                                    margin: "0.5em"
-                                                }}
-                                            />
-                                            <TGui.Typography>{t(value)}</TGui.Typography>
-                                        </TGui.Stack>
-                                    </TGui.Card>
+                                    <_PopoverSelectionItem
+                                        icon={`/icons/${AssetsTypeMap.get(value)?.ICON}`}
+                                        value={value}
+                                        contentTypeChanged={contentTypeChanged}
+
+                                    />
                                 )
                             })
                         }
@@ -336,5 +338,36 @@ function _EditQuestionContentButton({question, onRefresh}: _EditQuestionContentB
             </TGui.Popover>
         </div>
 
+    )
+}
+
+function _PopoverSelectionItem({icon, value, contentTypeChanged}) {
+
+    const [t] = TGui.T()
+
+    return (
+        <TGui.Card
+            key={value}
+            style={{
+                cursor: "pointer"
+            }}
+            onClick={() => {
+                contentTypeChanged(value)
+            }}
+        >
+            <TGui.Stack
+                direction={"horizontal"}
+                gap={3}
+            >
+                <TGui.IconClickButton
+                    image={icon}
+                    size={"2em"}
+                    style={{
+                        margin: "0.5em"
+                    }}
+                />
+                <TGui.Typography>{t(value)}</TGui.Typography>
+            </TGui.Stack>
+        </TGui.Card>
     )
 }

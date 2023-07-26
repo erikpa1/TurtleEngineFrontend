@@ -96,7 +96,18 @@
         "height": 600,
         "resizable": true,
         "title": "Turtle Engine",
-        "width": 800
+        "width": 800,
+        "label": "main",
+        "visible": true
+      },
+      {
+        "width": 1000,
+        "height": 1000,
+        "decorations": false,
+        "url": "splash.svg",
+        "label": "splashscreen",
+        "alwaysOnTop": true,
+        "center": true
       }
     ]
   }

@@ -13,6 +13,8 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+import AssetFilesView from "@components/assets/universal/AssetFilesView";
+import ExamPlayerView from "@components/assets/exam-player/ExamPlayerView";
 
 export default function ExamEditorView({}) {
 
@@ -51,6 +53,7 @@ function _ViewDispatcher({asset}) {
                 >
                     <TGui.Tab value={"0"} label={t("edit")}/>
                     <TGui.Tab value={"1"} label={t("preview")}/>
+                    <TGui.Tab value={"files"} label={t("files")}/>
                 </TGui.Tabs>
             </TGui.Card>
 
@@ -60,7 +63,11 @@ function _ViewDispatcher({asset}) {
                 </TGui.Case>
 
                 <TGui.Case value={"1"}>
-                    Preview is not implemented
+                    <ExamPlayerView asset={asset}/>
+                </TGui.Case>
+
+                <TGui.Case value={"files"}>
+                    <AssetFilesView asset={asset}/>
                 </TGui.Case>
 
             </TGui.Switch>
@@ -80,7 +87,7 @@ function _ExamEditor({asset}: { asset: Asset }) {
     crypto.randomUUID()
 
     return (
-        <div className={"vstack gap-3"}>
+        <TGui.Stack gap={3} >
 
             <TGui.Row>
                 <TGui.Col xs={3}>
@@ -114,7 +121,7 @@ function _ExamEditor({asset}: { asset: Asset }) {
 
             </TGui.Row>
 
-        </div>
+        </TGui.Stack>
     )
 }
 

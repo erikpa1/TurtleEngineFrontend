@@ -92,7 +92,7 @@ export function SceneVideoNodeView({node}: SceneVideoViewProps) {
             setNode({v: node})
         }
 
-        AssetsApi.GetAssetAndAssetData<VideoData>(VideoData,
+        AssetsApi.GetAssetAndAssetData(VideoData,
             projectZus.project.uid,
             node.content_uid
         ).then((value) => {

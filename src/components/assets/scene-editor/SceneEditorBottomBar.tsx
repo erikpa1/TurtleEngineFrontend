@@ -10,6 +10,7 @@ import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/Un
 import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas";
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import HudButton from "@components/assets/HudButton";
+import {useParams} from "react-router-dom";
 
 
 interface SceneEditorHudProps {
@@ -20,10 +21,11 @@ interface SceneEditorHudProps {
 
 export default function SceneEditorBottomBar(props: SceneEditorHudProps) {
 
+    const {projectuid}: any = useParams()
+
     const [t] = useTranslation()
 
     const popup = useGlobalPopup()
-    const projectZus = useActiveProjectZus()
 
     function addAssetPressed(assetDefinition: AssetDefinition) {
 
@@ -37,7 +39,7 @@ export default function SceneEditorBottomBar(props: SceneEditorHudProps) {
                 <UniversalAssetList
                     md={4}
                     assetDefinition={assetDefinition}
-                    parentProjectUid={projectZus.project.uid}
+                    parentProjectUid={projectuid}
                     mode={UniversalAssetListModes.SELECT}
                     onSelect={(asset) => {
                         props.sceneDefinition.AddAssetChildren(asset)

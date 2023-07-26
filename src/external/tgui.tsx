@@ -125,6 +125,7 @@ function _IconClickButton(props: _IconClickButtonProps) {
                 width: _size,
                 height: _size,
                 cursor: "pointer",
+                objectFit: "contain"
             }}
             onClick={props.onClick}
             src={props.image}
