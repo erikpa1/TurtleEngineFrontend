@@ -1,18 +1,19 @@
 import TurtleOffcanvas from "@components/Drawers";
-import React, {SyntheticEvent} from "react";
+import React, { SyntheticEvent } from "react";
 
 import ProjectApi from "@api/project/ProjectApi";
-import {useTranslation} from "react-i18next";
-import {Stack} from "@mui/material";
-import {CreateProjectParams} from "@api/project/params";
-import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import { useTranslation } from "react-i18next";
+import { Stack } from "@mui/material";
+import { CreateProjectParams } from "@api/project/params";
+import { useGlobalAppLock } from "@platform/zustands/globalAppLockZus";
 
-import {TurtleButton} from "@platform/components/TurtleButtons";
-import {TurtleTextField} from "@platform/components/TurtleForms";
-import {TGui} from "@external/tgui";
+import { TurtleButton } from "@platform/components/TurtleButtons";
+import { TurtleTextField } from "@platform/components/TurtleForms";
+import { TGui } from "@external/tgui";
 import FsTools from "@api/FsTools";
-import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import { ImagePicker } from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import ImagesApi from "@api/ImagesApi";
+import PlatformDispatcher from "@api/PlatformDispatcher";
 
 interface CreateProjectOffcanvasProps {
     onClose: () => void
@@ -21,9 +22,9 @@ interface CreateProjectOffcanvasProps {
 }
 
 export default function CreateProjectOffcanvas({
-                                                   onClose,
-                                                   onRefresh
-                                               }: CreateProjectOffcanvasProps) {
+    onClose,
+    onRefresh
+}: CreateProjectOffcanvasProps) {
 
     const [t] = useTranslation()
 
@@ -47,7 +48,9 @@ export default function CreateProjectOffcanvas({
 
         const newProjectUid = await ProjectApi.CreateProject(cpp)
 
-        await ImagesApi.GeneratePreviewDesktop(preview, FsTools.GetPathInProject(newProjectUid, "Preview.png"), 512)
+        if (PlatformDispatcher.IsDesktop()) {
+            await ImagesApi.GeneratePreviewDesktop(preview, FsTools.GetPathInProject(newProjectUid, "Preview.png"), 512)
+        }
 
         lock.unlock()
 
@@ -93,7 +96,7 @@ export default function CreateProjectOffcanvas({
                     <ImagePicker
                         image={preview}
                         imagePickedDesktop={imageSelectedDesktop}
-                        imagePickedWeb={imageSelectedWeb}/>
+                        imagePickedWeb={imageSelectedWeb} />
 
 
                     <TurtleTextField

@@ -1,8 +1,9 @@
-import {CreateProjectParams} from "./params";
+import { CreateProjectParams } from "./params";
 import PlatformDispatcher from "../PlatformDispatcher";
 
-import {ProjectLight} from "@data/project/ProjectLight";
+import { ProjectLight } from "@data/project/ProjectLight";
 import TauriProjectPlugin from "../../tauri/plugin_project";
+import axios from "axios";
 
 
 export default class ProjectApi {
@@ -11,7 +12,6 @@ export default class ProjectApi {
     static async ActivateProject(projectUid: string): Promise<ProjectLight | null> {
         if (PlatformDispatcher.IsDesktop()) {
             const result = await TauriProjectPlugin.ActivateProject(projectUid)
-
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             return result
@@ -26,7 +26,12 @@ export default class ProjectApi {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.CreateProject(params)
         } else {
-            alert("Create project is unimplemented for WEB")
+            await axios.post("/api/projects/create-project", null, {
+                params: params
+            }).catch((e) => {
+                console.log(e.request.responseText)
+            })
+            return ""
         }
         return ""
     }
@@ -55,9 +60,11 @@ export default class ProjectApi {
         if (PlatformDispatcher.IsDesktop()) {
             return await TauriProjectPlugin.ListProjects()
         } else {
-            alert("ListProjects is not implemented for web")
+            const data = await axios.get("/api/projects/list-projects")
+            console.log(data)
+            return ProjectLight.ArrayFromJsonArray(data.data)
         }
-        return []
+
     }
 
     static async GetProjectLight(projectUid: string): Promise<ProjectLight | null> {

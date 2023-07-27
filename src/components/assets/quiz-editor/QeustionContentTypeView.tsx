@@ -6,6 +6,7 @@ import {AssetDefinition, AssetsTypeMap} from "@platform/assets/Assets";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {useParams} from "react-router-dom";
+import Asset from "@platform/assets/Asset";
 
 
 interface QuestionContentTypeViewProps {
@@ -107,3 +108,23 @@ export default function QuestionContentTypeView({question, onRefresh}: QuestionC
 
     }
 }
+
+function _ExistingAssetCardLoader({assetUid}) {
+
+
+    const [asset, setAsset] = React.useState<Asset | null>(null)
+
+    if (asset) {
+        return (
+            <>
+            </>
+        )
+    } else {
+        return (
+            <TGui.MiddleSpinner/>
+        )
+    }
+
+
+}
+

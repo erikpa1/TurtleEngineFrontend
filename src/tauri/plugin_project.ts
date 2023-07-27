@@ -44,13 +44,9 @@ export default class TauriProjectPlugin {
         const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}ListProjects`)
         const parsed = JSON.parse(response)
 
-        const projects = parsed.projects.map((value) => {
-            const tmp = new ProjectLight()
-            tmp.from_json(value)
-            return tmp
-        })
+        return ProjectLight.ArrayFromJsonArray(parsed.projects)
 
-        return projects
+
     }
 
     static async GetProjectLight(projectUid: string): Promise<ProjectLight> {
