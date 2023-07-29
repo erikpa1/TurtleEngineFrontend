@@ -53,7 +53,9 @@ function _VideoEditor({asset}: _VideoEditorProps) {
             </TGui.Col>
 
             <TGui.Col>
-                <TGui.Card>
+                <TGui.Card style={{
+                    backgroundColor: TGui.Colors.WhiteMiddle
+                }}>
 
                     <TGui.CardContent style={{
                         height: "650px"

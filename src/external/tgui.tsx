@@ -62,6 +62,8 @@ export const TGui = {
     PopupZus: useGlobalPopup,
     SingleFileInput: TurtleSingleFileInput,
     TextMicro: _TextMicro,
+    TextBig: _TextBig,
+    TextMiddle: _TextMiddle,
     Colors: {
         WhiteBack: "#e7ebf0",
         WhiteMiddle: "#f4f4f4",
@@ -86,6 +88,35 @@ interface TSwitch {
 
 interface TCase {
     value: string | number | any
+}
+
+
+function _TextBig({children}) {
+    return (
+        <Typography
+            gutterBottom
+            component="div"
+            variant="h5"
+            color="text.secondary"
+
+        >
+            {React.Children.toArray(children)}
+        </Typography>
+
+    )
+}
+
+function _TextMiddle({children}) {
+    return (
+        <Typography
+            sx={{mb: 1.5}}
+            color="text.secondary"
+
+        >
+            {React.Children.toArray(children)}
+        </Typography>
+
+    )
 }
 
 function _TextMicro({children}) {

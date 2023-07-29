@@ -1,9 +1,10 @@
 import React from "react";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import {Modal} from "react-bootstrap";
+import {Form, Modal} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import {Stack} from "@mui/material";
 import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TGui} from "@external/tgui";
 
 
 const Modals = {
@@ -84,10 +85,57 @@ function showYesNoModal(props: YesNoModalProps) {
             }
 
         }}
-
-
     />)
 }
+
+
+export function showSimpleStringInput(title: string, buttonLang: string, onPicked: any) {
+    useGlobalPopup.getState().pushElement(<SimpleStringModal
+        onClose={useGlobalPopup.getState().popElement}
+        title={title}
+        buttonLang={buttonLang}
+        onPick={onPicked}
+    />)
+}
+
+
+export function SimpleStringModal({title,buttonLang, onPick, onClose}) {
+
+    const [t] = TGui.T()
+
+    const [value, setValue] = React.useState("")
+
+    return (
+        <TGui.Modal
+            closeEnabled={true}
+            onHide={onClose}
+            header={<TGui.ModalTitle>{t(title)}</TGui.ModalTitle>}
+        >
+            <Form.Control
+                type={"text"}
+                value={value}
+                onChange={(e) => {
+                    setValue(e.target.value)
+                }}
+
+            />
+
+            <div>
+                <TGui.Button
+                    label={buttonLang}
+                    onClick={() => {
+                        onClose()
+                        onPick(value)
+                    }}
+                />
+            </div>
+
+        </TGui.Modal>
+    )
+
+
+}
+
 
 export function YesNoModal(props: YesNoModalProps) {
 

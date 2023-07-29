@@ -37,8 +37,8 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
                             direction={"horizontal"}
                             style={{padding: "0.5em"}}
                         >
-                            {index + 1}.
-                            <div>{LanguagesApi.T(question.header)}</div>
+                            <TGui.TextBig>{index + 1}.</TGui.TextBig>
+                            <TGui.TextBig>{LanguagesApi.T(question.header)}</TGui.TextBig>
                         </TGui.Stack>
                     </TGui.Card>
 
@@ -57,7 +57,7 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
                             <TGui.Stack gap={3}>
 
                                 {
-                                    question.answers.map((value, index) => {
+                                    answers.map((value, index) => {
                                         return (
                                             <ExamAnswerCard
                                                 key={value.uid}

@@ -78,9 +78,9 @@ export default function ProjectUniversalCard({project, onRefresh}: ProjectUniver
                 onClick={activateProjectPressed}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <TGui.TextBig>
                     {val.project.name}
-                </Typography>
+                </TGui.TextBig>
 
                 <Typography
                     variant="body2"

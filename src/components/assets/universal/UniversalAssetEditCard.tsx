@@ -7,6 +7,7 @@ import FsTools from "@api/FsTools";
 import React from "react";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import ImagesApi from "@api/ImagesApi";
+import {showSimpleStringInput} from "@components/Modals";
 
 
 interface UniversalAssetEditCardProps {
@@ -14,11 +15,19 @@ interface UniversalAssetEditCardProps {
 }
 
 export function UniversalAssetEditCard({asset}: UniversalAssetEditCardProps) {
+
+
+    const [_asset, setAsset] = React.useState([asset])
+
     const lock = useGlobalAppLock()
 
     const exam: ExamAssetData = asset.data
 
     const inputRef = React.useRef<any>()
+
+    function refresh() {
+        setAsset([asset])
+    }
 
     async function takeSnapshotPressed() {
 
@@ -40,6 +49,20 @@ export function UniversalAssetEditCard({asset}: UniversalAssetEditCardProps) {
         }
     }
 
+    async function renamePressed() {
+        showSimpleStringInput("asset.new.name", "change.and.save", (value) => {
+            asset.name = value
+
+            lock.lock()
+
+            AssetsApi.UpdateAsset(asset).then(() => {
+                lock.unlock()
+                refresh()
+            })
+
+        })
+    }
+
     async function savePressed() {
         lock.lock()
 
@@ -53,13 +76,13 @@ export function UniversalAssetEditCard({asset}: UniversalAssetEditCardProps) {
 
             <TGui.CardMedia
                 sx={{height: 120}}
-                image={FsTools.ConvertFilePathRnd(asset.GetPreviewPath())}
+                image={FsTools.ConvertFilePathRnd(_asset[0].GetPreviewPath())}
             />
 
 
             <TGui.CardContent>
                 <TGui.Typography>
-                    {asset.name}
+                    {_asset[0].name}
                 </TGui.Typography>
             </TGui.CardContent>
 
@@ -80,6 +103,7 @@ export function UniversalAssetEditCard({asset}: UniversalAssetEditCardProps) {
                 />
                 <TGui.Button
                     label={"rename"}
+                    onClick={renamePressed}
                 />
 
             </TGui.CardActions>

@@ -8,6 +8,7 @@ import TauriAssetPlugin from "../tauri/plugin_assets";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams";
 import TauriOsPlugin from "../tauri/plugin_os";
+import TauriSqlitePlugin from "../tauri/plugin_sqlite";
 
 export default class AssetsApi {
 
@@ -28,6 +29,22 @@ export default class AssetsApi {
             return new Asset()
         }
 
+    }
+
+    static async UpdateAsset(asset: Asset) {
+
+        if (PlatformDispatcher.IsDesktop()) {
+            const query = `UPDATE Assets
+                           Set Name='${asset.name}',
+                               Description='${asset.description}',
+                               Tags='${asset.tags}'
+                           WHERE Uid = '${asset.uid}'`
+            await TauriSqlitePlugin.Exec(query)
+        } else {
+            await axios.put("/api/assets/update-asset", null, {
+                params: asset.ToJson()
+            })
+        }
     }
 
     static async CreateAsset(params: CreateAssetParamas): Promise<Asset> {

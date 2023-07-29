@@ -91,5 +91,7 @@
   "load": "Load",
   "unload": "Unload",
   "play": "Play",
-  "pause": "Pause"
+  "pause": "Pause",
+  "asset.new.name": "New asset name",
+  "change.and.save": "Change and save"
 }
