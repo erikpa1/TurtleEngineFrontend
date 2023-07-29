@@ -13,6 +13,17 @@ export default function ExamPlayerView({asset}: ExamPlayerViewProps) {
 
     const _exam: ExamAssetData = asset.data as any
 
+    const [isEvaluated, setIsEvaluated] = React.useState(false)
+
+    function evaluatePressed() {
+        setIsEvaluated(!isEvaluated)
+    }
+
+    React.useEffect(() => {
+
+        //pass
+
+    }, [])
 
     return (
         <TGui.Stack gap={3}>
@@ -23,10 +34,20 @@ export default function ExamPlayerView({asset}: ExamPlayerViewProps) {
                             key={value.uid}
                             question={value}
                             index={index}
+                            isEvaluated={isEvaluated}
                         />
                     )
                 })
             }
+
+            {
+                isEvaluated === false &&
+                <TGui.Button
+                    label={"evaluate"}
+                    onClick={evaluatePressed}
+                />
+            }
+
         </TGui.Stack>
     )
 

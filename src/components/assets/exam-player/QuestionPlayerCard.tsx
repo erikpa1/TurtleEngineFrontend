@@ -11,9 +11,10 @@ import Asset from "@platform/assets/Asset";
 interface QuestionPlayerCardProps {
     question: ExamQuestion
     index: number
+    isEvaluated: boolean
 }
 
-export default function QuestionPlayerCard({question, index}: QuestionPlayerCardProps) {
+export default function QuestionPlayerCard({question, isEvaluated, index}: QuestionPlayerCardProps) {
 
 
     const [answers, setAnswers] = React.useState(question.answers)
@@ -22,8 +23,8 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
         setAnswers([...question.answers])
     }
 
-
     const colXs = question.content_uid === "" ? {xs: 1} : {xs: 5}
+
 
     return (
         <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
