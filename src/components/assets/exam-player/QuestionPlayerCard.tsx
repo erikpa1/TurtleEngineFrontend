@@ -6,6 +6,7 @@ import LanguagesApi from "@api/LanguagesApi";
 import {useLoadAsset} from "@components/assets/assets_hooks";
 import {useParams} from "react-router-dom";
 import Asset from "@platform/assets/Asset";
+import EmbededAssetPlayerDispatcher from "@components/assets/universal/EmbededAssetPlayerDispatcher";
 
 
 interface QuestionPlayerCardProps {
@@ -114,6 +115,7 @@ function _QuestionContentCard({question, asset}: _QuestionContentCardProps) {
         <TGui.Card style={{
             height: "20em"
         }}>
+            <EmbededAssetPlayerDispatcher asset={asset}/>
 
         </TGui.Card>
     )

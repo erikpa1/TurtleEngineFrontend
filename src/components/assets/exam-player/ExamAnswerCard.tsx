@@ -2,7 +2,6 @@ import React from "react";
 import {TGui} from "@external/tgui";
 
 import {ExamQuestion, QuestionAnswer} from "@platform/assets/exam";
-import {AssetsTypeMap} from "@platform/assets/Assets";
 import LanguagesApi from "@api/LanguagesApi";
 
 
