@@ -3,6 +3,9 @@ import {TGui} from "@external/tgui";
 import {ExamQuestion} from "@platform/assets/exam";
 import ExamAnswerCard from "@components/assets/exam-player/ExamAnswerCard";
 import LanguagesApi from "@api/LanguagesApi";
+import {useLoadAsset} from "@components/assets/assets_hooks";
+import {useParams} from "react-router-dom";
+import Asset from "@platform/assets/Asset";
 
 
 interface QuestionPlayerCardProps {
@@ -20,7 +23,7 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
     }
 
 
-    const colXs = question.content_uid === "" ? {xs: 1} : {}
+    const colXs = question.content_uid === "" ? {xs: 1} : {xs: 5}
 
     return (
         <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
@@ -42,6 +45,11 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
                     <TGui.Row>
 
                         <TGui.Col {...colXs}>
+
+                            {
+                                question.content_uid !== "" &&
+                                <_QuestionContentCardLoader question={question}/>
+                            }
 
                         </TGui.Col>
 
@@ -68,6 +76,43 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
 
                 </TGui.Stack>
             </TGui.CardContent>
+
+        </TGui.Card>
+    )
+}
+
+
+function _QuestionContentCardLoader({question}: { question: ExamQuestion }) {
+
+    const {projectuid}: any = useParams()
+
+    const asset = useLoadAsset(projectuid, question.content_uid)
+
+
+    if (asset) {
+        return (
+            <_QuestionContentCard question={question}/>
+        )
+    } else {
+        return (
+            <TGui.MiddleSpinner/>
+        )
+    }
+
+
+}
+
+
+interface _QuestionContentCardProps {
+    question: ExamQuestion
+    asset: Asset
+}
+
+function _QuestionContentCard({question, asset}: _QuestionContentCardProps) {
+    return (
+        <TGui.Card style={{
+            height: "20em"
+        }}>
 
         </TGui.Card>
     )

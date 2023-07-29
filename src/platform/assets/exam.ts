@@ -95,8 +95,8 @@ export default class ExamAssetData extends AssetData {
         tmp.header = "Is turtle best engine"
         tmp.type = type
 
-        tmp.AddRandomAnswer()
-        tmp.AddRandomAnswer()
+        tmp.AddRandomAnswer(true)
+        tmp.AddRandomAnswer(false)
 
         this.questions.push(tmp)
     }
@@ -177,10 +177,11 @@ export class ExamQuestion {
         TurtleArrays.SwapElementsInDirection(this.answers, index, direction)
     }
 
-    AddRandomAnswer() {
+    AddRandomAnswer(isValid: boolean) {
         const tmp = new QuestionAnswer()
         tmp.text = RANDOM_ANSWERS[TurtleRandom.GetRandomFromZero(RANDOM_ANSWERS.length)]
         tmp._parent = this
+        tmp.isRight = isValid
 
         this.answers.push(tmp)
     }

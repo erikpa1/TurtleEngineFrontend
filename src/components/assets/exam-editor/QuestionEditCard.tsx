@@ -31,7 +31,7 @@ export default function QuestionEditCard({exam, index, question, onRefresh}: Que
     }
 
     function addAnswerPressed() {
-        question.AddRandomAnswer()
+        question.AddRandomAnswer(false)
         refresh()
     }
 
