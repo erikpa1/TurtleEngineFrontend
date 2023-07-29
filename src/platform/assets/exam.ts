@@ -195,6 +195,8 @@ export class QuestionAnswer {
 
     _parent: any = null
 
+    isSelected = false
+
     ToJson() {
         return {
             uid: this.uid,
@@ -203,10 +205,22 @@ export class QuestionAnswer {
         }
     }
 
+    ToJsonFull() {
+        return {
+            ...this.ToJson(),
+            isSelected: this.isSelected
+        }
+    }
+
     FromJson(jobj: any) {
         this.uid = jobj.uid ?? this.uid
         this.text = jobj.text ?? this.text
         this.isRight = jobj.isRight ?? this.isRight
+    }
+
+    FromJsonFull(jobj: any) {
+        this.FromJson(jobj)
+        this.isSelected = jobj.isSelected ?? false
     }
 
     RemoveFromParent() {

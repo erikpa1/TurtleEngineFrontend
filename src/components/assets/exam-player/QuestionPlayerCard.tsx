@@ -1,6 +1,8 @@
 import React from "react";
 import {TGui} from "@external/tgui";
 import {ExamQuestion} from "@platform/assets/exam";
+import ExamAnswerCard from "@components/assets/exam-player/ExamAnswerCard";
+import LanguagesApi from "@api/LanguagesApi";
 
 
 interface QuestionPlayerCardProps {
@@ -9,6 +11,17 @@ interface QuestionPlayerCardProps {
 }
 
 export default function QuestionPlayerCard({question, index}: QuestionPlayerCardProps) {
+
+
+    const [answers, setAnswers] = React.useState(question.answers)
+
+    function refresh() {
+        setAnswers([...question.answers])
+    }
+
+
+    const colXs = question.content_uid === "" ? {xs: 1} : {}
+
     return (
         <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
 
@@ -16,35 +29,42 @@ export default function QuestionPlayerCard({question, index}: QuestionPlayerCard
                 <TGui.Stack gap={3}>
 
                     <TGui.Card>
-                        <TGui.Stack gap={3} direction={"horizontal"}
-                                    style={{padding: "0.5em"}}
+                        <TGui.Stack
+                            gap={3}
+                            direction={"horizontal"}
+                            style={{padding: "0.5em"}}
                         >
                             {index + 1}.
-
+                            <div>{LanguagesApi.T(question.header)}</div>
                         </TGui.Stack>
                     </TGui.Card>
 
+                    <TGui.Row>
 
-                    {
-                        question.answers.map((value, index) => {
-                            return (
+                        <TGui.Col {...colXs}>
 
-                                <div
-                                    key={value.uid}
-                                    className={"hstack gap-3"}
-                                >
+                        </TGui.Col>
 
-                                    <TGui.Card
-                                        style={{
-                                            padding: "0.35em"
-                                        }}>
-                                        {index + 1}.
-                                    </TGui.Card>
-                                </div>
-                            )
-                        })
-                    }
+                        <TGui.Col>
+                            <TGui.Stack gap={3}>
 
+                                {
+                                    question.answers.map((value, index) => {
+                                        return (
+                                            <ExamAnswerCard
+                                                key={value.uid}
+                                                index={index}
+                                                answer={value}
+                                                parentRefresh={refresh}
+                                            />
+
+                                        )
+                                    })
+                                }
+
+                            </TGui.Stack>
+                        </TGui.Col>
+                    </TGui.Row>
 
                 </TGui.Stack>
             </TGui.CardContent>

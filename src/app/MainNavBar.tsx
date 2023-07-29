@@ -36,7 +36,7 @@ export default function MainNavBar() {
             width: isCollapsed ? "79px" : "200px",
             height: "100vh",
             float: "left",
-            backgroundColor: "red",
+            backgroundColor: "#002c3d",
         }}>
             <sb.Sidebar
                 backgroundColor={"rgba(0, 0,0, 0.5)"}

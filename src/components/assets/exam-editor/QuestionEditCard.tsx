@@ -5,10 +5,10 @@ import {TGui} from "@external/tgui";
 import FsTools from "@api/FsTools";
 
 import LanguagesApi from "@api/LanguagesApi";
-import AnswerActions from "@components/assets/quiz-editor/AnswerActions";
-import QuestionActions from "@components/assets/quiz-editor/QuestionActions";
+import AnswerActions from "@components/assets/exam-editor/AnswerActions";
+import QuestionActions from "@components/assets/exam-editor/QuestionActions";
 import {AssetsTypeMap} from "@platform/assets/Assets";
-import QuestionContentTypeView from "@components/assets/quiz-editor/QeustionContentTypeView";
+import QuestionContentTypeView from "@components/assets/exam-editor/QeustionContentTypeView";
 
 interface QuestionEditCardProps {
     index: number
@@ -321,9 +321,10 @@ function _EditQuestionContentButton({question, onRefresh}: _EditQuestionContentB
                         />
 
                         {
-                            ExamQuestionContentTypes.ToArray().map((value) => {
+                            ExamQuestionContentTypes.ToArray().map((value, index) => {
                                 return (
                                     <_PopoverSelectionItem
+                                        key={index}
                                         icon={`/icons/${AssetsTypeMap.get(value)?.ICON}`}
                                         value={value}
                                         contentTypeChanged={contentTypeChanged}

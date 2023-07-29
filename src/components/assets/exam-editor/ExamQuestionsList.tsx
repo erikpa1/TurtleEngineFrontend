@@ -2,9 +2,9 @@ import React from "react";
 import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
 import {TGui} from "@external/tgui";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import SelectQuestionModal from "@components/assets/quiz-editor/SelectQuestionTypeModal";
-import AnswerActions from "@components/assets/quiz-editor/AnswerActions";
-import QuestionActions from "@components/assets/quiz-editor/QuestionActions";
+import SelectQuestionModal from "@components/assets/exam-editor/SelectQuestionTypeModal";
+import AnswerActions from "@components/assets/exam-editor/AnswerActions";
+import QuestionActions from "@components/assets/exam-editor/QuestionActions";
 
 
 interface ExamQuestionsListProps {

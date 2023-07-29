@@ -13,7 +13,7 @@ const PointCloudEditor = React.lazy(() => import("@components/assets/pointcould-
 const PanoramaEditor = React.lazy(() => import( "@components/assets/panorama/PanoramaEditor"))
 const AreaEditor = React.lazy(() => import("@components/assets/area-editor/AreaEditor"))
 const MaterialEditor = React.lazy(() => import("@components/assets/material/MaterialEditor"))
-const ExamEditorView = React.lazy(() => import("@components/assets/quiz-editor/ExamEditorView"))
+const ExamEditorView = React.lazy(() => import("@components/assets/exam-editor/ExamEditorView"))
 const DataFactoryEditor = React.lazy(() => import("@components/assets/data-factory/DataFactoryEditor"))
 const DataInstanceEditor = React.lazy(() => import("@components/assets/data-instance/DataInstanceEditor"))
 

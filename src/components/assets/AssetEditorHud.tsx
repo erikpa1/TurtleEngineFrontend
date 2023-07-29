@@ -13,7 +13,11 @@ export function AssetEditorHud({children, placement}: AssetEditorHudProps) {
         <div style={{
             position: "absolute",
             ..._position(placement),
+            //             borderRadius: "25%",
+            // backgroundColor: `rgba(150, 150, 150, 0.8)`,
         }}>
+
+
             <div className={_stack(placement)}>
                 {
                     React.Children.toArray(children)

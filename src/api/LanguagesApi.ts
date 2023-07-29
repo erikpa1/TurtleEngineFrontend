@@ -31,6 +31,8 @@ export default class LanguagesApi {
             const storage = LanguagesApi.LANGS.get(LanguagesApi.ACTIVE_LANGUAGE)
             return key
         }
+
+
         return key
     }
 

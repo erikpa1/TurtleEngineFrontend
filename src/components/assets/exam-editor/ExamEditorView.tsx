@@ -10,10 +10,10 @@ import Asset from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
 
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
-import QuestionEditCard from "@components/assets/quiz-editor/QuestionEditCard";
-import ExamQuestionsList from "@components/assets/quiz-editor/ExamQuestionsList";
+import QuestionEditCard from "@components/assets/exam-editor/QuestionEditCard";
+import ExamQuestionsList from "@components/assets/exam-editor/ExamQuestionsList";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
-import AssetFilesView from "@components/assets/universal/AssetFilesView";
+import {AssetFilesSideView, AssetFilesView} from "@components/assets/universal/AssetFilesView";
 import ExamPlayerView from "@components/assets/exam-player/ExamPlayerView";
 
 export default function ExamEditorView({}) {
@@ -53,7 +53,7 @@ function _ViewDispatcher({asset}) {
                 >
                     <TGui.Tab value={"0"} label={t("edit")}/>
                     <TGui.Tab value={"1"} label={t("preview")}/>
-                    <TGui.Tab value={"files"} label={t("files")}/>
+
                 </TGui.Tabs>
             </TGui.Card>
 
@@ -66,9 +66,6 @@ function _ViewDispatcher({asset}) {
                     <ExamPlayerView asset={asset}/>
                 </TGui.Case>
 
-                <TGui.Case value={"files"}>
-                    <AssetFilesView asset={asset}/>
-                </TGui.Case>
 
             </TGui.Switch>
         </div>
@@ -94,6 +91,7 @@ function _ExamEditor({asset}: { asset: Asset }) {
                     <TGui.Stack gap={3}>
                         <_QuizAssetCard asset={asset}/>
                         <ExamQuestionsList exam={exam[0]} onRefresh={refresh}/>
+                        <AssetFilesSideView asset={asset}/>
                     </TGui.Stack>
 
 
