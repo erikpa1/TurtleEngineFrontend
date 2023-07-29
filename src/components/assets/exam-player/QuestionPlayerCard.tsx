@@ -91,7 +91,7 @@ function _QuestionContentCardLoader({question}: { question: ExamQuestion }) {
 
     if (asset) {
         return (
-            <_QuestionContentCard question={question}/>
+            <_QuestionContentCard asset={asset} question={question}/>
         )
     } else {
         return (

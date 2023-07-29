@@ -2,7 +2,7 @@ import React from "react";
 
 
 import {ViewContainer} from "@components/ViewContainer";
-import ExamAssetData, {ExamQuestion} from "@platform/assets/exam";
+import ExamAssetData from "@platform/assets/exam";
 import AssetsApi from "@api/AssetsApi";
 import {TGui} from "@external/tgui";
 
@@ -13,8 +13,9 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import QuestionEditCard from "@components/assets/exam-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/exam-editor/ExamQuestionsList";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
-import {AssetFilesSideView, AssetFilesView} from "@components/assets/universal/AssetFilesView";
+import {AssetFilesSideView} from "@components/assets/universal/AssetFilesView";
 import ExamPlayerView from "@components/assets/exam-player/ExamPlayerView";
+import {UniversalAssetEditCard} from "@components/assets/universal/UniversalAssetEditCard";
 
 export default function ExamEditorView({}) {
 
@@ -84,12 +85,12 @@ function _ExamEditor({asset}: { asset: Asset }) {
     crypto.randomUUID()
 
     return (
-        <TGui.Stack gap={3} >
+        <TGui.Stack gap={3}>
 
             <TGui.Row>
                 <TGui.Col xs={3}>
                     <TGui.Stack gap={3}>
-                        <_QuizAssetCard asset={asset}/>
+                        <UniversalAssetEditCard asset={asset}/>
                         <ExamQuestionsList exam={exam[0]} onRefresh={refresh}/>
                         <AssetFilesSideView asset={asset}/>
                     </TGui.Stack>
@@ -122,49 +123,3 @@ function _ExamEditor({asset}: { asset: Asset }) {
         </TGui.Stack>
     )
 }
-
-function _QuizAssetCard({asset}: { asset: Asset }) {
-    const lock = useGlobalAppLock()
-
-    const exam: ExamAssetData = asset.data
-
-    async function savePressed() {
-        lock.lock()
-
-        await AssetsApi.UploadAssetData(asset.parent_project_uid, asset.uid, exam.ToJson())
-        lock.unlock()
-    }
-
-    return (
-
-        <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
-
-            <TGui.CardMedia
-                sx={{height: 120}}
-                image={FsTools.ConvertFilePathRnd(asset.GetPreviewPath())}
-            />
-
-
-            <TGui.CardContent>
-                <TGui.Typography>
-                    {asset.name}
-                </TGui.Typography>
-            </TGui.CardContent>
-
-            <TGui.CardActions>
-                <TGui.Button
-                    onClick={savePressed}
-                    label={"save"}
-                />
-                <TGui.Button
-                    label={"snapshot"}
-                />
-                <TGui.Button
-                    label={"rename"}
-                />
-
-            </TGui.CardActions>
-        </TGui.Card>
-    )
-}
-

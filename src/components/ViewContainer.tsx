@@ -25,3 +25,21 @@ export function ViewContainer({children, style}: ViewContainerProps) {
         </Container>
     )
 }
+
+export function BigViewContainer({children, style}: ViewContainerProps) {
+
+    const _style = style ?? {}
+
+    return (
+        <Container style={{
+            padding: "15px",
+            paddingTop: "55px",
+
+            ..._style
+        }}>
+            {
+                React.Children.toArray(children)
+            }
+        </Container>
+    )
+}

@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React from "react";
-import {ViewContainer} from "@components/ViewContainer";
+import {BigViewContainer, ViewContainer} from "@components/ViewContainer";
 
 import VideoData from "@platform/assets/video";
 import AssetsApi from "@api/AssetsApi";
@@ -12,6 +12,8 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import TauriOsPlugin from "../../../tauri/plugin_os";
 import ImagesApi from "@api/ImagesApi";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
+import {UniversalAssetEditCard} from "@components/assets/universal/UniversalAssetEditCard";
+import {AssetFilesSideView} from "@components/assets/universal/AssetFilesView";
 
 export default function VideoEditor({}) {
 
@@ -20,9 +22,9 @@ export default function VideoEditor({}) {
 
     if (asset) {
         return (
-            <ViewContainer>
+            <BigViewContainer>
                 <_VideoEditor asset={asset}/>
-            </ViewContainer>
+            </BigViewContainer>
         )
     } else {
         return (
@@ -41,66 +43,41 @@ function _VideoEditor({asset}: _VideoEditorProps) {
 
     return (
 
-        <div className={"vstack gap-3"}>
+        <TGui.Row>
 
-            <_PreviewCard asset={asset}/>
+            <TGui.Col xs={3}>
+                <TGui.Stack gap={3}>
+                    <UniversalAssetEditCard asset={asset}/>
+                    <AssetFilesSideView asset={asset}/>
+                </TGui.Stack>
+            </TGui.Col>
 
-            <TGui.Card>
+            <TGui.Col>
+                <TGui.Card>
 
-                <TGui.CardContent style={{
-                    height: "650px"
-                }}>
-                    <video
-                        id={"video-editor-player-guis"}
-                        controls
-                        width={"100%"}
-                        height={"100%"}
-                        style={{
-                            backgroundColor: "black"
-                        }}
-                    >
-                        <source src={FsTools.ConvertFilePath(video.GetEntryPath())} type="video/mp4"/>
-                    </video>
-                </TGui.CardContent>
+                    <TGui.CardContent style={{
+                        height: "650px"
+                    }}>
+                        <video
+                            id={"video-editor-player-guis"}
+                            controls
+                            width={"100%"}
+                            height={"100%"}
+                            style={{
+                                backgroundColor: "black"
+                            }}
+                        >
+                            <source src={FsTools.ConvertFilePath(video.GetEntryPath())} type="video/mp4"/>
+                        </video>
+                    </TGui.CardContent>
 
-                <_VideoControlBars asset={asset} assetData={video}/>
-            </TGui.Card>
+                    <_VideoControlBars asset={asset} assetData={video}/>
+                </TGui.Card>
 
-            <_FilesView/>
-
-        </div>
-    )
-}
-
-
-function _PreviewCard({asset}) {
-
-    const [rnd, setRnd] = React.useState(Math.random())
-
-    function refresh() {
-        setRnd(Math.random())
-    }
+            </TGui.Col>
 
 
-    return (
-        <TGui.Card style={{
-            width: "400px"
-        }}>
-
-            <TGui.CardMedia
-                sx={{height: 140}}
-                image={FsTools.ConvertFilePathRnd(asset.GetPreviewPath())}
-            />
-
-            <TGui.CardContent>
-                <TGui.Typography gutterBottom variant="h5" component="div">
-                    {asset.name}
-                </TGui.Typography>
-            </TGui.CardContent>
-
-            <_AssetControlBars asset={asset} onRefresh={refresh}/>
-        </TGui.Card>
-
+        </TGui.Row>
     )
 }
 
@@ -118,52 +95,6 @@ function _VideoControlBars({asset, assetData}) {
     return (
         <TGui.CardActions>
             <_ReplaceVideoButton asset={asset} assetData={assetData}/>
-        </TGui.CardActions>
-    )
-}
-
-
-function _AssetControlBars({asset, onRefresh}: { asset: Asset, onRefresh: any }) {
-
-    const lock = useGlobalAppLock()
-
-    const inputRef = React.useRef<any>()
-
-    async function takeSnapshotPressed() {
-
-        lock.lock()
-
-        if (PlatformDispatcher.IsDesktop()) {
-            const filePath = await PlatformDispatcher.OpenAnySingleFileDialog("Image", "png")
-
-            if (filePath !== "") {
-                const pathToSave = `${asset.GetFolderPath()}/Preview.png`
-
-                await ImagesApi.GeneratePreviewDesktop(filePath, pathToSave, 512)
-            }
-            lock.unlock()
-
-            onRefresh()
-
-        } else {
-            const curr: any = inputRef.current
-            curr.click()
-        }
-    }
-
-
-    return (
-        <TGui.CardActions>
-            <TGui.Button
-                label={"upload.snapshot"}
-                onClick={takeSnapshotPressed}
-            />
-            <input
-                ref={inputRef}
-                onChange={takeSnapshotPressed}
-                type={"file"}
-                hidden
-            />
         </TGui.CardActions>
     )
 }
@@ -223,17 +154,3 @@ function _ReplaceVideoButton({asset, assetData}: { assetData: VideoData, asset: 
     )
 }
 
-function _FilesView({}) {
-    return (
-        <TGui.Card>
-
-            <TGui.CardContent>
-                a
-                B
-                C
-                D
-            </TGui.CardContent>
-
-        </TGui.Card>
-    )
-}

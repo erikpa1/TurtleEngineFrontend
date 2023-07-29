@@ -30,7 +30,7 @@ export function AssetFilesSideView({asset}: AssetFilesViewProps) {
                         {
                             [0, 1, 2, 3].map((value) => {
                                 return (
-                                    <TGui.Typography>
+                                    <TGui.Typography key={value}>
                                         {value}.png
                                     </TGui.Typography>
                                 )
