@@ -66,6 +66,10 @@ export class ExamQuestionTypes {
 
 export default class ExamAssetData extends AssetData {
 
+    isEvaluated = false
+    success_rate = 0
+
+
     questions = new Array<ExamQuestion>()
 
     ToJson(): any {
@@ -101,6 +105,21 @@ export default class ExamAssetData extends AssetData {
         this.questions.push(tmp)
     }
 
+    Evaluate(): void {
+        this.isEvaluated = true
+
+        if (this.questions.length > 0) {
+            let summaryPercentage = 0
+
+            for (const i of this.questions) {
+                summaryPercentage += i.Evaluate()
+            }
+
+            this.success_rate = summaryPercentage / this.questions.length
+        }
+
+        console.log(`Evaluation result: ${this.success_rate}`)
+    }
 }
 
 export class ExamQuestionLayouts {
@@ -125,6 +144,8 @@ export class ExamQuestion {
     answers = new Array<QuestionAnswer>()
 
     _parent: any = null
+
+    success_rate = 0
 
     FromJson(jobj: any) {
 
@@ -186,6 +207,47 @@ export class ExamQuestion {
         this.answers.push(tmp)
     }
 
+    Evaluate(): number {
+
+        if (this.isMultiChoice) {
+
+            let goodOnes = 0
+            let badOnes = 0
+
+            for (const i of this.answers) {
+                if (i.isSelected && i.isRight) {
+                    goodOnes += 1
+                } else if (i.isSelected && i.isRight === false) {
+                    badOnes += 1
+                } else if (i.isSelected === false && i.isRight) {
+                    badOnes += 1
+                }
+            }
+
+            const answersCount = goodOnes - badOnes
+
+            if (answersCount < 1) {
+                return 0
+            } else {
+                const tmp = (goodOnes - badOnes) / answersCount
+                this.success_rate = tmp
+                return tmp
+            }
+
+        } else {
+            for (const i of this.answers) {
+                if (i.isSelected && i.isRight) {
+                    this.success_rate = 1
+                    return 1
+                } else if (i.isSelected && i.isRight === false) {
+                    return 0
+                }
+            }
+            return 0
+        }
+
+        return 0
+    }
 }
 
 export class QuestionAnswer {

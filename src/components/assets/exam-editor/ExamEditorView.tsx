@@ -65,6 +65,7 @@ function _ViewDispatcher({asset}) {
 
                 <TGui.Case value={"1"}>
                     <ExamPlayerView asset={asset}/>
+
                 </TGui.Case>
 
 

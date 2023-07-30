@@ -77,7 +77,7 @@ function _QuestionLine({question, onFullRefresh, index}: _QuestionLineProps) {
 
 
     return (
-        <TGui.PaperBox>
+        <TGui.Card>
             <div className={"hstack gap-1"} style={{margin: "0.25em"}}>
                 <b>{index + 1}.</b>
                 <TGui.Typography>
@@ -96,7 +96,7 @@ function _QuestionLine({question, onFullRefresh, index}: _QuestionLineProps) {
                 </div>
 
             </div>
-        </TGui.PaperBox>
+        </TGui.Card>
 
     )
 }
