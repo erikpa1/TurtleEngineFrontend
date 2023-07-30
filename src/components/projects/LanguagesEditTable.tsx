@@ -3,6 +3,7 @@ import React from "react";
 import LanguagesApi, {LangsMap} from "@api/LanguagesApi";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {useParams} from "react-router-dom";
+import {showSimpleStringInput} from "@components/Modals";
 
 
 interface _LanguagesTableProps {
@@ -13,6 +14,8 @@ interface _LanguagesTableProps {
 export default function LanguagesEditTable({langs, avlLangs}: _LanguagesTableProps) {
 
     const {projectuid}: any = useParams()
+
+    const [_langs, setLangs] = React.useState([langs])
 
     const lock = useGlobalAppLock()
 
@@ -25,7 +28,14 @@ export default function LanguagesEditTable({langs, avlLangs}: _LanguagesTablePro
     }
 
     function addKeyPressed() {
+        showSimpleStringInput("new.key.value", "create", (value) => {
+            langs.set(value, new Map())
+            refresh()
+        })
+    }
 
+    function refresh() {
+        setLangs([langs])
     }
 
     return (
@@ -42,7 +52,7 @@ export default function LanguagesEditTable({langs, avlLangs}: _LanguagesTablePro
 
             </TGui.Stack>
 
-            <_Table langs={langs} avlLangs={avlLangs}/>
+            <_Table langs={_langs[0]} avlLangs={avlLangs}/>
 
         </>
     )

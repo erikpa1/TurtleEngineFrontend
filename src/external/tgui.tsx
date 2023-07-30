@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {
     Box,
-    ButtonGroup,
+    ButtonGroup, Chip,
     MenuItem,
     Popover,
     Select,
@@ -82,6 +82,7 @@ export const TGui = {
         WhiteMiddle: "#f4f4f4",
         WhiteFront: "#ffffff",
     },
+    Chip: Chip,
     TableRow: TableRow,
     TableHead: TableHead,
     TableCell: TableCell,

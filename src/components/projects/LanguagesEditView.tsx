@@ -67,6 +67,11 @@ interface _AvlLangsLineProps {
 
 
 function _AvlLangsLine({avlLangs, onRefresh}: _AvlLangsLineProps) {
+
+    function deletePressed() {
+
+    }
+
     return (
         <TGui.Card style={{
             padding: "0.5em"
@@ -75,7 +80,7 @@ function _AvlLangsLine({avlLangs, onRefresh}: _AvlLangsLineProps) {
                 {
                     Array.from(avlLangs.values()).map((value) => {
                         return (
-                            <div key={value}>{value}</div>
+                            <TGui.Chip key={value} label={value} onDelete={deletePressed}/>
                         )
                     })
                 }
