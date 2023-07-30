@@ -58,7 +58,11 @@ function _Table({langs, avlLangs}: _LanguagesTableProps) {
     const avlLangsArray = Array.from(avlLangs.values())
 
     return (
-        <TGui.Card style={{backgroundColor: TGui.Colors.WhiteMiddle}}>
+        <TGui.Card
+            style={{
+                backgroundColor: TGui.Colors.WhiteMiddle,
+                scrollX: "auto"
+            }}>
             <TGui.Table size="small">
                 <_THead avlLangs={avlLangs}/>
                 <TGui.TableBody>
