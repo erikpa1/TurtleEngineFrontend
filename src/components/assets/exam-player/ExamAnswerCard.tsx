@@ -51,7 +51,8 @@ export default function ExamAnswerCard({
                 padding: "0.55em",
                 cursor: isEvaluated ? "" : "pointer"
             }}
-            onClick={isEvaluated ? null : clicked}
+            onClick={isEvaluated ? () => {
+            } : clicked}
         >
             <TGui.Stack gap={3} direction={"horizontal"}>
 

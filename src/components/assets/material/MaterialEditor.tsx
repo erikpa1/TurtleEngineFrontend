@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 import {Canvas, useThree} from "@react-three/fiber";
 import {ContactShadows, Environment, OrbitControls} from "@react-three/drei";
 import {TGui} from "@external/tgui";
@@ -14,14 +13,15 @@ import Typography from "@mui/material/Typography";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 import MaterialData from "@platform/assets/material";
 import Asset from "@platform/assets/Asset";
+import FsTools from "@api/FsTools";
 
 
 const TEXTURES = {
-    base: "/dev/assets/material/tmp-material/Base.png",
-    metalness: "/dev/assets/material/tmp-material/Metalic.png",
-    ao: "/dev/assets/material/tmp-material/AO.png",
-    normal: "/dev/assets/material/tmp-material/Normal.png",
-    rough: "/dev/assets/material/tmp-material/Roughness.png",
+    base: "Defaults/Assets/Material/Base.png",
+    metalness: "Defaults/Assets/Material/Metalic.png",
+    ao: "Defaults/Assets/Material/AO.png",
+    normal: "Defaults/Assets/Material/Normal.png",
+    rough: "Defaults/Assets/Material/Roughness.png",
 }
 
 
@@ -51,6 +51,10 @@ interface _MaterialEditorProps {
 function _MaterialEditor({asset}: _MaterialEditorProps) {
 
     const material: MaterialData = asset.data
+
+    function _path(path: string) {
+        return FsTools.ConvertFilePath(FsTools.GetPlatformPath(path))
+    }
 
     return (
         <div className={"hstack gap-3"}>
@@ -95,11 +99,11 @@ function _MaterialEditor({asset}: _MaterialEditorProps) {
 
             <div className={"vstack gap-3"}>
 
-                <MaterialTextureCard type={"base"} path={TEXTURES.base}/>
-                <MaterialTextureCard type={"metalness"} path={TEXTURES.metalness}/>
-                <MaterialTextureCard type={"rough"} path={TEXTURES.rough}/>
-                <MaterialTextureCard type={"normal"} path={TEXTURES.normal}/>
-                <MaterialTextureCard type={"ao"} path={TEXTURES.ao}/>
+                <MaterialTextureCard type={"base"} path={_path(TEXTURES.base)}/>
+                <MaterialTextureCard type={"metalness"} path={_path(TEXTURES.metalness)}/>
+                <MaterialTextureCard type={"rough"} path={_path(TEXTURES.rough)}/>
+                <MaterialTextureCard type={"normal"} path={_path(TEXTURES.normal)}/>
+                <MaterialTextureCard type={"ao"} path={_path(TEXTURES.ao)}/>)
 
             </div>
 

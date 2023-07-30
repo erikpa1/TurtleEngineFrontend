@@ -7,7 +7,7 @@ export default class LanguagesApi {
 
     static ACTIVE_LANGUAGE = "en"
 
-    static LANGS = new Map<string, string>()
+    static LANGS = new Map<string, Map<string, string>>()
 
     static async Activate(projectUid: string, language: string) {
 
@@ -20,7 +20,26 @@ export default class LanguagesApi {
     }
 
 
-    static async LoadAll(): Promise<Map<string, Map<string, string | null>>> {
+    static async GetProjectLanguages(): Promise<Set<string>> {
+        return new Set(["en", "sk", "cz"])
+    }
+
+    static async GetAll(projectUid: string, languages: Set<string>): Promise<Map<string, Map<string, string | null>>> {
+
+        if (PlatformDispatcher.IsDesktop()) {
+
+            const promises = Array.from(languages.values()).map((value) => {
+                return TauriOsPlugin.ReadFileStringSafe(FsTools.GetPathInProject(projectUid, `Languages/${value}.json`), "{}")
+            })
+
+            const value = await Promise.all(promises)
+
+            return new Map()
+
+        } else {
+            alert("Get all languages is unimplemnted")
+        }
+
         return new Map()
     }
 
