@@ -6,7 +6,20 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 
 import {TurtleButton} from "@platform/components/TurtleButtons";
-import {Box, ButtonGroup, MenuItem, Popover, Select, Tab, Tabs} from "@mui/material";
+import {
+    Box,
+    ButtonGroup,
+    MenuItem,
+    Popover,
+    Select,
+    Tab,
+    Table, TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Tabs
+} from "@mui/material";
 
 import {Col, Modal, Offcanvas, Row, Stack} from "react-bootstrap";
 import {MiddleSearchBar} from "@components/SearchBar";
@@ -68,7 +81,14 @@ export const TGui = {
         WhiteBack: "#e7ebf0",
         WhiteMiddle: "#f4f4f4",
         WhiteFront: "#ffffff",
-    }
+    },
+    TableRow: TableRow,
+    TableHead: TableHead,
+    TableCell: TableCell,
+    Table: Table,
+    TableBody: TableBody,
+    TableContainer: TableContainer,
+
 
 }
 

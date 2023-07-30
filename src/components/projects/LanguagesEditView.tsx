@@ -4,6 +4,7 @@ import {ViewContainer} from "@components/ViewContainer";
 import {TGui} from "@external/tgui";
 import {useParams} from "react-router-dom";
 import LanguagesEditTable from "@components/projects/LanguagesEditTable";
+import LanguagesApi, {LangsMap} from "@api/LanguagesApi";
 
 export default function LanguagesEditView({}) {
 
@@ -11,18 +12,25 @@ export default function LanguagesEditView({}) {
 
     const [avlLangs, setAvlLangs] = React.useState<null | Set<string>>(null)
 
-    const [langsMap, setLangsMap] = React.useState<null | Map<string, Map<string, string | null>>>()
+    const [langsMap, setLangsMap] = React.useState<null | LangsMap>()
 
     React.useEffect(() => {
+
+        LanguagesApi.GetProjectLanguages(projectuid).then((value) => {
+            setAvlLangs(value)
+
+            LanguagesApi.GetAll(projectuid, value).then((value) => {
+                setLangsMap(value)
+            })
+
+        })
+
 
     }, [projectuid])
 
     if (avlLangs && langsMap) {
         return (
-            <ViewContainer>
-                <_LanguagesEditView avlLangs={avlLangs} langs={langsMap}/>
-
-            </ViewContainer>
+            <_LanguagesEditView avlLangs={avlLangs} langs={langsMap}/>
         )
     } else {
         return (<TGui.MiddleSpinner/>)
@@ -47,7 +55,7 @@ function _LanguagesEditView({avlLangs, langs}: _LanguagesEditViewProps) {
     return (
         <TGui.Stack gap={3}>
             <_AvlLangsLine avlLangs={_avlLangs} onRefresh={refresh}/>
-            <LanguagesEditTable langs={langs}/>
+            <LanguagesEditTable langs={langs} avlLangs={_avlLangs}/>
         </TGui.Stack>
     )
 }
@@ -60,7 +68,9 @@ interface _AvlLangsLineProps {
 
 function _AvlLangsLine({avlLangs, onRefresh}: _AvlLangsLineProps) {
     return (
-        <TGui.Card>
+        <TGui.Card style={{
+            padding: "0.5em"
+        }}>
             <TGui.Stack gap={3} direction={"horizontal"}>
                 {
                     Array.from(avlLangs.values()).map((value) => {
