@@ -9,9 +9,15 @@ interface ExamAnswerCardProps {
     index: number,
     answer: QuestionAnswer
     parentRefresh: any
+    isEvaluated: boolean
 }
 
-export default function ExamAnswerCard({index, answer, parentRefresh}: ExamAnswerCardProps) {
+export default function ExamAnswerCard({
+                                           index,
+                                           answer,
+                                           parentRefresh,
+                                           isEvaluated
+                                       }: ExamAnswerCardProps) {
 
     const parentQuestion: ExamQuestion = answer._parent
 
@@ -43,18 +49,24 @@ export default function ExamAnswerCard({index, answer, parentRefresh}: ExamAnswe
         <TGui.Card
             style={{
                 padding: "0.55em",
-                cursor: "pointer"
+                cursor: isEvaluated ? "" : "pointer"
             }}
-            onClick={clicked}
+            onClick={isEvaluated ? null : clicked}
         >
             <TGui.Stack gap={3} direction={"horizontal"}>
 
                 <_CheckElementSwitch
                     isMulti={parentQuestion.isMultiChoice}
                     isSelected={isSelected}
+                    isEvaluated={isEvaluated}
                 />
                 <div>{index + 1}.</div>
                 <div>{LanguagesApi.T(answer.text)}</div>
+
+                {
+                    isEvaluated &&
+                    <_AfterEvaluationPostFix answer={answer}/>
+                }
 
             </TGui.Stack>
 
@@ -62,7 +74,38 @@ export default function ExamAnswerCard({index, answer, parentRefresh}: ExamAnswe
     )
 }
 
-function _CheckElementSwitch({isMulti, isSelected}) {
+function _AfterEvaluationPostFix({answer}: { answer: QuestionAnswer }) {
+
+    let icon = ""
+
+    if (answer.isSelected && answer.isRight) {
+        icon = "/icons/Ok.svg"
+    } else if (answer.isSelected && answer.isRight === false) {
+        icon = "/icons/Cancel.svg"
+    } else if (answer.isSelected === false && answer.isRight) {
+        icon = "/icons/Create.Mesh.svg"
+    }
+
+    return (
+        <>
+            {
+                icon !== "" &&
+                <TGui.IconClickButton
+                    image={icon}
+                />
+            }
+        </>
+    )
+}
+
+
+interface _CheckElementSwitchProps {
+    isMulti: boolean
+    isSelected: boolean
+    isEvaluated: boolean
+}
+
+function _CheckElementSwitch({isMulti, isEvaluated, isSelected}: _CheckElementSwitchProps) {
 
     let icon = ""
 
@@ -76,6 +119,9 @@ function _CheckElementSwitch({isMulti, isSelected}) {
         <TGui.IconClickButton
             image={icon}
             size={"1.5em"}
+            style={{
+                opacity: isEvaluated ? 0.5 : 1
+            }}
         />
     )
 }

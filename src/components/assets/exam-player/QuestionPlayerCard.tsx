@@ -64,6 +64,7 @@ export default function QuestionPlayerCard({question, isEvaluated, index}: Quest
                                             <ExamAnswerCard
                                                 key={value.uid}
                                                 index={index}
+                                                isEvaluated={isEvaluated}
                                                 answer={value}
                                                 parentRefresh={refresh}
                                             />
