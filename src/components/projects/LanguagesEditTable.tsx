@@ -71,7 +71,7 @@ function _Table({langs, avlLangs}: _LanguagesTableProps) {
         <TGui.Card
             style={{
                 backgroundColor: TGui.Colors.WhiteMiddle,
-                scrollX: "auto"
+                overflowX: "auto"
             }}>
             <TGui.Table size="small">
                 <_THead avlLangs={avlLangs}/>
