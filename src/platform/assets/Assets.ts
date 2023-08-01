@@ -148,15 +148,15 @@ SCENE.DEFAULT_PREVIEW = _getPreview(SCENE.TYPE)
 
 const SCENE_PANORAMA_SUBTYPE = new AssetSubtype()
 SCENE_PANORAMA_SUBTYPE.key = "virtual"
-SCENE_PANORAMA_SUBTYPE.lang = "scene.virtual"
+SCENE_PANORAMA_SUBTYPE.lang = "entities.virtual"
 
 const SCENE_VIRTUAL_SUBTYPE = new AssetSubtype()
 SCENE_VIRTUAL_SUBTYPE.key = "panorama"
-SCENE_VIRTUAL_SUBTYPE.lang = "scene.panorama"
+SCENE_VIRTUAL_SUBTYPE.lang = "entities.panorama"
 
 const SCENE_AREA_SUBTYPE = new AssetSubtype()
 SCENE_AREA_SUBTYPE.key = "area"
-SCENE_AREA_SUBTYPE.lang = "scene.area"
+SCENE_AREA_SUBTYPE.lang = "entities.area"
 
 SCENE.SUBTYPES = [
     SCENE_PANORAMA_SUBTYPE,

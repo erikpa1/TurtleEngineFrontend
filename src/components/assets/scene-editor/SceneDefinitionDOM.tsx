@@ -1,10 +1,10 @@
 import React from "react";
 
 
-import {SceneMeshNode, SceneMeshNodeView} from "@platform/scene/world/SceneMeshNode";
-import {SceneVideoNode, SceneVideoNodeView} from "@platform/scene/media/SceneVideoNode";
+import {SceneMeshNode, SceneMeshNodeView} from "@platform/entities/world/SceneMeshNode";
+import {VideoEntity, SceneVideoNodeView} from "@platform/entities/media/VideoEntity";
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
-import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
+import SceneEntitiesFactory from "@platform/entities/SceneEntitiesFactory";
 
 
 interface SceneDefinitionDomProps {
@@ -24,7 +24,7 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
 
         root.children.forEach((value) => {
 
-            const NodeHandler: any = SceneNodesFactory.GetFiberHandler(value.type)
+            const NodeHandler: any = SceneEntitiesFactory.GetFiberHandler(value.type)
 
             elements.push(
                 <NodeHandler key={value.uid} node={value}/>

@@ -4,13 +4,13 @@ import {MeshAssetData} from "@platform/assets/mesh";
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
-import {SceneNode} from "@platform/scene/SceneNode";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
 import AssetsApi from "@api/AssetsApi";
 import Asset from "@platform/assets/Asset";
 
 
-export class SceneMeshNode extends SceneNode {
+export class SceneMeshNode extends SceneEntity {
 
     static TYPE = "mesh"
     content_uid = ""

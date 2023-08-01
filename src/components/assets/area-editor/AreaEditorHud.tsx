@@ -85,7 +85,7 @@ function _Right({asset}: AreaEditorHudProps) {
 
         // popupZus.pushElement(
         //     <TurtleOffcanvas
-        //         header={<Offcanvas.Title>{t("select.scene")}</Offcanvas.Title>}
+        //         header={<Offcanvas.Title>{t("select.entities")}</Offcanvas.Title>}
         //         closeEnabled={true}
         //         width={"800px"}
         //         onClose={popupZus.popElement}>

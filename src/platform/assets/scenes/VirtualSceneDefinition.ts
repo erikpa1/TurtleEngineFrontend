@@ -1,7 +1,7 @@
 import Assets from "@platform/assets/Assets";
 import Asset from "@platform/assets/Asset";
-import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode";
-import {SceneMeshNode} from "@platform/scene/world/SceneMeshNode";
+import {VideoEntity} from "@platform/entities/media/VideoEntity";
+import {SceneMeshNode} from "@platform/entities/world/SceneMeshNode";
 import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
 
 export default class VirtualSceneDefinition extends SceneDefinition {
@@ -31,7 +31,7 @@ export default class VirtualSceneDefinition extends SceneDefinition {
             tmp.content_uid = asset.uid
             this.root.children.push(tmp)
         } else if (asset.type === Assets.Video.TYPE) {
-            const tmp = new SceneVideoNode()
+            const tmp = new VideoEntity()
             tmp.content_uid = asset.uid
             this.root.children.push(tmp)
         }

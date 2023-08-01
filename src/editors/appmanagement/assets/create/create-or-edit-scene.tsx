@@ -47,7 +47,7 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
     const [subAsset, setSubAsset] = React.useState<Asset | null>(null)
 
-    const [sceneType, setSceneType] = Ext.Cookie.useCookie("new-scene-type", "virtual")
+    const [sceneType, setSceneType] = Ext.Cookie.useCookie("new-entities-type", "virtual")
 
     const [uploadFileParams] = React.useState<UploadAssetFileParams>(new UploadAssetFileParams())
 

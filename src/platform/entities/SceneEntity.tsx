@@ -1,14 +1,14 @@
 // import * as three from "three"
 
-import SceneNodesFactory from "@platform/scene/SceneNodesFactory";
+import SceneEntitiesFactory from "@platform/entities/SceneEntitiesFactory";
 import React from "react";
 
-export class SceneNode {
+export class SceneEntity {
 
     static TYPE = "base"
-    type = SceneNode.TYPE
+    type = SceneEntity.TYPE
 
-    children = new Array<SceneNode>()
+    children = new Array<SceneEntity>()
 
     name = ""
     uid = crypto.randomUUID()
@@ -45,8 +45,8 @@ export class SceneNode {
 
         const children = jObject.children ?? []
 
-        children.forEach((value: any | SceneNode) => {
-            const clazz = SceneNodesFactory.GetClass(value.type ?? "base")
+        children.forEach((value: any | SceneEntity) => {
+            const clazz = SceneEntitiesFactory.GetClass(value.type ?? "base")
             const node = new clazz()
             node.FromJson(value)
             this.children.push(node)

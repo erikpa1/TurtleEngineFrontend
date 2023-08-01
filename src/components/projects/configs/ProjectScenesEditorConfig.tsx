@@ -8,7 +8,7 @@ export default function ProjectScenesEditorConfig({}) {
 
     const [t] = TGui.T()
 
-    const [tabValue, setTabValue] = Ext.Cookie.useCookie("project-config-tab-scene-editor", "0")
+    const [tabValue, setTabValue] = Ext.Cookie.useCookie("project-config-tab-entities-editor", "0")
 
     const tabChanged = (e: React.SyntheticEvent, newValue: string) => {
         setTabValue(newValue)
@@ -28,10 +28,10 @@ export default function ProjectScenesEditorConfig({}) {
                         textColor="inherit"
                     >
                         <Tab label={t("general")} value={"0"}/>
-                        <Tab label={t("virtual-scene-editor")} value={"1"}/>
-                        <Tab label={t("panorama-scene-editor")} value={"2"}/>
-                        <Tab label={t("area-scene-editor")} value={"3"}/>
-                        <Tab label={t("2d-scene-editor")} value={"4"}/>
+                        <Tab label={t("virtual-entities-editor")} value={"1"}/>
+                        <Tab label={t("panorama-entities-editor")} value={"2"}/>
+                        <Tab label={t("area-entities-editor")} value={"3"}/>
+                        <Tab label={t("2d-entities-editor")} value={"4"}/>
                     </TGui.Tabs>
 
                 </TGui.Box>

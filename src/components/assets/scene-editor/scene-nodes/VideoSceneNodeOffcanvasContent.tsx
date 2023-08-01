@@ -1,10 +1,10 @@
 import React from "react"
-import {SceneVideoNode} from "@platform/scene/media/SceneVideoNode";
+import {VideoEntity} from "@platform/entities/media/VideoEntity";
 import {TGui} from "@external/tgui";
 
 
 interface _VideoSceneNodeContentEditorProps {
-    node: SceneVideoNode
+    node: VideoEntity
 }
 
 export default function VideoSceneNodeContentEditor({node}: _VideoSceneNodeContentEditorProps) {
@@ -52,7 +52,7 @@ function _BoolEditrPrototype({obj, value}) {
 }
 
 
-function _PlaneSelection({obj}: { obj: SceneVideoNode }) {
+function _PlaneSelection({obj}: { obj: VideoEntity }) {
 
     const actual = obj.view_mesh
     const newOne = obj.view_mesh === "plane" ? "curved_plane" : "plane"

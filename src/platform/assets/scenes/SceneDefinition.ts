@@ -1,9 +1,9 @@
-import {SceneNode} from "@platform/scene/SceneNode";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 import {AssetData, ProjectSerializationContext} from "@platform/assets/Asset";
 
 export default class SceneDefinition extends AssetData {
 
-    root = new SceneNode()
+    root = new SceneEntity()
     type = "base"
 
     ToJson(): any {

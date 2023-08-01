@@ -93,5 +93,7 @@
   "play": "Play",
   "pause": "Pause",
   "asset.new.name": "New asset name",
-  "change.and.save": "Change and save"
+  "change.and.save": "Change and save",
+  "select.entity": "Select entity",
+  "physics": "Physics"
 }

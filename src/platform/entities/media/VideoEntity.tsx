@@ -4,7 +4,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
 import SceneNodeMover from "@components/assets/tools/SceneNodeMover";
 
-import {SceneNode} from "@platform/scene/SceneNode";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 
 import {CurvedVideoWorldCanvas, VideoWorldCanvas} from "@components/assets/video/VideoWorldCanvas";
 import Asset from "@platform/assets/Asset";
@@ -13,13 +13,13 @@ import AssetsApi from "@api/AssetsApi";
 import {Plane, useTexture} from "@react-three/drei";
 
 
-export class SceneVideoNode extends SceneNode {
+export class VideoEntity extends SceneEntity {
 
     static TYPE = "video"
 
     content_uid = ""
 
-    type = SceneVideoNode.TYPE
+    type = VideoEntity.TYPE
 
     looping = false
     muted = false
@@ -37,7 +37,7 @@ export class SceneVideoNode extends SceneNode {
     }
 
 
-    FromJson(jObject: any | SceneVideoNode) {
+    FromJson(jObject: any | VideoEntity) {
         super.FromJson(jObject);
         this.content_uid = jObject.content_uid ?? ""
 
@@ -73,7 +73,7 @@ export class SceneVideoNode extends SceneNode {
 }
 
 interface SceneVideoViewProps {
-    node: SceneVideoNode
+    node: VideoEntity
 }
 
 export function SceneVideoNodeView({node}: SceneVideoViewProps) {
@@ -115,7 +115,7 @@ export function SceneVideoNodeView({node}: SceneVideoViewProps) {
 }
 
 interface _SceneVideoViewProps {
-    videoNode: SceneVideoNode
+    videoNode: VideoEntity
     asset: Asset
 }
 

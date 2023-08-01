@@ -1,11 +1,11 @@
-import {SceneNode} from "@platform/scene/SceneNode";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 import create from "zustand";
 import {GizmoTypes} from "@components/assets/canvases/SceneTransformHelper";
 
 
 interface ActiveNodeZus {
-    activeNode: SceneNode | null
-    setActiveNode: (newNode: null | SceneNode) => void
+    activeNode: SceneEntity | null
+    setActiveNode: (newNode: null | SceneEntity) => void
     gizmoType: string,
     setGizmoType: (newGizmo: string) => void
 }

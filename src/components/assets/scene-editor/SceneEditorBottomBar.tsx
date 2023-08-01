@@ -7,7 +7,7 @@ import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import Assets, {AssetDefinition} from "@platform/assets/Assets";
 import {TGui} from "@external/tgui";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
-import SceneNodesSelectionOffcanvas from "@components/assets/scene-editor/SceneNodesSelectionOffcanvas";
+import EntitySelectionOffcanvas from "@components/assets/scene-editor/EntitySelectionOffcanvas";
 import {AssetEditorHud} from "@components/assets/AssetEditorHud";
 import HudButton from "@components/assets/HudButton";
 import {useParams} from "react-router-dom";
@@ -57,7 +57,7 @@ export default function SceneEditorBottomBar(props: SceneEditorHudProps) {
 
     function otherPressed() {
         const offCanvas = (
-            <SceneNodesSelectionOffcanvas
+            <EntitySelectionOffcanvas
                 onHide={popup.popElement}
                 onSelect={(asset) => {
                     props.sceneDefinition.AddAssetChildren(asset)

@@ -3,7 +3,7 @@ import Assets from "@platform/assets/Assets";
 const PREFIX_PROJECT_CONFIG = "/project-config"
 const PREFIX_ASSETS = "/assets"
 const PREFIX_PLAY = "/play"
-const PREFIX_SCENE_EDITOR = "/scene-editor"
+const PREFIX_SCENE_EDITOR = "/entities-editor"
 const PREFIX_MESH_EDITOR = "/mesh-editor"
 const PREFIX_AREA_EDITOR = "/area-editor"
 const PREFIX_VIDEO_EDITOR = "/video-editor"

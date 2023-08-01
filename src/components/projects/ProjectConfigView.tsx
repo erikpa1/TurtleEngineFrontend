@@ -41,7 +41,7 @@ export default function ProjectConfigView({}) {
                             <Tab label={"languages"} value={"0"}/>
                             <Tab label={"player-guis"} value={"1"}/>
                             <Tab label={"vts"} value={"2"}/>
-                            <Tab label={"scene-editor"} value={"3"}/>
+                            <Tab label={"entities-editor"} value={"3"}/>
                         </TGui.Tabs>
 
                     </TGui.Box>

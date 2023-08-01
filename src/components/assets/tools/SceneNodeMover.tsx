@@ -1,4 +1,4 @@
-import {SceneNode} from "@platform/scene/SceneNode";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 
 import {Plane} from "@react-three/drei";
 import * as three from "three";
@@ -21,7 +21,7 @@ const SCENE_MESH_MATERIAL = (
 
 interface SceneNodeMoverProps {
     children?: any
-    node: SceneNode
+    node: SceneEntity
 }
 
 
