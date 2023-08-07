@@ -11,9 +11,10 @@ import {VideoEntity, SceneVideoNodeView} from "@platform/entities/media/VideoEnt
 import VideoSceneNodeContentEditor from "@components/assets/scene-editor/scene-nodes/VideoSceneNodeOffcanvasContent";
 import DefaultSceneEditorContent from "@components/assets/scene-editor/scene-nodes/DefaultSceneEditorContent";
 import {PhysicalAvatarEntity} from "@platform/entities/physics/PhysicsAvatarEntity";
-import {PhysicalSphereEntity} from "@platform/entities/physics/PhysicsSphereEntity";
-import {PhysicalCapsuleEntity} from "@platform/entities/physics/PhysicsCapsuleEntity";
+import {PhysicalSphereEntity, PhysicalSphereEntityView} from "@platform/entities/physics/PhysicsSphereEntity";
+import {PhysicalCylinderEntity, PhysicsCapsuleEntityView} from "@platform/entities/physics/PhysicalCylinderEntity";
 import {PhysicalBoxEntity, PhysicsBoxEntityView} from "@platform/entities/physics/PhysicsBoxEntity";
+import {PhysicalPlaneEntity, PhysicsPlaneEntityView} from "@platform/entities/physics/PhysicsPlaneEntity";
 
 
 export default class AppApi {
@@ -87,7 +88,7 @@ async function _RegisterPhysicsLibrary() {
 
     _reg("avatar", "/icons/Physics.Avatar.svg", PhysicalAvatarEntity, EntityView)
     _reg("box", "/icons/Physics.Box.svg", PhysicalBoxEntity, PhysicsBoxEntityView)
-    _reg("sphere", "/icons/Physics.Box.svg", PhysicalSphereEntity, EntityView)
-    _reg("plane", "/icons/Physics.Box.svg", PhysicalCapsuleEntity, EntityView)
-    _reg("cylinder", "/icons/Physics.Box.svg", PhysicalCapsuleEntity, EntityView)
+    _reg("sphere", "/icons/Physics.Sphere.svg", PhysicalSphereEntity, PhysicalSphereEntityView)
+    _reg("plane", "/icons/Physics.Plane.svg", PhysicalPlaneEntity, PhysicsPlaneEntityView)
+    _reg("cylinder", "/icons/Physics.Capsule.svg", PhysicalCylinderEntity, PhysicsCapsuleEntityView)
 }

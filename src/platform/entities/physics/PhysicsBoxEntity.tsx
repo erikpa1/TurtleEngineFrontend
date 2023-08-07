@@ -6,14 +6,6 @@ import React from "react";
 export class PhysicalBoxEntity extends SceneEntity {
     static TYPE = "physics.box"
 
-    ToJson(): any {
-        return {
-            ...super.ToJson(),
-            type: PhysicalBoxEntity.TYPE
-        }
-    }
-
-
 }
 
 

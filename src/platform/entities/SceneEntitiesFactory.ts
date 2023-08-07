@@ -28,10 +28,7 @@ export default class SceneEntitiesFactory {
     static GetFiberHandler(nodeType: string): any {
         const tmp = SceneEntitiesFactory.FIBER_HANDLERS_MAP.get(nodeType)
 
-        console.log(`Getting: ${nodeType}`)
-
         if (tmp) {
-            console.log(`Returning: ${tmp}`)
             return tmp
         } else {
             return SceneEntitiesFactory.FIBER_HANDLERS_MAP.get("base")
