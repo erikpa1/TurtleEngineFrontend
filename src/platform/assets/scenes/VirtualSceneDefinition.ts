@@ -3,6 +3,7 @@ import Asset from "@platform/assets/Asset";
 import {VideoEntity} from "@platform/entities/media/VideoEntity";
 import {SceneMeshNode} from "@platform/entities/world/SceneMeshNode";
 import SceneDefinition from "@platform/assets/scenes/SceneDefinition";
+import {LibraryEntity} from "@platform/entities/SceneEntitiesFactory";
 
 export default class VirtualSceneDefinition extends SceneDefinition {
 
@@ -39,6 +40,12 @@ export default class VirtualSceneDefinition extends SceneDefinition {
         if (this.root.onChildrenChanged) {
             this.root.onChildrenChanged()
         }
+    }
+
+    AddFromLibrary(entity: LibraryEntity) {
+        const tmp = new entity.clazz()
+        this.root.AddChildren(tmp)
+
     }
 
     DeleteChildrenWithUid(nodeUid: string) {

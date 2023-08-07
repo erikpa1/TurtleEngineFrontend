@@ -49,7 +49,6 @@ fn main() {
 
         .setup(|app| {
             let splashscreen_window = app.get_window("splashscreen").unwrap();
-            splashscreen_window.set_always_on_top(true).unwrap();
             splashscreen_window.center().unwrap();
 
             let main_window = app.get_window("main").unwrap();

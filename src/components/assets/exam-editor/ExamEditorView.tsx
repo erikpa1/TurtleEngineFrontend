@@ -1,15 +1,12 @@
 import React from "react";
 
-
 import {ViewContainer} from "@components/ViewContainer";
 import ExamAssetData from "@platform/assets/exam";
-import AssetsApi from "@api/AssetsApi";
+
 import {TGui} from "@external/tgui";
 
 import Asset from "@platform/assets/Asset";
-import FsTools from "@api/FsTools";
 
-import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import QuestionEditCard from "@components/assets/exam-editor/QuestionEditCard";
 import ExamQuestionsList from "@components/assets/exam-editor/ExamQuestionsList";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
@@ -23,7 +20,10 @@ export default function ExamEditorView({}) {
 
     if (asset) {
         return (
-            <ViewContainer style={{padding: "0em", paddingTop: "3em"}}>
+            <ViewContainer style={{
+                padding: "1em",
+                marginTop: "3em",
+            }}>
                 <_ViewDispatcher asset={asset}/>
             </ViewContainer>
         )

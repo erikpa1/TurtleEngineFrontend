@@ -5,7 +5,7 @@ import TauriProjectPlugin from "../tauri/plugin_project";
 import TauriOsPlugin from "../tauri/plugin_os";
 import ConstantsApi from "@api/ConstantsApi";
 import SceneEntitiesFactory, {LibraryEntity} from "@platform/entities/SceneEntitiesFactory";
-import {SceneEntity, SceneNodeView} from "@platform/entities/SceneEntity";
+import {SceneEntity, EntityView} from "@platform/entities/SceneEntity";
 import {SceneMeshNode, SceneMeshNodeView} from "@platform/entities/world/SceneMeshNode";
 import {VideoEntity, SceneVideoNodeView} from "@platform/entities/media/VideoEntity";
 import VideoSceneNodeContentEditor from "@components/assets/scene-editor/scene-nodes/VideoSceneNodeOffcanvasContent";
@@ -13,7 +13,7 @@ import DefaultSceneEditorContent from "@components/assets/scene-editor/scene-nod
 import {PhysicalAvatarEntity} from "@platform/entities/physics/PhysicsAvatarEntity";
 import {PhysicalSphereEntity} from "@platform/entities/physics/PhysicsSphereEntity";
 import {PhysicalCapsuleEntity} from "@platform/entities/physics/PhysicsCapsuleEntity";
-import {PhysicalBoxEntity} from "@platform/entities/physics/PhysicsBoxEntity";
+import {PhysicalBoxEntity, PhysicsBoxEntityView} from "@platform/entities/physics/PhysicsBoxEntity";
 
 
 export default class AppApi {
@@ -48,7 +48,7 @@ export default class AppApi {
 
         //Scene Node
         SceneEntitiesFactory.AddClass(SceneEntity.TYPE, SceneEntity)
-        SceneEntitiesFactory.AddFiberClass(SceneEntity.TYPE, SceneNodeView)
+        SceneEntitiesFactory.AddFiberClass(SceneEntity.TYPE, EntityView)
         SceneEntitiesFactory.AddEditorContent(SceneEntity.TYPE, DefaultSceneEditorContent)
         //Scene Mesh node
         SceneEntitiesFactory.AddClass(SceneMeshNode.TYPE, SceneMeshNode)
@@ -73,19 +73,21 @@ async function _RegisterPhysicsLibrary() {
 
     console.log("Called")
 
-    function _reg(lang: string, icon: string, clazz: typeof SceneEntity) {
+    function _reg(lang: string, icon: string, clazz: typeof SceneEntity, entityClazz: any) {
         const tmp = new LibraryEntity()
         tmp.group = "physics"
         tmp.name = lang
         tmp.type = clazz.TYPE
         tmp.clazz = clazz
         tmp.icon = icon
+        SceneEntitiesFactory.AddClass(tmp.type, clazz)
         SceneEntitiesFactory.AddLibraryEntity(tmp)
+        SceneEntitiesFactory.AddFiberClass(tmp.type, entityClazz)
     }
 
-    _reg("avatar", "/icons/Physics.Avatar.svg", PhysicalAvatarEntity)
-    _reg("box", "/icons/Physics.Box.svg", PhysicalBoxEntity)
-    _reg("sphere", "/icons/Physics.Box.svg", PhysicalSphereEntity)
-    _reg("plane", "/icons/Physics.Box.svg", PhysicalCapsuleEntity)
-    _reg("cylinder", "/icons/Physics.Box.svg", PhysicalCapsuleEntity)
+    _reg("avatar", "/icons/Physics.Avatar.svg", PhysicalAvatarEntity, EntityView)
+    _reg("box", "/icons/Physics.Box.svg", PhysicalBoxEntity, PhysicsBoxEntityView)
+    _reg("sphere", "/icons/Physics.Box.svg", PhysicalSphereEntity, EntityView)
+    _reg("plane", "/icons/Physics.Box.svg", PhysicalCapsuleEntity, EntityView)
+    _reg("cylinder", "/icons/Physics.Box.svg", PhysicalCapsuleEntity, EntityView)
 }

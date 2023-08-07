@@ -26,6 +26,7 @@ import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager
 import FsTools from "@api/FsTools";
 import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene";
 import ImagesApi from "@api/ImagesApi";
+import {useOpenAssetDispatcher} from "@components/assets/assets_hooks";
 
 interface CreateAssetOffcanvasProps {
     onClose?: () => void
@@ -73,6 +74,8 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
 
     const [t] = useTranslation()
 
+    const dispatch = useOpenAssetDispatcher()
+
     const assetDefinition = props.assetDefinition
     const assetType = assetDefinition.TYPE
 
@@ -97,7 +100,6 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
         } else {
             const asset = await AssetsApi.CreateAsset(basicParams)
 
-
             const targetPath = FsTools.GetPathInProject(projectUid, `Assets/${asset.uid}/Preview.png`)
 
             const newDefaultData = props.assetDefinition.DEFAULT_DATA()
@@ -115,7 +117,6 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
 
                     AssetsApi.CopyAssetFileDesktop(from, pathTo)
                 })
-
             }
 
             asset.hasPreview = true
@@ -123,6 +124,10 @@ function _CreateOtherAssets(props: CreateAssetOffcanvasProps) {
             await AssetsApi.UploadAssetLight(asset)
 
             await ImagesApi.GeneratePreviewDesktop(thumbnail, targetPath, 256)
+
+            console.log(asset)
+
+            dispatch(asset)
 
         }
 

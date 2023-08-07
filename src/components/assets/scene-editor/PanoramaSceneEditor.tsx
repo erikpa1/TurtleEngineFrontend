@@ -11,7 +11,7 @@ import {
 
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
-import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
+import EntitiesDOM from "@components/assets/scene-editor/EntitiesDOM";
 
 import SceneEditorHud from "@components/assets/scene-editor/SceneEditorHud";
 import PhotoDom, {PhotoRawDom} from "@components/assets/panorama/PhotoDom";
@@ -69,7 +69,7 @@ function _PanoramaSceneEditor(props: _PanoramaSceneEditorProps) {
 
                 {/*<_ExampleMeshes/>*/}
 
-                <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
+                <EntitiesDOM sceneDefinition={props.sceneDefinition}/>
 
                 <_PanoramaLoader
                     projectUid={props.scene.parent_project_uid}

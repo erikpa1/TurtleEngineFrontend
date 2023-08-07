@@ -3,6 +3,7 @@ import {Environment, Grid, OrbitControls} from "@react-three/drei";
 
 import React from "react";
 import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
+import {Debug, Physics} from "@react-three/cannon";
 
 interface UniversalMeshCanvasProps {
     children: any
@@ -44,6 +45,14 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                 raycaster={{params: {Line: {threshold: 0.15}}}}
             >
 
+                <Physics gravity={[0, -10, 0]}>
+                    <Debug color={"red"}>
+                        {
+                            React.Children.toArray(props.children)
+                        }
+                    </Debug>
+                </Physics>
+
                 <directionalLight castShadow position={[2.5, 5, 5]} intensity={1.5} shadow-mapSize={[1024, 1024]}>
                     <orthographicCamera attach="shadow-camera" args={[-5, 5, 5, -5, 1, 50]}/>
                 </directionalLight>
@@ -53,11 +62,6 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                 {/*</AccumulativeShadows>*/}
 
                 {/*<CameraControls/>*/}
-
-
-                {
-                    React.Children.toArray(props.children)
-                }
 
 
             </Canvas>

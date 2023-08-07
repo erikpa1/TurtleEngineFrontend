@@ -9,6 +9,7 @@ import {
     UniversalWorldEnvironment,
     UniversalWorldGrid
 } from "@components/assets/canvases/UniversalMeshCanvas";
+
 import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
 
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
@@ -17,6 +18,7 @@ import {MeshAssetData} from "@platform/assets/mesh";
 import Asset from "@platform/assets/Asset";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
 import {TGui} from "@external/tgui";
+
 export default function MeshEditor({}) {
 
     const asset = useLoadAssetFromParams()

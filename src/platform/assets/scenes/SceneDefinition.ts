@@ -9,7 +9,7 @@ export default class SceneDefinition extends AssetData {
     ToJson(): any {
         return {
             ...super.ToJson(),
-            root: this.root,
+            root: this.root.ToJson(),
         }
     }
 

@@ -1,8 +1,7 @@
 import React from "react";
-import {MeshAssetData} from "@platform/assets/mesh";
 
 import {TGui} from "@external/tgui";
-import {EditAssetDescriptionFormField, EditAssetNameFormField} from "@components/assets/parent/edit-parent-props";
+
 import Asset from "@platform/assets/Asset";
 
 interface EditMeshAssetOffcanvas {

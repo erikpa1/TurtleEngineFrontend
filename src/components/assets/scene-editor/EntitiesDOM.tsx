@@ -1,17 +1,15 @@
 import React from "react";
 
 
-import {SceneMeshNode, SceneMeshNodeView} from "@platform/entities/world/SceneMeshNode";
-import {VideoEntity, SceneVideoNodeView} from "@platform/entities/media/VideoEntity";
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 import SceneEntitiesFactory from "@platform/entities/SceneEntitiesFactory";
 
 
-interface SceneDefinitionDomProps {
+interface EntitiesDOMProps {
     sceneDefinition: VirtualSceneDefinition
 }
 
-export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
+export default function EntitiesDOM(props: EntitiesDOMProps) {
 
 
     const [view, setView] = React.useState<any>()
@@ -22,7 +20,11 @@ export default function SceneDefinitionDOM(props: SceneDefinitionDomProps) {
 
         const root = props.sceneDefinition.root
 
+        console.log(root.children)
+
         root.children.forEach((value) => {
+
+            console.log(`Adding to world: ${value.type}`)
 
             const NodeHandler: any = SceneEntitiesFactory.GetFiberHandler(value.type)
 

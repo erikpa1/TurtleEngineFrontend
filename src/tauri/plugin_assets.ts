@@ -65,6 +65,7 @@ export default class TauriAssetPlugin {
         asset.parent_project_uid = params.project_uid
         asset.uid = params.uid
         asset.name = params.name
+        asset.type = params.assetType
 
         await TauriOsPlugin.WriteFileString(
             FsTools.GetPathInProject(params.project_uid, `Assets/${params.uid}/Default.json`),

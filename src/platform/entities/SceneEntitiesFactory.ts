@@ -28,7 +28,10 @@ export default class SceneEntitiesFactory {
     static GetFiberHandler(nodeType: string): any {
         const tmp = SceneEntitiesFactory.FIBER_HANDLERS_MAP.get(nodeType)
 
+        console.log(`Getting: ${nodeType}`)
+
         if (tmp) {
+            console.log(`Returning: ${tmp}`)
             return tmp
         } else {
             return SceneEntitiesFactory.FIBER_HANDLERS_MAP.get("base")
@@ -44,7 +47,6 @@ export default class SceneEntitiesFactory {
         } else {
             return SceneEntitiesFactory.EDITORS_CONTENT_MAP.get("base")
         }
-
     }
 
     static AddClass(nodeType: string, clazz) {

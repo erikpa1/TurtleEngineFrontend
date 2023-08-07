@@ -6,22 +6,25 @@ import React from "react";
 export class SceneEntity {
 
     static TYPE = "base"
-    type = SceneEntity.TYPE
+    type = "base"
 
     children = new Array<SceneEntity>()
 
     name = ""
-    uid = crypto.randomUUID()
+    uid = ""
     position: [number, number, number] | number[] = [0, 0, 0]
     rotation: [number, number, number] | number[] = [0, 0, 0]
     scale: [number, number, number] | number[] = [1, 1, 1]
 
-
     onChildrenChanged: any = null
     onChanged: any = null
 
+    _parent: SceneEntity | null = null
+
     constructor() {
         //pass
+        this.type = this.constructor?.TYPE
+        this.uid = `${this.type}-${crypto.randomUUID()}`
     }
 
     ToJson(): any {
@@ -46,7 +49,12 @@ export class SceneEntity {
         const children = jObject.children ?? []
 
         children.forEach((value: any | SceneEntity) => {
+
+            console.log(`Deserializing: ${value.type}`)
+
             const clazz = SceneEntitiesFactory.GetClass(value.type ?? "base")
+
+
             const node = new clazz()
             node.FromJson(value)
             this.children.push(node)
@@ -59,11 +67,15 @@ export class SceneEntity {
         })
     }
 
+    AddChildren(child: SceneEntity) {
+        child._parent = this
+        this.children.push(child)
+    }
 
 }
 
 
-export function SceneNodeView({}) {
+export function EntityView({}) {
     return (
         <mesh>
             <boxGeometry args={[1, 1, 1]}/>

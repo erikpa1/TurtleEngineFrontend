@@ -12,7 +12,7 @@ import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRot
 
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 
-import SceneDefinitionDOM from "@components/assets/scene-editor/SceneDefinitionDOM";
+import EntitiesDOM from "@components/assets/scene-editor/EntitiesDOM";
 
 import SceneApi from "@api/project/SceneApi";
 
@@ -66,7 +66,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
 
                 {/*<_ExampleMeshes/>*/}
 
-                <SceneDefinitionDOM sceneDefinition={props.sceneDefinition}/>
+                <EntitiesDOM sceneDefinition={props.sceneDefinition}/>
                 <UniversalMeshOrbitControls/>
 
                 <UniversalWorldGrid/>

@@ -3,7 +3,6 @@ import Asset from "@platform/assets/Asset";
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 import {useTranslation} from "react-i18next";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 import Assets, {AssetDefinition} from "@platform/assets/Assets";
 import {TGui} from "@external/tgui";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
@@ -60,7 +59,8 @@ export default function SceneEditorBottomBar(props: SceneEditorHudProps) {
             <EntitySelectionOffcanvas
                 onHide={popup.popElement}
                 onSelect={(asset) => {
-                    props.sceneDefinition.AddAssetChildren(asset)
+
+                    props.sceneDefinition.AddFromLibrary(asset)
                     popup.popElement()
                     props.onSceneDefinitionChanged()
                 }}

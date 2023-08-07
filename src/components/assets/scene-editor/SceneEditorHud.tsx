@@ -16,6 +16,7 @@ import SceneEditorBottomBar from "@components/assets/scene-editor/SceneEditorBot
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import SceneNodeEditOffcanvasDispatcher
     from "@components/assets/scene-editor/scene-nodes/SceneNodeEditOffcanvasDispatcher";
+import {SceneEntity} from "@platform/entities/SceneEntity";
 
 
 interface SceneEditorHudProps {
@@ -75,12 +76,27 @@ function _Top(props: SceneEditorHudProps) {
 }
 
 function _Left(props: SceneEditorHudProps) {
+
+
+    function _printRecursive(root: SceneEntity) {
+        console.log(`Name: ${root.name} Type: ${root.type} Uid: ${root.uid}`)
+
+        for (const i of root.children) {
+            console.log(`Name: ${i.name} Type: ${i.type} Uid: ${i.uid}`)
+        }
+    }
+
+    function hierarchyPressed() {
+        _printRecursive(props.sceneDefinition.root)
+    }
+
     return (
         <AssetEditorHud placement={"left"}>
 
             <OpenAssetFolderButton asset={props.asset}/>
 
             <HudGizmoSwapper/>
+
             <HudButton
                 lang={"edit"}
                 icon={"/icons/Management.svg"}
@@ -89,6 +105,12 @@ function _Left(props: SceneEditorHudProps) {
             <HudButton
                 lang={"snapshot"}
                 icon={"/icons/Management.svg"}
+            />
+
+            <HudButton
+                lang={"hierarchy"}
+                icon={"/icons/Management.svg"}
+                onClick={hierarchyPressed}
             />
 
         </AssetEditorHud>

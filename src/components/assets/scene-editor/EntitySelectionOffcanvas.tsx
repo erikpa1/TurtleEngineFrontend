@@ -22,7 +22,6 @@ export default function EntitySelectionOffcanvas(props: SceneEntitiesSelectionOf
             onClose={props.onHide}
             header={<TGui.OffcanvasTitle>{t("select.entity")}</TGui.OffcanvasTitle>}
         >
-
             <_SelectionView {...props}/>
         </TGui.Offcanvas>
 
@@ -62,6 +61,9 @@ function _SelectionView(props: SceneEntitiesSelectionOffcanvas) {
                                                 key={index}
                                                 lang={libEntity.name}
                                                 icon={libEntity.icon}
+                                                onClick={() => {
+                                                    props.onSelect(libEntity)
+                                                }}
                                             />
                                         )
                                     })
