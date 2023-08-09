@@ -8,7 +8,7 @@ export class PhysicalCylinderEntity extends SceneEntity {
 }
 
 interface PhysicsCapsuleEntityViewProps {
-    entity: PhysicalCylinderEntity
+    node: PhysicalCylinderEntity
     children: any
 
 }
@@ -18,7 +18,11 @@ export function PhysicsCapsuleEntityView(props: PhysicsCapsuleEntityViewProps) {
     console.log("Pushing box entity")
 
     const [ref, api] = useCylinder(
-        () => ({args: [1, 1, 1], mass: 1}),
+        () => ({
+            args: [1, 1, 1],
+            mass: 1,
+            position: props.node.position as any
+        }),
         React.useRef<any>()
     )
 

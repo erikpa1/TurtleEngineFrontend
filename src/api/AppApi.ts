@@ -10,7 +10,7 @@ import {SceneMeshNode, SceneMeshNodeView} from "@platform/entities/world/SceneMe
 import {VideoEntity, SceneVideoNodeView} from "@platform/entities/media/VideoEntity";
 import VideoSceneNodeContentEditor from "@components/assets/scene-editor/scene-nodes/VideoSceneNodeOffcanvasContent";
 import DefaultSceneEditorContent from "@components/assets/scene-editor/scene-nodes/DefaultSceneEditorContent";
-import {PhysicalAvatarEntity} from "@platform/entities/physics/PhysicsAvatarEntity";
+import {PhysicalAvatarEntity, PhysicsAvatarEntityView} from "@platform/entities/physics/PhysicsAvatarEntity";
 import {PhysicalSphereEntity, PhysicalSphereEntityView} from "@platform/entities/physics/PhysicsSphereEntity";
 import {PhysicalCylinderEntity, PhysicsCapsuleEntityView} from "@platform/entities/physics/PhysicalCylinderEntity";
 import {PhysicalBoxEntity, PhysicsBoxEntityView} from "@platform/entities/physics/PhysicsBoxEntity";
@@ -86,7 +86,7 @@ async function _RegisterPhysicsLibrary() {
         SceneEntitiesFactory.AddFiberClass(tmp.type, entityClazz)
     }
 
-    _reg("avatar", "/icons/Physics.Avatar.svg", PhysicalAvatarEntity, EntityView)
+    _reg("avatar", "/icons/Physics.Avatar.svg", PhysicalAvatarEntity, PhysicsAvatarEntityView)
     _reg("box", "/icons/Physics.Box.svg", PhysicalBoxEntity, PhysicsBoxEntityView)
     _reg("sphere", "/icons/Physics.Sphere.svg", PhysicalSphereEntity, PhysicalSphereEntityView)
     _reg("plane", "/icons/Physics.Plane.svg", PhysicalPlaneEntity, PhysicsPlaneEntityView)

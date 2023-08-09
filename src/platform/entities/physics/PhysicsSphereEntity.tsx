@@ -1,5 +1,5 @@
 import {SceneEntity} from "@platform/entities/SceneEntity";
-import { useSphere} from "@react-three/cannon";
+import {useSphere} from "@react-three/cannon";
 import React from "react";
 import {PhysicalCylinderEntity} from "@platform/entities/physics/PhysicalCylinderEntity";
 
@@ -10,7 +10,7 @@ export class PhysicalSphereEntity extends SceneEntity {
 }
 
 interface PhysicsCapsuleEntityViewProps {
-    entity: PhysicalCylinderEntity
+    node: PhysicalCylinderEntity
     children: any
 
 }
@@ -18,7 +18,11 @@ interface PhysicsCapsuleEntityViewProps {
 export function PhysicalSphereEntityView(props: PhysicsCapsuleEntityViewProps) {
 
     const [ref, api] = useSphere(
-        () => ({args: [1], mass: 1}),
+        () => ({
+            args: [1],
+            mass: 1,
+            position: props.node.position as any
+        }),
         React.useRef<any>()
     )
 

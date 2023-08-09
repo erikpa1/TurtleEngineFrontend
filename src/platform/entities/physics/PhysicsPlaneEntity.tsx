@@ -10,7 +10,7 @@ export class PhysicalPlaneEntity extends SceneEntity {
 }
 
 interface PhysicsPlaneEntityViewProps {
-    entity: PhysicalBoxEntity
+    node: PhysicalBoxEntity
     children: any
 
 }
@@ -19,7 +19,8 @@ export function PhysicsPlaneEntityView(props: PhysicsPlaneEntityViewProps) {
 
     const [ref] = usePlane(() => ({
         mass: 0, ...props,
-        rotation: [-Math.PI / 2, 0, 0]
+        rotation: [-Math.PI / 2, 0, 0],
+        position: props.node.position as any
     }), React.useRef<any>())
 
     return (

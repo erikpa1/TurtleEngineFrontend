@@ -4,7 +4,7 @@ import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import ConstantsApi from "@api/ConstantsApi";
 
 
-export default function PhysicsWorld() {
+export default function PhysicsExampleWorld() {
     return (
         <Physics gravity={[0, -10, 0]}>
             <Debug color={"red"}>

@@ -9,7 +9,7 @@ interface EntitiesDOMProps {
     sceneDefinition: VirtualSceneDefinition
 }
 
-export default function EntitiesDOM(props: EntitiesDOMProps) {
+export default function EntityDOM(props: EntitiesDOMProps) {
 
 
     const [view, setView] = React.useState<any>()

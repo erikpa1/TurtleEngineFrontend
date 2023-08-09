@@ -10,7 +10,7 @@ export class PhysicalBoxEntity extends SceneEntity {
 
 
 interface PhysicsBoxEntityViewProps {
-    entity: PhysicalBoxEntity
+    node: PhysicalBoxEntity
     children: any
 
 }
@@ -20,7 +20,11 @@ export function PhysicsBoxEntityView(props: PhysicsBoxEntityViewProps) {
     console.log("Pushing box entity")
 
     const [ref, api] = useBox(
-        () => ({args: [1, 1, 1], mass: 1}),
+        () => ({
+            args: [1, 1, 1],
+            mass: 1,
+            position: props.node.position as any
+        }),
         React.useRef<any>()
     )
 

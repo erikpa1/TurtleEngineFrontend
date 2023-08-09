@@ -12,12 +12,12 @@ import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRot
 
 import VirtualSceneDefinition from "@platform/assets/scenes/VirtualSceneDefinition";
 
-import EntitiesDOM from "@components/assets/scene-editor/EntitiesDOM";
+import EntityDOM from "@components/assets/scene-editor/EntityDOM";
 
 import SceneApi from "@api/project/SceneApi";
 
 import Asset from "@platform/assets/Asset";
-import PhysicsWorld from "@platform/physics/PhysicsWorld";
+import PhysicsExampleWorld from "@platform/physics/PhysicsExampleWorld";
 import {DnDBox3D} from "@components/assets/tools/DndBox";
 
 
@@ -66,7 +66,7 @@ function _VirtualSceneEditor(props: _VirtualSceneEditorProps) {
 
                 {/*<_ExampleMeshes/>*/}
 
-                <EntitiesDOM sceneDefinition={props.sceneDefinition}/>
+                <EntityDOM sceneDefinition={props.sceneDefinition}/>
                 <UniversalMeshOrbitControls/>
 
                 <UniversalWorldGrid/>
