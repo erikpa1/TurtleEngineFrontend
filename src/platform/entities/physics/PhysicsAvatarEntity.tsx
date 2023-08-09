@@ -29,7 +29,7 @@ export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
         }),
         React.useRef<any>()
     )
-    
+
 
     return (
         <mesh ref={ref} castShadow onPointerDown={() => api.velocity.set(0, 10, 0)}>
