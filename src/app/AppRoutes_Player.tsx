@@ -4,6 +4,7 @@ import MountTabWrapper from "@components/MountTabWrapper";
 import {ViewContainer} from "@components/ViewContainer";
 import RoutesManager from "@platform/RoutesManager";
 
+
 const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
 
 
@@ -14,7 +15,10 @@ const VtsTrainingsView = React.lazy(() => import( "@players/vts/VtsTrainingsView
 const VtsTrainingLevelsView = React.lazy(() => import("@players/vts/VtsTrainingLevelsView"))
 const VtsLevelPlayerView = React.lazy(() => import( "@players/vts/VtsLevelPlayerView"))
 
+const VtsTestScena = React.lazy(() => import(  "@players/vts/test-scena/VtsTestScena"))
+
 export default function AppRoutes_Player() {
+
     return (
         <main style={{
             overflowY: "hidden",
@@ -64,6 +68,12 @@ export default function AppRoutes_Player() {
                 <Route path={"/trainings-player-guis"} element={
                     <MountTabWrapper>
                         <VtsLevelPlayerView/>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={"/play"} element={
+                    <MountTabWrapper>
+                        <VtsTestScena/>
                     </MountTabWrapper>
                 }/>
 

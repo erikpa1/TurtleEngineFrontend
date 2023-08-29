@@ -11,7 +11,7 @@ export class PhysicalPlaneEntity extends SceneEntity {
 
 interface PhysicsPlaneEntityViewProps {
     node: PhysicalBoxEntity
-    children: any
+    children?: any
 
 }
 

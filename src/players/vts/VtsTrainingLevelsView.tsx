@@ -1,14 +1,13 @@
 import React from "react";
 import {ViewContainer} from "@components/ViewContainer";
-import TraningDefinition from "@data/vts/TrainingDefinition";
+
 import TraningLevelDefinition from "@data/vts/TraningLevelDefinition";
 
 import {TGui} from "@external/tgui";
 
-import FsTools from "@api/FsTools";
-
 import TrainingsApi from "@api/TraningsApi"
 import {useNavigate} from "react-router-dom";
+import FsTools from "@api/FsTools";
 
 export default function VtsTrainingLevelsView({}) {
 
@@ -39,6 +38,11 @@ function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
 
     const navigate = useNavigate()
 
+
+    function clicked() {
+        navigate("/trainings-player-guis")
+    }
+
     return (
         <TGui.Row xs={1} md={4} className="g-4">
 
@@ -49,7 +53,9 @@ function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
                             <TGui.Card>
                                 <TGui.CardMedia
                                     sx={{height: 140}}
-                                    image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("/Images/Question.Text.png"))}
+                                    image={FsTools.ConvertFilePath(value.image)}
+                                    onClick={clicked}
+                                    style={{cursor: "pointer"}}
                                 />
                                 <TGui.CardContent>
                                     <TGui.Typography>
@@ -64,9 +70,7 @@ function _LevelsView({levels}: { levels: Array<TraningLevelDefinition> }) {
                                 <TGui.CardActions>
                                     <TGui.Button
                                         label={"open"}
-                                        onClick={() => {
-                                            navigate("/trainings-player-guis")
-                                        }}
+                                        onClick={clicked}
                                     />
                                 </TGui.CardActions>
 

@@ -3,7 +3,9 @@ import {Environment, Grid, OrbitControls} from "@react-three/drei";
 
 import React from "react";
 import {useActiveNodeZus} from "@components/assets/scene-editor/scene-zuses";
-import {Debug, Physics} from "@react-three/cannon";
+
+import SceneCameraRotationGizmo from "@components/assets/canvases/SceneCameraRotationGizmo";
+import {Physics} from "@react-three/cannon";
 
 interface UniversalMeshCanvasProps {
     children: any
@@ -44,17 +46,21 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                 }}
                 raycaster={{params: {Line: {threshold: 0.15}}}}
             >
-                <Physics gravity={[0, -9.81, 0]} isPaused={false}>
-                    <Debug color={"red"}>
-                        {
-                            React.Children.toArray(props.children)
-                        }
-                    </Debug>
+                <Physics gravity={[0, -9.81, 0]} debug={true}>
+                    React.Children.toArray(props.children)
                 </Physics>
 
                 <directionalLight castShadow position={[2.5, 5, 5]} intensity={1.5} shadow-mapSize={[1024, 1024]}>
                     <orthographicCamera attach="shadow-camera" args={[-5, 5, 5, -5, 1, 50]}/>
                 </directionalLight>
+
+                <UniversalWorldGrid/>
+
+                <SceneCameraRotationGizmo/>
+
+                <UniversalWorldEnvironment/>
+
+                <UniversalMeshOrbitControls/>
 
                 {/*<AccumulativeShadows frames={100} color="#9d4b4b" colorBlend={0.5} alphaTest={0.9} scale={20}>*/}
                 {/*    <RandomizedLight amount={8} radius={4} position={[5, 5, -10]}/>*/}

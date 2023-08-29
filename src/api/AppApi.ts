@@ -20,10 +20,10 @@ import {PhysicalPlaneEntity, PhysicsPlaneEntityView} from "@platform/entities/ph
 export default class AppApi {
 
 
-    static MODE = "editor"
+    static MODE = "player"
 
     static IsPlayer() {
-        return AppApi.MODE === "player-guis"
+        return AppApi.MODE === "player"
     }
 
     static IsEditor() {

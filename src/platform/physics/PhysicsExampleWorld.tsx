@@ -1,17 +1,16 @@
 import React from "react";
-import {Debug, Physics, useBox, usePlane} from '@react-three/cannon'
+
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import ConstantsApi from "@api/ConstantsApi";
+import {Physics} from "@react-three/cannon";
 
 
 export default function PhysicsExampleWorld() {
     return (
-        <Physics gravity={[0, -10, 0]}>
-            <Debug color={"red"}>
-                <Plane rotation={[-Math.PI / 2, 0, 0]}/>
-                <Box position={[0, 2, 0]}/>
-                <_TestMesh position={[2, 2, 0]}/>
-            </Debug>
+        <Physics gravity={[0, -10, 0]} debug={true}>
+            <Plane rotation={[-Math.PI / 2, 0, 0]}/>
+            <Box position={[0, 2, 0]}/>
+            <_TestMesh position={[2, 2, 0]}/>
         </Physics>
     )
 }

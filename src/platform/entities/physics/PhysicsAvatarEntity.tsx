@@ -1,28 +1,74 @@
 import React from "react";
-import {useCylinder} from "@react-three/cannon";
+import {useCylinder, useSphere} from "@react-three/cannon";
 
 import {SceneEntity} from "@platform/entities/SceneEntity";
 
 
 import {PhysicalBoxEntity} from "@platform/entities/physics/PhysicsBoxEntity";
+import {useKeyboardControls} from "@react-three/drei";
+import {useFrame, useThree} from "@react-three/fiber";
+import {VtsAvatarControls} from "@platform/entities/physics/PhysicsAvatarControls";
 
+import * as three from "three"
 
 export class PhysicalAvatarEntity extends SceneEntity {
     static TYPE = "physics.avatar"
+
+    position = [0, 2, 0]
+
 }
 
 interface PhysicsAvatarEntityViewProps {
     node: PhysicalBoxEntity
-    children: any
+    children?: any
 }
 
 export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
-
     console.log("Pushing Avatar entity")
 
-    const [ref, api] = useCylinder(
+    const headGroup = React.useRef<any | three.Group>()
+
+    const jumpPressed = useKeyboardControls((state) => state[VtsAvatarControls.jump])
+    const forwardPressed = useKeyboardControls((state) => state[VtsAvatarControls.forward])
+    const backwardPressed = useKeyboardControls((state) => state[VtsAvatarControls.back])
+    const leftPressed = useKeyboardControls((state) => state[VtsAvatarControls.left])
+    const rightPressed = useKeyboardControls((state) => state[VtsAvatarControls.right])
+
+    const {camera} = useThree()
+
+    useFrame((_, delta) => {
+
+        const speed = 5
+
+        const vector = new three.Vector3()
+
+        const currentPosition: three.Vector3 = headGroup.current.getWorldPosition(vector)
+
+        camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z)
+
+
+        if (jumpPressed) {
+            api.velocity.set(0, 5, 0)
+        }
+        if (forwardPressed) {
+            api.velocity.set(speed * 1, 0, 0)
+        }
+        if (backwardPressed) {
+            api.velocity.set(speed * -1, 0, 0)
+        }
+        if (leftPressed) {
+            api.velocity.set(0, 0, speed * -1)
+        }
+        if (rightPressed) {
+            api.velocity.set(0, 0, speed * 1)
+        }
+
+    })
+
+
+    const [ref, api] = useSphere(
         () => ({
-            args: [0.5, 0.5, 2],
+
             mass: 1,
             position: props.node.position as any,
             angularFactor: [0, 1, 0]
@@ -30,14 +76,26 @@ export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
         React.useRef<any>()
     )
 
+    React.useEffect(() => {
+        //pass
+
+    }, [])
 
     return (
-        <mesh ref={ref} castShadow onPointerDown={() => api.velocity.set(0, 10, 0)}>
-            <capsuleGeometry args={[0.5, 2]}/>
-            <meshNormalMaterial/>
-            {
-                props.children
-            }
-        </mesh>
+        <group ref={ref} castShadow>
+
+            <group ref={headGroup} position={[0, 2, 0]}>
+
+            </group>
+
+            <mesh>
+                <capsuleGeometry args={[0.5, 2]}/>
+                <meshNormalMaterial/>
+                {
+                    props.children
+                }
+            </mesh>
+        </group>
+
     )
 }

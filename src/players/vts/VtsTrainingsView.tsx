@@ -52,7 +52,12 @@ function _TrainingsList({trainings}: { trainings: Array<TraningDefinition> }) {
                             <TGui.Card>
                                 <TGui.CardMedia
                                     sx={{height: 140}}
-                                    image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("/Images/Question.Text.png"))}
+                                    // image={FsTools.ConvertFilePath(FsTools.GetPlatformPath("/Images/Question.Text.png"))}
+                                    image={FsTools.ConvertFilePath(value.image)}
+                                    onClick={() => {
+                                        navigate(`/levels`)
+                                    }}
+                                    style={{cursor: "pointer"}}
                                 />
                                 <TGui.CardContent>
                                     <TGui.Typography>

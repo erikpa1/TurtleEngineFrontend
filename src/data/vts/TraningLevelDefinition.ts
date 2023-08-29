@@ -8,6 +8,8 @@ export default class TraningLevelDefinition {
     desciption = ""
     asset_uid = ""
 
+    image = ""
+
     level_materials = new Array<Asset>()
 
     ToJson(): any {

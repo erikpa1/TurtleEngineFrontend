@@ -2,6 +2,7 @@ import {TGui} from "@external/tgui";
 import React from "react";
 import {VtsPanelHeading} from "@players/vts/player-guis/Common";
 import FsTools from "@api/FsTools";
+import {useNavigate} from "react-router-dom";
 
 
 export function MiddlePanel({}) {
@@ -48,12 +49,16 @@ function _BottomBar({}) {
     const [t] = TGui.T()
 
 
+    const navigate = useNavigate()
+
     function unloadPressed() {
         setVisibleGui(<_LoadView onLoad={loadPressed}/>)
     }
 
     function playPressed() {
         setVisibleGui(<_PauseView onPause={pausePressed}/>)
+
+        navigate("/play")
     }
 
     function pausePressed() {

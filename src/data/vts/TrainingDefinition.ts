@@ -11,6 +11,8 @@ export default class TraningDefinition {
     image_asset = ""
     video_asset = ""
 
+    image = ""
+
     levels = new Array<TraningLevelDefinition>()
 
     ToJson(): any {
