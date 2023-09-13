@@ -5,11 +5,12 @@ import {SceneEntity} from "@platform/entities/SceneEntity";
 
 
 import {PhysicalBoxEntity} from "@platform/entities/physics/PhysicsBoxEntity";
-import {useKeyboardControls} from "@react-three/drei";
+import {PerspectiveCamera, useKeyboardControls} from "@react-three/drei";
 import {useFrame, useThree} from "@react-three/fiber";
 import {VtsAvatarControls} from "@platform/entities/physics/PhysicsAvatarControls";
 
 import * as three from "three"
+import {Vector3} from "three";
 
 export class PhysicalAvatarEntity extends SceneEntity {
     static TYPE = "physics.avatar"
@@ -24,9 +25,9 @@ interface PhysicsAvatarEntityViewProps {
 }
 
 export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
-    console.log("Pushing Avatar entity")
 
     const headGroup = React.useRef<any | three.Group>()
+
 
     const jumpPressed = useKeyboardControls((state) => state[VtsAvatarControls.jump])
     const forwardPressed = useKeyboardControls((state) => state[VtsAvatarControls.forward])
@@ -40,28 +41,32 @@ export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
 
         const speed = 5
 
-        const vector = new three.Vector3()
-
-        const currentPosition: three.Vector3 = headGroup.current.getWorldPosition(vector)
-
-        camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z)
-
 
         if (jumpPressed) {
             api.velocity.set(0, 5, 0)
         }
+
         if (forwardPressed) {
-            api.velocity.set(speed * 1, 0, 0)
+            const direction = new Vector3(0, 0, speed * -1)
+            direction.applyQuaternion(headGroup.current.quaternion)
+            api.velocity.set(direction.x, direction.y, direction.z)
         }
         if (backwardPressed) {
-            api.velocity.set(speed * -1, 0, 0)
+            const direction = new Vector3(0, 0, speed * 1)
+            direction.applyQuaternion(headGroup.current.quaternion)
+            api.velocity.set(direction.x, direction.y, direction.z)
         }
         if (leftPressed) {
-            api.velocity.set(0, 0, speed * -1)
+            const direction = new Vector3(speed * -1, 0, 0)
+            direction.applyQuaternion(headGroup.current.quaternion)
+            api.velocity.set(direction.x, direction.y, direction.z)
         }
         if (rightPressed) {
-            api.velocity.set(0, 0, speed * 1)
+            const direction = new Vector3(speed * 1, 0, 0)
+            direction.applyQuaternion(headGroup.current.quaternion)
+            api.velocity.set(direction.x, direction.y, direction.z)
         }
+
 
     })
 
@@ -85,7 +90,7 @@ export function PhysicsAvatarEntityView(props: PhysicsAvatarEntityViewProps) {
         <group ref={ref} castShadow>
 
             <group ref={headGroup} position={[0, 2, 0]}>
-
+                <PerspectiveCamera makeDefault/>
             </group>
 
             <mesh>
