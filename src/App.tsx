@@ -7,6 +7,9 @@ import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import AppApi from "@api/AppApi";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
+import WasmView from "./WasmEntry";
+
+
 
 export default function App() {
 
@@ -42,6 +45,9 @@ export default function App() {
                 <div className={"app_background"}/>
 
                 <GlobalAppLock/>
+
+
+
 
                 <_LoggedContent/>
 
@@ -79,3 +85,5 @@ function _GlobalPopup() {
     }
 
 }
+
+

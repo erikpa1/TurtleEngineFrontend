@@ -44,6 +44,7 @@ pub fn GetProjectsPath() -> String {
 }
 
 pub fn NormalizePath(path: &Path) -> PathBuf {
+
     let mut components = path.components().peekable();
     let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
         components.next();
@@ -72,6 +73,8 @@ pub fn NormalizePath(path: &Path) -> PathBuf {
 
 
 pub fn GetWorkingDirectory() -> String {
+
+
     let original_path = format!("{}/../", GetExePath());
     // Create a PathBuf from the original path
     let mut path_buf = PathBuf::from(original_path);

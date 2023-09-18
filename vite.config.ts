@@ -17,7 +17,8 @@ export default defineConfig({
             '@data': path.resolve(__dirname, "src/data"),
             '@api': path.resolve(__dirname, "src/api"),
             '@hooks': path.resolve(__dirname, "src/hooks"),
-            '@external': path.resolve(__dirname, "src/external")
+            '@external': path.resolve(__dirname, "src/external"),
+            '@wasm': path.resolve(__dirname, "src/wasm")
         }
     },
     build: {

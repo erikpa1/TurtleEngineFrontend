@@ -3,6 +3,8 @@ resolver = "2"
 members = [
     "src-tauri",
     "src-fs",
-    "src-structures"
+    "src-structures",
+    "src-asny",
 ]
-default-members = ["src-tauri"]
+#default-members = ["src-tauri"]
+default-members = ["src-asny"]

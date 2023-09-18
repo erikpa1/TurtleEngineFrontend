@@ -136,6 +136,7 @@ dist
 
 /build/
 
+/target/wasm32-unknown-unknown/
 /target/release/
 /target/debug/
 /target/projects/
