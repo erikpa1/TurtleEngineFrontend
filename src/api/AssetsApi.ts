@@ -21,6 +21,15 @@ export default class AssetsApi {
         }
     }
 
+    static async GetAllAssets(projectUid: string): Promise<Array<Asset>> {
+        if (PlatformDispatcher.IsDesktop()) {
+            const assets = await TauriAssetPlugin.GetAllAssets(projectUid)
+            return assets
+        } else {
+            return []
+        }
+    }
+
     static async GetAsset(projectUid: string, assetUid: string): Promise<Asset> {
         if (PlatformDispatcher.IsDesktop()) {
             const asset = await TauriAssetPlugin.GetAsset(projectUid, assetUid)

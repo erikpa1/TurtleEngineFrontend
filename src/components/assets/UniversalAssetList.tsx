@@ -30,7 +30,7 @@ export const UniversalAssetListModes = {
 
 export default function UniversalAssetList(props: UniversalAssetListProps) {
 
-    const _md = props.md ?? 4
+    const _md = props.md ?? 6
     const _mode = props.mode ?? UniversalAssetListModes.EDIT
 
     const popupZus = useGlobalPopup()
@@ -91,7 +91,7 @@ export default function UniversalAssetList(props: UniversalAssetListProps) {
                 {
                     assets.map((value) => {
                         return (
-                            <Col key={value.uid}>
+                            <Col key={value.uid} style={{marginTop: "1em"}}>
                                 <AssetCard
                                     onRefresh={refreshAssets}
                                     asset={value}

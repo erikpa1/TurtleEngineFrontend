@@ -35,6 +35,24 @@ export default class TauriAssetPlugin {
 
     }
 
+    static async GetAllAssets(projectUid: string): Promise<Array<Asset>> {
+        const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetAllAssets`, {
+            projectUid: projectUid,
+        })
+
+        const responseJson = JSON.parse(response)
+
+        const returnValue = responseJson.assets.map((value: any) => {
+            const tmp = new Asset()
+            tmp.FromJson(value)
+            tmp.parent_project_uid = projectUid
+
+            return tmp
+        })
+
+        return returnValue
+    }
+
 
     static async GetAsset(projectUid: string, assetUid: string): Promise<Asset> {
         const response = await invoke<string>(`${ASSETS_PLUGIN_NAME}GetAsset`, {

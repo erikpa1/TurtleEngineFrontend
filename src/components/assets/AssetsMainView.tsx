@@ -15,8 +15,51 @@ import {TGui} from "@external/tgui";
 import {useParams} from "react-router-dom";
 
 import {Ext} from "@external/prelude";
+import UniversalAssetsTable from "@components/assets/UniversalAssetsTable";
 
 export default function AssetsMainView({}) {
+
+    // return (
+    //     <ViewContainer>
+    //         <_ViewAsTiles/>
+    //     </ViewContainer>
+    // )
+
+    const {projectuid}: any = useParams()
+
+    const [tabView, setTabView] = React.useState("0")
+
+    return (
+        <ViewContainer>
+            <TGui.Stack gap={3}>
+                <TGui.Card>
+                    <TGui.Tabs
+                        value={tabView}
+                        onChange={(_, value) => setTabView(value)}
+                        centered
+                    >
+                        <TGui.Tab label={"table"} value={"0"}/>
+                        <TGui.Tab label={"tiles"} value={"1"}/>
+                    </TGui.Tabs>
+                </TGui.Card>
+
+
+                <TGui.Switch condition={tabView}>
+                    <TGui.Case value={"0"}>
+                        <UniversalAssetsTable parentProjectUid={projectuid}/>
+                    </TGui.Case>
+                    <TGui.Case value={"1"}>
+                        <_ViewAsTiles/>
+                    </TGui.Case>
+                </TGui.Switch>
+            </TGui.Stack>
+
+        </ViewContainer>
+    )
+}
+
+
+function _ViewAsTiles({}) {
 
     const [t] = TGui.T()
 
@@ -30,48 +73,43 @@ export default function AssetsMainView({}) {
 
 
     return (
-        <ViewContainer>
+        <div className={"vstack gap-3"}>
+            <TabContext value={tabValue}>
 
-            <div className={"vstack gap-3"}>
-                <TabContext value={tabValue}>
-
-                    <TGui.Box
-                        sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
+                <TGui.Box
+                    sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}
+                >
+                    <Tabs
+                        value={tabValue}
+                        onChange={tabChanged}
+                        aria-label="Asset tabs"
+                        textColor="inherit"
                     >
-                        <Tabs
-                            value={tabValue}
-                            onChange={tabChanged}
-                            aria-label="Asset tabs"
-                            textColor="inherit"
-                        >
-                            <Tab label={"World"} value={"world"}/>
-                            <Tab label={"Media"} value={"media"}/>
-                            <Tab label={"Data"} value={"data"}/>
-                            <Tab label={"Vts"} value={"vts"}/>
-                        </Tabs>
+                        <Tab label={"World"} value={"world"}/>
+                        <Tab label={"Media"} value={"media"}/>
+                        <Tab label={"Data"} value={"data"}/>
+                        <Tab label={"Vts"} value={"vts"}/>
+                    </Tabs>
 
-                    </TGui.Box>
-                </TabContext>
+                </TGui.Box>
+            </TabContext>
 
-                <TGui.Switch condition={tabValue}>
-                    <TGui.Case value={"world"}>
-                        <_SubView type={"world"}/>
-                    </TGui.Case>
-                    <TGui.Case value={"media"}>
-                        <_SubView type={"media"}/>
-                    </TGui.Case>
-                    <TGui.Case value={"data"}>
-                        <_SubView type={"data"}/>
-                    </TGui.Case>
-                    <TGui.Case value={"vts"}>
-                        <_SubView type={"vts"}/>
-                    </TGui.Case>
-                </TGui.Switch>
+            <TGui.Switch condition={tabValue}>
+                <TGui.Case value={"world"}>
+                    <_SubView type={"world"}/>
+                </TGui.Case>
+                <TGui.Case value={"media"}>
+                    <_SubView type={"media"}/>
+                </TGui.Case>
+                <TGui.Case value={"data"}>
+                    <_SubView type={"data"}/>
+                </TGui.Case>
+                <TGui.Case value={"vts"}>
+                    <_SubView type={"vts"}/>
+                </TGui.Case>
+            </TGui.Switch>
 
-            </div>
-
-
-        </ViewContainer>
+        </div>
 
     )
 }

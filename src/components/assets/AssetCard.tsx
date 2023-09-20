@@ -69,7 +69,7 @@ export default function AssetCard({
     return (
         <TGui.Card sx={{maxWidth: 345}}>
             <TGui.CardMedia
-                sx={{height: 140}}
+                sx={{height: 120}}
                 image={FsTools.ConvertFilePath(asset.GetPreviewPath())}
                 title={asset.name}
                 style={{
@@ -90,7 +90,7 @@ export default function AssetCard({
 
                 }
 
-                <TGui.Typography gutterBottom variant="h5" component="div">
+                <TGui.Typography gutterBottom component="div">
                     {asset.name}
                 </TGui.Typography>
                 <TGui.Typography
@@ -108,8 +108,6 @@ export default function AssetCard({
 
                 {
                     mode === AssetCardModes.EDIT && <>
-                        <TGui.Button onClick={editAssetPressed} label={"open"}/>
-                        <TGui.Button onClick={editAssetPressed} label={"edit"}/>
                         <TGui.Button onClick={deletePressed} label={"delete"} color={"error"}/>
                     </>
                 }

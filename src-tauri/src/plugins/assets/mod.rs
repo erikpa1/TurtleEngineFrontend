@@ -106,6 +106,56 @@ pub async fn GetAllAssetsOfType(state: State<'_, AppState>, project_uid: String,
 
 
 #[tauri::command]
+pub async fn GetAllAssets(state: State<'_, AppState>, project_uid: String) -> Result<String, ()> {
+    // let mapLock = state.test.lock().unwrap();
+    // let map = mapLock.as_mut().unwrap();
+    //
+    // map.insert("Test".into(), "value".into());
+    //
+    let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
+    let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
+
+    let query = String::from("SELECT Uid, Name, Type, SubType, Tags, Description, HasPreview from Assets");
+
+    let mut statement = dbc.prepare(&query).unwrap();
+
+    let rows_iter = statement.query_map([], |row| {
+        let mut tmp = TurtleAsset::New();
+
+        tmp.uid = row.get(0).unwrap_or("".into());
+        tmp.name = row.get(1).unwrap_or("".into());
+        tmp.assetType = row.get(2).unwrap_or("".into());
+        tmp.subtype = row.get(3).unwrap_or("".into());
+        tmp.tags = row.get(4).unwrap_or("".into());
+        tmp.description = row.get(5).unwrap_or("".into());
+
+        tmp.hasPreview = if row.get(6).unwrap_or(0) == 0 {
+            false
+        } else {
+            true
+        };
+
+        return Ok(tmp);
+    }).unwrap();
+
+    let mut result: Vec<TurtleAsset> = vec![];
+
+    for myRow in rows_iter {
+        if let Ok(lightAsset) = myRow {
+            result.push(lightAsset);
+        }
+    }
+
+    let resultValue = json!({"assets": result});
+
+    let resString = serde_json::to_string(&resultValue)
+        .unwrap_or("\"assets\": []".into());
+
+    return Ok(resString);
+}
+
+
+#[tauri::command]
 pub async fn DeleteAssetWithUid(state: State<'_, AppState>, project_uid: String, asset_uid: String) -> Result<String, ()> {
     let dbPath = state.activeProjectDbPath.lock().unwrap().clone();
     let mut dbc = database::CreateDatabaseConnection(&dbPath).unwrap();
@@ -187,6 +237,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_assets")
         .invoke_handler(tauri::generate_handler![
             GetAllAssetsOfType,
+            GetAllAssets,
             GetAsset,
             DeleteAssetWithUid,
             UploadAssetFile,
