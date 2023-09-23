@@ -46,7 +46,7 @@ export function UniversalMeshCanvas(props: UniversalMeshCanvasProps) {
                 }}
                 raycaster={{params: {Line: {threshold: 0.15}}}}
             >
-                <Physics gravity={[0, -9.81, 0]} debug={true}>
+                <Physics gravity={[0, -9.81, 0]} {...{debug: true} as any}>
                     React.Children.toArray(props.children)
                 </Physics>
 

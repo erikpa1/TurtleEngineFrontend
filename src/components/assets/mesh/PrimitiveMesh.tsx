@@ -17,12 +17,15 @@ interface PrimitiveMeshProps {
     position?: [number, number, number] | any
     rotation?: [number, number, number] | any
     scale?: [number, number, number] | any
+    ref?: any
 }
 
 export function PrimitiveMesh(props: PrimitiveMeshProps) {
     return (
         <ErrorBoundary onError={<ErrorMesh/>}>
-            <_Mesh {...props}/>
+            <React.Suspense  fallback={""}>
+                <_Mesh {...props}/>
+            </React.Suspense>
         </ErrorBoundary>
     )
 }
@@ -102,9 +105,12 @@ function _Mesh(props: PrimitiveMeshProps) {
 
     const gltf = useGLTF(meshPath, true)
 
+    console.log(props.ref)
+
     return (
         <React.Suspense fallback={null}>
             <primitive
+                ref={props.ref}
                 object={gltf.scene.clone(true)}
                 position={props.position ?? [0, 0, 0]}
                 scale={props.scale ?? [1, 1, 1]}

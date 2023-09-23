@@ -2,12 +2,12 @@ import React from "react";
 
 import {PrimitiveMesh} from "@components/assets/mesh/PrimitiveMesh";
 import ConstantsApi from "@api/ConstantsApi";
-import {Physics} from "@react-three/cannon";
+import {Physics, useBox, usePlane} from "@react-three/cannon";
 
 
 export default function PhysicsExampleWorld() {
     return (
-        <Physics gravity={[0, -10, 0]} debug={true}>
+        <Physics gravity={[0, -10, 0]}  {...{debug: true} as any}>
             <Plane rotation={[-Math.PI / 2, 0, 0]}/>
             <Box position={[0, 2, 0]}/>
             <_TestMesh position={[2, 2, 0]}/>

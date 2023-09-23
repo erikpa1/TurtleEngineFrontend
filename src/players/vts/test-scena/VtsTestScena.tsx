@@ -46,7 +46,7 @@ export default function VtsTestScena({}) {
                     raycaster={{params: {Line: {threshold: 0.15}}}}
                 >
 
-                    <Physics gravity={[0, -9.81, 0]} debug={true}>
+                    <Physics gravity={[0, -9.81, 0]}  {...{debug: true} as any}>
 
                         <PhysicsPlaneEntityView node={plane}/>
 

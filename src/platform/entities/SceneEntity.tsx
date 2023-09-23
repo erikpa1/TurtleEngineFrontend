@@ -23,7 +23,10 @@ export class SceneEntity {
 
     constructor() {
         //pass
-        this.type = this.constructor?.TYPE
+
+        const conts: any = this.constructor
+
+        this.type = conts.TYPE
         this.uid = `${this.type}-${crypto.randomUUID()}`
     }
 

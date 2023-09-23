@@ -6,6 +6,7 @@ import AppApi from "@api/AppApi";
 
 import AppRoutes_Player from "@app/AppRoutes_Player";
 import AppRoutes_Editor from "@app/AppRoutes_Editor";
+import OpenXrDemoScene from "@openxr/OpenXrDemoScene";
 
 
 export default function AppRoutes() {
@@ -18,6 +19,7 @@ export default function AppRoutes() {
 
             <div style={{flexGrow: 1}}>
 
+                {/*<OpenXrDemoScene/>*/}
                 {
                     AppApi.IsEditor() && <AppRoutes_Editor/>
                 }

@@ -18,6 +18,7 @@ export default defineConfig({
             '@api': path.resolve(__dirname, "src/api"),
             '@hooks': path.resolve(__dirname, "src/hooks"),
             '@external': path.resolve(__dirname, "src/external"),
+            '@openxr': path.resolve(__dirname, "src/openxr"),
             '@wasm': path.resolve(__dirname, "src/wasm")
         }
     },
