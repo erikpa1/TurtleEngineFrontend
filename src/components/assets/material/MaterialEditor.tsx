@@ -7,22 +7,16 @@ import {TGui} from "@external/tgui";
 import {ViewContainer} from "@components/ViewContainer";
 
 import * as three from "three"
-import MaterialSphere from "@components/assets/material/MaterialEditorSphere";
+import PhysicalMaterialMesh from "@components/assets/material/MateriaFiberNodes";
 import MaterialTextureCard from "@components/assets/material/MaterialTextureCard";
 import Typography from "@mui/material/Typography";
 import {useLoadAssetFromParams} from "@components/assets/assets_hooks";
-import MaterialData from "@platform/assets/material";
+import MaterialData, {MaterialTypes, TurtlePhysicsMaterial} from "@platform/assets/material";
 import Asset from "@platform/assets/Asset";
 import FsTools from "@api/FsTools";
-
-
-const TEXTURES = {
-    base: "Defaults/Assets/Material/Base.png",
-    metalness: "Defaults/Assets/Material/Metalic.png",
-    ao: "Defaults/Assets/Material/AO.png",
-    normal: "Defaults/Assets/Material/Normal.png",
-    rough: "Defaults/Assets/Material/Roughness.png",
-}
+import MaterialConfigWizard from "@components/assets/material/MaterialConfigWizard";
+import AssetsApi from "@api/AssetsApi";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
 
 export default function MaterialEditor({}) {
@@ -33,7 +27,7 @@ export default function MaterialEditor({}) {
     if (asset) {
         return (
             <ViewContainer>
-                <_MaterialEditor asset={asset}/>
+                <_WizardDispatcher asset={asset}/>
             </ViewContainer>
         )
     } else {
@@ -44,16 +38,47 @@ export default function MaterialEditor({}) {
 
 }
 
+
+function _WizardDispatcher({asset}: _MaterialEditorProps) {
+
+    const material: MaterialData = asset.data
+
+    const [type, setType] = React.useState(material.type)
+
+    console.log(type)
+
+    if (type === MaterialTypes.UNDEFINED) {
+        return (
+            <MaterialConfigWizard material={material} onChanged={() => {
+                setType(material.type)
+            }}/>
+        )
+    } else {
+        return (
+            <_MaterialEditor asset={asset}/>
+        )
+    }
+}
+
 interface _MaterialEditorProps {
     asset: Asset
 }
 
+
 function _MaterialEditor({asset}: _MaterialEditorProps) {
 
-    const material: MaterialData = asset.data
+    const [material, setMaterial] = React.useState([asset.data])
 
-    function _path(path: string) {
-        return FsTools.ConvertFilePath(FsTools.GetPlatformPath(path))
+    const lock = useGlobalAppLock()
+
+    function refresh() {
+        setMaterial([asset.data])
+    }
+
+    async function savePressed() {
+        lock.lock()
+        await AssetsApi.UploadAssetData(asset.parent_project_uid, asset.uid, material[0].ToJson())
+        lock.unlock()
     }
 
     return (
@@ -66,7 +91,7 @@ function _MaterialEditor({asset}: _MaterialEditorProps) {
                     <TGui.CardContent style={{
                         height: "650px"
                     }}>
-                        <_MaterialCanvas/>
+                        <_MaterialCanvas material={material as any}/>
                     </TGui.CardContent>
 
                     <TGui.CardContent>
@@ -87,24 +112,26 @@ function _MaterialEditor({asset}: _MaterialEditorProps) {
                     </TGui.CardContent>
 
                     <TGui.CardActions>
+                        <TGui.Button label={"save"} onClick={savePressed}/>
                         <TGui.Button label={"snapshot"}/>
                         <TGui.Button label={"clear"} color={"error"}/>
                     </TGui.CardActions>
-
 
                 </TGui.Card>
 
 
             </div>
 
+
             <div className={"vstack gap-3"}>
-
-                <MaterialTextureCard type={"base"} path={_path(TEXTURES.base)}/>
-                <MaterialTextureCard type={"metalness"} path={_path(TEXTURES.metalness)}/>
-                <MaterialTextureCard type={"rough"} path={_path(TEXTURES.rough)}/>
-                <MaterialTextureCard type={"normal"} path={_path(TEXTURES.normal)}/>
-                <MaterialTextureCard type={"ao"} path={_path(TEXTURES.ao)}/>)
-
+                <TGui.Switch condition={material[0].type}>
+                    <TGui.Case value={MaterialTypes.PHYSICAL}>
+                        <_PhysicalMaterialRightBar
+                            material={material as any}
+                            onRefresh={refresh}
+                        />
+                    </TGui.Case>
+                </TGui.Switch>
             </div>
 
 
@@ -112,7 +139,37 @@ function _MaterialEditor({asset}: _MaterialEditorProps) {
     )
 }
 
-function _MaterialCanvas({}) {
+
+interface _PhysicalMaterialRightBarProps {
+    material: TurtlePhysicsMaterial
+    onRefresh: any
+}
+
+function _PhysicalMaterialRightBar({material, onRefresh}: _PhysicalMaterialRightBarProps) {
+
+    function _path(path: string) {
+        return FsTools.ConvertFilePath(FsTools.GetPlatformPath(path))
+    }
+
+    return (
+        <>
+            <MaterialTextureCard label={"base"} obj={material} variable={"base"} onRefresh={onRefresh}/>
+            <MaterialTextureCard label={"metalness"} obj={material} variable={"metalness"} onRefresh={onRefresh}/>
+            <MaterialTextureCard label={"roughness"} obj={material} variable={"roughness"} onRefresh={onRefresh}/>
+            <MaterialTextureCard label={"normal"} obj={material} variable={"normal"} onRefresh={onRefresh}/>
+            <MaterialTextureCard label={"ao"} obj={material} variable={"ao"} onRefresh={onRefresh}/>
+        </>
+    )
+
+
+}
+
+
+interface _MaterialCanvasProps {
+    material: [TurtlePhysicsMaterial]
+}
+
+function _MaterialCanvas({material}: _MaterialCanvasProps) {
 
 
     return (
@@ -145,7 +202,7 @@ function _MaterialCanvas({}) {
 
                 <_InitCanvas/>
 
-                <MaterialSphere textures={TEXTURES}/>
+                <PhysicalMaterialMesh material={material[0]}/>
 
             </Canvas>
         </div>

@@ -81,6 +81,7 @@ interface TurtleClickSelectProps {
 interface TurtleSingleFileInput {
     name: string
     accept: string
+    onFileClicked: any
 }
 
 
@@ -94,6 +95,7 @@ export function TurtleSingleFileInput(props: TurtleSingleFileInput | any): JSX.E
     function handleFileInputChange(event) {
         const file = event.target.files[0];
         // Handle the selected file here
+        onFileClicked(file)
         console.log(file);
     }
 
