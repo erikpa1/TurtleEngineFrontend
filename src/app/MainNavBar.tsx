@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {Image} from "react-bootstrap";
 import "./MainNavBar.css";
 import {TGui} from "@external/tgui";
+import {Drawer} from "@mui/material";
 
 
 export default function AppNavbarNew() {
@@ -46,12 +47,7 @@ export default function AppNavbarNew() {
                         marginTop: "15px"
                     }}/>
 
-                    <MyNavbarItem
-                        lang={"Projects"}
-                        link={"/projects"}
-                        icon={"/icons/Projects.svg"}
-                    />
-
+                    <_ProjectsBar/>
 
                     {/*<MyNavbarItem*/}
                     {/*    lang={"I/O"}*/}
@@ -169,3 +165,36 @@ function _SettingsNavItem({}) {
 }
 
 
+function _ProjectsBar({}) {
+
+    const [visible, setIsVisible] = React.useState(false)
+
+    function clickPressed() {
+        setIsVisible(true)
+    }
+
+    return (
+        <>
+            <MyNavbarItem
+                lang={"Projects"}
+                icon={"/icons/Projects.svg"}
+                onClick={clickPressed}
+            />
+
+            {
+                visible &&
+                <Drawer
+                    anchor={"right"}
+                    open={true}
+                    onClose={() => setIsVisible(false)}
+                >
+                    <div style={{width: "40em"}}>
+                        Here
+                    </div>
+                </Drawer>
+            }
+
+        </>
+
+    )
+}
