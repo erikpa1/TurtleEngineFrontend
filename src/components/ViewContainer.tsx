@@ -6,7 +6,9 @@ import {Container} from "react-bootstrap";
 interface ViewContainerProps {
     children?: React.ReactNode;
     style?: React.CSSProperties;
-};
+}
+
+
 
 
 export function ViewContainer({children, style}: ViewContainerProps) {

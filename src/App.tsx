@@ -10,7 +10,6 @@ import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
 
 
-
 export default function App() {
 
 
@@ -45,8 +44,6 @@ export default function App() {
                 <div className={"app_background"}/>
 
                 <GlobalAppLock/>
-
-
 
 
                 <_LoggedContent/>

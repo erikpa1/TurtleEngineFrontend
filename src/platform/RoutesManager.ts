@@ -1,5 +1,3 @@
-import Assets from "@platform/assets/Assets";
-
 const PREFIX_PROJECT_CONFIG = "/project-config"
 const PREFIX_ASSETS = "/assets"
 const PREFIX_PLAY = "/play"
@@ -95,25 +93,12 @@ export default class RoutesManager {
     }
 
     static GetAssetRoute(projectUid: string, assetType: string, assetUid: string) {
-        if (ASSET_ROUTES_MAP.has(assetType)) {
-            return ASSET_ROUTES_MAP.get(assetType)(projectUid, assetUid)
-        } else {
-            alert(`No editor for: ${assetType}`)
-            return "/"
-        }
+        // if (ASSET_ROUTES_MAP.has(assetType)) {
+        //     return ASSET_ROUTES_MAP.get(assetType)(projectUid, assetUid)
+        // } else {
+        //     alert(`No editor for: ${assetType}`)
+        //     return "/"
+        // }
+        return "/"
     }
 }
-
-const ASSET_ROUTES_MAP = new Map<string, any>([
-    [Assets.Video.TYPE, RoutesManager.VideoEditor],
-    [Assets.Area.TYPE, RoutesManager.AreaEditor],
-    [Assets.Exam.TYPE, RoutesManager.ExamEditor],
-    [Assets.Mesh.TYPE, RoutesManager.MeshEditor],
-    [Assets.Material.TYPE, RoutesManager.MaterialEditor],
-    [Assets.Panorama.TYPE, RoutesManager.PanoramaEditor],
-    [Assets.Scene.TYPE, RoutesManager.SceneEditor],
-    [Assets.PointCloud.TYPE, RoutesManager.PointCloudEditor],
-    [Assets.DataFactory.TYPE, RoutesManager.DataFactoryEditor],
-    [Assets.DataInstance.TYPE, RoutesManager.DataInstanceEditor],
-    [Assets.TrainingTaskSet.TYPE, RoutesManager.TrainingTaskSetEditor],
-])

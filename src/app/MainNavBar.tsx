@@ -1,282 +1,171 @@
-import React from "react"
-
-import * as sb from "react-pro-sidebar"
+import React from "react";
 
 import {useTranslation} from "react-i18next";
 
 import {useNavigate} from "react-router-dom";
 
 import {Image} from "react-bootstrap";
-
-import "./MainNavBar.css"
-
-import {ProjectLight} from "@data/project/ProjectLight";
-
-import {Ext} from "@external/prelude";
-
-import {useActiveProjectZus} from "@platform/zustands/projectZuses";
-
-import RoutesManager from "@platform/RoutesManager";
-import AppApi from "@api/AppApi";
+import "./MainNavBar.css";
+import {TGui} from "@external/tgui";
 
 
-export default function MainNavBar() {
+export default function AppNavbarNew() {
+    const [t] = useTranslation();
 
 
-    const [isCollapsed, setisCollapsed] = Ext.Cookie.useCookieBoolean("navbar-collapsed", false)
-
-    const collapse = () => {
-        setisCollapsed(!isCollapsed as any)
-    }
-
+    const WIDTH = "50px"
 
     return (
+        <div
+            className={"navbarbody"}
+            id="navbar"
+            style={{
+                width: WIDTH,
+                height: "100vh",
+                float: "left",
+            }}
+        >
+            <div
 
-        <div style={{
-            width: isCollapsed ? "79px" : "200px",
-            height: "100vh",
-            float: "left",
-            backgroundColor: "#002c3d",
-        }}>
-            <sb.Sidebar
-                backgroundColor={"rgba(0, 0,0, 0.5)"}
-                image={"/textures/AppBackgroundBlured.png"}
-                width={isCollapsed ? "80px" : "200px"}
                 style={{
-                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+                    // boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px",
                     touchAction: "none",
                     position: "fixed",
                     left: "0px",
                     height: "100vh",
-                    zIndex: 1000
-
+                    width: WIDTH,
+                    zIndex: 1,
+                    backgroundColor: "#ebebeb",
                 }}
             >
-                <sb.Menu>
-                    <div
-                        style={{
-                            padding: '24px',
-                            fontWeight: 'bold',
-                            fontSize: 14,
-                            letterSpacing: '1px',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            color: "white",
-                            cursor: "pointer",
-
-                        }} onClick={() => {
-                        collapse()
-                    }}>
-                        {"Turtle Engine"}
-                    </div>
-
-                </sb.Menu>
 
 
-                {
-                    AppApi.IsEditor() && <_EditorMenu/>
-                }
-                {
-                    AppApi.IsPlayer() && <_PlayerMenu/>
-                }
+                <TGui.Stack gap={3}>
+
+                    <div style={{
+                        marginTop: "15px"
+                    }}/>
+
+                    <MyNavbarItem
+                        lang={"Projects"}
+                        link={"/projects"}
+                        icon={"/icons/Projects.svg"}
+                    />
 
 
-            </sb.Sidebar>
+                    {/*<MyNavbarItem*/}
+                    {/*    lang={"I/O"}*/}
+                    {/*    link={"/io"}*/}
+                    {/*    icon={"/icons/spot.svg"}*/}
+                    {/*/>*/}
+
+                    <hr style={{color: "lightgray"}}/>
+
+
+                    <_Version/>
+
+                </TGui.Stack>
+
+
+            </div>
         </div>
-
-    )
-}
-
-function _PlayerMenu() {
-
-    const projectZus = useActiveProjectZus()
-
-    return (
-        <sb.Menu>
-            <MyNavbarItem lang={"projects"}
-                          link={RoutesManager.ROUTE_PROJECTS} icon={"/icons/Projects.svg"}/>
-
-            <MyNavbarItem lang={"users"}
-                          link={RoutesManager.ROUTE_TRAINING_USERS} icon={"/icons/Users.svg"}/>
-
-            <MyNavbarItem lang={"statistics"}
-                          link={RoutesManager.ROUTE_TRAINING_STATISTICS}
-                          icon={"/icons/PieChart.svg"}/>
-
-            <MyNavbarItem lang={"trainings"}
-                          link={RoutesManager.ROUTE_TRAININGS}
-                          icon={"/icons/Trainings.svg"}/>
-        </sb.Menu>
-    )
-}
-
-
-function _EditorMenu() {
-
-    const projectZus = useActiveProjectZus()
-
-
-    return (
-        <>
-            <sb.Menu>
-                <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
-                <MyNavbarItem lang={"management"} link={"/management"} icon={"/icons/Management.svg"}/>
-            </sb.Menu>
-
-            <Hr/>
-
-            {
-                projectZus.project && <_ActiveProjectBar project={projectZus.project}/>
-            }
-
-            <sb.Menu
-                style={{
-                    position: "absolute",
-                    bottom: "0px",
-                    width: "100%"
-                }}
-            >
-                <Hr/>
-                {/*<_SettingsNavItem/>*/}
-
-            </sb.Menu>
-        </>
-    )
+    );
 }
 
 
 interface MyNavbarItemProps {
-    lang: string
-    icon: string
-    link?: string
-    onClick?: () => void
+    lang: string;
+    icon: string;
+    link?: string;
+    onClick?: () => void;
 }
-
 
 function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-
-    const [t] = useTranslation()
+    const [t] = useTranslation();
 
     const iconComponent = (
-        <>
-            <div style={{
-                height: "100%",
-                width: "1px",
-                backgroundColor: "#006ba8"
-            }}/>
-            <Image src={icon} style={{
+        <Image
+            src={icon}
+            style={{
                 margin: "auto",
                 width: "20px",
-                height: "20px"
-            }}/>
-
-        </>
-    )
+                height: "20px",
+            }}
+        />
+    );
 
     return (
-        <sb.MenuItem
-            icon={iconComponent}
-            onClick={() => {
-                if (onClick) {
-                    onClick()
-                } else if (link) {
-                    navigate(link)
+        <div
+            className={"navbaritem"}
+            onMouseDown={(e) => {
+                if (e.button === 1) {
+                    window.open(`${window.origin}/#${link}`, "_blank")
                 }
             }}
-            className={"navbaritem"}
-        >
-            {t(lang)}
-
-        </sb.MenuItem>
-    )
-}
-
-
-function MyNavbarSubItem({children, lang, icon}) {
-
-    const navigate = useNavigate()
-
-    const [t] = useTranslation()
-
-    const iconComponent = (
-        <Image src={icon} style={{
-            margin: "auto",
-            width: "20px",
-            height: "20px"
-        }}/>
-    )
-
-    return (
-        <sb.SubMenu
-            title={t(lang) as string}
-            icon={iconComponent}
-            color={"white"}
-
-        >
-            <div style={{backgroundColor: "rgb(10, 10, 10)"}}>
-                {
-                    React.Children.toArray(children)
+            onClick={() => {
+                if (onClick) {
+                    onClick();
+                } else if (link) {
+                    navigate(link);
                 }
-            </div>
-        </sb.SubMenu>
+            }}
+            style={{
+                paddingTop: "2.5px",
+                paddingBottom: "2.5px",
+            }}
+        >
+            <TGui.Stack>
+                {iconComponent}
+                <div style={{
+                    color: "#888888",
+                    textAlign: "center",
+                    fontSize: "10px"
+                }}>
+                    {t(lang)}
+                </div>
+            </TGui.Stack>
+        </div>
+
+
+    );
+}
+
+function _Version({}) {
+    return (
+        <div style={{
+            position: "absolute",
+            bottom: "0px",
+            left: "50%",
+            transform: "translate(-50%, 0)",
+            color: "lightgray"
+        }}>
+            <_SettingsNavItem/>
+            v0.1.1
+        </div>
     )
 }
+
 
 function _SettingsNavItem({}) {
+    const navigate = useNavigate()
 
-    const [show, setShow] = React.useState(false)
+    const [t] = TGui.T()
+    const [visible, setVisible] = React.useState(false)
 
     return (
         <>
             <MyNavbarItem
-                icon={"/icons/settings.svg"}
+                icon={"/icons/Settings.svg"}
                 lang={"settings"}
                 onClick={() => {
-                    setShow(true)
+                    setVisible(true)
                 }}
             />
-            {/*{*/}
-            {/*    show &&*/}
-            {/*    <SettingsOffcanvas onHide={() => setShow(false)}/>*/}
-            {/*}*/}
+
         </>
     )
 }
 
-interface _ActiveProjectBarProps {
-    project: ProjectLight
-}
 
-
-function Hr() {
-    return (
-        <hr color={"white"}/>
-    )
-}
-
-function _ActiveProjectBar({project}: _ActiveProjectBarProps) {
-
-    return (
-        <sb.Menu>
-            <MyNavbarItem
-                lang={"project"}
-                link={RoutesManager.ProjectConfig(project.uid)}
-                icon={"/icons/Alchemy.svg"}/>
-
-            <MyNavbarItem
-                lang={"assets"}
-                link={RoutesManager.Assets(project.uid)}
-                icon={"/icons/Assets.svg"}/>
-
-            <MyNavbarItem
-                lang={"play"}
-                link={RoutesManager.Play(project.uid)}
-                icon={"/icons/Spot.svg"}/>
-
-        </sb.Menu>
-    )
-
-}
