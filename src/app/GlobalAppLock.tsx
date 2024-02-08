@@ -1,6 +1,5 @@
-import {Spinner} from "react-bootstrap";
-
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import {CircularProgress} from "@mui/material";
 
 
 export default function GlobalAppLock() {
@@ -24,7 +23,7 @@ export default function GlobalAppLock() {
                 top: "50%",
                 transform: "translate(-50%, 50%)"
             }}>
-                <Spinner animation="border" variant="danger"/>
+                <CircularProgress/>
             </div>
         </div>
     )

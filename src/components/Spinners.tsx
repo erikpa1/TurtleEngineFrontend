@@ -1,10 +1,10 @@
-import {CircularProgress} from "@mui/material";
-import {TGui} from "@external/tgui";
+import {CircularProgress, Container} from "@mui/material";
+
 
 export function MiddleSpinner({}) {
     return (
-        <TGui.Box sx={{display: 'flex'}}>
+        <Container>
             <CircularProgress/>
-        </TGui.Box>
+        </Container>
     )
 }

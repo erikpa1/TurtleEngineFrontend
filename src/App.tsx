@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
 
 
+
+
 export default function App() {
 
 

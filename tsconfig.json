@@ -56,8 +56,8 @@
       "@wasm/*": [
         "src/wasm/*"
       ],
-      "@openxr/*": [
-        "src/openxr/*"
+      "@views/*": [
+        "src/views/*"
       ]
     }
   },

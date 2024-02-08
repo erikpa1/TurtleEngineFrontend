@@ -11,6 +11,23 @@ export default class PlatformDispatcher {
         return !PlatformDispatcher.IsDesktop()
     }
 
+    static async OpenTurtleProjectDialog(): Promise<string> {
+        const selected = await open({
+            multiple: false,
+            filters: [{
+                name: 'Turtle Project',
+                extensions: ["turtle.json"]
+            }]
+        });
+
+        if (selected) {
+            return selected as string
+        } else {
+            return ""
+        }
+    }
+
+
     static async OpenImageDialog(): Promise<string> {
         const selected = await open({
             multiple: false,

@@ -4,10 +4,13 @@ import {useTranslation} from "react-i18next";
 
 import {useNavigate} from "react-router-dom";
 
-import {Image} from "react-bootstrap";
 import "./MainNavBar.css";
-import {TGui} from "@external/tgui";
-import {Drawer} from "@mui/material";
+
+import {Container, Drawer, Stack} from "@mui/material";
+import {MiddleSpinner} from "@components/Spinners";
+
+
+const ProjectsView = React.lazy(() => import("@views/project/ProjectsView"));
 
 
 export default function AppNavbarNew() {
@@ -41,7 +44,7 @@ export default function AppNavbarNew() {
             >
 
 
-                <TGui.Stack gap={3}>
+                <Stack gap={3}>
 
                     <div style={{
                         marginTop: "15px"
@@ -60,7 +63,7 @@ export default function AppNavbarNew() {
 
                     <_Version/>
 
-                </TGui.Stack>
+                </Stack>
 
 
             </div>
@@ -82,7 +85,7 @@ function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
     const [t] = useTranslation();
 
     const iconComponent = (
-        <Image
+        <img
             src={icon}
             style={{
                 margin: "auto",
@@ -112,7 +115,7 @@ function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
                 paddingBottom: "2.5px",
             }}
         >
-            <TGui.Stack>
+            <Stack>
                 {iconComponent}
                 <div style={{
                     color: "#888888",
@@ -121,7 +124,7 @@ function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
                 }}>
                     {t(lang)}
                 </div>
-            </TGui.Stack>
+            </Stack>
         </div>
 
 
@@ -147,7 +150,7 @@ function _Version({}) {
 function _SettingsNavItem({}) {
     const navigate = useNavigate()
 
-    const [t] = TGui.T()
+    const [t] = useTranslation()
     const [visible, setVisible] = React.useState(false)
 
     return (
@@ -188,9 +191,15 @@ function _ProjectsBar({}) {
                     open={true}
                     onClose={() => setIsVisible(false)}
                 >
-                    <div style={{width: "40em"}}>
-                        Here
-                    </div>
+                    <Container
+                        style={{
+                            width: "40em",
+                            marginTop: "2em"
+                        }}>
+                        <React.Suspense fallback={<MiddleSpinner/>}>
+                            <ProjectsView/>
+                        </React.Suspense>
+                    </Container>
                 </Drawer>
             }
 

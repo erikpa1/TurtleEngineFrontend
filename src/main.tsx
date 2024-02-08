@@ -5,7 +5,6 @@ import './index.css'
 import "./i18n"
 import {HashRouter} from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import PlatformDispatcher from "@api/PlatformDispatcher";
 
 
