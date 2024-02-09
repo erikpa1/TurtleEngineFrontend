@@ -99,16 +99,8 @@
         "width": 800,
         "label": "main",
         "visible": true
-      },
-      {
-        "width": 500,
-        "height": 500,
-        "decorations": false,
-        "url": "splash.svg",
-        "label": "splashscreen",
-        "alwaysOnTop": true,
-        "center": true
       }
+
     ]
   }
 }

@@ -7,6 +7,15 @@ use std::fs::{File};
 use std::path::{Path, PathBuf, Component};
 
 
+pub fn GetAppData() -> String {
+    if let Ok(local_appdata) = env::var("LOCALAPPDATA") {
+        return local_appdata;
+    } else {
+        return String::from("");
+    }
+
+}
+
 pub fn GetExePath() -> String {
     let pathR = env::current_exe();
 

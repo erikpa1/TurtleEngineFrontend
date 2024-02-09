@@ -1,3 +1,7 @@
 {
-  "open.project": "Open project"
+  "open.project": "Open project",
+  "name": "Name",
+  "description": "Description",
+  "author": "Author",
+  "search": "Search"
 }

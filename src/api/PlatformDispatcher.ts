@@ -27,6 +27,19 @@ export default class PlatformDispatcher {
         }
     }
 
+    static async OpenFolderDialog(text: string): Promise<string> {
+        const selected = await open({
+            directory: true,
+            multiple: false,
+        });
+
+        if (selected) {
+            return selected as string
+        } else {
+            return ""
+        }
+    }
+
 
     static async OpenImageDialog(): Promise<string> {
         const selected = await open({

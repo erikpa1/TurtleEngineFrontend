@@ -16,11 +16,3 @@ html {
     background-color: #e7ebf0;
 }
 
-
-.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
-    background-color: #eff6fc !important;
-}
-
-.ant-btn.ant-btn-primary.christmas:before {
-    display: none !important;
-}

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import './App.css'
+import "./MuiOverride.css"
 import AppRoutes from "@app/AppRoutes";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
@@ -8,8 +9,6 @@ import AppApi from "@api/AppApi";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
-
-
 
 
 export default function App() {

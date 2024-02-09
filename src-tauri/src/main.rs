@@ -33,6 +33,17 @@ fn main() {
     println!("Running Turtle engine on path: {}", &tfs::GetExePath());
     println!("-----------");
 
+    // Code for splash screen, need to put to tauri.config.json
+    // {
+    //     "width": 500,
+    //     "height": 500,
+    //     "decorations": false,
+    //     "url": "splash.svg",
+    //     "label": "splashscreen",
+    //     "alwaysOnTop": true,
+    //     "center": true
+    //   }
+
     tauri::Builder::default()
         .manage(app)
         .manage(app::DbTest {
@@ -47,27 +58,27 @@ fn main() {
         .plugin(plugins::images::init())
         .plugin(plugins::sqlite::init())
 
-        .setup(|app| {
-            let splashscreen_window = app.get_window("splashscreen").unwrap();
-            splashscreen_window.center().unwrap();
+        // .setup(|app| {
+        //     let splashscreen_window = app.get_window("splashscreen").unwrap();
+        //     splashscreen_window.center().unwrap();
 
-            let main_window = app.get_window("main").unwrap();
+        //     let main_window = app.get_window("main").unwrap();
 
-            main_window.hide().unwrap();
-            // we perform the initialization code on a new task so the app doesn't freeze
-            tauri::async_runtime::spawn(async move {
-                // initialize your app here instead of sleeping :)
-                println!("Initializing...");
-                std::thread::sleep(std::time::Duration::from_secs(5));
-                println!("Done initializing.");
+        //     main_window.hide().unwrap();
+        //     // we perform the initialization code on a new task so the app doesn't freeze
+        //     tauri::async_runtime::spawn(async move {
+        //         // initialize your app here instead of sleeping :)
+        //         println!("Initializing...");
+        //         std::thread::sleep(std::time::Duration::from_secs(5));
+        //         println!("Done initializing.");
 
-                // After it's done, close the splashscreen and display the main window
-                splashscreen_window.center().unwrap();
-                splashscreen_window.close().unwrap();
-                main_window.show().unwrap();
-            });
-            Ok(())
-        })
+        //         // After it's done, close the splashscreen and display the main window
+        //         splashscreen_window.center().unwrap();
+        //         splashscreen_window.close().unwrap();
+        //         main_window.show().unwrap();
+        //     });
+        //     Ok(())
+        // })
 
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

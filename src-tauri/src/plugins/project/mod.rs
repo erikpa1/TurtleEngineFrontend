@@ -1,18 +1,16 @@
 use std::borrow::BorrowMut;
 use std::fmt::format;
-use std::{fs, result};
 use std::sync::Mutex;
+use std::{fs, result};
 
-
-use rusqlite::{Connection};
+use rusqlite::Connection;
 
 use serde::de::Unexpected::Str;
 
-use uuid::{Uuid};
+use uuid::Uuid;
 
-use tauri::{Runtime, State};
 use tauri::plugin::{Builder, TauriPlugin};
-
+use tauri::{Runtime, State};
 
 use tfs;
 use tstructures::project::{CreateProjectParams, ProjectLight};
@@ -25,45 +23,34 @@ use crate::database;
 use crate::app::{AppState, DbTest};
 use crate::database::FixProject;
 
+mod cache;
 
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
     let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
 
-    createParams.uid = format!("project-{}", Uuid::new_v4().to_string());
+    createParams.uid = format!("p-{}", Uuid::new_v4().to_string());
 
     println!("--------");
     println!("{}", tfs::GetExePath());
     println!("{}", tfs::GetProjectsPath());
 
+    let projectFolder = &createParams.folder;
 
-    let projectFolder = format!("{}{}/", tfs::GetProjectsPath(), createParams.uid);
-
-    let dbPath = format!("{}/project.db", projectFolder);
-
-    println!("Exe path: {}", &tfs::GetExePath());
     println!("Creating project folder: {}", &projectFolder);
 
     tfs::CreateFolders(&projectFolder);
 
-    let connRes = database::CreateDatabaseConnection(&dbPath);
+    let mut projectLight = createParams.ToJson();
 
-    if let Ok(conn) = connRes {
-        FixProject(&conn);
+    let target_file = format!("{}\\{}.turtle",projectFolder, createParams.name);
 
-        conn.close();
+    fs::write(&target_file, serde_json::to_string(&projectLight).unwrap());
 
-        let lightProject = ProjectLight::FromCreateParams(&createParams);
-
-        fs::write(format!("{}/project_light.json", projectFolder), serde_json::to_string(&lightProject).unwrap());
-    } else {
-        println!("Failed to create database: {}", &dbPath);
-    }
-
+    cache::AddProjectToCache(&target_file);
 
     return String::from(createParams.uid);
 }
-
 
 #[tauri::command]
 async fn DeleteProject(uid: String) -> String {
@@ -74,50 +61,11 @@ async fn DeleteProject(uid: String) -> String {
     return String::from("success");
 }
 
-
 #[tauri::command]
 async fn ListProjects() -> String {
-    let paths = tfs::ListFolders(&tfs::GetProjectsPath());
-
-    let mut resultJsons: Vec<ProjectLight> = Vec::new();
-
-    for folder in &paths {
-        println!("{}", folder);
-
-        if tfs::CheckProjectExistenceAndValidity(folder) {
-            let lightDataStr = tfs::FileToString(&format!("{}project_light.json", folder));
-
-            let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
-
-            if let Ok(mut lightData) = lightDataResult {
-                lightData.projectFolderPath = folder.clone();
-                resultJsons.push(lightData);
-            }
-        }
-    }
-
-    let resultValue = json!({"projects": resultJsons});
-
-    return serde_json::to_string(&resultValue).unwrap_or("\"projects\": []".into());
+    return cache::GetProjectsCacheJson();
 }
 
-
-#[tauri::command]
-async fn GetProjectLight(projectUid: String) -> String {
-    let projectFolder = tfs::GetProjectsPath();
-
-    let lightDataStr = tfs::FileToString(&format!("{}{}\\project_light.json", projectFolder, projectUid));
-
-    let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
-
-    if let Ok(mut lightData) = lightDataResult {
-        lightData.projectFolderPath = format!("{}{}\\", projectFolder, projectUid);
-
-        return serde_json::to_string(&lightData).unwrap_or("{}".into());
-    }
-
-    return "{}".into();
-}
 
 #[tauri::command]
 async fn ActivateLastProject(state: State<'_, AppState>) -> Result<String, String> {
@@ -132,7 +80,10 @@ async fn ActivateLastProject(state: State<'_, AppState>) -> Result<String, Strin
 }
 
 #[tauri::command]
-async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -> Result<(), String> {
+async fn GetAndActivateProject(
+    state: State<'_, AppState>,
+    projectUid: String,
+) -> Result<(), String> {
     let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
 
     let connRes = database::CreateDatabaseConnection(&dbPath);
@@ -147,12 +98,10 @@ async fn GetAndActivateProject(state: State<'_, AppState>, projectUid: String) -
     return Ok(());
 }
 
-
 #[tauri::command]
 async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> {
     return Ok(state.activeProjectUid.lock().unwrap().clone());
 }
-
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
@@ -162,7 +111,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             ActivateLastProject,
             DeleteProject,
             ListProjects,
-            GetProjectLight,
         ])
         .build()
 }
