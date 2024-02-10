@@ -39,17 +39,21 @@ async fn CreateProject(projectJson: String) -> String {
 
     println!("Creating project folder: {}", &projectFolder);
 
-    tfs::CreateFolders(&projectFolder);
-
     let mut projectLight = createParams.ToJson();
 
-    let target_file = format!("{}\\{}.turtle",projectFolder, createParams.name);
+    let target_file = format!("{}\\{}.turtle", projectFolder, createParams.name);
 
-    fs::write(&target_file, serde_json::to_string(&projectLight).unwrap());
+    if tfs::Exists(&target_file) {
+    } else {
+        tfs::CreateFolders(&projectFolder);
 
-    cache::AddProjectToCache(&target_file);
+        tfs::SaveJson(&target_file, &projectLight);
 
-    return String::from(createParams.uid);
+        cache::AddProjectToCache(&target_file);
+        return String::from(createParams.uid);
+    }
+
+    return String::from("");
 }
 
 #[tauri::command]
@@ -65,7 +69,6 @@ async fn DeleteProject(uid: String) -> String {
 async fn ListProjects() -> String {
     return cache::GetProjectsCacheJson();
 }
-
 
 #[tauri::command]
 async fn ActivateLastProject(state: State<'_, AppState>) -> Result<String, String> {

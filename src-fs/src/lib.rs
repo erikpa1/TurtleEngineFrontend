@@ -3,9 +3,48 @@ extern crate core;
 use std::env;
 use std::fmt::format;
 use std::fs;
-use std::fs::{File};
-use std::path::{Path, PathBuf, Component};
+use std::fs::File;
+use std::path::{Component, Path, PathBuf};
 
+use serde_json::{json, Value};
+
+pub fn Exists(path: &String) -> bool {
+    return Path::new(path).exists();
+}
+
+pub fn GetJson(path: &String) -> Option<Value> {
+    let read_r = fs::read_to_string(path);
+
+    if let Ok(json_string) = read_r {
+        let val_r = serde_json::from_str(&json_string);
+
+        if let Ok(value) = val_r {
+            return Some(value);
+        } else {
+            println!("Unable to deparse: {}", &json_string);
+        }
+
+        return None;
+    } else {
+        println!("Unable to load file: {}", path);
+    }
+    return None;
+}
+
+pub fn SaveJson(path: &String, jObj: &Value) {
+    if let Some(parent) = Path::new(path).parent() {
+        let parent_path = String::from(parent.to_str().unwrap());
+        CreateFolders(&parent_path);
+
+        fs::write(
+            path,
+            serde_json::to_string(&jObj).unwrap(),
+        );
+        
+    } else {
+        println!("Unable to write to: {}", path);
+    }
+}
 
 pub fn GetAppData() -> String {
     if let Ok(local_appdata) = env::var("LOCALAPPDATA") {
@@ -13,13 +52,12 @@ pub fn GetAppData() -> String {
     } else {
         return String::from("");
     }
-
 }
 
 pub fn GetExePath() -> String {
-    let pathR = env::current_exe();
+    let path_r = env::current_exe();
 
-    if let Ok(path) = pathR {
+    if let Ok(path) = path_r {
         let parentPathOption = path.parent();
         return parentPathOption.unwrap().to_str().unwrap().into();
     }
@@ -53,7 +91,6 @@ pub fn GetProjectsPath() -> String {
 }
 
 pub fn NormalizePath(path: &Path) -> PathBuf {
-
     let mut components = path.components().peekable();
     let mut ret = if let Some(c @ Component::Prefix(..)) = components.peek().cloned() {
         components.next();
@@ -80,10 +117,7 @@ pub fn NormalizePath(path: &Path) -> PathBuf {
     ret
 }
 
-
 pub fn GetWorkingDirectory() -> String {
-
-
     let original_path = format!("{}/../", GetExePath());
     // Create a PathBuf from the original path
     let mut path_buf = PathBuf::from(original_path);
