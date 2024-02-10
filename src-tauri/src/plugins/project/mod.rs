@@ -43,6 +43,8 @@ async fn CreateProject(projectJson: String) -> String {
 
     let target_file = format!("{}\\{}.turtle", projectFolder, createParams.name);
 
+    //TODO nepridat projekt ak priecinok nie je prazdny
+
     if tfs::Exists(&target_file) {
     } else {
         tfs::CreateFolders(&projectFolder);
