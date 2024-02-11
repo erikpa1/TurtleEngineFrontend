@@ -21,7 +21,7 @@ export default function UniversalInputSearchBar(props: UniversalInputSearchBarPr
             <InputBase
                 sx={{ml: 1, flex: 1}}
                 placeholder={t(_placeHolder) ?? ""}
-                inputProps={{'aria-label': 'search google maps'}}
+                inputProps={{'aria-label': 'Search'}}
             />
         </Card>
     );
@@ -29,7 +29,9 @@ export default function UniversalInputSearchBar(props: UniversalInputSearchBarPr
 
 export function MiddleSearchBar({}) {
     return (
-        <div style={{marginLeft: "auto", marginRight: "auto"}}>
+        <div style={{
+            marginLeft: "auto", marginRight: "auto"
+        }}>
             <UniversalInputSearchBar placeHolder={"search"}/>
         </div>
     )

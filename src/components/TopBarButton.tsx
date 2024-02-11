@@ -4,6 +4,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import Stack from "@mui/material/Stack";
 import {CircularProgress, Skeleton} from "@mui/material";
+import MySkeleton from "@components/MySkeleton";
 
 
 interface TopBarButtonProps {
@@ -35,8 +36,19 @@ export default function TopBarButton({icon, isActive, disabled, onClick, lang}: 
         >
             <Stack>
                 <div>
-                    <Skeleton
-                        variant="circular" width={40} height={40}/>
+
+                    <MySkeleton
+                        src={icon}
+                        imageSize={40}
+                    >
+                        <Skeleton
+                            variant="circular"
+                            width={40}
+                            height={40}
+
+                        />
+                    </MySkeleton>
+
 
                 </div>
 

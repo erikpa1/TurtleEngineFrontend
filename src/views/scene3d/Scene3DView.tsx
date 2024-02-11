@@ -12,6 +12,7 @@ import ChevronRightSharp from '@mui/icons-material/ChevronRightSharp'
 
 import Stack from "@mui/material/Stack";
 import Scene3D_SideBar from "@views/scene3d/Scene3D_SideBar";
+import {useSceneModules} from "@views/scene3d/scene_modules";
 
 
 export default function Scene3DView({}) {
@@ -44,7 +45,7 @@ export default function Scene3DView({}) {
 function _3DView({}) {
     return (
         <div style={{
-            height:"100%"
+            height: "100%"
         }}>
             <WorldCanvasWrapper>
                 <_SceneContent/>
@@ -54,12 +55,26 @@ function _3DView({}) {
 }
 
 function _SceneContent() {
+
+    const modules = useSceneModules()
+
     return (
         <group>
             <PrimitiveMesh
                 scale={[100, 100, 100]}
                 rotation={[Math.PI / -2, 0, 0]}
                 meshPath={FsTools.ConvertFilePath(FsTools.GetPathInProject("/Exercise 2.glb"))}/>
+
+            {
+                Array.from(modules.modules.values()).map((val, index) => {
+                    return (
+                        <React.Fragment key={index}>
+                            {val}
+                        </React.Fragment>
+                    )
+                })
+            }
+
         </group>
     )
 }

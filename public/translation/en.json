@@ -11,5 +11,6 @@
   "settings": "Settings",
   "zones": "Zones",
   "drawing": "Drawing",
-  "attpoints": "Attention points"
+  "attpoints": "Attention points",
+  "drawing.add": "+ Drawing"
 }

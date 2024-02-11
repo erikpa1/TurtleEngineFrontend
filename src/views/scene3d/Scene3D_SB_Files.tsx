@@ -12,6 +12,7 @@ import {
 import TurtleFile from "@api/project/files";
 import ProjectApi from "@api/project/ProjectApi";
 import Stack from "@mui/material/Stack";
+import {MiddleSearchBar} from "@components/SearchBar";
 
 export default function Scene3D_SB_FilesView({}) {
 
@@ -40,8 +41,12 @@ export default function Scene3D_SB_FilesView({}) {
     } else {
         return (
             <Container>
-                <div style={{height: "45px", marginTop: "15px"}}>
-                    Here
+                <div style={{
+                    height: "45px",
+                    marginTop: "25px",
+                    marginBottom: "25px",
+                }}>
+                    <MiddleSearchBar/>
                 </div>
                 <Grid container spacing={2} justifyContent="left">
                     {

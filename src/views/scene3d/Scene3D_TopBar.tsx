@@ -42,6 +42,29 @@ export default function Scene3DTopBar({}) {
                         setActiveTab("attpoints")
                     }}
                 />
+                <TopBarTextButton
+                    lang={"physics"}
+                    isActive={activeTab === "physics"}
+                    onClick={() => {
+                        setActiveTab("physics")
+                    }}
+                />
+
+                <TopBarTextButton
+                    lang={"logiccircuit"}
+                    isActive={activeTab === "logiccircuit"}
+                    onClick={() => {
+                        setActiveTab("logiccircuit")
+                    }}
+                />
+
+                <TopBarTextButton
+                    lang={"boards"}
+                    isActive={activeTab === "boards"}
+                    onClick={() => {
+                        setActiveTab("boards")
+                    }}
+                />
             </>
             <Switch condition={activeTab}>
                 <Case value={"edit"}>
@@ -55,6 +78,15 @@ export default function Scene3DTopBar({}) {
                 </Case>
                 <Case value={"zones"}>
                     <Scene3D_TBS_Zones/>
+                </Case>
+                <Case value={"physics"}>
+                    Phyisics
+                </Case>
+                <Case value={"logiccircuit"}>
+                    Logic circuits
+                </Case>
+                <Case value={"boards"}>
+                    Boards
                 </Case>
             </Switch>
         </TopBar>
