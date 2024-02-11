@@ -6,6 +6,9 @@ use std::fs;
 use std::fs::File;
 use std::path::{Component, Path, PathBuf};
 
+
+use serde::de::DeserializeOwned;
+
 use serde_json::{json, Error, Value};
 
 pub fn Exists(path: &String) -> bool {
@@ -31,6 +34,22 @@ pub fn GetJson(path: &String) -> Option<Value> {
     return None;
 }
 
+pub fn GetGetTypedJson<T>(path: &str) -> Option<T>
+where
+    T: DeserializeOwned,
+{
+    if let Ok(json_string) = fs::read_to_string(path) {
+        if let Ok(value) = serde_json::from_str(&json_string) {
+            return Some(value);
+        } else {
+            println!("Unable to deserialize: {}", json_string);
+        }
+    } else {
+        println!("Unable to load file: {}", path);
+    }
+    None
+}
+
 pub fn SaveJson(path: &String, jObj: &Value) {
     if let Some(parent) = Path::new(path).parent() {
         let parent_path = String::from(parent.to_str().unwrap());
@@ -48,6 +67,13 @@ pub fn GetAppData() -> String {
     } else {
         return String::from("");
     }
+}
+
+pub fn FolderEmpty(folder: &impl AsRef<Path>) -> bool {
+    if let Ok(entries) = fs::read_dir(folder) {
+        return entries.count() == 0;
+    }
+    false
 }
 
 pub fn FindFilesWithExtension(
@@ -75,7 +101,7 @@ fn _FindFilesWithExtension(
             if let Ok(entry) = path {
                 let entry_path = entry.path();
 
-                if (entry_path.is_file()) {
+                if entry_path.is_file() {
                     if let Some(file_extension_osstr) = entry_path.extension() {
                         let file_extension: String =
                             file_extension_osstr.to_string_lossy().to_string();
@@ -199,7 +225,11 @@ pub fn GetWorkingDirectory() -> String {
 }
 
 pub fn CreateFolders(path: &String) {
-    let folderPath = Path::new(&path);
+    let mut folderPath = Path::new(&path);
+
+    if folderPath.is_file() {
+        folderPath = folderPath.parent().unwrap();
+    }
 
     if folderPath.exists() == false {
         println!("Creating folder: {}", folderPath.to_str().unwrap());
@@ -234,7 +264,7 @@ pub fn CheckProjectExistenceAndValidity(projectPath: &String) -> bool {
     let lightPath = Path::new(&lPathString);
     let dbPath = Path::new(&dbPathString);
 
-    return ((lightPath.exists() && lightPath.is_file()) && (dbPath.exists() && dbPath.is_file()));
+    return (lightPath.exists() && lightPath.is_file()) && (dbPath.exists() && dbPath.is_file());
 }
 
 pub fn FileToString(filePath: &String) -> String {

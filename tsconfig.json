@@ -58,6 +58,9 @@
       ],
       "@views/*": [
         "src/views/*"
+      ],
+      "@world/*": [
+        "src/world/*"
       ]
     }
   },

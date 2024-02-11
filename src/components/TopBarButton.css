@@ -1,0 +1,25 @@
+.TopBarButton {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px
+}
+
+.TopBarButton:hover {
+    background-color: #e3e3e3;
+    cursor: pointer;
+
+
+}
+
+.TopBarButtonMini {
+    padding: 3px;
+    display: flex;
+    user-select: none;
+
+}
+
+.TopBarButtonMini:hover {
+    background-color: lightgray;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+}

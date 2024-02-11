@@ -5,13 +5,12 @@ html {
 }
 
 .app_background {
-    background-color: #dae0e6;
+    background-image: linear-gradient(to bottom, #d8e6ec, #f4f5f7);
     width: 100%;
     height: 100%;
     position: fixed;
     z-index: -100;
 }
-
 .custom-white {
     background-color: #e7ebf0;
 }

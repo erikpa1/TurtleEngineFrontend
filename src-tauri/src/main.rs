@@ -3,6 +3,7 @@ all(not(debug_assertions), target_os = "windows"),
 windows_subsystem = "windows"
 )]
 
+#![allow(warnings, unused)]
 #![allow(unused_imports)]
 #![allow(dead_code)]
 

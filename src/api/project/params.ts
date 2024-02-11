@@ -13,11 +13,15 @@ export class CreateProjectParams {
 export class LastProjectInfo {
     name = ""
     path = ""
+    uid = ""
     lastModified = ""
+    exists = false
 
     FromJson(jObj: any) {
         this.name = jObj.name ?? ""
         this.path = jObj.path ?? ""
+        this.uid = jObj.uid ?? ""
+        this.exists = jObj.exists ?? false
         this.lastModified = jObj.lastModified ?? ""
     }
 

@@ -1,5 +1,6 @@
 use std::borrow::BorrowMut;
 use std::fmt::format;
+use std::path::Path;
 use std::sync::Mutex;
 use std::{fs, result};
 
@@ -7,6 +8,7 @@ use rusqlite::Connection;
 
 use serde::de::Unexpected::Str;
 
+use tauri::api::file;
 use uuid::Uuid;
 
 use tauri::plugin::{Builder, TauriPlugin};
@@ -24,6 +26,8 @@ use crate::app::{AppState, DbTest};
 use crate::database::FixProject;
 
 mod cache;
+mod scenes;
+mod files;
 
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
@@ -37,24 +41,16 @@ async fn CreateProject(projectJson: String) -> String {
 
     let projectFolder = &createParams.folder;
 
-    let turtle_projects =
-        tfs::FindFilesWithExtension(&projectFolder, &String::from("turtle"), true);
-
-    println!("{}", turtle_projects.len());
-
-    if turtle_projects.len() == 0 {
+    if tfs::FolderEmpty(&projectFolder) {
         println!("Creating project folder: {}", &projectFolder);
 
         let mut projectLight = createParams.ToJson();
 
         let target_file = format!("{}\\{}.turtle", projectFolder, createParams.name);
 
-        if tfs::Exists(&target_file) {
-        } else {
-            tfs::SaveJson(&target_file, &projectLight);
-            cache::AddProjectToCache(&target_file, &createParams.uid, &createParams.name);
-            return String::from(createParams.uid);
-        }
+        tfs::SaveJson(&target_file, &projectLight);
+        cache::AddProjectToCache(&target_file, &createParams.uid, &createParams.name);
+        return String::from(createParams.uid);
     } else {
         println!("Directory is not empty");
     }
@@ -73,53 +69,61 @@ async fn DeleteProject(uid: String) -> String {
 
 #[tauri::command]
 async fn ListProjects() -> String {
-    return cache::GetProjectsCacheJson();
+    return cache::GetProjectsCacheJsonString();
 }
 
 #[tauri::command]
-async fn ActivateLastProject(state: State<'_, AppState>) -> Result<String, String> {
-    // let activeProjectUid = state.activeProjectUid.lock().unwrap();
-    //
-    // if (activeProjectUid != "") {
-    //     return Ok(tfs::FileToString(&format!("{}{}/project_light.json", tfs::GetProjectsPath(), &activeProjectUid)))
-    // } else {
-    //     return Err("".into());
-    // }
-    return Err("Not found".into());
+async fn DeleteCached(filePath: String) -> bool {
+    cache::RemoveProjectFromCache(&filePath);
+    return true;
 }
 
 #[tauri::command]
-async fn GetAndActivateProject(
-    state: State<'_, AppState>,
-    projectUid: String,
-) -> Result<(), String> {
-    let dbPath = format!("{}{}/project.db", tfs::GetProjectsPath(), projectUid);
+async fn GetActiveProject(filePath: String, state: State<'_, AppState>) -> Result<String, String> {
+    let mut data_val: std::sync::MutexGuard<'_, serde_json::Value> =
+        state.activeProject.lock().unwrap();
 
-    let connRes = database::CreateDatabaseConnection(&dbPath);
-    let conn = connRes.unwrap();
+    let clon = data_val.clone();
 
-    FixProject(&conn);
+    let res = serde_json::to_string(&clon).unwrap();
 
-    state.SetSqlLiteConnection(conn);
-    state.SetActiveProjectUid(projectUid);
-    state.SetActiveProjectDbPah(dbPath);
-
-    return Ok(());
+    return Ok(res);
 }
 
 #[tauri::command]
-async fn GetActiveProject(state: State<'_, AppState>) -> Result<String, String> {
-    return Ok(state.activeProjectUid.lock().unwrap().clone());
+async fn ActivateProject(filePath: String, state: State<'_, AppState>) -> Result<String, String> {
+    let mut data_val: std::sync::MutexGuard<'_, serde_json::Value> =
+        state.activeProject.lock().unwrap();
+    *data_val = tfs::GetJson(&filePath).unwrap_or(json!({}));
+
+    let mut path_string: std::sync::MutexGuard<'_, String> =
+        state.activeProjectPath.lock().unwrap();
+    *path_string = filePath.clone();
+
+    let parent_folder = Path::new(&filePath)
+        .parent()
+        .unwrap()
+        .to_string_lossy()
+        .to_string();
+
+    return Ok(serde_json::to_string(&json!({
+        "ok": true,
+        "project_folder": parent_folder,
+    }))
+    .unwrap());
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
-            GetAndActivateProject,
             CreateProject,
-            ActivateLastProject,
+            ActivateProject,
             DeleteProject,
             ListProjects,
+            DeleteCached,
+            GetActiveProject,
+            scenes::GetAllScenes,
+            files::GetProjectFiles,
         ])
         .build()
 }

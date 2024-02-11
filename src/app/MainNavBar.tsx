@@ -197,7 +197,9 @@ function _ProjectsBar({}) {
                             marginTop: "2em"
                         }}>
                         <React.Suspense fallback={<MiddleSpinner/>}>
-                            <ProjectsView/>
+                            <ProjectsView onProjectPicked={() => {
+                                setIsVisible(false)
+                            }}/>
                         </React.Suspense>
                     </Container>
                 </Drawer>

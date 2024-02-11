@@ -5,7 +5,7 @@ import "./MuiOverride.css"
 import AppRoutes from "@app/AppRoutes";
 import GlobalAppLock from "./app/GlobalAppLock";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import AppApi from "@api/AppApi";
+
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
@@ -22,13 +22,11 @@ export default function App() {
     React.useEffect(() => {
         setIsLoading(true)
 
-        AppApi.Init().then(() => {
-            setIsLoading(false)
+        if (PlatformDispatcher.IsDesktop()) {
+            navigate("/")
+        }
 
-            if (PlatformDispatcher.IsDesktop()) {
-                navigate("/")
-            }
-        })
+        setIsLoading(false)
 
     }, [])
 
@@ -43,16 +41,9 @@ export default function App() {
         return (
             <div>
                 <div className={"app_background"}/>
-
                 <GlobalAppLock/>
-
-
                 <_LoggedContent/>
-
-
                 <_GlobalPopup/>
-
-
             </div>
 
         )

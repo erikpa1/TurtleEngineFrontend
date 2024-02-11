@@ -19,7 +19,8 @@ export default defineConfig({
             '@hooks': path.resolve(__dirname, "src/hooks"),
             '@external': path.resolve(__dirname, "src/external"),
             '@wasm': path.resolve(__dirname, "src/wasm"),
-            '@views': path.resolve(__dirname, "src/views")
+            '@views': path.resolve(__dirname, "src/views"),
+            '@world': path.resolve(__dirname, "src/world")
         }
     },
     build: {

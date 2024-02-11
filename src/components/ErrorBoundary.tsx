@@ -1,11 +1,11 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 
-
 interface ErrorBoundaryProps {
     children: any
     onError?: any
 }
+
 
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, any> {
     constructor(props) {
@@ -74,9 +74,10 @@ function _ErrorView({error = ""}): any {
                                 {t("continue")}
                             </button>
                         </div>
-
                         <div style={{color: "red"}}>
-                            {error}
+                            {
+                                error
+                            }
                         </div>
                     </div>
                 </div>

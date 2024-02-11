@@ -2,9 +2,22 @@ import axios from "axios";
 import PlatformDispatcher from "../PlatformDispatcher";
 import {CreateProjectParams, LastProjectInfo} from "@api/project/params";
 import TauriProjectsPlugin from "../../tauri/plugin_projects";
+import TurtleFile from "@api/project/files";
 
 
 export default class ProjectApi {
+
+
+    static async DeleteCached(path: string) {
+
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriProjectsPlugin.DeleteCached(path)
+            return ""
+        } else {
+            alert("Unimplemented for WEB - and shouldn't be!")
+        }
+
+    }
 
     static async CreateProject(params: CreateProjectParams): Promise<string> {
         if (PlatformDispatcher.IsDesktop()) {
@@ -38,5 +51,19 @@ export default class ProjectApi {
         }
     }
 
+    static async GetProjectFiles(projectUid: string): Promise<Array<TurtleFile>> {
+
+        if (PlatformDispatcher.IsDesktop()) {
+            const data = await TauriProjectsPlugin.GetProjectFiles()
+            return data
+        } else {
+            await axios.get("/api/project/files").catch((e) => {
+                console.log(e.request.responseText)
+            })
+
+            return []
+        }
+
+    }
 
 }

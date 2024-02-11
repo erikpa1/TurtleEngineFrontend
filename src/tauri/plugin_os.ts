@@ -11,6 +11,8 @@ export default class TauriOsPlugin {
         return true
     }
 
+
+
     static async DeleteFolder(folder: string): Promise<boolean> {
         await invoke<string>(`${ASSETS_PLUGIN_NAME}DeleteFolder`, {
             folder: folder,

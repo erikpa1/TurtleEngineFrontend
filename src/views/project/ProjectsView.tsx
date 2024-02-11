@@ -1,10 +1,8 @@
 import React from "react";
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import {styled} from '@mui/material/styles';
 import {useTranslation} from "react-i18next";
-import TauriOsPlugin from "../../tauri/plugin_os";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {Button, Container, Divider, Drawer, IconButton, Modal, TextField} from "@mui/material";
 import InputBase from "@mui/material/InputBase";
@@ -12,12 +10,15 @@ import InputBase from "@mui/material/InputBase";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import {CreateProjectParams, LastProjectInfo} from "@api/project/params";
 import ProjectApi from "@api/project/ProjectApi";
-
-
 import FolderIcon from '@mui/icons-material/Folder'
 import CreateNewFolderRoundedIcon from '@mui/icons-material/CreateNewFolderRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {MiddleSpinner} from "@components/Spinners";
+import {DeleteForeverRounded} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
+import TauriProjectsPlugin from "../../tauri/plugin_projects";
+import RoutesApi from "@app/RoutesApi";
+import FsTools from "@api/FsTools";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -28,10 +29,15 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 
-export default function ProjectsView({}) {
+export default function ProjectsView({onProjectPicked}) {
 
     const [t] = useTranslation()
 
+    const listRef = React.useRef<any>()
+
+    function refreshProjects() {
+        listRef.current && listRef.current.refreshProjects()
+    }
 
     return (
 
@@ -41,13 +47,17 @@ export default function ProjectsView({}) {
                 sx={{p: '2px 4px', display: 'flex', alignItems: 'left'}}
             >
                 <_OpenProjectButton/>
-                <_CreateProjectButton/>
+                <_CreateProjectButton onRefresh={refreshProjects}/>
 
                 <_SearchLabel/>
 
             </Paper>
 
-            <_ProjectsList filterKey={""}/>
+            <_ProjectsList
+                ref={listRef}
+                filterKey={""}
+                onProjectPicked={onProjectPicked}
+            />
 
         </Stack>
 
@@ -75,7 +85,7 @@ function _OpenProjectButton({}) {
     )
 }
 
-function _CreateProjectButton({}) {
+function _CreateProjectButton({onRefresh}) {
 
     const [t] = useTranslation()
 
@@ -92,13 +102,14 @@ function _CreateProjectButton({}) {
 
             <_CreateProjectDrawer
                 visible={visible}
+                onRefresh={onRefresh}
                 onHide={() => setVisible(false)}
             />
         </>
     )
 }
 
-function _CreateProjectDrawer({visible, onHide}) {
+function _CreateProjectDrawer({visible, onHide, onRefresh}) {
 
     const [t] = useTranslation()
 
@@ -123,8 +134,9 @@ function _CreateProjectDrawer({visible, onHide}) {
 
         await ProjectApi.CreateProject(params)
 
-
         lock.unlock()
+
+        onRefresh()
     }
 
     return (
@@ -146,6 +158,9 @@ function _CreateProjectDrawer({visible, onHide}) {
                         label={`${t("name")}:`}
                         size="small"
                         value={projectName}
+                        onChange={(e) => {
+                            setProjectName(e.target.value)
+                        }}
                     />
 
 
@@ -153,14 +168,19 @@ function _CreateProjectDrawer({visible, onHide}) {
                         label={`${t("author")}:`}
                         size="small"
                         value={projectAuthor}
+                        onChange={(e) => {
+                            setProjectAuthor(e.target.value)
+                        }}
                     />
 
                     <TextField
                         label={`${t("description")}:`}
                         size="small"
                         value={projectDescription}
+                        onChange={(e) => {
+                            setProjectDescription(e.target.value)
+                        }}
                     />
-
 
                     <Button
                         onClick={_createProjectPressed}
@@ -195,9 +215,13 @@ function _SearchLabel({}) {
 
 interface _ProjectsListProps {
     filterKey: string
+    onProjectPicked: (project: LastProjectInfo) => void
 }
 
-function _ProjectsList({filterKey}: _ProjectsListProps) {
+const _ProjectsList = React.forwardRef(({filterKey, onProjectPicked}: _ProjectsListProps, ref) => {
+
+    const [t] = useTranslation()
+    const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = React.useState(true)
 
@@ -211,6 +235,29 @@ function _ProjectsList({filterKey}: _ProjectsListProps) {
         setProjects(data)
         setIsLoading(false)
     }
+
+    async function projectActivated(project: LastProjectInfo) {
+        if (PlatformDispatcher.IsDesktop()) {
+            const data = await TauriProjectsPlugin.ActivateProject(project.path)
+
+            if (data.ok) {
+                FsTools.WORK_DIR = data.project_folder
+                console.log(FsTools.WORK_DIR)
+                navigate(RoutesApi.GetScenesRoute(project.uid))
+                onProjectPicked(project)
+            }
+        }
+    }
+
+    async function deleteCached(path: string) {
+        setIsLoading(true)
+        await ProjectApi.DeleteCached(path)
+        refreshProjects()
+    }
+
+    React.useImperativeHandle(ref, () => ({
+        refreshProjects
+    }))
 
     React.useEffect(() => {
         if (isLoading) {
@@ -229,14 +276,41 @@ function _ProjectsList({filterKey}: _ProjectsListProps) {
                     visibleProjects.map((val) => {
                         return (
                             <Paper
-                                sx={{p: '2px 4px', display: 'flex', alignItems: 'left'}}
+                                key={val.path + val.uid}
+                                sx={{
+                                    p: '2px 4px', display: 'flex', alignItems: 'left',
+                                    cursor: "pointer"
+                                }}
+                                onClick={() => {
+                                    projectActivated(val)
+                                }}
+
                             >
                                 <IconButton
-                                    color={"success"}
+                                    color={val.exists ? "success" : "error"}
                                 >
                                     <CreateNewFolderRoundedIcon/>
                                 </IconButton>
-                                {val.path}
+
+                                <Stack>
+                                    <div>{val.name}.turtle</div>
+                                    <div>{val.path}</div>
+                                </Stack>
+
+
+                                {
+                                    val.exists === false &&
+                                    <IconButton
+                                        color={"error"}
+                                        onClick={() => {
+                                            deleteCached(val.path)
+                                        }}
+                                    >
+                                        <DeleteForeverRounded/>
+                                    </IconButton>
+                                }
+
+
                             </Paper>
                         )
                     })
@@ -245,4 +319,4 @@ function _ProjectsList({filterKey}: _ProjectsListProps) {
         )
     }
 
-}
+})

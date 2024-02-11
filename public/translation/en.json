@@ -3,5 +3,13 @@
   "name": "Name",
   "description": "Description",
   "author": "Author",
-  "search": "Search"
+  "search": "Search",
+  "error.foldernonempty": "Folder is not empty!",
+  "scene": "Scene",
+  "files": "Files",
+  "edit": "Edit",
+  "settings": "Settings",
+  "zones": "Zones",
+  "drawing": "Drawing",
+  "attpoints": "Attention points"
 }

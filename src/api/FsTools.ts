@@ -23,16 +23,9 @@ export default class FsTools {
         return path.replaceAll("/", sep)
     }
 
-    static GetPlatformPath(path: string) {
-        return FsTools.NormalizePath(`${FsTools.WORK_DIR}platform/${path}`)
-    }
 
-    static GetProjectsPath(path: string) {
-        return FsTools.NormalizePath(`${FsTools.WORK_DIR}projects/${path}`)
-    }
-
-    static GetPathInProject(projectUid: string, path: string) {
-        return FsTools.GetProjectsPath(`${projectUid}/${path}`)
+    static GetPathInProject(path: string) {
+        return FsTools.NormalizePath(`${FsTools.WORK_DIR}${path}`)
     }
 
 
