@@ -1,8 +1,14 @@
 import React from "react";
 import {Box, Line} from "@react-three/drei";
+import {Drawing} from "@data/drawings";
 
 
 const DrawingFiber = React.forwardRef(({}, ref) => {
+
+
+    const [drawings, setDrawings] = React.useState<Array<Drawing>>()
+
+    const [drawingState, setDrawingState] = React.useState("line")
 
 
     function setDrawingBox() {
@@ -49,6 +55,15 @@ const DrawingFiber = React.forwardRef(({}, ref) => {
                     <planeGeometry args={[1, 1]}/>
                 </mesh>
             </group>
+
+            {/*<Line*/}
+            {/*    points={[*/}
+            {/*        [0, 0, 10],*/}
+            {/*        [10, 0, 10],*/}
+            {/*        [10, 0, 20]*/}
+            {/*    ]}*/}
+            {/*    color={"red"}*/}
+            {/*/>*/}
 
             <_DrawingCursor position={position}/>
 
