@@ -37,22 +37,26 @@ async fn CreateProject(projectJson: String) -> String {
 
     let projectFolder = &createParams.folder;
 
-    println!("Creating project folder: {}", &projectFolder);
+    let turtle_projects =
+        tfs::FindFilesWithExtension(&projectFolder, &String::from("turtle"), true);
 
-    let mut projectLight = createParams.ToJson();
+    println!("{}", turtle_projects.len());
 
-    let target_file = format!("{}\\{}.turtle", projectFolder, createParams.name);
+    if turtle_projects.len() == 0 {
+        println!("Creating project folder: {}", &projectFolder);
 
-    //TODO nepridat projekt ak priecinok nie je prazdny
+        let mut projectLight = createParams.ToJson();
 
-    if tfs::Exists(&target_file) {
+        let target_file = format!("{}\\{}.turtle", projectFolder, createParams.name);
+
+        if tfs::Exists(&target_file) {
+        } else {
+            tfs::SaveJson(&target_file, &projectLight);
+            cache::AddProjectToCache(&target_file, &createParams.uid, &createParams.name);
+            return String::from(createParams.uid);
+        }
     } else {
-        tfs::CreateFolders(&projectFolder);
-
-        tfs::SaveJson(&target_file, &projectLight);
-
-        cache::AddProjectToCache(&target_file);
-        return String::from(createParams.uid);
+        println!("Directory is not empty");
     }
 
     return String::from("");

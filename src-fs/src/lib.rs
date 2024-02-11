@@ -6,7 +6,7 @@ use std::fs;
 use std::fs::File;
 use std::path::{Component, Path, PathBuf};
 
-use serde_json::{json, Value};
+use serde_json::{json, Error, Value};
 
 pub fn Exists(path: &String) -> bool {
     return Path::new(path).exists();
@@ -36,11 +36,7 @@ pub fn SaveJson(path: &String, jObj: &Value) {
         let parent_path = String::from(parent.to_str().unwrap());
         CreateFolders(&parent_path);
 
-        fs::write(
-            path,
-            serde_json::to_string(&jObj).unwrap(),
-        );
-        
+        fs::write(path, serde_json::to_string(&jObj).unwrap());
     } else {
         println!("Unable to write to: {}", path);
     }
@@ -51,6 +47,60 @@ pub fn GetAppData() -> String {
         return local_appdata;
     } else {
         return String::from("");
+    }
+}
+
+pub fn FindFilesWithExtension(
+    folder: &impl AsRef<Path>,
+    extension: &String,
+    is_recursive: bool,
+) -> Vec<String> {
+    let mut result: Vec<String> = vec![];
+
+    _FindFilesWithExtension(folder, extension, is_recursive, &mut result);
+
+    return result;
+}
+
+fn _FindFilesWithExtension(
+    folder: &impl AsRef<Path>,
+    searched_extension: &String,
+    is_recursive: bool,
+    result: &mut Vec<String>,
+) {
+    let read_dir_r = fs::read_dir(folder);
+
+    if let Ok(read_dir) = read_dir_r {
+        for path in read_dir {
+            if let Ok(entry) = path {
+                let entry_path = entry.path();
+
+                if (entry_path.is_file()) {
+                    if let Some(file_extension_osstr) = entry_path.extension() {
+                        let file_extension: String =
+                            file_extension_osstr.to_string_lossy().to_string();
+
+                        if searched_extension.to_lowercase() == file_extension.to_lowercase() {
+                            let string_path = entry_path.to_string_lossy().to_string();
+                            result.push(string_path);
+                        }
+                    }
+                } else {
+                    if is_recursive {
+                        _FindFilesWithExtension(
+                            &entry.path(),
+                            searched_extension,
+                            is_recursive,
+                            result,
+                        )
+                    }
+                }
+            }
+        }
+    } else {
+        if let Result::Err(err) = read_dir_r {
+            print!("{}", err)
+        }
     }
 }
 

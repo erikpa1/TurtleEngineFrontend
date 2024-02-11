@@ -47,7 +47,7 @@ export default function AppNavbarNew() {
                 <Stack gap={3}>
 
                     <div style={{
-                        marginTop: "15px"
+                        marginTop: "5px"
                     }}/>
 
                     <_ProjectsBar/>
