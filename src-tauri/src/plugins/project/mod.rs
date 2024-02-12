@@ -4,6 +4,7 @@ use std::path::Path;
 use std::sync::Mutex;
 use std::{fs, result};
 
+use rusqlite::types::Value;
 use rusqlite::Connection;
 
 use serde::de::Unexpected::Str;
@@ -22,12 +23,12 @@ use serde_json::json;
 
 use crate::database;
 
-use crate::app::{AppState, DbTest};
+use crate::app::AppStateMut;
 use crate::database::FixProject;
 
 mod cache;
-mod scenes;
 mod files;
+mod scenes;
 
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
@@ -79,26 +80,25 @@ async fn DeleteCached(filePath: String) -> bool {
 }
 
 #[tauri::command]
-async fn GetActiveProject(filePath: String, state: State<'_, AppState>) -> Result<String, String> {
-    let mut data_val: std::sync::MutexGuard<'_, serde_json::Value> =
-        state.activeProject.lock().unwrap();
+async fn GetActiveProject(state: State<'_, Mutex<AppStateMut>>) -> Result<String, String> {
+    let tmp = state.lock().unwrap();
 
-    let clon = data_val.clone();
+    println!("Active project: {}", &tmp.activeProjectPath);
 
-    let res = serde_json::to_string(&clon).unwrap();
-
-    return Ok(res);
+    if tmp.activeProjectPath != "" {
+        let res = serde_json::to_string(&tmp.activeProject).unwrap();
+        return Ok(res);
+    } else {
+        return Err("No active project".into());
+    }
 }
 
 #[tauri::command]
-async fn ActivateProject(filePath: String, state: State<'_, AppState>) -> Result<String, String> {
-    let mut data_val: std::sync::MutexGuard<'_, serde_json::Value> =
-        state.activeProject.lock().unwrap();
-    *data_val = tfs::GetJson(&filePath).unwrap_or(json!({}));
-
-    let mut path_string: std::sync::MutexGuard<'_, String> =
-        state.activeProjectPath.lock().unwrap();
-    *path_string = filePath.clone();
+async fn ActivateProject(
+    filePath: String,
+    state: State<'_, Mutex<AppStateMut>>,
+) -> Result<String, String> {
+    let mut tmp = state.lock().unwrap();
 
     let parent_folder = Path::new(&filePath)
         .parent()
@@ -106,11 +106,29 @@ async fn ActivateProject(filePath: String, state: State<'_, AppState>) -> Result
         .to_string_lossy()
         .to_string();
 
+    let mut prj = tfs::GetJson(&filePath).unwrap_or(json!({}));
+    let mut obj = prj.as_object_mut().unwrap();
+    obj.insert(
+        "project_folder".into(),
+        serde_json::Value::String(parent_folder.clone()),
+    );
+
+    tmp.activeProject = prj;
+    tmp.activeProjectPath = filePath.clone();
+
     return Ok(serde_json::to_string(&json!({
         "ok": true,
         "project_folder": parent_folder,
     }))
     .unwrap());
+}
+
+#[tauri::command]
+async fn Test(filePath: String, state: State<'_, Mutex<AppStateMut>>) -> Result<String, String> {
+    println!("Here");
+    println!("{}", filePath);
+
+    return Err("Success".into());
 }
 
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
@@ -122,6 +140,7 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             ListProjects,
             DeleteCached,
             GetActiveProject,
+            Test,
             scenes::GetAllScenes,
             files::GetProjectFiles,
         ])

@@ -241,8 +241,6 @@ const _ProjectsList = React.forwardRef(({filterKey, onProjectPicked}: _ProjectsL
             const data = await TauriProjectsPlugin.ActivateProject(project.path)
 
             if (data.ok) {
-                FsTools.WORK_DIR = data.project_folder
-                console.log(FsTools.WORK_DIR)
                 navigate(RoutesApi.GetScenesRoute(project.uid))
                 onProjectPicked(project)
             }

@@ -8,6 +8,15 @@ import TurtleFile from "@api/project/files";
 export default class ProjectApi {
 
 
+    static async GetActiveProject(): Promise<any> {
+
+        if (PlatformDispatcher.IsDesktop()) {
+            return await TauriProjectsPlugin.GetActiveProject()
+        } else {
+            alert("Unimplemented for WEB - and shouldn't be!")
+        }
+    }
+
     static async DeleteCached(path: string) {
 
         if (PlatformDispatcher.IsDesktop()) {

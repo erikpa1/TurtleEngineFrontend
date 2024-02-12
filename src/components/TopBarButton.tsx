@@ -244,6 +244,7 @@ export function TopBarTextButton({lang, disabled, isActive, onClick}: TopBarFile
             paddingLeft: "10px",
             paddingRight: "10px",
             cursor: "pointer",
+            height: "20px",
             ...(isActive ? {backgroundColor: "#f6f6f6"} : {color: "grey"}),
             ...(disabled ? {opacity: 0.5} : {})
         }}

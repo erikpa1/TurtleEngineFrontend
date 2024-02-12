@@ -9,7 +9,7 @@ use std::path::Path;
 
 use tfs;
 
-use crate::app::AppState;
+
 
 #[tauri::command]
 pub async fn OpenFolder(folder: String) -> Result<String, ()> {

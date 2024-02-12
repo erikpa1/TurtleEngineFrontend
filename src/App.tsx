@@ -9,6 +9,8 @@ import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
+import ProjectApi from "@api/project/ProjectApi";
+import FsTools from "@api/FsTools";
 
 
 export default function App() {
@@ -18,16 +20,23 @@ export default function App() {
 
     const navigate = useNavigate()
 
+    async function refresh() {
+        setIsLoading(true)
+        if (PlatformDispatcher.IsDesktop()) {
+            const project = await ProjectApi.GetActiveProject()
+            if (project) {
+
+                FsTools.WORK_DIR = project.project_folder
+
+            } else {
+                navigate("/")
+            }
+        }
+        setIsLoading(false)
+    }
 
     React.useEffect(() => {
-        setIsLoading(true)
-
-        if (PlatformDispatcher.IsDesktop()) {
-            navigate("/")
-        }
-
-        setIsLoading(false)
-
+        refresh()
     }, [])
 
     if (isLoading) {

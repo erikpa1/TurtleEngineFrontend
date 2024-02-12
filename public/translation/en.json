@@ -12,5 +12,8 @@
   "zones": "Zones",
   "drawing": "Drawing",
   "attpoints": "Attention points",
-  "drawing.add": "+ Drawing"
+  "drawing.add": "+ Drawing",
+  "physics": "Physics",
+  "logiccircuit": "Logic circuit",
+  "boards": "Boards"
 }

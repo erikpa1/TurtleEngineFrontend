@@ -7,45 +7,18 @@ use serde_json::{json, Value};
 
 use tstructures::licence::Licence;
 
-pub struct AppState {
-    pub licence: Arc<Mutex<Licence>>,
-    pub sqliteConn: Arc<Mutex<Option<rusqlite::Connection>>>,
-    pub activeProjectPath: Arc<Mutex<String>>,
-    pub activeProject: Arc<Mutex<Value>>,
-    pub activeProjectDbPath: Arc<Mutex<String>>,
-    pub test: Arc<Mutex<HashMap<String, String>>>,
+pub struct AppStateMut {
+    pub activeProjectFolder: String,
+    pub activeProjectPath: String,
+    pub activeProject: Value,
 }
 
-impl AppState {
+impl AppStateMut {
     pub fn New() -> Self {
         return Self {
-            licence: Arc::new(Mutex::new(Licence::NewFull())),
-            sqliteConn: Arc::new(Mutex::new(None)),
-            activeProject: Arc::new(Mutex::new(json!({}))),
-            activeProjectPath: Arc::new(Mutex::new("".into())),
-            activeProjectDbPath: Arc::new(Mutex::new("".into())),
-            test: Arc::new(Mutex::new(HashMap::new())),
+            activeProject: json!({}),
+            activeProjectPath: "".into(),
+            activeProjectFolder: "".into(),
         };
     }
-
-    pub fn SetSqlLiteConnection(&self, connection: rusqlite::Connection) {
-        let mut my_lock = self.sqliteConn.lock().unwrap();
-
-        *my_lock = Some(connection);
-    }
-
-    pub fn SetActiveProjectUid(&self, project: String) {
-        let mut my_lock = self.activeProjectPath.lock().unwrap();
-        *my_lock = project;
-    }
-
-    pub fn SetActiveProjectDbPah(&self, project: String) {
-        let mut my_lock = self.activeProjectDbPath.lock().unwrap();
-        *my_lock = project;
-    }
-}
-
-#[derive(Default)]
-pub struct DbTest {
-    pub mapMutex: Arc<Mutex<HashMap<String, String>>>,
 }

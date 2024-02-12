@@ -3,6 +3,7 @@ import {CreateProjectParams} from "@api/project/params";
 import {message} from "@tauri-apps/api/dialog";
 import i18n from "../i18n";
 import TurtleFile from "@api/project/files";
+import FsTools from "@api/FsTools";
 
 
 export const PROJECTS_PLUGIN_NAME = "plugin:turtle_projects|"
@@ -19,9 +20,31 @@ export default class TauriProjectsPlugin {
                 title: "Error",
                 type: "error"
             })
+        } else {
+            FsTools.WORK_DIR = data.project_folder
         }
 
         return data
+    }
+
+    static async GetActiveProject(): Promise<any> {
+        const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetActiveProject`).catch(() => {
+            return null
+        })
+
+        if (response) {
+            return JSON.parse(response)
+        } else {
+            return null
+        }
+    }
+
+    static async Test(path: string): Promise<string> {
+        const response = await invoke<string>(`${PROJECTS_PLUGIN_NAME}Test`, {
+            filePath: path,
+        })
+        return response
+
     }
 
     static async DeleteCached(path: string): Promise<boolean> {
