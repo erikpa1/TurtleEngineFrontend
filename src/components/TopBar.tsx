@@ -1,5 +1,6 @@
 import React from "react"
 import Stack from "@mui/material/Stack";
+import Skin from "@data/skin";
 
 
 interface TopBar {
@@ -15,17 +16,17 @@ export default function TopBar({children, topDisabled}: TopBar) {
     return (
         <div style={{
             height: "129px",
-            backgroundColor: "#f6f6f6",
+            backgroundColor: Skin.ContainerB,
         }}>
             <div style={{
                 height: "4px",
-                backgroundColor: "#ebebeb"
+                backgroundColor: Skin.ContainerA,
             }}/>
             {
                 !topDisabled &&
                 <div style={{
                     height: "20px",
-                    backgroundColor: "#ebebeb"
+                    backgroundColor: Skin.ContainerA,
                 }}>
                     <Stack direction={"row"}>
                         {_children[0]}

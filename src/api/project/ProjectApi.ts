@@ -55,24 +55,28 @@ export default class ProjectApi {
             await axios.get("/api/projects").catch((e) => {
                 console.log(e.request.responseText)
             })
-
             return []
         }
     }
 
-    static async GetProjectFiles(projectUid: string): Promise<Array<TurtleFile>> {
+    static async GetProjectFiles(projectUid: string, extensions: Array<string> = []): Promise<Array<TurtleFile>> {
 
         if (PlatformDispatcher.IsDesktop()) {
-            const data = await TauriProjectsPlugin.GetProjectFiles()
+            const data = await TauriProjectsPlugin.GetProjectFiles(extensions)
             return data
         } else {
             await axios.get("/api/project/files").catch((e) => {
                 console.log(e.request.responseText)
             })
-
             return []
         }
+    }
 
+    static async SaveProject() {
+
+        if (PlatformDispatcher.IsDesktop()) {
+            await TauriProjectsPlugin.SaveProject()
+        }
     }
 
 }

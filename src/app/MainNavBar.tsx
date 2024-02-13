@@ -8,6 +8,7 @@ import "./MainNavBar.css";
 
 import {Container, Drawer, Stack} from "@mui/material";
 import {MiddleSpinner} from "@components/Spinners";
+import Skin from "@data/skin";
 
 
 const ProjectsView = React.lazy(() => import("@views/project/ProjectsView"));
@@ -39,7 +40,7 @@ export default function AppNavbarNew() {
                     height: "100vh",
                     width: WIDTH,
                     zIndex: 1,
-                    backgroundColor: "#ebebeb",
+                    backgroundColor: Skin.ContainerA,
                 }}
             >
 

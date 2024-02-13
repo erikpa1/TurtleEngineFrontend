@@ -5,7 +5,7 @@ import ChevronRightSharp from "@mui/icons-material/ChevronRightSharp";
 import Stack from "@mui/material/Stack";
 import {TopBarTextButton} from "@components/TopBarButton";
 import Switch, {Case} from "react-switch-case";
-import Scene3D_SB_FilesView from "@views/scene3d/Scene3D_SB_Files";
+import Scene3D_SB_FilesView from "@views/files/Scene3D_SB_Files";
 
 
 export default function Scene3D_SideBar({}) {

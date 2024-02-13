@@ -26,9 +26,12 @@ use crate::database;
 use crate::app::AppStateMut;
 use crate::database::FixProject;
 
+mod _project;
 mod cache;
 mod files;
 mod scenes;
+mod storage;
+
 
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
@@ -93,35 +96,6 @@ async fn GetActiveProject(state: State<'_, Mutex<AppStateMut>>) -> Result<String
     }
 }
 
-#[tauri::command]
-async fn ActivateProject(
-    filePath: String,
-    state: State<'_, Mutex<AppStateMut>>,
-) -> Result<String, String> {
-    let mut tmp = state.lock().unwrap();
-
-    let parent_folder = Path::new(&filePath)
-        .parent()
-        .unwrap()
-        .to_string_lossy()
-        .to_string();
-
-    let mut prj = tfs::GetJson(&filePath).unwrap_or(json!({}));
-    let mut obj = prj.as_object_mut().unwrap();
-    obj.insert(
-        "project_folder".into(),
-        serde_json::Value::String(parent_folder.clone()),
-    );
-
-    tmp.activeProject = prj;
-    tmp.activeProjectPath = filePath.clone();
-
-    return Ok(serde_json::to_string(&json!({
-        "ok": true,
-        "project_folder": parent_folder,
-    }))
-    .unwrap());
-}
 
 #[tauri::command]
 async fn Test(filePath: String, state: State<'_, Mutex<AppStateMut>>) -> Result<String, String> {
@@ -135,7 +109,6 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("turtle_projects")
         .invoke_handler(tauri::generate_handler![
             CreateProject,
-            ActivateProject,
             DeleteProject,
             ListProjects,
             DeleteCached,
@@ -143,6 +116,8 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             Test,
             scenes::GetAllScenes,
             files::GetProjectFiles,
+            _project::SaveProject,
+            _project::ActivateProject,
         ])
         .build()
 }

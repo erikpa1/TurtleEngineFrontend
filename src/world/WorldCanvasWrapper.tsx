@@ -1,6 +1,7 @@
 import React from "react";
 import {Canvas} from "@react-three/fiber";
 import {Environment, Grid, Line, MapControls} from "@react-three/drei";
+import Skin from "@data/skin";
 
 
 interface WorldCanvasWrapperProps {
@@ -18,7 +19,7 @@ export default function WorldCanvasWrapper({children}: WorldCanvasWrapperProps) 
                 position: [4, 3, 12]
             }}
             style={{
-                background: 'radial-gradient(#9fadc2, #d4dff1)',
+                background: Skin.WorldView,
                 height: "100%"
             }}
             raycaster={{params: {Line: {threshold: 0.15}}}}
@@ -34,7 +35,7 @@ export default function WorldCanvasWrapper({children}: WorldCanvasWrapperProps) 
                 <Environment files={"/textures/venice_sunset_1k.hdr"}/>
             </React.Suspense>
 
-            <MapControls/>
+            <MapControls enableDamping={false}/>
 
             {
                 React.Children.toArray(children)

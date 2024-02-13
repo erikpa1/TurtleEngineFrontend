@@ -71,24 +71,21 @@ export default class TauriProjectsPlugin {
         return true
     }
 
-    static async GetProjectFiles(): Promise<Array<TurtleFile>> {
-        const result: Array<TurtleFile> = []
-        // const result: Array<TurtleFile> = JSON.parse(await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetProjectFiles`)).map((val) => {
-        //     const file = new TurtleFile()
-        //     file.FromJson(val)
-        //     return file
-        // })
+    static async GetProjectFiles(extensions: Array<string>): Promise<Array<TurtleFile>> {
 
-        for (let i = 0; i < 100; i++) {
+        const result: Array<TurtleFile> = JSON.parse(await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetProjectFiles`, {
+            extensions: extensions
+        })).map((val) => {
             const file = new TurtleFile()
-            file.name = `File_${i}.json`
-            file.path = `File_${i}.json`
-            file.preview = `Preview_${i}.png`
-            result.push(file)
-        }
+            file.FromJson(val)
+            return file
+        })
 
         return result
+    }
 
+    static async SaveProject(): Promise<boolean> {
+        return await invoke<boolean>(`${PROJECTS_PLUGIN_NAME}SaveProject`)
     }
 
     static async GetLastProjects(): Promise<string> {

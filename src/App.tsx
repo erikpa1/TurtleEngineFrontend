@@ -11,6 +11,8 @@ import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
 import ProjectApi from "@api/project/ProjectApi";
 import FsTools from "@api/FsTools";
+import {anyReceiver} from "@components/AnyEventEmmiter";
+import Skin from "@data/skin";
 
 
 export default function App() {
@@ -37,6 +39,13 @@ export default function App() {
 
     React.useEffect(() => {
         refresh()
+
+        window.addEventListener('keydown', anyReceiver)
+
+        return () => {
+            window.removeEventListener('keydown', anyReceiver)
+        }
+
     }, [])
 
     if (isLoading) {
@@ -49,7 +58,12 @@ export default function App() {
 
         return (
             <div>
-                <div className={"app_background"}/>
+                <div
+                    className={"app_background"}
+                    style={{
+                        backgroundColor: Skin.ContainerB
+                    }}
+                />
                 <GlobalAppLock/>
                 <_LoggedContent/>
                 <_GlobalPopup/>

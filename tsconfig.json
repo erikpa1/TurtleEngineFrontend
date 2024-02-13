@@ -64,6 +64,9 @@
       ],
       "@data/*": [
         "src/data/*"
+      ],
+      "@icons/*": [
+        "src/icons/*"
       ]
     }
   },

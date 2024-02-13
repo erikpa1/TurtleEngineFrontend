@@ -15,5 +15,6 @@
   "drawing.add": "+ Drawing",
   "physics": "Physics",
   "logiccircuit": "Logic circuit",
-  "boards": "Boards"
+  "boards": "Boards",
+  "meshes": "Meshes"
 }

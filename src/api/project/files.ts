@@ -4,31 +4,30 @@ export default class TurtleFile {
 
     name = ""
     path = ""
-    modified_at = ""
-    created_at = ""
-    created_by = ""
-    preview = ""
-    canBeDeleted = ""
+    full_path = ""
+    modified_at = 0
+    created_at = 0
+    is_file = false
+
 
     ToJson() {
         return {
             name: this.name,
             path: this.path,
+            is_file: this.is_file,
             modified_at: this.modified_at,
             created_at: this.created_at,
-            created_by: this.created_by,
-            preview: this.preview,
+            full_path: this.full_path,
         }
     }
 
     FromJson(jObj: any) {
         this.name = jObj.name ?? ""
         this.path = jObj.path ?? ""
+        this.is_file = jObj.is_file ?? false
         this.modified_at = jObj.modified_at ?? ""
         this.created_at = jObj.created_at ?? ""
-        this.created_by = jObj.created_by ?? ""
-        this.preview = jObj.preview ?? ""
-        this.canBeDeleted = jObj.canBeDeleted ?? false
+        this.full_path = jObj.full_path ?? ""
     }
 
     Extension(): string {

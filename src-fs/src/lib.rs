@@ -1,14 +1,15 @@
 extern crate core;
 
-use std::env;
 use std::fmt::format;
 use std::fs;
 use std::fs::File;
+use std::os::windows::fs::MetadataExt;
 use std::path::{Component, Path, PathBuf};
-
+use std::{default, env};
 
 use serde::de::DeserializeOwned;
 
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Error, Value};
 
 pub fn Exists(path: &String) -> bool {
@@ -237,26 +238,6 @@ pub fn CreateFolders(path: &String) {
     }
 }
 
-pub fn ListFolders(path: &String) -> Vec<String> {
-    let mut folders: Vec<String> = Vec::new();
-
-    if let Ok(entries) = fs::read_dir(path) {
-        for entry in entries {
-            if let Ok(entry) = entry {
-                if let Ok(file_type) = entry.file_type() {
-                    if file_type.is_dir() {
-                        if let Ok(file_name) = entry.file_name().into_string() {
-                            folders.push(format!("{}{}\\", path, file_name))
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return folders;
-}
-
 pub fn CheckProjectExistenceAndValidity(projectPath: &String) -> bool {
     let lPathString = format!("{}project_light.json", &projectPath);
     let dbPathString = format!("{}project.db", &projectPath);
@@ -280,5 +261,105 @@ pub fn DeleteFolder(path: &String) {
         println!("Success to remove file: {}", path);
     } else {
         println!("Failed to remove file: {}", path);
+    }
+}
+
+pub fn ListFolders(path: &String) -> Vec<String> {
+    let mut folders: Vec<String> = Vec::new();
+
+    if let Ok(entries) = fs::read_dir(path) {
+        for entry in entries {
+            if let Ok(entry) = entry {
+                if let Ok(file_type) = entry.file_type() {
+                    if file_type.is_dir() {
+                        if let Ok(file_name) = entry.file_name().into_string() {
+                            folders.push(format!("{}{}\\", path, file_name))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return folders;
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct FileWithMeta {
+    #[serde(default)]
+    pub name: String,
+
+    #[serde(default)]
+    pub is_file: bool,
+
+    #[serde(default)]
+    pub path: String,
+
+    #[serde(default)]
+    pub modified_at: u64,
+
+    #[serde(default)]
+    pub created_at: u64,
+
+    #[serde(default)]
+    pub full_path: String,
+}
+
+impl FileWithMeta {
+    pub fn new() -> Self {
+        FileWithMeta {
+            name: "".into(),
+            path: "".into(),
+            is_file: false,
+            modified_at: 0,
+            created_at: 0,
+            full_path: "".into(),
+        }
+    }
+}
+
+pub fn ListFilesWithMetadata(folder: &impl AsRef<Path>, recursive: bool) -> Vec<FileWithMeta> {
+    let mut folders: Vec<FileWithMeta> = Vec::new();
+    _ListFilesWithMetadata(folder, &mut folders, recursive);
+    return folders;
+}
+
+pub fn _ListFilesWithMetadata(
+    folder: &impl AsRef<Path>,
+    buffer: &mut Vec<FileWithMeta>,
+    recursive: bool,
+) {
+    if let Ok(entries) = fs::read_dir(folder) {
+        for entry in entries {
+            if let Ok(entry) = entry {
+                if let Ok(file_type) = entry.file_type() {
+                    let mut data = FileWithMeta::new();
+                    data.is_file = file_type.is_file();
+
+                    let file_folder = folder.as_ref().to_string_lossy().to_string();
+                    let file_path = entry.path().to_string_lossy().to_string();
+
+                    println!("{}", &file_folder);
+
+                    data.path = file_path.replace(&file_folder, "");
+                    data.full_path = file_path.clone();
+
+                    if let Ok(meta) = entry.metadata() {
+                        data.created_at = meta.creation_time();
+                        data.modified_at = meta.last_write_time();
+                    }
+
+                    if let Ok(file_name) = entry.file_name().into_string() {
+                        data.name = file_name;
+                    }
+
+                    buffer.push(data);
+
+                    if file_type.is_dir() {
+                        _ListFilesWithMetadata(&entry.path(), buffer, recursive);
+                    }
+                }
+            }
+        }
     }
 }
