@@ -53,7 +53,8 @@ export default function TopBarButton({icon, isActive, disabled, onClick, lang}: 
                 <div style={{
                     textAlign: "center",
                     marginTop: "auto",
-                    fontSize: "11px"
+                    fontSize: "11px",
+                    color: Skin.FontActive,
                 }}>
                     {t(lang)}
                 </div>

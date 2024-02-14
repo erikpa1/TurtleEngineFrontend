@@ -74,7 +74,7 @@ export default class TauriProjectsPlugin {
     static async GetProjectFiles(extensions: Array<string>): Promise<Array<TurtleFile>> {
 
         const result: Array<TurtleFile> = JSON.parse(await invoke<string>(`${PROJECTS_PLUGIN_NAME}GetProjectFiles`, {
-            extensions: extensions
+            extensions: JSON.stringify(extensions)
         })).map((val) => {
             const file = new TurtleFile()
             file.FromJson(val)

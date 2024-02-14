@@ -53,6 +53,42 @@ impl AppStateMut {
         Ok(())
     }
 
+    pub fn DeleteEntities(&mut self, container_key: &String, query: &Value) {
+        if let Some(container) = self.containers.get_mut(container_key) {
+            if let Some(query_object) = query.as_object() {
+                let keys_len = query_object.keys().len();
+
+                if keys_len == 0 {
+                    container.clear();
+                } else if (keys_len == 1 && query_object.contains_key("uid")) {
+                    let mut keys_to_delete: Vec<String> = vec![];
+
+                    for val in container.values() {
+                        let uid = String::from(val.get("uid").unwrap().as_str().unwrap());
+                        keys_to_delete.push(uid);
+                    }
+
+                    for key in keys_to_delete {
+                        container.remove_entry(&key);
+                    }
+                } else {
+                    let mut keys_to_delete: Vec<String> = vec![];
+
+                    for val in container.values() {
+                        if Self::_ValueMatchQuery(val, query_object) {
+                            let uid = String::from(val.get("uid").unwrap().as_str().unwrap());
+                            keys_to_delete.push(uid);
+                        }
+                    }
+
+                    for key in keys_to_delete {
+                        container.remove_entry(&key);
+                    }
+                }
+            }
+        }
+    }
+
     pub fn QueryEntities(&self, container_key: &String, query: &Value) -> Vec<Value> {
         let mut result: Vec<Value> = vec![];
 
@@ -95,5 +131,12 @@ impl AppStateMut {
             }
         }
         return true;
+    }
+
+    pub fn ToJson(&self) -> Value {
+        json!({
+            "name": "Some name",
+            "containers": self.containers
+        })
     }
 }

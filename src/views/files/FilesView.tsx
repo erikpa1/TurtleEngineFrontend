@@ -6,7 +6,12 @@ import TurtleFile from "@api/project/files";
 import ProjectApi from "@api/project/ProjectApi";
 
 
-export default function FilesView({files}) {
+interface FilesViewProps {
+    files: Array<TurtleFile>
+    onPicked: (file: TurtleFile) => void
+}
+
+export default function FilesView({files, onPicked}: FilesViewProps) {
     return (
         <>
             <div style={{
@@ -21,7 +26,7 @@ export default function FilesView({files}) {
                     files.map((val) => {
                         return (
                             <Grid key={val.path}>
-                                <_FileCard file={val}/>
+                                <_FileCard file={val} onPicked={onPicked}/>
                             </Grid>
 
                         )
@@ -35,9 +40,10 @@ export default function FilesView({files}) {
 
 interface _FileCardProps {
     file: TurtleFile
+    onPicked: (file: TurtleFile) => void
 }
 
-function _FileCard({file}: _FileCardProps) {
+function _FileCard({file, onPicked}: _FileCardProps) {
 
     const ICON = file.is_file ? "/icons/Connection.svg" : "/icons/Projects.svg"
 
@@ -45,7 +51,12 @@ function _FileCard({file}: _FileCardProps) {
         <div style={{
             margin: "2.5px",
         }}>
-            <Card sx={{maxWidth: 100}}>
+            <Card
+                sx={{maxWidth: 100}}
+                onClick={() => {
+                    onPicked(file)
+                }}
+            >
                 <CardActionArea>
                     <CardMedia
                         component="img"
@@ -87,7 +98,9 @@ export function AllFilesView({}) {
             <CircularProgress/>
         )
     } else {
-        return (<FilesView files={files}/>)
+        return (<FilesView files={files} onPicked={() => {
+            //pass
+        }}/>)
     }
 
 }

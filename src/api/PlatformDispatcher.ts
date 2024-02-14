@@ -16,7 +16,7 @@ export default class PlatformDispatcher {
             multiple: false,
             filters: [{
                 name: 'Turtle Project',
-                extensions: ["turtle.json"]
+                extensions: ["turtle"]
             }]
         });
 

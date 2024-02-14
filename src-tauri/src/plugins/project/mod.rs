@@ -32,7 +32,6 @@ mod files;
 mod scenes;
 mod storage;
 
-
 #[tauri::command]
 async fn CreateProject(projectJson: String) -> String {
     let mut createParams: CreateProjectParams = serde_json::from_str(&projectJson).unwrap();
@@ -96,7 +95,6 @@ async fn GetActiveProject(state: State<'_, Mutex<AppStateMut>>) -> Result<String
     }
 }
 
-
 #[tauri::command]
 async fn Test(filePath: String, state: State<'_, Mutex<AppStateMut>>) -> Result<String, String> {
     println!("Here");
@@ -118,6 +116,10 @@ pub fn init<R: Runtime>() -> TauriPlugin<R> {
             files::GetProjectFiles,
             _project::SaveProject,
             _project::ActivateProject,
+            storage::InsertEntities,
+            storage::InsertEntity,
+            storage::QueryEntities,
+            storage::DeleteEntities,
         ])
         .build()
 }

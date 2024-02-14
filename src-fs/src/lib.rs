@@ -1,5 +1,6 @@
 extern crate core;
 
+use std::collections::HashSet;
 use std::fmt::format;
 use std::fs;
 use std::fs::File;
@@ -56,7 +57,12 @@ pub fn SaveJson(path: &String, jObj: &Value) {
         let parent_path = String::from(parent.to_str().unwrap());
         CreateFolders(&parent_path);
 
-        fs::write(path, serde_json::to_string(&jObj).unwrap());
+        let string_json = serde_json::to_string(&jObj).unwrap();
+
+        println!("Saving json to: {}", path);
+        println!("Json to: {}", &string_json);
+
+        fs::write(path, string_json);
     } else {
         println!("Unable to write to: {}", path);
     }
@@ -290,6 +296,9 @@ pub struct FileWithMeta {
     pub name: String,
 
     #[serde(default)]
+    pub extension: String,
+
+    #[serde(default)]
     pub is_file: bool,
 
     #[serde(default)]
@@ -309,6 +318,7 @@ impl FileWithMeta {
     pub fn new() -> Self {
         FileWithMeta {
             name: "".into(),
+            extension: "".into(),
             path: "".into(),
             is_file: false,
             modified_at: 0,
@@ -318,15 +328,20 @@ impl FileWithMeta {
     }
 }
 
-pub fn ListFilesWithMetadata(folder: &impl AsRef<Path>, recursive: bool) -> Vec<FileWithMeta> {
+pub fn ListFilesWithMetadata(
+    folder: &impl AsRef<Path>,
+    extensions: &HashSet<String>,
+    recursive: bool,
+) -> Vec<FileWithMeta> {
     let mut folders: Vec<FileWithMeta> = Vec::new();
-    _ListFilesWithMetadata(folder, &mut folders, recursive);
+    _ListFilesWithMetadata(folder, &mut folders, extensions, recursive);
     return folders;
 }
 
 pub fn _ListFilesWithMetadata(
     folder: &impl AsRef<Path>,
     buffer: &mut Vec<FileWithMeta>,
+    extensions: &HashSet<String>,
     recursive: bool,
 ) {
     if let Ok(entries) = fs::read_dir(folder) {
@@ -339,7 +354,18 @@ pub fn _ListFilesWithMetadata(
                     let file_folder = folder.as_ref().to_string_lossy().to_string();
                     let file_path = entry.path().to_string_lossy().to_string();
 
-                    println!("{}", &file_folder);
+                    let mut extension = String::from("");
+
+                    if (file_type.is_file()) {
+                        extension = entry
+                            .path()
+                            .extension()
+                            .unwrap()
+                            .to_string_lossy()
+                            .to_string();
+                    }
+
+                    data.extension = extension.to_lowercase();
 
                     data.path = file_path.replace(&file_folder, "");
                     data.full_path = file_path.clone();
@@ -353,10 +379,17 @@ pub fn _ListFilesWithMetadata(
                         data.name = file_name;
                     }
 
-                    buffer.push(data);
+                    if extensions.len() == 0 {
+                        buffer.push(data);
+                    } else {
+
+                        if extensions.contains(&data.extension) {
+                            buffer.push(data);
+                        }
+                    }
 
                     if file_type.is_dir() {
-                        _ListFilesWithMetadata(&entry.path(), buffer, recursive);
+                        _ListFilesWithMetadata(&entry.path(), buffer, extensions, recursive);
                     }
                 }
             }

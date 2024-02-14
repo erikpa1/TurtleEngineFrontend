@@ -12,7 +12,8 @@ use tfs;
 pub async fn SaveProject(state: State<'_, Mutex<AppStateMut>>) -> Result<bool, bool> {
     let st = state.lock().unwrap();
 
-    tfs::SaveJson(&st.activeProjectPath, &st.activeProject);
+    let project_value = st.ToJson();
+    tfs::SaveJson(&st.activeProjectPath, &project_value);
 
     return Ok(true);
 }
@@ -46,36 +47,4 @@ pub async fn ActivateProject(
         "project_folder": parent_folder,
     }))
     .unwrap());
-}
-
-#[tauri::command]
-pub async fn InsertData(
-    container: String,
-    data: String,
-    state: State<'_, Mutex<AppStateMut>>,
-) -> Result<String, String> {
-    let mut project = state.lock().unwrap();
-
-    let data: Value = serde_json::from_str(&data).unwrap();
-
-    if let Ok(()) = project.InsertEntity(&container, data) {
-        return Ok("".into());
-    } else {
-        return Ok("".into());
-    }
-}
-
-#[tauri::command]
-pub async fn QueryData(
-    container: String,
-    query: String,
-    state: State<'_, Mutex<AppStateMut>>,
-) -> Result<String, String> {
-
-    let project = state.lock().unwrap();
-
-    let entities = project.QueryEntities(&container, &serde_json::from_str(&query).unwrap());
-
-
-    return Ok(serde_json::to_string(&entities).unwrap());
 }
