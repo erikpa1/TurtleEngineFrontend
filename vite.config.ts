@@ -20,7 +20,6 @@ export default defineConfig({
             '@external': path.resolve(__dirname, "src/external"),
             '@wasm': path.resolve(__dirname, "src/wasm"),
             '@views': path.resolve(__dirname, "src/views"),
-            '@data': path.resolve(__dirname, "src/data"),
             '@world': path.resolve(__dirname, "src/world"),
             '@icons': path.resolve(__dirname, "src/icons")
         }
