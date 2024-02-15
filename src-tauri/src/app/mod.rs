@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 use std::sync::{Arc, Mutex};
 use std::vec;
+use uuid::Uuid;
 
 use serde_json::{json, Value};
 
@@ -26,19 +27,22 @@ impl AppStateMut {
         };
     }
 
-    pub fn InsertEntity(&mut self, container: &String, entity: Value) -> Result<(), ()> {
+    pub fn InsertEntity(&mut self, container: &String, mut entity: Value) -> Result<String, ()> {
         let mut uid = String::from("");
+        let mut return_uid = String::from("");
 
-        if let Some(val_obj) = entity.as_object() {
+        if let Some(val_obj) = entity.as_object_mut() {
             if let Some(val) = val_obj.get("uid") {
                 if let Some(uid_val) = val.as_str() {
                     uid = String::from(uid_val);
                 }
             } else {
-                println!("Entity has no attribute UID");
-                return Err(());
+                uid = Uuid::new_v4().to_string();
+                val_obj.insert("uid".into(), Value::String(uid.clone()));
             }
         }
+
+        return_uid = uid.clone();
 
         let container_r = self.containers.get_mut(container);
 
@@ -50,7 +54,7 @@ impl AppStateMut {
             self.containers.insert(container.clone(), map);
         }
 
-        Ok(())
+        Ok(return_uid)
     }
 
     pub fn DeleteEntities(&mut self, container_key: &String, query: &Value) {

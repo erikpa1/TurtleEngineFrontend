@@ -13,6 +13,8 @@ import ProjectApi from "@api/project/ProjectApi";
 import FsTools from "@api/FsTools";
 import {anyReceiver} from "@components/AnyEventEmmiter";
 import Skin from "@data/skin";
+import {createTheme} from "@mui/material";
+import {ThemeProvider} from "@mui/styles";
 
 
 export default function App() {
@@ -21,6 +23,13 @@ export default function App() {
     const [isLoading, setIsLoading] = React.useState(true)
 
     const navigate = useNavigate()
+
+
+    const darkTheme = createTheme({
+        palette: {
+            mode: "dark"
+        }
+    })
 
     async function refresh() {
         setIsLoading(true)
@@ -57,17 +66,19 @@ export default function App() {
     } else {
 
         return (
-            <div>
-                <div
-                    className={"app_background"}
-                    style={{
-                        backgroundColor: Skin.ContainerB
-                    }}
-                />
-                <GlobalAppLock/>
-                <_LoggedContent/>
-                <_GlobalPopup/>
-            </div>
+            <ThemeProvider theme={darkTheme}>
+                <div>
+                    <div
+                        className={"app_background"}
+                        style={{
+                            backgroundColor: Skin.ContainerB
+                        }}
+                    />
+                    <GlobalAppLock/>
+                    <_LoggedContent/>
+                    <_GlobalPopup/>
+                </div>
+            </ThemeProvider>
 
         )
     }

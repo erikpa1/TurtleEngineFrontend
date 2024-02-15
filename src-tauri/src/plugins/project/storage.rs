@@ -1,8 +1,8 @@
 use crate::app::AppStateMut;
 use serde_json::{json, Value};
-use std::array;
 use std::path::Path;
 use std::sync::Mutex;
+use std::{array, vec};
 use tauri::State;
 
 use tauri;
@@ -23,8 +23,8 @@ pub async fn InsertEntity(
         return Err("Entity is not an object".into());
     }
 
-    if let Ok(()) = project.InsertEntity(&container, data) {
-        return Ok("".into());
+    if let Ok(uid) = project.InsertEntity(&container, data) {
+        return Ok(uid);
     } else {
         return Err("".into());
     }
@@ -40,10 +40,12 @@ pub async fn InsertEntities(
 
     let data: Value = serde_json::from_str(&data).unwrap();
 
+    let mut inserted: Vec<String> = vec![];
+
     if let Some(array) = data.as_array() {
         for element in array {
-            if let Ok(()) = project.InsertEntity(&container, element.clone()) {
-                //Nothing
+            if let Ok(uid) = project.InsertEntity(&container, element.clone()) {
+                inserted.push(uid);
             } else {
                 println!("Failed to insert entity: {}", element);
             }
@@ -51,7 +53,9 @@ pub async fn InsertEntities(
     } else {
         return Err("Not an Array!".into());
     }
-    return Ok("".into());
+
+    let response: Value = json!(inserted);
+    return Ok(serde_json::to_string(&response).unwrap());
 }
 
 #[tauri::command]
@@ -78,7 +82,6 @@ pub async fn DeleteEntities(
     let query_value: Value = serde_json::from_str(&query).unwrap();
 
     project.DeleteEntities(&container, &query_value);
-
 
     return Ok("".into());
 }
