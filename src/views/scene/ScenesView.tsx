@@ -20,7 +20,7 @@ export default function ScenesView({}) {
             <Stack>
                 <Typography>Scene1</Typography>
                 <Typography>Scene2</Typography>
-                <Typography>Scene3</Typography>
+                <div>Scene3</div>
             </Stack>
 
 

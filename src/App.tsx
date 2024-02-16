@@ -8,28 +8,25 @@ import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
-import WasmView from "./WasmEntry";
+
 import ProjectApi from "@api/project/ProjectApi";
 import FsTools from "@api/FsTools";
 import {anyReceiver} from "@components/AnyEventEmmiter";
 import Skin from "@data/skin";
-import {createTheme, CssBaseline} from "@mui/material";
-import {ThemeProvider} from "@mui/styles";
+import {Container, CssBaseline, Drawer, Typography} from "@mui/material";
+import {createTheme, ThemeProvider} from '@mui/material/styles'
 
-
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+})
 export default function App() {
-
 
     const [isLoading, setIsLoading] = React.useState(true)
 
     const navigate = useNavigate()
 
-
-    const darkTheme = createTheme({
-        palette: {
-            mode: "dark"
-        }
-    })
 
     async function refresh() {
         setIsLoading(true)
@@ -68,6 +65,7 @@ export default function App() {
         return (
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline/>
+
                 <div>
                     <div
                         className={"app_background"}
