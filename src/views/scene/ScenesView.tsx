@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, Container, Drawer, Fab, FormControl, Input, Modal, TextField} from "@mui/material";
+import {Box, Button, Container, Drawer, Fab, FormControl, Input, Modal, TextField, Typography} from "@mui/material";
 import Stack from "@mui/material/Stack";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -18,9 +18,9 @@ export default function ScenesView({}) {
             <_FloatingButton/>
 
             <Stack>
-                <div>Scene1</div>
-                <div>Scene2</div>
-                <div>Scene3</div>
+                <Typography>Scene1</Typography>
+                <Typography>Scene2</Typography>
+                <Typography>Scene3</Typography>
             </Stack>
 
 

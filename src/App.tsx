@@ -13,7 +13,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import FsTools from "@api/FsTools";
 import {anyReceiver} from "@components/AnyEventEmmiter";
 import Skin from "@data/skin";
-import {createTheme} from "@mui/material";
+import {createTheme, CssBaseline} from "@mui/material";
 import {ThemeProvider} from "@mui/styles";
 
 
@@ -67,6 +67,7 @@ export default function App() {
 
         return (
             <ThemeProvider theme={darkTheme}>
+                <CssBaseline/>
                 <div>
                     <div
                         className={"app_background"}
