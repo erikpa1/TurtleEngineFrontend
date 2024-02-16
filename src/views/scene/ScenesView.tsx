@@ -1,5 +1,17 @@
 import React from "react";
-import {Box, Button, Container, Drawer, Fab, FormControl, Input, Modal, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Drawer,
+    Fab,
+    FormControl,
+    Input,
+    Modal,
+    TextField,
+    Typography
+} from "@mui/material";
 import Stack from "@mui/material/Stack";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -9,22 +21,57 @@ import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import SceneApi from "@api/SceneApi";
 import TurtleScene from "@data/scene";
 import CreateOrEditSceneView from "@views/scene/CreateOrEditSceneView";
+import {MiddleSearchBar} from "@components/SearchBar";
 
 export default function ScenesView({}) {
 
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [scenes, setScenes] = React.useState<Array<TurtleScene>>([])
+
+
+    async function refresh() {
+        setIsLoading(true)
+
+        const response = await SceneApi.GetScenes("")
+        console.log(response)
+        setScenes(response)
+
+        setIsLoading(false)
+    }
+
+    React.useEffect(() => {
+
+        refresh()
+
+    }, [])
+
 
     return (
-        <Container>
+        <>
+            <Container>
+                <MiddleSearchBar/>
+
+                {
+                    isLoading ? <CircularProgress/> :
+                        <Stack>
+                            {
+                                scenes.map((val) => {
+                                    return (
+                                        <Typography
+                                            key={val.uid}
+                                        >
+                                            {val.name}
+                                        </Typography>
+                                    )
+                                })
+                            }
+                        </Stack>
+                }
+
+
+            </Container>
             <_FloatingButton/>
-
-            <Stack>
-                <Typography>Scene1</Typography>
-                <Typography>Scene2</Typography>
-                <div>Scene3</div>
-            </Stack>
-
-
-        </Container>
+        </>
     )
 }
 

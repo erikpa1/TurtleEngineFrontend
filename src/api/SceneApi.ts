@@ -2,6 +2,7 @@ import axios from "axios";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import TauriStoragePlugin from "../tauri/plugin_storage";
 import TurtleScene from "@data/scene";
+import ProjectApi from "@api/project/ProjectApi";
 
 
 export default class SceneApi {
@@ -16,7 +17,7 @@ export default class SceneApi {
 
     static async GetScenes(project_uid: string): Promise<Array<any>> {
         if (PlatformDispatcher.IsDesktop()) {
-            return []
+            return await TauriStoragePlugin.QueryEntities("scenes", {})
         } else {
             return (await axios.get("/api/scenes")).data
         }
@@ -25,6 +26,7 @@ export default class SceneApi {
     static async CreateOrUpdateScene(scene: TurtleScene) {
         if (PlatformDispatcher.IsDesktop()) {
             await TauriStoragePlugin.InsertEntities("scenes", [scene.ToJson()])
+            await ProjectApi.SaveProject()
         }
     }
 
