@@ -9,12 +9,15 @@ import {useTranslation} from "react-i18next";
 
 interface CreateOrEditSceneViewProps {
     scene?: TurtleScene
+    onStart: () => void
     onUpdate: () => void
 }
 
-export default function CreateOrEditSceneView({scene, onUpdate}: CreateOrEditSceneViewProps) {
+export default function CreateOrEditSceneView({scene, onStart, onUpdate}: CreateOrEditSceneViewProps) {
 
     const [t] = useTranslation()
+
+    const [_scene] = React.useState<TurtleScene>(scene ?? (new TurtleScene()))
 
     const [name, setName] = React.useState("Name 1")
 
@@ -22,15 +25,12 @@ export default function CreateOrEditSceneView({scene, onUpdate}: CreateOrEditSce
 
     async function createScenePressed() {
         locker.lock()
-
-        const scene = new TurtleScene()
-        scene.name = name
-
-        await SceneApi.CreateOrUpdateScene(scene)
-
+        onStart()
+        _scene.name = name
+        await SceneApi.CreateOrUpdateScene(_scene)
         locker.unlock()
+        onUpdate()
     }
-
 
     return (
         <Stack gap={2}>
@@ -39,7 +39,9 @@ export default function CreateOrEditSceneView({scene, onUpdate}: CreateOrEditSce
                 size="small"
                 value={name}
                 onChange={(e) => {
-                    setName(e.target.value)
+                    const newVal = e.target.value
+                    setName(newVal)
+                    _scene.name = newVal
                 }}
             />
 

@@ -15,10 +15,10 @@ export default function AppRoutes() {
 
 
     return (
-        <div>
-            <ProSidebarProvider>
-                <MainNavBar/>
-            </ProSidebarProvider>
+        <main style={{
+            overflowY: "hidden",
+            overflowX: "hidden",
+        }}>
 
             <div style={{flexGrow: 1}}>
                 <Routes>
@@ -39,7 +39,7 @@ export default function AppRoutes() {
                 </Routes>
 
             </div>
-        </div>
+        </main>
     )
 }
 

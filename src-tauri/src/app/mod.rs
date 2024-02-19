@@ -34,7 +34,12 @@ impl AppStateMut {
         if let Some(val_obj) = entity.as_object_mut() {
             if let Some(val) = val_obj.get("uid") {
                 if let Some(uid_val) = val.as_str() {
-                    uid = String::from(uid_val);
+                    if uid_val == "" {
+                        uid = Uuid::new_v4().to_string();
+                        val_obj.insert("uid".into(), Value::String(uid.clone()));
+                    } else {
+                        uid = String::from(uid_val);
+                    }
                 }
             } else {
                 uid = Uuid::new_v4().to_string();

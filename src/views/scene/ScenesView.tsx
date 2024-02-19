@@ -22,64 +22,68 @@ import SceneApi from "@api/SceneApi";
 import TurtleScene from "@data/scene";
 import CreateOrEditSceneView from "@views/scene/CreateOrEditSceneView";
 import {MiddleSearchBar} from "@components/SearchBar";
+import SceneCard from "@views/scene/SceneCard";
 
 export default function ScenesView({}) {
 
     const [isLoading, setIsLoading] = React.useState(true)
     const [scenes, setScenes] = React.useState<Array<TurtleScene>>([])
 
-
     async function refresh() {
         setIsLoading(true)
-
         const response = await SceneApi.GetScenes("")
-        console.log(response)
         setScenes(response)
-
         setIsLoading(false)
     }
 
     React.useEffect(() => {
-
         refresh()
-
     }, [])
 
 
     return (
-        <>
+        <div>
             <Container>
-                <MiddleSearchBar/>
 
-                {
-                    isLoading ? <CircularProgress/> :
-                        <Stack>
-                            {
-                                scenes.map((val) => {
-                                    return (
-                                        <Typography
-                                            key={val.uid}
-                                        >
-                                            {val.name}
-                                        </Typography>
-                                    )
-                                })
-                            }
-                        </Stack>
-                }
+                <Stack
+                    style={{
+                        marginTop: "5em"
+                    }}
+                    gap={1}>
 
+                    <MiddleSearchBar/>
 
+                    {
+                        isLoading ? <CircularProgress/> :
+                            <Stack>
+                                {
+                                    scenes.map((val) => {
+                                        return (
+                                            <SceneCard
+                                                key={val.uid}
+                                                scene={val}
+                                            />
+                                        )
+                                    })
+                                }
+                            </Stack>
+                    }
+                </Stack>
             </Container>
-            <_FloatingButton/>
-        </>
+            <_FloatingButton onRefresh={refresh}/>
+        </div>
     )
 }
 
-function _FloatingButton({}) {
+function _FloatingButton({onRefresh}) {
 
     const [t] = useTranslation()
 
     const [show, setShow] = React.useState(false)
+
+    function onClose() {
+        setShow(true)
+    }
 
     return (
         <>
@@ -90,7 +94,7 @@ function _FloatingButton({}) {
             }}>
                 <Fab
                     size={"small"}
-                    onClick={() => setShow(true)}
+                    onClick={onClose}
                     color="success" aria-label="add">
                     <AddIcon/>
                 </Fab>
@@ -108,7 +112,13 @@ function _FloatingButton({}) {
                     }}
                 >
 
-                    <CreateOrEditSceneView onUpdate={() => setShow(false)}/>
+                    <CreateOrEditSceneView
+                        onUpdate={() => {
+                            onClose()
+                            onRefresh()
+                        }}
+                        onStart={onClose}
+                    />
 
                 </Container>
             </Drawer>

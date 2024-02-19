@@ -78,3 +78,11 @@ export function useAnyEventEmmiter(key: string, fun: any): [] {
 }
 
 console.log("Any event emmiter inited")
+
+export class Shortcuts {
+
+    static Ctrl(key: string): string {
+        return `keydown-ctrl-${key}`
+    }
+
+}

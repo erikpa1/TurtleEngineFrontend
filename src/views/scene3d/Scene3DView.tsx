@@ -14,7 +14,7 @@ import Stack from "@mui/material/Stack";
 import Scene3D_SideBar from "@views/scene3d/Scene3D_SideBar";
 import {useSceneModules} from "@views/scene3d/scene_modules";
 import Scene3D_BottomBar from "@views/scene3d/Scene3D_BottomBar";
-import anyEventEmmiter from "@components/AnyEventEmmiter";
+import anyEventEmmiter, {Shortcuts} from "@components/AnyEventEmmiter";
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 import ProjectApi from "@api/project/ProjectApi";
 import TauriSqlitePlugin from "../../tauri/plugin_storage";
@@ -30,6 +30,8 @@ export default function Scene3DView({}) {
         locker.lock()
         await ProjectApi.SaveProject()
 
+        console.log("Saving project")
+
         setTimeout(() => {
             locker.unlock()
         }, 1000)
@@ -44,12 +46,11 @@ export default function Scene3DView({}) {
     }
 
     React.useEffect(() => {
-
-        anyEventEmmiter.on("keydown-ctrl-s", save)
-        anyEventEmmiter.on("keydown-ctrl-d", testShortcut)
+        anyEventEmmiter.on(Shortcuts.Ctrl("s"), save)
+        anyEventEmmiter.on(Shortcuts.Ctrl("d"), testShortcut)
         return () => {
-            anyEventEmmiter.off("keydown-ctrl-s", save)
-            anyEventEmmiter.off("keydown-ctrl-d", testShortcut)
+            anyEventEmmiter.off(Shortcuts.Ctrl("s"), save)
+            anyEventEmmiter.off(Shortcuts.Ctrl("d"), testShortcut)
         }
 
     }, [])

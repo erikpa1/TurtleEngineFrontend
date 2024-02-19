@@ -15,12 +15,22 @@ export default class SceneApi {
         }
     }
 
-    static async GetScenes(project_uid: string): Promise<Array<any>> {
+    static async GetScenes(project_uid: string): Promise<Array<TurtleScene>> {
+
+        let data: Array<any> = []
+
         if (PlatformDispatcher.IsDesktop()) {
-            return await TauriStoragePlugin.QueryEntities("scenes", {})
+            data = await TauriStoragePlugin.QueryEntities("scenes", {})
         } else {
-            return (await axios.get("/api/scenes")).data
+            data = (await axios.get("/api/scenes")).data
         }
+
+        return data.map((val) => {
+            const tmp = new TurtleScene()
+            tmp.FromJson(val)
+            return tmp
+        })
+
     }
 
     static async CreateOrUpdateScene(scene: TurtleScene) {

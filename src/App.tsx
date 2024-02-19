@@ -15,12 +15,16 @@ import {anyReceiver} from "@components/AnyEventEmmiter";
 import Skin from "@data/skin";
 import {Container, CssBaseline, Drawer, Typography} from "@mui/material";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {ProSidebarProvider} from "react-pro-sidebar";
+import MainNavBar from '@app/MainNavBar';
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
     },
 })
+
+
 export default function App() {
 
     const [isLoading, setIsLoading] = React.useState(true)
@@ -73,8 +77,18 @@ export default function App() {
                             backgroundColor: Skin.ContainerB
                         }}
                     />
+
+                    <div>
+                        <ProSidebarProvider>
+                            <MainNavBar/>
+                        </ProSidebarProvider>
+
+                        <div style={{flexGrow: 1}}>
+                            <AppRoutes/>
+                        </div>
+                    </div>
+
                     <GlobalAppLock/>
-                    <_LoggedContent/>
                     <_GlobalPopup/>
                 </div>
             </ThemeProvider>
@@ -84,11 +98,6 @@ export default function App() {
 
 }
 
-function _LoggedContent() {
-    return (
-        <AppRoutes/>
-    )
-}
 
 function _GlobalPopup() {
 
