@@ -6,7 +6,7 @@ import {
     Container,
     Drawer,
     Fab,
-    FormControl,
+    FormControl, Grid,
     Input,
     Modal,
     TextField,
@@ -47,26 +47,28 @@ export default function ScenesView({}) {
 
                 <Stack
                     style={{
-                        marginTop: "5em"
+                        marginTop: "2em"
                     }}
-                    gap={1}>
+                    gap={3}>
 
                     <MiddleSearchBar/>
 
                     {
                         isLoading ? <CircularProgress/> :
-                            <Stack>
+                            <Grid container spacing={2}>
                                 {
                                     scenes.map((val) => {
                                         return (
-                                            <SceneCard
-                                                key={val.uid}
-                                                scene={val}
-                                            />
+                                            <Grid item>
+                                                <SceneCard
+                                                    key={val.uid}
+                                                    scene={val}
+                                                />
+                                            </Grid>
                                         )
                                     })
                                 }
-                            </Stack>
+                            </Grid>
                     }
                 </Stack>
             </Container>

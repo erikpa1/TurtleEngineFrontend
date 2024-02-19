@@ -3,6 +3,7 @@ import MainNavBar from "./MainNavBar"
 import {ProSidebarProvider} from "react-pro-sidebar"
 import {Route, Routes} from "react-router-dom"
 import RoutesApi from "@app/RoutesApi"
+import GlobalShortcutsWrapper from "@components/GlobalShortcutsWrapper";
 
 
 const ScenesView = React.lazy(() => import("@views/scene/ScenesView"))
@@ -26,13 +27,17 @@ export default function AppRoutes() {
 
                     <Route path={RoutesApi.SCENES} element={
                         <React.Suspense>
-                            <ScenesView/>
+                            <GlobalShortcutsWrapper>
+                                <ScenesView/>
+                            </GlobalShortcutsWrapper>
                         </React.Suspense>
                     }/>
 
                     <Route path={RoutesApi.SCENE} element={
                         <React.Suspense>
-                            <Scene3DView/>
+                            <GlobalShortcutsWrapper>
+                                <Scene3DView/>
+                            </GlobalShortcutsWrapper>
                         </React.Suspense>
                     }/>
 

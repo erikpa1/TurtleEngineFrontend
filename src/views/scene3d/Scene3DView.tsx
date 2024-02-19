@@ -23,38 +23,6 @@ import TauriStoragePlugin from "../../tauri/plugin_storage";
 
 export default function Scene3DView({}) {
 
-    const locker = useGlobalAppLock()
-
-    async function save(e) {
-        e.preventDefault()
-        locker.lock()
-        await ProjectApi.SaveProject()
-
-        console.log("Saving project")
-
-        setTimeout(() => {
-            locker.unlock()
-        }, 1000)
-
-    }
-
-    async function testShortcut() {
-        locker.lock()
-
-        locker.unlock()
-
-    }
-
-    React.useEffect(() => {
-        anyEventEmmiter.on(Shortcuts.Ctrl("s"), save)
-        anyEventEmmiter.on(Shortcuts.Ctrl("d"), testShortcut)
-        return () => {
-            anyEventEmmiter.off(Shortcuts.Ctrl("s"), save)
-            anyEventEmmiter.off(Shortcuts.Ctrl("d"), testShortcut)
-        }
-
-    }, [])
-
     return (
         <div style={{
             height: "100vh",
