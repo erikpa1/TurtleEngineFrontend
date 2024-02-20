@@ -1,6 +1,6 @@
 import React from "react";
 import {Container, Drawer} from "@mui/material";
-import anyEventEmmiter from "@components/AnyEventEmmiter";
+import anyEventEmmiter, {Shortcuts} from "@components/AnyEventEmmiter";
 import {AllFilesView} from "@views/files/FilesView";
 
 export default function Scene3D_BottomBar({}) {
@@ -20,12 +20,10 @@ function _FilesDrawer({}) {
         setVisible(!visible)
     }
 
-
     React.useEffect(() => {
-        anyEventEmmiter.on("keydown-ctrl-space", swapDrawer)
-
+        anyEventEmmiter.on(Shortcuts.Ctrl("space"), swapDrawer)
         return () => {
-            anyEventEmmiter.off("keydown-ctrl-space", swapDrawer)
+            anyEventEmmiter.off(Shortcuts.Ctrl("space"), swapDrawer)
         }
     })
 

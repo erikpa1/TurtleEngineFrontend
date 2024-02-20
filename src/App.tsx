@@ -17,6 +17,7 @@ import {Container, CssBaseline, Drawer, Typography} from "@mui/material";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import {ProSidebarProvider} from "react-pro-sidebar";
 import MainNavBar from '@app/MainNavBar';
+import {DnDBox, DnDBox1, MultiplatformDngBox} from "@views/files/FilesView";
 
 const darkTheme = createTheme({
     palette: {
@@ -68,6 +69,7 @@ export default function App() {
 
         return (
             <ThemeProvider theme={darkTheme}>
+
                 <CssBaseline/>
 
                 <div>

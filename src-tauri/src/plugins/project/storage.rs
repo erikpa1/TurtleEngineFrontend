@@ -64,7 +64,7 @@ pub async fn QueryEntities(
     query: String,
     state: State<'_, Mutex<AppStateMut>>,
 ) -> Result<String, String> {
-    let project = state.lock().unwrap();
+    let mut project = state.lock().unwrap();
 
     let entities = project.QueryEntities(&container, &serde_json::from_str(&query).unwrap());
 

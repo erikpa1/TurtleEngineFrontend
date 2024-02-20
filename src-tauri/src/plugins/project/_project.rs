@@ -32,11 +32,8 @@ pub async fn ActivateProject(
         .to_string();
 
     let mut prj = tfs::GetJson(&filePath).unwrap_or(json!({}));
-    let mut obj = prj.as_object_mut().unwrap();
-    obj.insert(
-        "project_folder".into(),
-        serde_json::Value::String(parent_folder.clone()),
-    );
+
+    println!("{}", serde_json::to_string(&prj).unwrap());
 
     tmp.activeProject = prj;
     tmp.activeProjectPath = filePath.clone();

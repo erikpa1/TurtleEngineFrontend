@@ -7,14 +7,15 @@ use uuid::Uuid;
 
 use serde_json::{json, Value};
 
+use serde_json::map::Map as SerdeMap;
+
 use tstructures::licence::Licence;
 
 pub struct AppStateMut {
     pub activeProjectFolder: String,
     pub activeProjectPath: String,
     pub activeProject: Value,
-
-    pub containers: HashMap<String, HashMap<String, Value>>,
+    // pub containers: HashMap<String, HashMap<String, Value>>,
 }
 
 impl AppStateMut {
@@ -23,8 +24,21 @@ impl AppStateMut {
             activeProject: json!({}),
             activeProjectPath: "".into(),
             activeProjectFolder: "".into(),
-            containers: HashMap::new(),
+            // containers: HashMap::new(),
         };
+    }
+
+    pub fn GetOrCreateContainer(&mut self, name: &String) -> Option<&mut SerdeMap<String, Value>> {
+        if let Some(ct) = self.activeProject.as_object_mut() {
+            if ct.contains_key(name) {
+            } else {
+                let mut tmp = SerdeMap::new();
+                ct.insert(name.clone(), Value::from(tmp));
+            }
+            return ct.get_mut(name).map(|v| v.as_object_mut().unwrap());
+        }
+
+        None
     }
 
     pub fn InsertEntity(&mut self, container: &String, mut entity: Value) -> Result<String, ()> {
@@ -49,21 +63,19 @@ impl AppStateMut {
 
         return_uid = uid.clone();
 
-        let container_r = self.containers.get_mut(container);
+        let container_r = self.GetOrCreateContainer(container);
 
         if let Some(map) = container_r {
             map.insert(uid, entity);
-        } else {
-            let mut map: HashMap<String, Value> = HashMap::new();
-            map.insert(uid, entity);
-            self.containers.insert(container.clone(), map);
         }
 
         Ok(return_uid)
     }
 
     pub fn DeleteEntities(&mut self, container_key: &String, query: &Value) {
-        if let Some(container) = self.containers.get_mut(container_key) {
+        let container_r = self.GetOrCreateContainer(container_key);
+
+        if let Some(container) = container_r {
             if let Some(query_object) = query.as_object() {
                 let keys_len = query_object.keys().len();
 
@@ -98,10 +110,12 @@ impl AppStateMut {
         }
     }
 
-    pub fn QueryEntities(&self, container_key: &String, query: &Value) -> Vec<Value> {
+    pub fn QueryEntities(&mut self, container_key: &String, query: &Value) -> Vec<Value> {
         let mut result: Vec<Value> = vec![];
 
-        if let Some(container) = self.containers.get(container_key) {
+        let container_r = self.GetOrCreateContainer(container_key);
+
+        if let Some(container) = container_r {
             if let Some(query_object) = query.as_object() {
                 let keys_len = query_object.keys().len();
 
@@ -143,9 +157,10 @@ impl AppStateMut {
     }
 
     pub fn ToJson(&self) -> Value {
-        json!({
-            "name": "Some name",
-            "containers": self.containers
-        })
+        // json!({
+        //     "name": "Some name",
+        //     "containers": self.containers
+        // })
+        return self.activeProject.clone();
     }
 }
