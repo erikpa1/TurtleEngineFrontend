@@ -26,12 +26,11 @@ function _AddMesh({}) {
 
     const [show, setShow] = React.useState(false)
 
-
     return (
         <>
             <TopBarButton
-                icon={Icons.Mesh}
-                lang={t("add.mesh")}
+                icon={Icons.Video}
+                lang={t("add.video")}
                 onClick={() => setShow(true)}
             />
 

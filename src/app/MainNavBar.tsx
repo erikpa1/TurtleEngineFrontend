@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 import "./MainNavBar.css";
 
-import {Container, Drawer, Stack} from "@mui/material";
+import {Container, Drawer, Stack, Typography} from "@mui/material";
 import {MiddleSpinner} from "@components/Spinners";
 import Skin from "@data/skin";
 
@@ -118,13 +118,14 @@ function MyNavbarItem({lang, icon, link, onClick}: MyNavbarItemProps) {
         >
             <Stack>
                 {iconComponent}
-                <div style={{
-                    color: "#888888",
-                    textAlign: "center",
-                    fontSize: "10px"
-                }}>
+                <Typography
+                    sx={{
+                        textAlign: "center",
+                        fontSize: "10px"
+                    }}
+                >
                     {t(lang)}
-                </div>
+                </Typography>
             </Stack>
         </div>
 

@@ -41,8 +41,10 @@ export default class TurtleFile {
     Preview(): string {
         const ext = this.Extension()
 
-        if (ext == "glb") {
+        if (ext === "glb") {
             return "/icons/Deployment.svg"
+        } else if (ext === "turtlescene") {
+            return "/icons/Scene.svg"
         }
         return "/icons/Projects.svg"
     }

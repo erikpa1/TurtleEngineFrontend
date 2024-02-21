@@ -13,7 +13,7 @@ import ProjectApi from "@api/project/ProjectApi";
 import FolderIcon from '@mui/icons-material/Folder'
 import CreateNewFolderRoundedIcon from '@mui/icons-material/CreateNewFolderRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import {MiddleSpinner} from "@components/Spinners";
+import {DefaultSkeleton, MiddleSpinner} from "@components/Spinners";
 import {DeleteForeverRounded} from "@mui/icons-material";
 import {useNavigate} from "react-router-dom";
 import TauriProjectsPlugin from "../../tauri/plugin_projects";
@@ -266,7 +266,7 @@ const _ProjectsList = React.forwardRef(({filterKey, onProjectPicked}: _ProjectsL
     }, [])
 
     if (isLoading) {
-        return (<MiddleSpinner/>)
+        return (<DefaultSkeleton count={10}/>)
     } else {
         return (
             <>

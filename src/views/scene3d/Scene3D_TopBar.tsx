@@ -7,6 +7,7 @@ import Scene3D_TBS_Zones from "@views/scene3d/Scene3D_TBS_Zones";
 import Scene3D_TBS_AttPoints from "@views/scene3d/Scene3D_TBS_AttPoints";
 import Scene3D_TBS_Drawing from "@views/scene3d/Scene3D_TBS_Drawing";
 import Scene3D_TBS_Meshes from "@views/scene3d/meshes/Scene3D_TBS_Meshes";
+import Scene3D_TBS_Boards from "@views/scene3d/boards/Scene3D_TBS_Boards";
 
 export default function Scene3D_TopBar({}) {
 
@@ -97,7 +98,7 @@ export default function Scene3D_TopBar({}) {
                     Logic circuits
                 </Case>
                 <Case value={"boards"}>
-                    Boards
+                    <Scene3D_TBS_Boards/>
                 </Case>
             </Switch>
         </TopBar>

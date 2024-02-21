@@ -44,7 +44,7 @@ export default function TopBarButton({icon, isActive, disabled, onClick, lang}: 
                         style={{
                             width: '100%',
                             height: 40,
-                            marginLeft: "auto",
+                            marginLeft: "auto"
                         }}
                     />
 
