@@ -23,8 +23,8 @@ function _AddMesh({}) {
     return (
         <>
             <TopBarButton
-                icon={Icons.Video}
-                lang={t("add.video")}
+                icon={Icons.Mesh}
+                lang={t("add.mesh")}
                 onClick={() => setShow(true)}
             />
 
