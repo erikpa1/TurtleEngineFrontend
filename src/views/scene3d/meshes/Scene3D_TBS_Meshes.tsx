@@ -8,22 +8,16 @@ import FilesView, {AllFilesView} from "@views/files/FilesView";
 import TurtleFile from "@api/project/files";
 import ProjectApi from "@api/project/ProjectApi";
 
-
 export default function Scene3D_TBS_Meshes({}) {
     return (
         <Stack direction={"row"}>
-
             <_AddMesh/>
-
-
         </Stack>
     )
 }
 
 function _AddMesh({}) {
-
     const [t] = useTranslation()
-
     const [show, setShow] = React.useState(false)
 
     return (

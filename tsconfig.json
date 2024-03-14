@@ -62,9 +62,6 @@
       "@world/*": [
         "src/world/*"
       ],
-      "@data/*": [
-        "src/data/*"
-      ],
       "@icons/*": [
         "src/icons/*"
       ]

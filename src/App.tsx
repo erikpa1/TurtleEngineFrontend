@@ -21,7 +21,7 @@ import {DnDBox, DnDBox1, MultiplatformDngBox} from "@views/files/FilesView";
 
 const darkTheme = createTheme({
     palette: {
-        mode: 'dark',
+        mode: 'light',
     },
 })
 
@@ -31,6 +31,9 @@ export default function App() {
     const [isLoading, setIsLoading] = React.useState(true)
 
     const navigate = useNavigate()
+
+
+    Skin.SetLight()
 
 
     async function refresh() {

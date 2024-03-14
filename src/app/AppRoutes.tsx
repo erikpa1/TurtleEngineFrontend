@@ -12,7 +12,6 @@ const Scene3DView = React.lazy(() => import("@views/scene3d/Scene3DView"))
 
 export default function AppRoutes() {
 
-    ScenesView
 
 
     return (

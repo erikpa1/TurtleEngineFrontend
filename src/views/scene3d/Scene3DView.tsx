@@ -1,62 +1,91 @@
-import React from "react";
-import FsTools from "@api/FsTools";
-import WorldCanvasWrapper from "../../world/WorldCanvasWrapper";
-import {PrimitiveMesh} from "../../world/PrimitiveMesh";
-import SidebarLayout from "@components/SidebarLayout";
+import React from "react"
+import FsTools from "@api/FsTools"
+import WorldCanvasWrapper from "../../world/WorldCanvasWrapper"
+import {PrimitiveMesh} from "../../world/PrimitiveMesh"
 
-import Scene3D_TopBar from "@views/scene3d/Scene3D_TopBar";
-import {TreeItem, TreeView} from "@mui/lab";
+import {useSceneViewTopBar} from "@views/scene3d/Scene3D_TopBar"
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import ChevronRightSharp from '@mui/icons-material/ChevronRightSharp'
-
-import Stack from "@mui/material/Stack";
-import Scene3D_SideBar from "@views/scene3d/Scene3D_SideBar";
 import {useSceneModules} from "@views/scene3d/scene_modules";
-import Scene3D_BottomBar from "@views/scene3d/Scene3D_BottomBar";
-import anyEventEmmiter, {Shortcuts} from "@components/AnyEventEmmiter";
-import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
-import ProjectApi from "@api/project/ProjectApi";
-import TauriSqlitePlugin from "../../tauri/plugin_storage";
-import TauriStoragePlugin from "../../tauri/plugin_storage";
+
+import {Docking_WorldView, TabScrollWrapper, TabScrollWrapperNoMargins} from "@components/docking/docking"
 
 
 export default function Scene3DView({}) {
 
+    const topBar = useSceneViewTopBar()
+
     return (
-        <div style={{
-            height: "100vh",
-            flexDirection: "column",
-            display: "flex"
-        }}>
+        <div>
 
-            <Scene3D_TopBar/>
+            <Docking_WorldView
+                headings={topBar}
+                tabulators={[
+                    {
+                        size: 200,
+                        tabs: [
+                            {
+                                content: (
+                                    <TabScrollWrapperNoMargins>
+                                        <div>Hothing</div>
+                                    </TabScrollWrapperNoMargins>
 
-            <div style={{
-                flex: 1
-            }}>
-                <SidebarLayout>
-                    <_3DView/>
+                                ),
+                                title: "Some View",
+                                id: "Some View",
+                            }
+                        ],
+                    },
+                    {
+                        size: 1000,
+                        tabs: [
+                            {
+                                title: "3D World",
+                                id: "3D World",
+                                content: (<_3DView/>)
+                            }
+                        ]
+                    },
+                    {
+                        size: 200,
+                        tabs: [
+                            {
+                                content: (
+                                    <TabScrollWrapper>
+                                        <div>Nothing</div>
+                                    </TabScrollWrapper>
 
-                    <Scene3D_SideBar/>
+                                ),
+                                title: "Scene",
+                                id: "Scene",
+                            },
+                            {
+                                content: (
+                                    <TabScrollWrapperNoMargins>
+                                        <div>Nothing</div>
+                                    </TabScrollWrapperNoMargins>
 
-                </SidebarLayout>
-            </div>
+                                ),
+                                title: "Edit",
+                                id: "Edit",
+                            }
+                        ],
+                    },
+                ]}
+            />
 
-            <Scene3D_BottomBar/>
+
+            {/*<Scene3D_TopBar/>*/}
+
+            {/*<Scene3D_BottomBar/>*/}
         </div>
     )
 }
 
 function _3DView({}) {
     return (
-        <div style={{
-            height: "100%"
-        }}>
-            <WorldCanvasWrapper>
-                <_SceneContent/>
-            </WorldCanvasWrapper>
-        </div>
+        <WorldCanvasWrapper>
+            <_SceneContent/>
+        </WorldCanvasWrapper>
     )
 }
 
@@ -71,7 +100,6 @@ function _SceneContent() {
                 scale={[10, 10, 10]}
                 rotation={[Math.PI / -2, 0, 0]}
                 meshPath={FsTools.ConvertFilePath(FsTools.GetPathInProject("/Exercise 2.glb"))}/>
-
             {
                 Array.from(modules.modules.values()).map((val, index) => {
                     return (
