@@ -3,6 +3,7 @@ import Stack from "@mui/material/Stack";
 import TopBarButton from "@components/TopBarButton";
 import {useSceneModules} from "@views/scene3d/scene_modules";
 import DrawingFiber from "@views/scene3d/drawing/DrawingFiber";
+import Icons from "@icons/Icons";
 
 
 export default function Scene3D_TBS_Drawing({}) {
@@ -10,6 +11,25 @@ export default function Scene3D_TBS_Drawing({}) {
     return (
         <Stack direction={"row"}>
             <_DrawingModule/>
+
+            <TopBarButton
+                icon={Icons.PhysicsBox}
+                lang={"solid-box"}
+            />
+            <TopBarButton
+                icon={Icons.PhysicsBox}
+                lang={"wireframe-box"}
+            />
+
+            <TopBarButton
+                icon={Icons.PhysicsSphere}
+                lang={"solid-sphere"}
+            />
+            <TopBarButton
+                icon={Icons.PhysicsSphere}
+                lang={"wireframe-sphere"}
+            />
+
         </Stack>
     )
 }

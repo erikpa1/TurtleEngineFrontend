@@ -27,7 +27,7 @@ export default function TopBarButton({icon, isActive, disabled, onClick, lang}: 
             style={{
                 width: "60px",
                 padding: "2px",
-                margin:"2px",
+                margin: "2px",
                 ...((isActive ? {backgroundColor: "#dfeacc"} : {})),
                 ...((disabled ? {opacity: 0.5} : {cursor: "pointer"}))
             }}
