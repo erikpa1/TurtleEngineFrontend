@@ -19,7 +19,6 @@ const MODULE = "drawing"
 
 function _DrawingModule() {
 
-
     const modulesZus = useSceneModules()
 
     const _active = modulesZus.modules.has(MODULE)

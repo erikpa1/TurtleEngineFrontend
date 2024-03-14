@@ -21,6 +21,8 @@ export default defineConfig({
             '@wasm': path.resolve(__dirname, "src/wasm"),
             '@views': path.resolve(__dirname, "src/views"),
             '@world': path.resolve(__dirname, "src/world"),
+            '@commands': path.resolve(__dirname, "src/commands"),
+            '@ecs': path.resolve(__dirname, "src/ecs"),
             '@icons': path.resolve(__dirname, "src/icons")
         }
     },

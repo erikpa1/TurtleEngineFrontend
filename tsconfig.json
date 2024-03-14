@@ -64,6 +64,12 @@
       ],
       "@icons/*": [
         "src/icons/*"
+      ],
+      "@commands/*": [
+        "src/commands/*"
+      ],
+      "@ecs/*": [
+        "src/ecs/*"
       ]
     }
   },
