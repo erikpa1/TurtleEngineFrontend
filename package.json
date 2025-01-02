@@ -20,6 +20,7 @@
     "@react-three/fiber": "^8.13.0",
     "@react-three/xr": "^5.7.1",
     "@tauri-apps/api": "^1.2.0",
+    "antd": "^5.22.7",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "html2canvas": "^1.4.1",

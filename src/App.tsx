@@ -8,6 +8,7 @@ import AppApi from "@api/AppApi";
 import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
+import LoginView from "./routes/auth/LoginView";
 
 
 
@@ -39,6 +40,10 @@ export default function App() {
         )
 
     } else {
+
+        return (
+            <LoginView/>
+        )
 
         return (
             <div>

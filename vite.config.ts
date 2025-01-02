@@ -19,7 +19,7 @@ export default defineConfig({
             '@hooks': path.resolve(__dirname, "src/hooks"),
             '@external': path.resolve(__dirname, "src/external"),
             '@openxr': path.resolve(__dirname, "src/openxr"),
-            '@wasm': path.resolve(__dirname, "src/wasm")
+            '@wasm': path.resolve(__dirname, "src/wasm"),
         }
     },
     build: {
@@ -30,7 +30,7 @@ export default defineConfig({
         strictPort: true,
         port: 3000,
         proxy: {
-            "/api": "http://127.0.0.1:8000",
+            "/api": "http://127.0.0.1:8080",
         }
     },
 

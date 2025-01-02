@@ -6,14 +6,17 @@ import "./i18n"
 import {HashRouter} from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PlatformDispatcher from "@api/PlatformDispatcher";
+
+import AntdConfig from "./AntdConfig";
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <React.Suspense fallback={""}>
             <HashRouter>
-                <App/>
+                <AntdConfig>
+                    <App/>
+                </AntdConfig>
             </HashRouter>
         </React.Suspense>
     </React.StrictMode>,
