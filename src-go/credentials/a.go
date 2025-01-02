@@ -63,9 +63,9 @@ func GetParamFromEnvOrArg(envName, defaultValue, argValue string) string {
 
 // Database-related configuration
 const (
-	TWIN_DB_NAME             = "INFINITY_TWIN_DB_NAME"
-	TWIN_DB_NAME_VAL_DEFAULT = "infinity_twin"
-	TWIN_DB_NAME_VAL_TEST    = "infinity_twin_test"
+	TWIN_DB_NAME             = "TURTLE_DB_NAME"
+	TWIN_DB_NAME_VAL_DEFAULT = "turtle"
+	TWIN_DB_NAME_VAL_TEST    = "turtle_test"
 )
 
 func GetAppName() string {
@@ -77,25 +77,21 @@ func GetDBName() string {
 	return GetParamFromEnvOrArg(TWIN_DB_NAME, TWIN_DB_NAME_VAL_DEFAULT, GetValue(arguments, "db_name"))
 } // GetDBName returns the database name
 
-func GetProxyRoute() string {
-	return GetParamFromEnvOrArg("INFINITY_TWIN_PROXY_ROUTE", "http://localhost:5000", GetValue(arguments, "proxy_route"))
-}
-
 // GetDBConnStr returns the database connection string
 func GetDBConnStr() string {
-	return GetParamFromEnvOrArg("INFINITY_TWIN_DB_CONN_STRING", "mongodb://localhost:27017/", GetValue(arguments, "db_conn_str"))
+	return GetParamFromEnvOrArg("TURTLE_DB_CONN_STRING", "mongodb://localhost:27017/", GetValue(arguments, "db_conn_str"))
 }
 
 // Network-related configuration
 
 // GetIpAddress returns the IP address
 func GetIpAddress() string {
-	return GetParamFromEnvOrArg("INFINITY_TWIN_IP", "0.0.0.0", GetValue(arguments, "ip_address"))
+	return GetParamFromEnvOrArg("TURTLE_IP", "0.0.0.0", GetValue(arguments, "ip_address"))
 }
 
 // GetPort returns the port number as an integer
 func GetPort() int {
-	portStr := GetParamFromEnvOrArg("INFINITY_TWIN_PORT", "5000", GetValue(arguments, "port"))
+	portStr := GetParamFromEnvOrArg("TURTLE_PORT", "5000", GetValue(arguments, "port"))
 	port, err := strconv.Atoi(portStr)
 	if err != nil {
 		return 5000
@@ -113,17 +109,17 @@ const (
 
 // AuthProvider returns the authentication provider
 func AuthProvider() string {
-	return os.Getenv("INFINITY_TWIN_AUTH_PROVIDER")
+	return os.Getenv("TURTLE_AUTH_PROVIDER")
 }
 
 // AuthDefaultUser returns the default user for authentication
 func AuthDefaultUser() string {
-	return GetEnvOrDefault("INFINITY_TWIN_DEFAULT_USER", "exe@exe.sk")
+	return GetEnvOrDefault("TURTLE_DEFAULT_USER", "turtle@turtle.sk")
 }
 
 // AuthDefaultUser returns the default user for authentication
 func AuthDefaultPassword() string {
-	return GetEnvOrDefault("INFINITY_TWIN_DEFAULT_PASSWORD", "exe@exe.sk")
+	return GetEnvOrDefault("TURTLE_DEFAULT_PASSWORD", "turtle@turtle.sk")
 }
 
 // Auth0-related configuration
@@ -135,12 +131,12 @@ func Auth0Enabled() bool {
 
 // Auth0ClientID returns the Auth0 client ID
 func Auth0ClientID() string {
-	return os.Getenv("INFINITY_TWIN_AUTH0_CLIENT_ID")
+	return os.Getenv("TURTLE_AUTH0_CLIENT_ID")
 }
 
 // Auth0Secret returns the Auth0 secret
 func Auth0Secret() string {
-	return os.Getenv("INFINITY_TWIN_AUTH0_SECRET")
+	return os.Getenv("TURTLE_AUTH0_SECRET")
 }
 
 // Auth0Scope returns the Auth0 scope
@@ -152,7 +148,7 @@ func Auth0Scope() map[string]string {
 
 // Auth0Domain returns the Auth0 domain
 func Auth0Domain() string {
-	return os.Getenv("INFINITY_TWIN_AUTH0_DOMAIN")
+	return os.Getenv("TURTLE_AUTH0_DOMAIN")
 }
 
 // Auth0Metadata returns the Auth0 metadata URL
@@ -174,27 +170,27 @@ func AuthInfinityEnabled() bool {
 
 // AuthInfinityJwtSecret returns the JWT secret for Infinity authentication
 func AuthInfinityJwtSecret() string {
-	return GetEnvOrDefault("INFINITY_TWIN_AUTH_JWT_SECRET", "infinitysecret")
+	return GetEnvOrDefault("TURTLE_AUTH_JWT_SECRET", "infinitysecret")
 }
 
 func AuthInfinityJwtKey() string {
-	return GetEnvOrDefault("INFINITY_TWIN_AUTH_JWT_SECRET", "infinity")
+	return GetEnvOrDefault("TURTLE_AUTH_JWT_SECRET", "infinity")
 }
 
 func AuthInfinityTokenExpire() string {
 	//In seconds
 
-	return GetEnvOrDefault("INFINITY_TWIN_AUTH_TOKEN_EXPIRE", "3600")
+	return GetEnvOrDefault("TURTLE_AUTH_TOKEN_EXPIRE", "3600")
 }
 
 // AuthInfinityChangePasswordURL returns the change password URL for Infinity authentication
 func AuthInfinityChangePasswordURL() string {
-	return os.Getenv("INFINITY_TWIN_AUTH_CHANGE_PASSWORD_URL")
+	return os.Getenv("TURTLE_AUTH_CHANGE_PASSWORD_URL")
 }
 
 // AuthInfinityChangePasswordSession returns the session duration for changing passwords in minutes
 func AuthInfinityChangePasswordSession() int {
-	timeStr := os.Getenv("INFINITY_TWIN_AUTH_CHANGE_PASSWORD_MINUTE_SESSION")
+	timeStr := os.Getenv("TURTLE_AUTH_CHANGE_PASSWORD_MINUTE_SESSION")
 	time, err := strconv.Atoi(timeStr)
 	if err != nil {
 		return 1
@@ -206,17 +202,17 @@ func AuthInfinityChangePasswordSession() int {
 
 // RunHttps checks if the service should run with HTTPS
 func RunHttps() bool {
-	return os.Getenv("INFINITY_TWIN_HTTPS") == "1"
+	return os.Getenv("TURTLE_HTTPS") == "1"
 }
 
 // AzureMailCredentials returns the Azure mail credentials
 func AzureMailCredentials() string {
-	return os.Getenv("INFINITY_TWIN_AZURE_MAIL_KEY")
+	return os.Getenv("TURTLE_AZURE_MAIL_KEY")
 }
 
 // GetAzureStorageCredentials returns the Azure storage credentials
 func GetAzureStorageCredentials() string {
-	return os.Getenv("INFINITY_TWIN_AZURE_STORAGE_KEY")
+	return os.Getenv("TURTLE_AZURE_STORAGE_KEY")
 }
 
 // FillTestCredentials sets test credentials for the environment
@@ -226,10 +222,10 @@ func FillTestCredentials() {
 
 // SamlEnabled checks if SAML is enabled
 func SamlEnabled() bool {
-	return os.Getenv("INFINITY_TWIN_SAML") == "1"
+	return os.Getenv("TURTLE_SAML") == "1"
 }
 
 // SamlEnabled checks if SAML is enabled
 func LinuxWorkspace() string {
-	return GetEnvOrDefault("INFINITY_TWIN_LINUX_WORKSPACE", "../infinity_twin_storage") + "/" + GetAppName()
+	return GetEnvOrDefault("TURTLE_LINUX_WORKSPACE", "../turtle_storage") + "/" + GetAppName()
 }
