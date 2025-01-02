@@ -30,8 +30,7 @@ func handleError(err error) {
 	}
 }
 
-var CONN_STR = "DefaultEndpointsProtocol=https;AccountName=erikrust;AccountKey=WIDlb70GwrFFQhB7MiLprbdA/womCvqGdarnn6R5zSEwF3NEHgOiPY+dcDj3EdZDUWgLxXz5AJww+AStafiZqw==;EndpointSuffix=core.windows.net"
-
+var CONN_STR = ""
 func TestStorage() {
 	fmt.Printf("Azure Blob storage quick start sample\n")
 
