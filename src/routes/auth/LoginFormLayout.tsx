@@ -125,7 +125,7 @@ export function LoginFormLayout({children, background = null}: LogoutLayoutProps
                             border: "none"
                         }}
                         onClick={() => {
-                            window.open("https://www.google.sk", "_blank")
+                            window.open("https://www.digitalocean.com", "_blank")
                         }}
                         icon={
                             <img

@@ -4,7 +4,11 @@ import MountTabWrapper from "@components/MountTabWrapper";
 import {ViewContainer} from "@components/ViewContainer";
 import RoutesManager from "@platform/RoutesManager";
 
-const ProjectsSelectionView = React.lazy(() => import( "@components/projects/ProjectsSelectionView"))
+
+const ScenesView = React.lazy(() => import("../routes/scenes/ScenesView"))
+const ProjectsSelectionView = React.lazy(() => import("../routes/projects/ProjectsSelectionView"))
+
+
 const AssetsMainView = React.lazy(() => import("@components/assets/AssetsMainView"))
 const AppManagementView = React.lazy(() => import("@editors/appmanagement/AppManagementView"))
 
@@ -44,6 +48,13 @@ export default function AppRoutes_Editor() {
                     <MountTabWrapper>
                         <ViewContainer>
                             <ProjectsSelectionView/>
+                        </ViewContainer>
+                    </MountTabWrapper>
+                }/>
+                <Route path={RoutesManager.ROUTE_SCENES} element={
+                    <MountTabWrapper>
+                        <ViewContainer>
+                            <ScenesView/>
                         </ViewContainer>
                     </MountTabWrapper>
                 }/>

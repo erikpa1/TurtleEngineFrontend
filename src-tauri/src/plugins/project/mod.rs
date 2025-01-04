@@ -15,7 +15,7 @@ use tauri::plugin::{Builder, TauriPlugin};
 
 
 use tfs;
-use tstructures::project::{CreateProjectParams, ProjectLight};
+use tstructures::project::{CreateProjectParams, Project};
 
 use serde_json;
 use serde_json::json;
@@ -53,7 +53,7 @@ async fn CreateProject(projectJson: String) -> String {
 
         conn.close();
 
-        let lightProject = ProjectLight::FromCreateParams(&createParams);
+        let lightProject = Project::FromCreateParams(&createParams);
 
         fs::write(format!("{}/project_light.json", projectFolder), serde_json::to_string(&lightProject).unwrap());
     } else {
@@ -79,7 +79,7 @@ async fn DeleteProject(uid: String) -> String {
 async fn ListProjects() -> String {
     let paths = tfs::ListFolders(&tfs::GetProjectsPath());
 
-    let mut resultJsons: Vec<ProjectLight> = Vec::new();
+    let mut resultJsons: Vec<Project> = Vec::new();
 
     for folder in &paths {
         println!("{}", folder);
@@ -87,7 +87,7 @@ async fn ListProjects() -> String {
         if tfs::CheckProjectExistenceAndValidity(folder) {
             let lightDataStr = tfs::FileToString(&format!("{}project_light.json", folder));
 
-            let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
+            let mut lightDataResult: serde_json::Result<Project> = serde_json::from_str(&lightDataStr);
 
             if let Ok(mut lightData) = lightDataResult {
                 lightData.projectFolderPath = folder.clone();
@@ -108,7 +108,7 @@ async fn GetProjectLight(projectUid: String) -> String {
 
     let lightDataStr = tfs::FileToString(&format!("{}{}\\project_light.json", projectFolder, projectUid));
 
-    let mut lightDataResult: serde_json::Result<ProjectLight> = serde_json::from_str(&lightDataStr);
+    let mut lightDataResult: serde_json::Result<Project> = serde_json::from_str(&lightDataStr);
 
     if let Ok(mut lightData) = lightDataResult {
         lightData.projectFolderPath = format!("{}{}\\", projectFolder, projectUid);

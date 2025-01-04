@@ -1,4 +1,6 @@
 import React from 'react'
+import {useTranslation} from "react-i18next"
+
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -6,23 +8,23 @@ import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import {Project} from "@data/project/Project"
-import {useTranslation} from "react-i18next"
 
-import ProjectApi from "@api/project/ProjectApi"
+
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus"
 import {Routes, useNavigate} from "react-router-dom"
 import RoutesManager from "@platform/RoutesManager"
 import FsTools from "@api/FsTools"
 import {TGui} from "@external/tgui"
-import TauriWindowPlugin from "../../tauri/plugin_window"
-import PlatformDispatcher from "@api/PlatformDispatcher"
 
-interface ProjectUniversalCardProps {
-    project: Project
+import PlatformDispatcher from "@api/PlatformDispatcher"
+import TurtleScene from "@data/project/Scene"
+
+interface SceneCardProps {
+    scene: TurtleScene
     onEdit: (project: Project) => void
 }
 
-export default function ProjectUniversalCard({project, onEdit}: ProjectUniversalCardProps) {
+export default function SceneCard({scene, onEdit}: SceneCardProps) {
 
 
     const [t] = useTranslation()
@@ -32,21 +34,13 @@ export default function ProjectUniversalCard({project, onEdit}: ProjectUniversal
     const navigate = useNavigate()
 
 
-    async function activateProjectPressed() {
-
+    async function activateScenePressed() {
         if (PlatformDispatcher.IsDesktop()) {
-            const projectData = await ProjectApi.ActivateProject(project.uid)
-            if (projectData) {
-                navigate(RoutesManager.Assets(project.uid))
-                TauriWindowPlugin.ChangeWindowTitle(project.name)
-            }
+
         } else {
-            document.title = project.name
-            navigate(RoutesManager.Scenes(project.uid))
-
+            document.title = scene.name
+            navigate(RoutesManager.SceneEditor(scene.parent, scene.uid))
         }
-
-
     }
 
 
@@ -54,17 +48,17 @@ export default function ProjectUniversalCard({project, onEdit}: ProjectUniversal
         <Card sx={{maxWidth: 345}}>
             <CardMedia
                 sx={{height: 140}}
-                image={FsTools.ConvertFilePath(FsTools.GetPathInProject(project.uid, "Preview.png"))}
+                image={FsTools.ConvertFilePath(FsTools.GetPathInProject(scene.uid, "Preview.png"))}
                 // images="/textures/UniversalTurtle.png"
                 title="green iguana"
                 style={{
                     cursor: "pointer"
                 }}
-                onClick={activateProjectPressed}
+                onClick={activateScenePressed}
             />
             <CardContent>
                 <TGui.TextBig>
-                    {project.name}
+                    {scene.name}
                 </TGui.TextBig>
 
                 <Typography
@@ -75,17 +69,17 @@ export default function ProjectUniversalCard({project, onEdit}: ProjectUniversal
                         maxHeight: "50px"
                     }}
                 >
-                    {project.description}
+                    {scene.description}
                 </Typography>
 
                 <TGui.TextMicro>
-                    ({project.uid})
+                    ({scene.uid})
                 </TGui.TextMicro>
 
             </CardContent>
             <CardActions>
                 <Button size="small"
-                        onClick={activateProjectPressed}>
+                        onClick={activateScenePressed}>
                     {t("open")}
                 </Button>
                 <Button onClick={onEdit as any} size="small">{t("edit")}</Button>

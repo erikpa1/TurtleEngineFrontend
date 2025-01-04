@@ -1,15 +1,15 @@
 import React from "react";
-import {ProjectLight} from "@data/project/ProjectLight";
+import {Project} from "@data/project/Project";
 import ProjectApi from "@api/project/ProjectApi";
 import {useActiveProjectZus} from "@platform/zustands/projectZuses";
 
-export function useAvailableProjects(): [projects: Array<ProjectLight>, isLoading: boolean, refresh: () => void] {
+export function useAvailableProjects(): [projects: Array<Project>, isLoading: boolean, refresh: () => void] {
 
     const [isLoading, setIsLoading] = React.useState(true)
 
-    const [projects, setProjects] = React.useState<Array<ProjectLight>>([])
+    const [projects, setProjects] = React.useState<Array<Project>>([])
 
-    const refresh = () => {
+    async function refresh() {
         setIsLoading(true)
         ProjectApi.ListProjects().then((value) => {
             setProjects(value)
@@ -18,17 +18,19 @@ export function useAvailableProjects(): [projects: Array<ProjectLight>, isLoadin
 
     }
 
-    React.useEffect(refresh, [])
+    React.useEffect(() => {
+        refresh()
+    }, [])
 
     return [projects, isLoading, refresh]
 
 }
 
-export function useLoadProjectLight(projectUid: string): [project: ProjectLight | null, isLoading: boolean] {
+export function useLoadProjectLight(projectUid: string): [project: Project | null, isLoading: boolean] {
 
     const [isLoading, setIsLoading] = React.useState(true)
 
-    const [project, setProject] = React.useState<ProjectLight | null>(null)
+    const [project, setProject] = React.useState<Project | null>(null)
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -43,11 +45,11 @@ export function useLoadProjectLight(projectUid: string): [project: ProjectLight 
 
 }
 
-export function useActivateAndDispatchProject(): [(project: ProjectLight) => void] {
+export function useActivateAndDispatchProject(): [(project: Project) => void] {
 
     const projectZus = useActiveProjectZus()
 
-    const activateProject = (project: ProjectLight) => {
+    const activateProject = (project: Project) => {
         ProjectApi.GetAndActivateProject(project.uid).then((data) => {
             projectZus.setProject(project)
         })

@@ -16,7 +16,7 @@ use tauri::plugin::{Builder, TauriPlugin};
 
 
 use tfs;
-use tstructures::project::{CreateProjectParams, ProjectLight};
+use tstructures::project::{CreateProjectParams, Project};
 
 use serde_json;
 use serde_json::json;

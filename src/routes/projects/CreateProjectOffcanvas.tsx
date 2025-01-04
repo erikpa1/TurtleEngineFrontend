@@ -1,19 +1,19 @@
 import TurtleOffcanvas from "@components/Drawers";
-import React, { SyntheticEvent } from "react";
+import React from "react";
 
 import ProjectApi from "@api/project/ProjectApi";
-import { useTranslation } from "react-i18next";
-import { Stack } from "@mui/material";
-import { CreateProjectParams } from "@api/project/params";
-import { useGlobalAppLock } from "@platform/zustands/globalAppLockZus";
+import {useTranslation} from "react-i18next";
+import {Stack} from "@mui/material";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
 
-import { TurtleButton } from "@platform/components/TurtleButtons";
-import { TurtleTextField } from "@platform/components/TurtleForms";
-import { TGui } from "@external/tgui";
+import {TurtleButton} from "@platform/components/TurtleButtons";
+import {TurtleTextField} from "@platform/components/TurtleForms";
+import {TGui} from "@external/tgui";
 import FsTools from "@api/FsTools";
-import { ImagePicker } from "@editors/appmanagement/assets/CreateAssetWithFileContent";
+import {ImagePicker} from "@editors/appmanagement/assets/CreateAssetWithFileContent";
 import ImagesApi from "@api/ImagesApi";
 import PlatformDispatcher from "@api/PlatformDispatcher";
+import {Project} from "@data/project/Project"
 
 interface CreateProjectOffcanvasProps {
     onClose: () => void
@@ -22,9 +22,9 @@ interface CreateProjectOffcanvasProps {
 }
 
 export default function CreateProjectOffcanvas({
-    onClose,
-    onRefresh
-}: CreateProjectOffcanvasProps) {
+                                                   onClose,
+                                                   onRefresh
+                                               }: CreateProjectOffcanvasProps) {
 
     const [t] = useTranslation()
 
@@ -34,13 +34,7 @@ export default function CreateProjectOffcanvas({
 
     const [preview, setPreview] = React.useState(FsTools.GetPlatformPath("Images/Previews/project-Preview.png"))
 
-    const [cpp] = React.useState<CreateProjectParams | any>({
-        name: "",
-        author: "",
-        description: "",
-        project_type: "360",
-        lat_lon: ""
-    })
+    const [cpp] = React.useState(new Project())
 
     const createProjectPressed = async () => {
         lock.lock()
@@ -50,6 +44,8 @@ export default function CreateProjectOffcanvas({
 
         if (PlatformDispatcher.IsDesktop()) {
             await ImagesApi.GeneratePreviewDesktop(preview, FsTools.GetPathInProject(newProjectUid, "Preview.png"), 512)
+        } else {
+            //TODO nahrat project preview na uid
         }
 
         lock.unlock()
@@ -70,9 +66,6 @@ export default function CreateProjectOffcanvas({
         cpp.author = e.target.value
     }
 
-    const latLonChanged = (e: any) => {
-        cpp.lat_lon = e.target.value
-    }
 
     function imageSelectedDesktop(filePath: string) {
         if (filePath !== "") {
@@ -89,20 +82,30 @@ export default function CreateProjectOffcanvas({
     return (
         <TurtleOffcanvas onClose={onClose}>
 
+
             <TGui.Box>
                 <Stack spacing={2}>
 
+                    <h5>{t("create.project")}:</h5>
 
                     <ImagePicker
                         image={preview}
                         imagePickedDesktop={imageSelectedDesktop}
-                        imagePickedWeb={imageSelectedWeb} />
-
+                        imagePickedWeb={imageSelectedWeb}/>
 
                     <TurtleTextField
                         onChange={pNameChanged}
                         label={"project.name"}
                     />
+
+                    {
+                        PlatformDispatcher.IsDesktop() &&
+                        <TurtleTextField
+                            onChange={authorChanged}
+                            label={"project.author"}
+                        />
+                    }
+
 
                     <TurtleTextField
                         onChange={descChanged}
@@ -110,24 +113,22 @@ export default function CreateProjectOffcanvas({
                         multiline
                     />
 
-                    <TurtleTextField
-                        onChange={authorChanged}
-                        label={"project.author"}
-                    />
-
-                    <TurtleTextField
-                        onChange={latLonChanged}
-                        label={"project.latlon"}
-                    />
 
                 </Stack>
             </TGui.Box>
 
 
-            <TurtleButton
-                onClick={createProjectPressed}
-                label={"project.create"}
-            />
+            <div style={{
+                marginTop: "15px",
+                marginRight: "auto",
+                marginLeft: "auto"
+            }}>
+                <TurtleButton
+                    onClick={createProjectPressed}
+                    label={"project.create"}
+                />
+            </div>
+
 
         </TurtleOffcanvas>
     )

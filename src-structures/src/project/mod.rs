@@ -64,8 +64,8 @@ pub struct UploadAssetFileParams {
 
 #[derive(Serialize, Deserialize, Debug)]
 #[derive(TS)]
-#[ts(export, export_to = "../src/data/project/ProjectLight")]
-pub struct ProjectLight {
+#[ts(export, export_to = "../src/data/project/Project")]
+pub struct Project {
     #[serde(default)]
     pub name: String,
 
@@ -88,7 +88,7 @@ pub struct ProjectLight {
     pub projectFolderPath: String,
 }
 
-impl ProjectLight {
+impl Project {
     pub fn FromCreateParams(params: &CreateProjectParams) -> Self {
         return Self {
             uid: params.uid.clone(),

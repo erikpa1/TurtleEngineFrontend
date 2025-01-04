@@ -28,6 +28,7 @@ import FsTools from "@api/FsTools";
 import ImagesApi from "@api/ImagesApi";
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import UniversalAssetList, {UniversalAssetListModes} from "@components/assets/UniversalAssetList";
+import TurtleScene from "@data/project/Scene"
 
 
 interface CreateOrEditSceneOffContentProps {
@@ -43,7 +44,7 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
     const [thumbnail, setThumbnail] = React.useState(FsTools.GetPlatformPath(Assets.Scene.DEFAULT_PREVIEW))
 
-    const [asset, setAsset] = React.useState<Asset | null>(null)
+    const [asset, setAsset] = React.useState<TurtleScene | null>(null)
 
     const [subAsset, setSubAsset] = React.useState<Asset | null>(null)
 
@@ -60,8 +61,6 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
             lock.lock()
 
             props.onClose && props.onClose()
-
-            asset.hasPreview = true
 
             await SceneAssetManager.CreateSceneAsset(asset, subAsset)
 
@@ -108,11 +107,8 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
     }
 
     React.useEffect(() => {
-        const _asset = new Asset()
-        _asset.type = Assets.Scene.TYPE
-        _asset.subtype = sceneType
-        _asset.assetDefinition = Assets.Scene
-        _asset.parent_project_uid = activeProjectZus.project.uid
+        const _asset = new TurtleScene()
+
 
         setAsset(_asset)
     }, [])
@@ -168,7 +164,6 @@ export default function CreateSceneOffcanvas(props: CreateOrEditSceneOffContentP
 
                 <TGui.Stack>
                     <TurtleButton
-                        variant={"outlined"}
                         onClick={createAssetPressed}
                         label={"create.asset"}
                     />

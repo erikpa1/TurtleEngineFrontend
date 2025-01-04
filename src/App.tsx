@@ -9,16 +9,27 @@ import PlatformDispatcher from "@api/PlatformDispatcher";
 import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
 import LoginView from "./routes/auth/LoginView";
-
+import {useActiveUser} from "@hooks/activeUserZus";
 
 
 export default function App() {
 
+    return (
+        <div>
+            <div className={"app_background"}/>
+            <GlobalAppLock/>
+            <_App1/>
+            <_GlobalPopup/>
+        </div>
+    )
+}
+
+function _App1() {
+    const activeUserZus = useActiveUser()
 
     const [isLoading, setIsLoading] = React.useState(true)
 
     const navigate = useNavigate()
-
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -40,29 +51,16 @@ export default function App() {
         )
 
     } else {
-
-        return (
-            <LoginView/>
-        )
-
-        return (
-            <div>
-                <div className={"app_background"}/>
-
-                <GlobalAppLock/>
-
-
-
-
+        if (activeUserZus.user) {
+            return (
                 <_LoggedContent/>
+            )
+        } else {
+            return (
+                <LoginView/>
+            )
+        }
 
-
-                <_GlobalPopup/>
-
-
-            </div>
-
-        )
     }
 
 }

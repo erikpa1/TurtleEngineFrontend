@@ -17,6 +17,14 @@ type AuthContext struct {
 	User *models.User
 }
 
+func GetUserFromContext(c *gin.Context) *models.User {
+	tmp := models.NewUser()
+	tmp.Org = "olymp"
+	tmp.Uid = "poseidon"
+	//TODO semka dat uzivatela
+	return tmp
+}
+
 func GetUserFromCookies(cookiestring string) *models.User {
 	return &models.User{}
 }

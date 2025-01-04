@@ -18,14 +18,3 @@ export class CreateAssetParamas {
 }
 
 
-
-export interface CreateProjectParams {
-    name: string,
-    uid: string,
-    project_uid: string,
-    author: string,
-    lat_lon: string,
-    project_type: string,
-    description: string,
-
-}

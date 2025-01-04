@@ -2,6 +2,7 @@ import Assets from "@platform/assets/Assets";
 
 const PREFIX_PROJECT_CONFIG = "/project-config"
 const PREFIX_ASSETS = "/assets"
+const PREFIX_SCENES = "/scenes"
 const PREFIX_PLAY = "/play"
 const PREFIX_SCENE_EDITOR = "/entities-editor"
 const PREFIX_MESH_EDITOR = "/mesh-editor"
@@ -24,6 +25,7 @@ export default class RoutesManager {
     static ROUTE_PROJECTS = `/projects`
     static ROUTE_MANAGEMENT = `/management`
     static ROUTE_ASSETS = `${PREFIX_ASSETS}/:projectuid`
+    static ROUTE_SCENES = `${PREFIX_SCENES}/:projectuid`
     static ROUTE_PROJECT_CONFIG = `${PREFIX_PROJECT_CONFIG}/:projectuid`
     static ROUTE_PLAY = `${PREFIX_PLAY}/:projectuid`
     static ROUTE_SCENE_EDITOR = `${PREFIX_SCENE_EDITOR}/:projectuid/:assetuid`
@@ -40,6 +42,9 @@ export default class RoutesManager {
 
     static Assets(projectUid: string): string {
         return `${PREFIX_ASSETS}/${projectUid}`
+    }
+    static Scenes(projectUid: string): string {
+        return `${PREFIX_SCENES}/${projectUid}`
     }
 
     static ProjectConfig(projectUid: string): string {

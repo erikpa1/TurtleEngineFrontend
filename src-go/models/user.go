@@ -7,6 +7,7 @@ type User struct {
 	Surname   string `json:"surname" bson:"surname"`
 	Password  string `json:"password" bson:"password"`
 	Type      string `json:"type" bson:"type"`
+	Org       string `json:"org" bson:"org"`
 }
 
 func NewUser() *User {

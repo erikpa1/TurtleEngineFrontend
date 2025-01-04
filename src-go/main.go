@@ -67,7 +67,7 @@ func dev_main() {
 
 	r.GET("/api/main", _MainRoute)
 
-	api.InigApi(r)
+	api.InitApi(r)
 	auth.Init_api_auth0(r)
 
 	if tools.IsInDevelopment() {
@@ -155,7 +155,6 @@ func main() {
 	models.RegisterClazzFactory()
 
 	lg.LogI("Starting infinity twin application")
-	lg.LogI("Proxy: ", credentials.GetProxyRoute())
 	lg.LogI("DbName: ", credentials.GetDBName())
 
 	dev_main()

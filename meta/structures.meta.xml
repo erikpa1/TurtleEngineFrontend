@@ -30,7 +30,7 @@
     <class nam="CreateProjectParams">
         <export>
             <rust path="../src-structures/src/project/mod.rs"/>
-            <typescript path="../src/data/project/ProjectLight.ts"/>
+            <typescript path="../src/data/project/Project.ts"/>
         </export>
 
         <variables>

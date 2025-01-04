@@ -1,13 +1,14 @@
 import React from "react";
 
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
-import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas";
+
 import {useTranslation} from "react-i18next";
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import ProjectsSelectionView from "@components/projects/ProjectsSelectionView";
+import CreateProjectOffcanvas from "./CreateProjectOffcanvas";
 
 
-export default function ProjectsManagementView() {
+export default function ProjectsView() {
 
     const [t] = useTranslation()
 
@@ -18,7 +19,7 @@ export default function ProjectsManagementView() {
     const createProjectPressed = () => {
 
         popupZus.pushElement(
-            <CreateProjectDrawer
+            <CreateProjectOffcanvas
                 onClose={popupZus.popElement}
             />
         )

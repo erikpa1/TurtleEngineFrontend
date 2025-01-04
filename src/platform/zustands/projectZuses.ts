@@ -1,15 +1,15 @@
 import create from "zustand"
 
-import {ProjectLight} from "@data/project/ProjectLight";
+import {Project} from "@data/project/Project";
 
 interface ActiveProjectZus {
-    project: ProjectLight | any
-    setProject: (project: ProjectLight) => void
+    project: Project | any
+    setProject: (project: Project) => void
 }
 
 export const useActiveProjectZus = create<ActiveProjectZus>((set) => ({
     project: null,
-    setProject: (project: ProjectLight) => set((oldState) => ({
+    setProject: (project: Project) => set((oldState) => ({
         project: project
     })),
 

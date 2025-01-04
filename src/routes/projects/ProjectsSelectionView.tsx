@@ -5,11 +5,12 @@ import {Ext} from "@external/prelude";
 import ProjectUniversalCard from "@components/projects/ProjectUniversalCard";
 import {Col, Row, Spinner} from "react-bootstrap";
 import UniversalInputSearchBar from "@components/SearchBar";
-import {useAvailableProjects} from "@hooks/project";
-import CreateProjectDrawer from "@editors/appmanagement/projects/CreateProjectOffcanvas";
+import {useAvailableProjects} from "@hooks/projectHooks";
+
 import {useGlobalPopup} from "@platform/zustands/globalPopupZus";
 import {TurtleButton} from "@platform/components/TurtleButtons";
 import {TGui} from "@external/tgui";
+import CreateProjectOffcanvas from "./CreateProjectOffcanvas";
 
 
 export default function ProjectsSelectionView({}) {
@@ -20,7 +21,6 @@ export default function ProjectsSelectionView({}) {
 
     const [tabValue, setTabValue] = Ext.Cookie.useCookie("projects-selection-tab-main", "0")
 
-
     const popupZus = useGlobalPopup()
 
     const tabChanged = (e: React.SyntheticEvent, newValue: string) => {
@@ -30,7 +30,7 @@ export default function ProjectsSelectionView({}) {
     const createProjectPressed = () => {
 
         popupZus.pushElement(
-            <CreateProjectDrawer
+            <CreateProjectOffcanvas
                 onClose={popupZus.popElement}
                 onRefresh={refresh}
             />
@@ -47,40 +47,29 @@ export default function ProjectsSelectionView({}) {
             <>
                 <div className={"vstack gap-2"}>
 
+                    <div className={"hstack gap-1"}>
 
-                    {/*<Box sx={{borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper'}}>*/}
 
-                    {/*    <Tabs*/}
-                    {/*        value={tabValue}*/}
-                    {/*        onChange={tabChanged}*/}
-                    {/*        aria-label="basic tabs example"*/}
-                    {/*        centered*/}
-                    {/*        textColor="inherit"*/}
-                    {/*    >*/}
-                    {/*        <Tab  label={t("local")} value={"0"}/>*/}
-                    {/*        <Tab label={t("remote")} value={"1"}/>*/}
-                    {/*    </Tabs>*/}
-
-                    {/*</Box>*/}
-
-                    <div style={{marginLeft: "auto", marginRight: "auto"}}>
                         <UniversalInputSearchBar placeHolder={"search"}/>
+
+                        <div
+                            className={"hstack gap-3"} style={{
+                            marginLeft: "auto"
+                        }}>
+                            <div style={{
+                                marginLeft: "auto",
+                                marginRight: "auto"
+                            }}>
+                                <TurtleButton
+                                    onClick={createProjectPressed}
+                                    label={"project.create"}
+
+                                />
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div className={"hstack gap-3"} style={{
-                        marginTop: "25px"
-                    }}>
-                        <div style={{
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}>
-                            <TurtleButton
-                                onClick={createProjectPressed}
-                                label={"project.create"}
-                                variant={"outlined"}
-                            />
-                        </div>
-                    </div>
 
                     <TGui.Row xs={1} md={4} className="g-4">
 
@@ -88,7 +77,11 @@ export default function ProjectsSelectionView({}) {
                             projects.map((value) => {
                                 return (
                                     <Col key={value.uid}>
-                                        <ProjectUniversalCard project={value} onRefresh={refresh}/>
+                                        <ProjectUniversalCard
+                                            project={value}
+                                            onEdit={() => {
+                                                alert("Unimplemented")
+                                            }}/>
                                     </Col>
                                 )
                             })

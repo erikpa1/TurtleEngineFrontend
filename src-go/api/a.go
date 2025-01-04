@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InigApi(r *gin.Engine) {
-
+func InitApi(r *gin.Engine) {
+	initUsersApi(r)
+	initApiProjects(r)
+	initApiScenes(r)
 }

@@ -2,13 +2,28 @@ import {Button, Flex, Form, Input} from "antd";
 import {LoginFormLayout} from "./LoginFormLayout";
 import {TGui} from "@external/tgui";
 import ConstantsApi from "@api/ConstantsApi";
+import UsersApi from "@api/UsersApi";
+import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
+import {useActiveUser} from "@hooks/activeUserZus";
 
 
 export default function LoginView() {
 
     const onBack: any = null
 
+    const activeUserZus = useActiveUser()
+
+
+    const lockZus = useGlobalAppLock()
+
     const [t] = TGui.T()
+
+    async function tryLogin(email: string, password: string) {
+        lockZus.lock()
+        const user = await UsersApi.TryLogin(email, password)
+        activeUserZus.setActiveUser(user)
+        lockZus.unlock()
+    }
 
     return (
         <LoginFormLayout background={"/textures/login.jpeg"}>
@@ -19,8 +34,7 @@ export default function LoginView() {
                 }}
                 layout={"vertical"}
                 onFinish={async (data) => {
-
-
+                    tryLogin(data.email, data.password)
                 }}
             >
                 {/* <Flex align={"center"} justify={"center"}>
@@ -43,6 +57,7 @@ export default function LoginView() {
                 </Flex>
 
                 <Form.Item
+                    id={"turtle-email"}
                     name={"email"}
                     style={{
                         padding: "30px 0 0 0"
@@ -55,6 +70,7 @@ export default function LoginView() {
                     ]}
                 >
                     <Input
+                        id={"turtle-email"}
                         placeholder={t("email") as any}
                         style={{
                             borderRadius: "15px",
@@ -64,6 +80,7 @@ export default function LoginView() {
 
                 <Form.Item
                     name={"password"}
+                    id={"turtle-password"}
                     required
                     rules={[
                         {
@@ -72,6 +89,7 @@ export default function LoginView() {
                     ]}
                 >
                     <Input.Password
+                        id={"turtle-password"}
                         placeholder={t("password") as any}
                         style={{
                             borderRadius: "15px",
@@ -86,7 +104,7 @@ export default function LoginView() {
                     }}
                     htmlType={"submit"}
                 >
-                    {t("log.in")}
+                    {t("dive.in")}
                 </Button>
 
                 {onBack && <Flex

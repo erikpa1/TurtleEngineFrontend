@@ -10,7 +10,7 @@ import {Image} from "react-bootstrap";
 
 import "./MainNavBar.css"
 
-import {ProjectLight} from "@data/project/ProjectLight";
+import {Project} from "@data/project/Project";
 
 import {Ext} from "@external/prelude";
 
@@ -247,7 +247,7 @@ function _SettingsNavItem({}) {
 }
 
 interface _ActiveProjectBarProps {
-    project: ProjectLight
+    project: Project
 }
 
 

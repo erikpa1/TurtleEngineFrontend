@@ -7,8 +7,8 @@ import TurtleOffcanvas from "@components/Drawers";
 import {Box, Stack} from "@mui/material";
 
 import {useGlobalAppLock} from "@platform/zustands/globalAppLockZus";
-import {ProjectLight} from "@data/project/ProjectLight";
-import {useLoadProjectLight} from "@hooks/project";
+import {Project} from "@data/project/Project";
+import {useLoadProjectLight} from "@hooks/projectHooks";
 
 import ProjectApi from "@api/project/ProjectApi";
 
@@ -61,7 +61,7 @@ export default function EditProjectOffcanvas({
 }
 
 interface _InnerContentProps {
-    project: ProjectLight
+    project: Project
     onClose?: () => void
     onRefresh?: () => void
 
