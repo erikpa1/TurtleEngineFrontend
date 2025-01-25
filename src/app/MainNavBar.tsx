@@ -122,6 +122,7 @@ function _EditorMenu() {
             <sb.Menu>
                 <MyNavbarItem lang={"projects"} link={"/projects"} icon={"/icons/Projects.svg"}/>
                 <MyNavbarItem lang={"management"} link={"/management"} icon={"/icons/Management.svg"}/>
+                <MyNavbarItem lang={"rendering"} link={"/rendering"} icon={"/icons/Scene.svg"}/>
             </sb.Menu>
 
             <Hr/>

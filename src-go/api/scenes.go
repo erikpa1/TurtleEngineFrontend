@@ -15,6 +15,12 @@ func _ListScenes(c *gin.Context) {
 	tools.AutoReturn(c, ctrl.ListScenes(user.Org, parent))
 }
 
+func _GetScene(c *gin.Context) {
+	user := auth.GetUserFromContext(c)
+	uid := c.Query("uid")
+	tools.AutoReturn(c, ctrl.GetScene(user.Org, uid))
+}
+
 func _COUScene(c *gin.Context) {
 	user := auth.GetUserFromContext(c)
 
@@ -37,5 +43,6 @@ func _COUScene(c *gin.Context) {
 
 func initApiScenes(r *gin.Engine) {
 	r.GET("/api/scenes", auth.LoginOrApp, _ListScenes)
+	r.GET("/api/scene", auth.LoginOrApp, _GetScene)
 	r.POST("/api/scene", auth.LoginRequired, _COUScene)
 }

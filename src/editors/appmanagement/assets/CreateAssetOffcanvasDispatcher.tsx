@@ -24,7 +24,7 @@ import {UploadAssetFileParams} from "@editors/appmanagement/assets/CreateParams"
 
 import PanoramaAssetManager from "@platform/assets-managers/PanoramaAssetManager";
 import FsTools from "@api/FsTools";
-import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene";
+import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/CreateOrEditScene";
 import ImagesApi from "@api/ImagesApi";
 import {useOpenAssetDispatcher} from "@components/assets/assets_hooks";
 

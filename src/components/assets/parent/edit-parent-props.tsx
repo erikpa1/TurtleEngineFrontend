@@ -6,7 +6,7 @@ import {TGui} from "@external/tgui";
 import {AssetSubtype} from "@platform/assets/Assets";
 
 interface _AllProps {
-    asset: Asset | Asset
+    asset: any
 }
 
 export function EditAssetNameFormField({asset}: _AllProps) {

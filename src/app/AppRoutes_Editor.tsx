@@ -5,6 +5,8 @@ import {ViewContainer} from "@components/ViewContainer";
 import RoutesManager from "@platform/RoutesManager";
 
 
+const RenderingView = React.lazy(() => import("@TurtleApp/Rendering/RenderingView"))
+const SceneEditorView = React.lazy(() => import("../routes/sceneEditor/SceneEditorView"))
 const ScenesView = React.lazy(() => import("../routes/scenes/ScenesView"))
 const ProjectsSelectionView = React.lazy(() => import("../routes/projects/ProjectsSelectionView"))
 
@@ -56,6 +58,12 @@ export default function AppRoutes_Editor() {
                         <ViewContainer>
                             <ScenesView/>
                         </ViewContainer>
+                    </MountTabWrapper>
+                }/>
+
+                <Route path={RoutesManager.ROUTE_SCENE_EDITOR} element={
+                    <MountTabWrapper>
+                        <SceneEditorView/>
                     </MountTabWrapper>
                 }/>
 
@@ -148,6 +156,13 @@ export default function AppRoutes_Editor() {
                 <Route path={RoutesManager.ROUTE_DATAINSTANCE_EDITOR} element={
                     <MountTabWrapper>
                         <DataInstanceEditor/>
+                    </MountTabWrapper>
+                }/>
+
+
+                <Route path={"/rendering"} element={
+                    <MountTabWrapper>
+                        <RenderingView/>
                     </MountTabWrapper>
                 }/>
             </Routes>

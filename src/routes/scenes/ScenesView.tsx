@@ -20,10 +20,11 @@ import TurtleScene from "@data/project/Scene"
 import ScenesApi from "@api/ScenesApi"
 import {useParams} from "react-router-dom"
 import SceneCard from "./SceneCard"
-import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/create-or-edit-scene"
+import CreateSceneOffcanvas from "@editors/appmanagement/assets/create/CreateOrEditScene"
 import CreateProjectOffcanvas from "../projects/CreateProjectOffcanvas"
 import TurtleOffcanvas from "@components/Drawers"
 import {Stack} from "@mui/material"
+import create from "zustand"
 
 
 export default function ScenesView({}) {
@@ -36,33 +37,9 @@ export default function ScenesView({}) {
 
     const [scenes, setScenes] = React.useState<Array<TurtleScene>>([])
 
+    const [createShow, setCreateShow] = React.useState(false)
+
     const popupZus = useGlobalPopup()
-
-    async function createSceneView() {
-
-
-        popupZus.pushElement(
-            <TurtleOffcanvas
-                onClose={() => {
-
-                }}
-                closeEnabled={true}
-                header={<Offcanvas.Title>
-                    {t("create")}: <b style={{textTransform: "uppercase"}}>{t("scene")}:</b>
-                </Offcanvas.Title>}
-            >
-                <TGui.Box>
-                    <Stack spacing={2}>
-                        <CreateSceneOffcanvas
-                            onClose={popupZus.popElement}
-                            onRefresh={refresh}
-                        />
-                    </Stack>
-                </TGui.Box>
-
-            </TurtleOffcanvas>
-        )
-    }
 
     async function refresh() {
         setIsLoaing(true)
@@ -98,7 +75,9 @@ export default function ScenesView({}) {
                                 marginRight: "auto"
                             }}>
                                 <TurtleButton
-                                    onClick={createSceneView}
+                                    onClick={() => {
+                                        setCreateShow(true)
+                                    }}
                                     label={"create"}
 
                                 />
@@ -128,6 +107,30 @@ export default function ScenesView({}) {
 
 
                 </div>
+
+
+                {
+                    createShow &&
+                    <TurtleOffcanvas
+                        onClose={() => {
+
+                        }}
+                        closeEnabled={true}
+                        header={<Offcanvas.Title>
+                            {t("create")}: <b style={{textTransform: "uppercase"}}>{t("scene")}:</b>
+                        </Offcanvas.Title>}
+                    >
+                        <TGui.Box>
+                            <Stack spacing={2}>
+                                <CreateSceneOffcanvas
+                                    onClose={() =>setCreateShow(false)}
+                                    onRefresh={refresh}
+                                />
+                            </Stack>
+                        </TGui.Box>
+
+                    </TurtleOffcanvas>
+                }
 
             </>
 

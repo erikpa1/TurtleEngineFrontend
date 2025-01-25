@@ -39,7 +39,7 @@ export default function SceneCard({scene, onEdit}: SceneCardProps) {
 
         } else {
             document.title = scene.name
-            navigate(RoutesManager.SceneEditor(scene.parent, scene.uid))
+            navigate(RoutesManager.SceneEditor(scene.uid))
         }
     }
 

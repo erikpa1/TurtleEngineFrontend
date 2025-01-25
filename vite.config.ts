@@ -20,6 +20,8 @@ export default defineConfig({
             '@external': path.resolve(__dirname, "src/external"),
             '@openxr': path.resolve(__dirname, "src/openxr"),
             '@wasm': path.resolve(__dirname, "src/wasm"),
+            '@Turtle': path.resolve(__dirname, "src/Turtle"),
+            '@TurtleApp': path.resolve(__dirname, "src/TurtleApp"),
         }
     },
     build: {

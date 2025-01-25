@@ -10,7 +10,10 @@ import {useNavigate} from "react-router-dom";
 import WasmView from "./WasmEntry";
 import LoginView from "./routes/auth/LoginView";
 import {useActiveUser} from "@hooks/activeUserZus";
+import GraphicSettings from "@Turtle/Data/graphicssettings";
 
+
+GraphicSettings.AVL_PANORAMAS = new Set(["venice.hdr", "city.hdr", "office.hdr", "studio.hdr", "clouds.hdr"])
 
 export default function App() {
 
