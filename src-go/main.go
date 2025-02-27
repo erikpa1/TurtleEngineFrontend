@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+	"turtle/db"
 
 	"turtle/api"
 	"turtle/auth"
@@ -144,7 +145,11 @@ func dev_main() {
 
 	} else {
 		lg.LogOk("Started HTTP branch")
-		srv.ListenAndServe()
+		error := srv.ListenAndServe()
+
+		if error != nil {
+			lg.LogE(error)
+		}
 	}
 
 	lg.LogE("Execution ended")
@@ -153,6 +158,8 @@ func dev_main() {
 func main() {
 
 	models.RegisterClazzFactory()
+
+	db.InitGorm()
 
 	lg.LogI("Starting infinity twin application")
 	lg.LogI("DbName: ", credentials.GetDBName())
